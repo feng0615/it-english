@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily IT Business English</title>
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 20px 16px 32px;
+      text-align: center;
+      background: #ffffff;
+      color: #111;
+    }
+
+    .date {
+      font-size: 14px;
+      margin-bottom: 12px;
+      color: #555;
+    }
+
+    .tabs button {
+      padding: 8px 12px;
+      margin: 4px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: #f8f8f8;
+      font-size: 14px;
+    }
+
+    .word {
+      font-size: 32px;
+      font-weight: 700;
+      margin-top: 28px;
+    }
+
+    .meaning {
+      font-size: 18px;
+      margin-top: 6px;
+    }
+
+    .example {
+      font-size: 15px;
+      margin-top: 18px;
+      line-height: 1.5;
+      color: #333;
+    }
+
+    .done {
+      margin-top: 28px;
+      padding: 12px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+      background: #e0f2ff;
+    }
+  </style>
+</head>
+<body>
+
+<div class="date" id="date">📅</div>
+
+<div class="tabs">
+  <button onclick="switchMode('meeting')">會議</button>
+  <button onclick="switchMode('project')">專案</button>
+  <button onclick="switchMode('system')">系統</button>
+  <button onclick="switchMode('business')">商務</button>
+</div>
+
+<div class="word" id="word">Loading...</div>
+<div class="meaning" id="meaning"></div>
+<div class="example" id="example"></div>
+
+<button class="done" onclick="done()">✅ 今天看過了</button>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const vocab = {
+    meeting: [
+      ["align", "對齊共識", "Let’s align on the technical approach."],
+      ["clarify", "釐清", "Could you clarify the requirements?"],
+      ["follow up", "後續追蹤", "I’ll follow up after the meeting."]
+    ],
+    project: [
+      ["scope", "範圍", "This change is outside the project scope."],
+      ["timeline", "時程", "We need to revise the timeline."],
+      ["estimate", "估時", "We estimate this will take two weeks."]
+    ],
+    system: [
+      ["architecture", "系統架構", "We need to review the system architecture."],
+      ["deployment", "部署", "Deployment is scheduled for tonight."],
+      ["rollback", "回滾", "We had to rollback due to an issue."]
+    ],
+    business: [
+      ["approve", "核准", "The proposal has been approved."],
+      ["impact", "影響", "This change will have a major impact."],
+      ["finalize", "定案", "We’ll finalize the plan tomorrow."]
+    ]
+  };
+
+  let mode = "meeting";
+
+  const today = new Date().toISOString().slice(0, 10);
+  document.getElementById("date").textContent = "📅 " + today;
+
+  function pick() {
+    const list = vocab[mode];
+    const index =
+      today.split("").reduce((a, c) => a + c.charCodeAt(0), 0) % list.length;
+
+    document.getElementById("word").textContent = list[index][0].toUpperCase();
+    document.getElementById("meaning").textContent = list[index][1];
+    document.getElementById("example").textContent = "💬 " + list[index][2];
+  }
+
+  window.switchMode = function (m) {
+    mode = m;
+    pick();
+  };
+
+  window.done = function () {
+    document.getElementById("example").textContent =
+      "✅ 今天有看、有想過，就夠了。";
+  };
+
+  pick(); // ✅ iOS 關鍵：DOM 完成後再跑
+});
+</script>
+
+</body>
+</html>
