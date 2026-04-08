@@ -110,24 +110,55 @@ document.addEventListener("DOMContentLoaded", function () {
   const today = new Date().toISOString().slice(0, 10);
   document.getElementById("date").textContent = "📅 " + today;
 
+  function daysSinceStart() {
+    const startDate = new Date("2026-04-08"); // ✅ 你開始使用的起始日
+    const now = new Date();
+    const diff = now - startDate;
+    return Math.floor(diff / (1000 * 60 * 60 * 24));
+  }
+
   function pick() {
     const list = vocab[mode];
-    const index =
-      today.split("").reduce((a, c) => a + c.charCodeAt(0), 0) % list.length;
+    const dayIndex = daysSinceStart();
+    const index = dayIndex % list.length;
 
     document.getElementById("word").textContent = list[index][0].toUpperCase();
     document.getElementById("meaning").textContent = list[index][1];
     document.getElementById("example").textContent = "💬 " + list[index][2];
   }
 
+  function isTodayDone() {
+    const doneDate = localStorage.getItem("doneDate");
+    return doneDate === today;
+  }
+  
+  function markTodayDone() {
+    localStorage.setItem("doneDate", today);
+  }
+
+  function showDoneState() {
+    document.getElementById("word").textContent = "✅";
+    document.getElementById("meaning").textContent = "今天已完成 👍";
+    document.getElementById("example").textContent =
+      "不用多做，明天自動換新單字";
+  }
+  
+  function initApp() {
+    if (isTodayDone()) {
+      showDoneState();
+    } else {
+      initApp();
+    }
+  }
+  
   window.switchMode = function (m) {
     mode = m;
     pick();
   };
 
   window.done = function () {
-    document.getElementById("example").textContent =
-      "✅ 今天有看、有想過，就夠了。";
+    markTodayDone();
+    showDoneState();
   };
 
   pick(); // ✅ iOS 關鍵：DOM 完成後再跑
