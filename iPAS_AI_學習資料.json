@@ -1,0 +1,1327 @@
+{
+  "format": "ipas-ai-practice-learning",
+  "version": 1,
+  "exportedAt": "2026-10-29T09:01:38.224Z",
+  "records": {
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"科目2：生成式AI應用與規劃\",\"學習指引\",\"關於 No Code 平台，下列敘述何者較為準確？\",[\"已經完全取代傳統的 AI 開發模式\",\"只適用於大型企業\",\"是一種降低 AI 技術複雜性和開發成本的新興方法\",\"工具都具有完全相同的功能和效能\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T06:39:10.087Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"科目2：生成式AI應用與規劃\",\"學習指引\",\"關於 No Code / Low Code 平台，下列敘述何者較正確？\",[\"兩者完全相同\",\"Low Code 平台不需要任何程式設計知識\",\"Low Code 平台更適合開發靈活且可擴展的解決方案\",\"No Code 平台可以無限客製化\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T06:39:54.064Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"生成式AI導入評估規劃\",\"歷屆考古題\",\"某跨國電商企業導入生成式 AI，協助處理顧客服務請求，並根據顧客歷史訂單提供個人化建議。資安與法遵部門擔心 AI 在回覆時可能洩漏顧客個資，若要在導入初期優先避免觸法風險，下列哪一項措施最符合要求？\",[\"在加密環境下導入完整的顧客訂單與行為資料，並透過嚴格存取控管降低洩漏風險\",\"實施資料最小化與去識別化，確保 AI 在訓練與生成過程中不直接處理或暴露敏感個資\",\"強化模型的回覆審查流程，透過自動過濾與人工抽查結合，降低個資外洩的機率\",\"設定 AI 的角色與回覆範圍，讓其專注於客服相關內容，避免回答其他敏感議題\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T06:41:43.300Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"生成式AI導入評估規劃\",\"歷屆考古題\",\"某銀行導入 AI 理財助理供行員查詢客戶資訊。上線後發現，系統在部分對話中主動提及特定客戶的資產規模與交易紀錄，但這些資訊並未出現在當次輸入中。經調查已排除外部入侵、資料庫存取異常與輸入觸發問題。請問下列何者最可能是此次事件的根本原因？\",[\"行員在查詢過程中無意間輸入了特定關鍵字，觸發系統從資料庫中調用其他客戶的完整資料\",\"模型在訓練階段過度記憶了含有真實客戶資訊的訓練資料，在特定對話情境下將這些內容重新輸出\",\"客戶行為隨市場變化改變，導致模型對敏感資訊的判斷能力下降\",\"系統在不同使用者之間短暫共享對話上下文，導致部分資訊被誤帶入其他對話流程\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T06:42:27.632Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"生成式AI應用與工具\",\"歷屆考古題\",\"某企業導入AI Agent處理跨部門簽核流程。系統在開始執行前，會先建立一份解決方案圖(Solution Graph)，作為後續執行的依據，再由AI Agent完成整個簽核流程。相較於直接要求AI一次產生最終簽核結果，此設計方式最主要的優點為何？\",[\"因為解決方案圖可引導AI將推理過程分階段規劃與執行，並逐步驗證各階段結果，有助於降低推理缺乏依據、遺漏上下文或產生「幻覺(Hallucination)」的風險\",\"因為解決方案圖會自動糾正大型語言模型在各步驟產生的錯誤資訊，確保最終答案可靠無誤\",\"因為有了解決方案圖，大型語言模型不再直接處理自由文本，而只處理結構化資料，因而能完全避免產生虛構內容\",\"因為解決方案圖已預先定義所有推理結果，因此AI僅需依圖執行即可，不需再進行推理\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T06:44:05.461Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"生成式AI應用與工具\",\"歷屆考古題\",\"某金融機構導入檢索增強生成(Retrieval-Augmented Generation, RAG)模型，用於客服文件查詢與自動回覆。由於大型模型運算成本過高，若考慮引入知識蒸餾(Knowledge Distillation, KD)技術，下列何者為帶來的主要效益？\",[\"讓小型模型學習大型模型的知識，在降低運算成本的同時維持檢索與生成品質\",\"只能應用於語音或影像辨識，無法提升文字檢索生成效能\",\"因為 RAG 已有檢索機制，因此無需額外蒸餾知識\",\"僅能依賴特定 API 供應商才能使用，無法在自建模型中實現\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T06:45:37.423Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"No-code與Low-code\",\"歷屆考古題\",\"隨著企業加速導入 AI，No-Code/Low-Code 平台逐漸成為模型開發與產品化的常見工具。相較於傳統自行撰寫程式的建模流程，下列何者最能正確描述此類平台在模型訓練機制上的典型特性？\",[\"透過視覺化介面與標準化流程，協助完成模型訓練與調校\",\"主要提供既有模型推論能力，通常不支援重新訓練\",\"著重資料處理與轉換，模型訓練仍需外部工具完成\",\"多數僅適用於特定大數據框架（如 Spark）的訓練流程\"],0]": {
+      "attempts": 2,
+      "correctAttempts": 2,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T06:12:47.231Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"生成式AI應用與工具\",\"歷屆考古題\",\"某保險公司導入大型語言模型協助客服回覆保單相關問題。工程師撰寫提示詞時，先要求模型：「請扮演一位具有 15 年保險理賠經驗的資深客服專員，以專業且具同理心的語氣回答客戶問題，並避免使用艱澀的保險術語。」接著再提供客戶問題，要求模型產生回覆內容。請問上述使用的提示詞(Prompt)技巧稱為下列何者？\",[\"思維鏈提示(Chain-of-Thought Prompting)\",\"情境設定提示(Context Prompting)\",\"零樣本提示(Zero-Shot Prompting)\",\"少樣本提示(Few-Ｓhot Prompting)\"],1]": {
+      "attempts": 2,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T06:49:57.802Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"科目2：生成式AI應用與規劃\",\"學習指引\",\"生成式 AI 在金融業的應用不包括以下哪一項？\",[\"風險評估與管理\",\"投資組合優化\",\"自動化生成病歷\",\"提供個人化投資建議\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T06:49:29.741Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"旅遊平台預測顧客是否再次訂房，欄位含主要交通方式（火車/飛機/自駕/公車）等。下列哪一種特徵工程方法最適合處理「主要交通方式」欄位？\",[\"布林轉換(Boolean Conversion)\",\"序數編碼(Ordinal Encoding)\",\"數值標準化(Numerical Standardization)\",\"One-hot 編碼(One-hot Encoding)\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T06:58:14.595Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"某電商平台的客服部門統計了本月 10,000 筆顧客服務評分（滿分 100 分），發現平均分數為 72 分，中位數為 85 分，平均數顯著小於中位數。資料分析師欲初步判斷此評分資料的分配型態，下列敘述何者最合理？\",[\"資料呈負偏態分配（左偏，Skewness to the Left），代表多數顧客給予高分，但少數極低評分將平均數大幅拉低\",\"資料呈正偏態分配（右偏，Skewness to the Right），代表多數顧客給予低分，但少數極高評分將平均數大幅拉高\",\"資料呈標準常態分配，平均數與中位數的些微差異屬於正常的隨機抽樣誤差\",\"資料呈均勻分配，各分數區間出現的機率大致相同，因此平均數略低於中位數\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T06:58:35.780Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"科目1：人工智慧基礎概論\",\"學習指引\",\"下列何者為鑑別式 AI 的主要目標？\",[\"學習數據的生成過程\",\"生成類似真實數據的新樣本\",\"分類或迴歸數據\",\"創建多樣化的數據分佈\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-21T06:58:48.734Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"在「可解釋人工智慧(XAI)」領域中，LIME(Local Interpretable Model-agnostic Explanations)方法最核心的應用目的是什麼？\",[\"解釋單一樣本（局部預測）的黑箱模型決策過程\",\"全面提升黑箱模型整體的預測準確度\",\"將黑箱模型轉換成完全可解釋的模型作為替代\",\"用於生成大量擬真數據來替代訓練集\"],0]": {
+      "attempts": 2,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T05:49:59.030Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某語音辨識系統需分析長時間的語音序列，發現當句子較長時，模型難以保留長時間序列中的前段資訊，導致辨識準確度下降。為改善此問題，下列何種模型最適合？\",[\"長短期記憶網路(LSTM)\",\"循環神經網路(RNN)\",\"卷積神經網路(CNN)\",\"生成式對抗網路(GAN)\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T07:01:36.343Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某紡織製造公司導入 AI 系統進行布料瑕疵檢測，每天需處理來自 30 條產線的影像資料，包括高解析度照片、感測器數值、生產參數記錄等多種格式。該公司收集的資料量從每日 2GB 增長至 50GB，且需在布料離開產線前的 3 秒內完成瑕疵判定。近期團隊發現系統在尖峰時段容易出現判定延遲，影響製程節奏。若要優先改善此問題，下列哪一種做法最適合？\",[\"擴充資料儲存容量，以因應長期資料累積需求\",\"強化即時資料處理與推論計算資源配置，以降低延遲風險\",\"調整資料格式標準，以降低跨來源整合複雜度\",\"增加資料驗證與清理機制，以提升資料品質穩定性\"],1]": {
+      "attempts": 2,
+      "correctAttempts": 2,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T06:54:13.362Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某違約風險預測系統，特徵數量眾多，希望提升預測的穩定性與泛化能力，下列哪一種鑑別式 AI 模型最適合？\",[\"邏輯迴歸(Logistic Regression)\",\"支援向量機(Support Vector Machine)\",\"決策樹(Decision Tree)\",\"隨機森林(Random Forest)\"],3]": {
+      "attempts": 4,
+      "correctAttempts": 2,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:01:03.822Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"在信貸決策系統中導入反事實解釋(Counterfactual Explanation)時，實際部署常伴隨技術與監管挑戰。下列哪一項最符合該情境下的核心挑戰？\",[\"需建立完整客戶行為預測模型估算改變成本，並整合進風險管理系統\",\"必須用聯邦學習保護隱私，同時在分散式環境計算跨機構的反事實解釋\",\"需建構時間序列因果圖處理信用狀況動態變化，並預測信用評分軌跡\",\"生成的反事實樣本須滿足特徵間因果與業務邏輯約束，且建議在現實中可操作並符合公平放貸法規\"],3]": {
+      "attempts": 4,
+      "correctAttempts": 3,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:03:29.557Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"在大型 Transformer 模型的效能優化中，常見方法之一是「剪枝(Pruning)」。下列哪一項最符合該方法的核心概念？\",[\"將所有權重按比例縮小，使其更接近零，以降低計算量\",\"移除模型中影響較小或冗餘的權重參數，以減少模型大小並提升推理效率\",\"訓練時僅更新部分權重而凍結其他，減少需調整的參數\",\"依注意力分數動態跳過部分輸入 Token，以減少前向傳播計算\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T07:07:00.942Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"生成式AI應用與工具\",\"歷屆考古題\",\"某客服系統在回覆「訂單取消政策」時，即使生成溫度固定為 0.6，回覆品質仍常出現差異。調查顯示，檢索到的政策內容有時是最新版本，有時則是過時文件，此外 Prompt 約束不足，微調語料也有模糊描述。若要優先改善品質波動，應先解決下列哪一項問題？\",[\"調整溫度參數，降低生成隨機性\",\"加強 Prompt 設計，限制模型表達方式\",\"優化微調語料，減少含糊描述\",\"提升檢索系統品質，確保取得的政策內容正確且最新\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T07:08:38.420Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"科目2：生成式AI應用與規劃\",\"學習指引\",\"在選擇 No Code / Low Code 平台時，下列何者為考慮功能與擴展性時最重要因素？\",[\"平台的購買成本\",\"平台的技術整合能力和自訂性\",\"使用者的程式設計能力\",\"平台的市場評價\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T07:09:42.372Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"關於 ETL(Extract-Transform-Load)，下列敘述何者為正確？\",[\"E 表示將資料直接儲存至目標儲存庫\",\"ETL 的處理順序可以自由調整為 TEL\",\"L 表示將目標儲存庫經過反加密處理載入資料\",\"T 包括資料的清理與排序\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T07:09:47.476Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"生成式AI導入評估規劃\",\"歷屆考古題\",\"某醫院正在規劃一個 AI 專案，目的是協助醫師從胸腔 X 光影像中判斷是否存在肺炎徵兆，團隊卻誤將生成式 AI 模型運用於影像診斷。下列哪一項最可能成為主要風險？\",[\"模型在生成報告時語句流暢，但僅在文字表達上有差異，對診斷結果沒有重大影響\",\"模型若資料不足，僅會降低生成報告的完整性，而非影響判斷病灶的正確性\",\"模型偏向生成內容而非分類，但此差異僅影響效率，不會造成誤診風險\",\"模型可能生成與實際影像不符的診斷結論，導致誤判並引發醫療與法律風險\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T07:12:24.377Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"科目2：生成式AI應用與規劃\",\"學習指引\",\"若企業將資料安全管理外包給第三方服務供應商，屬於哪種風險應對策略？\",[\"風險緩解\",\"風險轉移\",\"風險接受\",\"風險規避\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T07:12:51.215Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"科目1：人工智慧基礎概論\",\"學習指引\",\"下列哪一項屬於監督式學習的特點？\",[\"數據集中包含標記訊息\",\"僅需探索數據內部的結構\",\"使用代理與環境互動進行學習\",\"不需要驗證集來調整參數\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-21T08:56:56.290Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"在大型語言模型(LLM)的效能優化中，Flash Attention 常被用來改善 Transformer 注意力機制的運算效率。關於 Flash Attention 的主要效益，下列敘述何者最正確？\",[\"透過忽略影響較小的注意力權重，減少模型需要計算的關聯數量，以降低運算成本\",\"透過調整注意力計算與資料處理方式，減少中間結果的儲存需求，進而改善速度與資源使用效率\",\"透過增加注意力計算的並行程度，使模型可同時處理更多注意力頭部\",\"透過將注意力結果暫存於高速快取記憶體，以避免重複計算造成延遲\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T02:08:03.182Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某農場收集了大量作物葉片影像，但只有 30% 的影像有病害類別標註，其餘 70% 的影像沒有任何標籤。農場希望充分利用所有資料來訓練病害識別模型。這種情況最適合使用哪一種學習方法？\",[\"半監督式學習(Semi-supervised Learning)\",\"監督式學習(Supervised Learning)\",\"非監督式學習(Unsupervised Learning)\",\"強化式學習(Reinforcement Learning)\"],0]": {
+      "attempts": 2,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T08:05:48.367Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"科目1：人工智慧基礎概論\",\"學習指引\",\"驗證性資料分析 ( Confirmatory Data Analysis, CDA ) 與探索性資料分析 (Exploratory Data Analysis, EDA)相比，主要著重於下列哪一項？\",[\"對資料進行初步描述和視覺化\",\"驗證先前生成的假設並進行深入挖掘\",\"排除資料中的極端值以提高準確性\",\"探索數據中潛在的模式和異常\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T02:09:58.728Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某企業導入大型語言模型處理超長合約文件（數萬字），發現輸入越長，運算時間與資源消耗增加得越快，遠超過文件長度增加的比例。下列何者最能解釋此現象發生的主要原因？\",[\"長文本包含較多生僻字，系統偵測到新詞時會自動暫停並即時重建底層詞彙表\",\"模型為了確保長文本的生成品質，會隨輸入長度自動動態增加模型的參數數量\",\"自注意力機制在處理文本時，時間複雜度會隨輸入長度呈二次方（平方）快速上升\",\"隨著合約內容變長，模型內部會自動切換為檢索增強生成(RAG)架構，以提升長文本處理效率\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T02:10:36.676Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"人工智慧概念\",\"歷屆考古題\",\"某電子製造公司建置 AI 視覺檢測系統，用於辨識 PCB 電路板製程缺陷。系統在影像判讀任務上表現穩定，但其模型設計與訓練目標皆侷限於特定應用範圍，無法直接遷移至其他營運決策任務。依人工智慧能力範疇分類，下列何者最符合該系統特性？\",[\"弱 AI(Weak AI/Narrow AI)\",\"強 AI(Strong AI)\",\"通用人工智慧(Artificial General Intelligence, AGI)\",\"超級人工智慧(Artificial Superintelligence, ASI)\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T02:11:17.602Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"在機器學習中，「叢集(Clustering)」方法最典型的應用情境是下列何者？\",[\"根據已標註詐欺案例訓練模型偵測未來詐欺交易\",\"用醫療數據與診斷標籤建模預測是否罹病\",\"根據顧客消費行為與特徵，將顧客自動劃分為數個群組以差異化行銷\",\"用大量已標註影像訓練模型辨識照片中物件\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T02:11:33.277Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"下列何者不屬於資料整合(Data Integration)的主要目的？\",[\"統一不同來源資料的格式與欄位定義，以確保分析一致性\",\"識別並處理重複資料，避免影響模型訓練結果\",\"整併多來源資料，以提升資料完整性與應用價值\",\"依資料保存政策延長原始資料留存期限，以利未來可能的分析需求\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T02:13:33.488Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"科目1：人工智慧基礎概論\",\"學習指引\",\"神經網路與傳統機器學習模型的主要區別是什麼？\",[\"神經網路無法處理非線性數據\",\"神經網路透過多層結構學習複雜特徵\",\"神經網路只適用於迴歸問題\",\"神經網路不需要大量數據支持\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T02:14:19.115Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"生成式AI應用與工具\",\"歷屆考古題\",\"在規劃生成式 AI 解決方案時，下列何種應用場景最適合採用 GPT-Realtime 類型模型？\",[\"需長時間批次處理的大規模報表生成任務\",\"即時資料查詢與結構化資訊檢索系統\",\"即時語音客服與互動式 AI 代理\",\"以高一致性為優先的法規文件自動摘要\"],2]": {
+      "attempts": 2,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:09:32.758Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"電商想選出對購買結果最有預測價值的特徵以提升模型效能。下列哪一種描述最符合監督式特徵選擇(Supervised Feature Selection)的概念？\",[\"根據特徵的整體分布、變異度或資訊量篩選，不直接參考目標變數\",\"評估每個特徵與目標變數的相關性，選對預測結果貢獻最大的特徵\",\"用模型評估特徵對預測結果的重要性，保留對目標變數影響較大的欄位\",\"用降維方法（如 PCA）將特徵轉換為新特徵再訓練\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T05:42:47.688Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"生成式AI應用與工具\",\"歷屆考古題\",\"某企業導入大型語言模型(LLM)進行客服自動化，並已透過 Fine-Tuning 學習企業標準問答範例，但在實務運作中仍出現回應策略未符合服務優先順序及語氣與品牌風格不一致的情況，因此技術團隊建議再導入 Reinforcement Fine-tuning(RFT)機制進行優化，其主要目的為何？\",[\"擴展模型的知識涵蓋範圍與資料記憶能力\",\"透過 reward 訊號調整模型回應策略與行為偏好\",\"提升模型推論速度與降低回應延遲\",\"降低 prompt 設計複雜度並取代訓練流程\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T05:45:49.946Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"生成式AI應用與工具\",\"歷屆考古題\",\"某開發團隊在使用 AI 程式設計助手開發資料管線系統(Data Pipeline System)時，發現生成的 Python 資料處理套件呼叫方式已是舊版 API，與最新官方文件不符，導致部分功能執行失敗。請問應導入何種技術，使系統能在推理過程中即時存取並導入最新外部文件內容，以確保生成結果符合最新 API 規範？\",[\"模型微調(Fine-tuning)，將最新文件資料重新訓練進模型權重，讓模型永久記住最新 API\",\"知識蒸餾(Knowledge Distillation)，將大型文件資料庫壓縮為輕量化的專用小型模型\",\"提示詞快取(Prompt Caching)，將常用文件內容快取於提示中，使模型可重複使用既有資訊並降低延遲\",\"透過 MCP(Model Context Protocol)工具整合，讓模型在推理時即時存取並整合最新的外部文件內容\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T05:50:50.000Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"科目1：人工智慧基礎概論\",\"學習指引\",\"關於 AI 的定義，下列敘述何者較為正確？\",[\"AI 僅限於深度學習技術\",\"AI 包括各種技術，例如機器學習、專家系統等\",\"AI 系統只能在學術研究中應用\",\"AI 無法應用於金融領域\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T05:50:57.807Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"某銀行建立機器學習模型預測客戶的貸款違約風險。資料集中有一個「職業類別」欄位，包含「工程師、教師、業務、自由業」等類別。工程師計劃將此欄位進行編碼處理後直接輸入線性模型。下列哪一種編碼方式最可能導致模型錯誤解讀類別之間的關係？\",[\"One-Hot Encoding\",\"Binary Encoding\",\"Target Encoding\",\"Label Encoding\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T05:51:30.145Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"某電商平台的資料科學團隊欲建置一套NLP模型，用於分析顧客在社群媒體上對商品的評論情緒。在將原始貼文資料送入模型訓練前，團隊執行了以下步驟：移除貼文中夾雜的HTML標籤與網址、將表情符號轉換或移除、去除「的、了、啊」等對情緒判斷無實質貢獻的停用詞，並統一將文字轉換為小寫格式。請問上述步驟主要屬於機器學習專案流程中的哪一環節？\",[\"模型評估(Model Evaluation)：透過移除干擾詞彙，計算模型在測試資料集上的準確率、精確率等指標表現\",\"特徵萃取(Feature Extraction)：將文字資料轉換為數值向量，使模型能夠識別評論中與情緒相關的關鍵詞彙權重\",\"資料清理與預處理(Data Cleaning and Preprocessing)：將原始、雜亂的文字資料轉換為格式一致、去除雜訊的乾淨資料，以利後續模型有效學習\",\"超參數調校(Hyperparameter Tuning)：調整模型訓練過程中的學習率、批次大小等參數，以移除訓練資料中的雜訊干擾\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T06:07:30.655Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"生成式AI應用與工具\",\"歷屆考古題\",\"某企業欲導入 AI 知識助理系統，需具備以下需求：員工可查詢內部規範與流程文件、回答需具可追溯來源、資料會頻繁更新及系統需降低模型重新訓練成本。下列哪一種架構最適合？\",[\"直接微調(Fine-tuning)大型語言模型\",\"使用檢索增強生成(RAG)架構\",\"使用純生成 AI，不連接外部資料\",\"使用規則式專家系統\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T06:10:46.704Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"生成式AI應用與工具\",\"歷屆考古題\",\"在 AI 應用設計中，Model Context Protocol(MCP)與檢索增強生成(RAG)都能擴展模型的能力，但兩者的核心差異主要為下列何者？\",[\"MCP 擴展模型工具，但主要用於補足訓練資料不足\",\"MCP 能標準化連接資源，但仍需依賴向量資料庫\",\"RAG 常用於擴展知識庫內容，而 MCP 更著重於動態工具與 API 呼叫的整合\",\"RAG 透過統一協議，提升回答相關性\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T06:11:25.975Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"生成式AI應用與工具\",\"歷屆考古題\",\"某律師事務所因業務量快速成長，正在評估導入生成式 AI 工具以減輕律師的行政負擔，請問下列哪一項最符合生成式 AI 目前在法律實務中的主要應用？\",[\"快速爬梳大量相關判例、協助起草合約初稿並標記文件中的潛在風險條款\",\"根據案件事實與法條自動做出判決建議，並作為法官裁決依據直接採用\",\"在正式庭審中代替律師進行言詞答辯，並即時調整辯護策略\",\"分析嫌疑人的歷史行為模式，預測其未來可能再犯的時間與地點供執法單位參考\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T06:12:18.514Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"生成式AI導入評估規劃\",\"歷屆考古題\",\"某物流公司導入自動駕駛貨車進行道路測試。測試期間，自駕系統誤將前方白色貨車車廂辨識為天空，導致車輛未減速而發生碰撞事故，造成人員受傷。事故調查時，技術團隊與系統供應商皆無法說明模型當時做出該判斷的依據，因此難以釐清事故責任。此案例最主要反映AI在高風險應用中的哪一項治理與責任挑戰？\",[\"自駕系統蒐集道路影像及車牌等資訊，若未妥善管理相關資料，可能涉及個人資料保護議題\",\"系統決策過程不透明，在發生交通事故時，難以釐清軟體商、車廠與測試人員之間的責任歸屬\",\"模型辨識效能可能因訓練資料品質不足而下降，需要重新蒐集及改善訓練資料\",\"自駕系統若未能即時更新道路資訊或交通標線，可能因環境變化而影響行駛決策\"],1]": {
+      "attempts": 2,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:09:19.690Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"CLIP 與 DINO 皆屬於自監督學習(Self-supervised Learning)模型，但其訓練資料來源有所不同。下列何者最能正確敘述兩者在訓練資料型態上的差異？\",[\"皆使用有標註圖像資料進行監督式學習\",\"皆使用未標註圖像資料進行自監督學習\",\"CLIP 使用圖像與文字配對資料，DINO 使用未標註圖像資料\",\"CLIP 使用未標註圖像資料，DINO 使用圖像與文字配對資料\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-22T06:15:33.109Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"某零售企業的資料科學團隊正在開發高價值會員預測模型。在資料前處理階段，分析師發現特徵欄位「年收入」有約 5%的遺漏值(Missing Value)。經資料探索發現，該欄位的數值分佈呈現高度正偏態（右偏分配，Skewness to the Right）。若在不刪除任何會員資料的前提下，欲選擇較適合的遺漏值填補方式，下列何者最為合適？\",[\"填補該欄位的平均值(Mean)\",\"填補該欄位的眾數(Mode)\",\"填補該欄位的中位數(Median)\",\"將遺漏值直接填補為「0」\"],2]": {
+      "attempts": 3,
+      "correctAttempts": 2,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T05:49:03.303Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"No-code與Low-code\",\"歷屆考古題\",\"某中小企業行銷部門主管希望在不需高度依賴 IT 支援的情況下，快速建立一套能自動分析顧客問卷回饋並進行情緒分類的系統。他評估了 AutoML 平台與自行開發機器學習模型兩種方案。下列何者最能說明 AutoML 在此情境下的核心優勢？\",[\"AutoML 仍需使用者熟悉 Python 與深度學習框架，否則無法進行模型訓練\",\"AutoML 可自動完成模型選擇、特徵處理與訓練流程，使非技術背景人員也能快速建立並上線模型\",\"AutoML 僅適用於文字情緒分析，若應用於其他預測任務需重新開發系統\",\"AutoML 產出的模型無法直接應用於實務場景，仍需完全重寫程式才能使用\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-22T06:54:07.909Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某集團為響應淨零排放政策，計劃引進智慧節能系統，利用歷史氣象觀測資料（如溫度、濕度）與大樓進出人數，來預測總部大樓明日的總用電量(kWh)，以利最佳化空調冰水主機的運轉排程。請問下列哪一組「任務類型／演算法／評估指標」的組合最適合此應用需求？\",[\"迴歸(Regression)／極限梯度提升迴歸(XGBoost Regressor)／平均絕對百分比誤差(MAPE)\",\"分類(Classification)／決策樹(Decision Tree)／F1 分數(F1-Score)\",\"分群(Clustering)／K-Means／準確率(Accuracy)\",\"迴歸(Regression)／孤立森林(Isolation Forest)／召回率(Recall)\"],0]": {
+      "attempts": 3,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T08:10:49.275Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"生成式AI應用與工具\",\"歷屆考古題\",\"所有在 Gemini 應用程式透過 Veo 生成的影片，皆採用何種技術措施來協助企業用戶應對 AI 生成內容可能帶來的不實資訊風險？\",[\"嚴格限制所有用戶每日的影片生成次數與使用時間\",\"在所有生成影片的開頭與結尾處強制加入明顯的 AI 標示警語\",\"要求所有影片輸出時必須附帶至少 10 秒的免責聲明片段\",\"使用 SynthID 技術在每一幀(frame)影片中嵌入不可見的數位浮水印\"],3]": {
+      "attempts": 2,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:08:49.312Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"貝氏分類器(Naive Bayes Classifier)常被應用於文字分類、垃圾郵件過濾等場景。依據模型特性，它最適合歸類於下列哪一類？\",[\"透過直接學習輸入特徵與目標標籤之間的邊界或關係來進行分類的模型\",\"透過建構資料的整體分布，並利用條件關係進行推斷和分類的模型\",\"側重探索資料中樣本間的相似性，將資料自動分成不同群組的模型\",\"透過試錯學習，根據行動結果的獎勵或懲罰來優化決策策略的模型\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T05:45:54.782Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"科目1：人工智慧基礎概論\",\"學習指引\",\"下列何者屬於生成式 AI 使用之模型？\",[\"支援向量機(SVM)\",\"邏輯迴歸(Logistic Regression)\",\"生成對抗網路(GAN)\",\"隨機森林(Random Forest)\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T05:48:38.617Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某醫院利用AI模型進行癌症篩檢，目前模型的精確率(Precision)為 96%，召回率(Recall)為 71%。醫師評估後認為，希望能讓更多真正罹癌的病患在初步篩檢時被及早發現，即使因此增加部分後續複檢人數也可以接受。分析師應優先採取何種策略？\",[\"調高判定癌症的門檻值，以提高精確率(Precision)，但召回率(Recall)可能會下降\",\"調低判定癌症的門檻值，以提高召回率(Recall)，但精確率(Precision)可能會下降\",\"調整模型參數，使精確率(Precision)與召回率(Recall)同步提升，而不需調整判定門檻\",\"保持目前判定門檻，以維持較高的精確率(Precision)，避免增加過多後續複檢\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T05:54:51.884Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"關於變分自編碼器(Variational Autoencoder, VAE)的運作流程，下列何者敘述最為正確？\",[\"解碼器的任務是將低維壓縮向量分類為不同類別\",\"編碼器將輸入資料轉換為可視化圖像以利模型學習\",\"編碼器將資料轉換為潛在空間表示，解碼器再重建資料\",\"編碼器利用最大邊際機率對資料進行異常點偵測\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T05:58:16.295Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"某團隊訓練影像分類模型，發現模型在訓練資料上的準確率達 98%，但在測試資料上僅有 72%。若團隊希望提升模型對新資料的適應能力，並增加訓練資料的多樣性，下列何者最適合？\",[\"增加模型的深度與參數量，使模型學習更多細節\",\"對訓練影像進行旋轉、翻轉等隨機變化\",\"提高訓練速度，使模型更快完成學習\",\"僅保留模型表現較好的訓練資料\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T06:19:06.288Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"科目1：人工智慧基礎概論\",\"學習指引\",\"下列何者最適合訓練電腦下圍棋、自動駕駛等動態重複地互動的問題？\",[\"監督式學習(Supervised Learning)\",\"非監督式學習(Unsupervised Learning)\",\"半監督式學習(Semi-supervised Learning)\",\"強化學習(Reinforcement Learning)\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T06:19:12.213Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"風險控管模型發現樣本間存在明顯時間序列相關性，導致偵測新交易時誤判率升高。若要同時改善詐騙比例推估準確性並提升穩健性，下列哪一種做法最為合適？\",[\"擴充樣本量但維持既有隨機抽樣方式不變\",\"採時間序列敏感的抽樣策略，如依交易時間區間分層，以保存時間結構\",\"將資料完全隨機打散，以降低序列相關性對訓練的影響\",\"評估時對相鄰時間區段合併誤差，以整體估計修正詐騙比例\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T06:29:25.043Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"在訓練神經網路時，為提升收斂速度與穩定性、避免梯度消失或爆炸，下列哪一種做法最常被使用？\",[\"對輸入資料隨機旋轉或水平翻轉，以增加資料多樣性\",\"選用 ReLU 或其變體作為隱藏層的啟動函數，以改善梯度傳播\",\"減少樣本量提升訓練速度\",\"對目標變數或特徵進行標準化\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T06:52:43.229Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"科目1：人工智慧基礎概論\",\"學習指引\",\"在品質管理中，若一產品的生產過程中標準差顯著偏大，通常意味著什麼？\",[\"資料點高度集中，產品質量穩定\",\"生產過程波動大，產品品質不穩定\",\"資料無法反映產品實際狀況\",\"中位數數值高，品質良率較高\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T06:52:58.281Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"下列哪一種特徵工程技巧，最適合將「星期幾」和「24 小時制時間」這兩個欄位結合，以預測通勤時間？\",[\"One-hot 編碼(One-hot encoding)\",\"正規化(Normalization)\",\"特徵交叉(Feature Cross)\",\"寬深模型(Wide and Deep)\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T06:53:11.726Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"在 Lasso 模型中，L1 正則化(Regularization)導致參數收斂為零的原因為何？\",[\"L1 正則化忽略目標變數\",\"L1 對梯度有平滑作用\",\"L1 對大係數懲罰較強，促使稀疏解\",\"L1 會轉換損失函數為非凸形\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T06:53:18.805Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"下列哪一項應用情境與機器學習類型搭配正確？\",[\"少部分影像有專家標註、其餘未標註，結合兩者建模 — 監督式學習\",\"自駕模擬中以「是否安全通過路口」的獎懲訊號調整策略 — 非監督式學習\",\"用已知「顧客是否流失」標籤訓練模型預測新顧客流失 — 強化式學習\",\"輸入歷史股價、無標籤地將走勢分成上升/盤整/下降群組 — 非監督式學習\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T06:53:53.201Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"人工智慧概念\",\"歷屆考古題\",\"根據《金融機構運用人工智慧技術作業規範》，金融機構須建立內部治理架構，並指定專責單位或人員負責推動及管理人工智慧事務，下列何者並非規範所明訂須落實的治理措施？\",[\"辦理人工智慧人才培育\",\"清楚了解生成式 AI 技術之運作模式\",\"每日公布人工智慧系統運作狀況\",\"指派高階主管或委員會進行監督管理\"],2]": {
+      "attempts": 2,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:07:13.079Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某銀行使用 LIME(Local Interpretable Model-agnostic Explanations)來解釋其信貸審核模型的決策結果。分析師在閱讀解釋報告時，看到系統建立了一個簡化模型來近似原模型在該筆資料附近的行為。下列何者最能說明 LIME 中代理模型(Surrogate model)的意義？\",[\"一個全局解釋所有預測的線性代理模型\",\"用於產生擾動資料的資料生成機制\",\"一種獨立訓練的生成式模型，用於輔助預測\",\"用於擬合原黑箱模型在目標實例附近的預測行為\"],3]": {
+      "attempts": 2,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T08:05:15.134Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"科目1：人工智慧基礎概論\",\"學習指引\",\"關於鑑別式 AI，下列敘述何者較為正確？\",[\"學習數據的聯合概率 P(x,y)\",\"專注於數據的分類或迴歸任務\",\"主要用於生成新數據\",\"適合處理無標記數據\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T07:06:05.543Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某企業於不同業務場景導入 AI 應用。下列關於其應用情境與機器學習類型的敘述，何者正確？\",[\"客服對話分析中，同時使用少量標註資料與大量未標註資料進行訓練，屬於監督式學習(Supervised Learning)\",\"商品分類系統依據顧客購買行為自動將商品分群，且未使用任何標註資料，屬於監督式學習(Supervised Learning)\",\"自動駕駛系統根據操作結果的回饋持續調整決策策略，屬於非監督式學習(Unsupervised Learning)\",\"使用者行為分析中，依據瀏覽與點擊模式將使用者分群，且未使用標註資料，屬於非監督式學習(Unsupervised Learning)\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T07:07:05.811Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"住院日數預測模型中，多數病人集中 3–7 天，少數重症明顯偏長。希望兼顧多數病人準確度又確保重症個案預測穩健，下列哪一種方法最符合此需求？\",[\"模型檢核時同時呈現平均絕對誤差(MAE)與重症子群的誤差指標\",\"僅針對一般病人樣本做交叉驗證，避免重症拉高誤差\",\"將所有住院日數標準化，以減少數值範圍差異\",\"只採用整體決定係數(R²)作為判斷依據\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T07:07:19.293Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"科目1：人工智慧基礎概論\",\"學習指引\",\"關於目前生成式 AI 的主要應用，不包括下列哪一項？\",[\"創建合成數據樣本\",\"模擬數據分佈\",\"分類醫學影像\",\"生成文本\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T07:07:34.491Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"關於深度學習(Deep Learning)，下列敘述何者最為正確？\",[\"深度學習模型通常需要人工設計特徵，以提升模型表現\",\"深度學習主要應用於資料壓縮與特徵轉換，較少用於預測任務\",\"深度學習透過多層神經網路，能自動從大量資料中學習抽象特徵\",\"深度學習模型通常不需要大量資料即可達到良好效果，適合資料量有限的情境\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T07:09:54.269Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"使用多種品種的貓影像訓練生成對抗網路(GAN)，希望生成多樣化的貓影像。然後，生成器(Generator)在訓練過程中逐漸只會反覆產生同一隻橘貓的影像，以騙過鑑別器(Discriminator)，導致生成結果缺乏多樣性。請問此現象稱為下列何者？\",[\"過擬合(Overfitting)\",\"模式崩潰(Mode Collapse)\",\"梯度爆炸(Exploding Gradient)\",\"梯度消失(Vanishing Gradient)\"],1]": {
+      "attempts": 2,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:07:25.094Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"某市政府環保局計畫建立空氣品質監測 AI 系統，需整合全市 5 萬個感測器的即時數據（每秒產生大量資料記錄），並持續接收氣象、交通與工廠排放等資料，且需即時處理持續產生的資料。就大數據特性分析，下列何者最能說明此專案面臨的主要挑戰組合？\",[\"Volume 與 Velocity，因為資料量龐大且持續高速產生\",\"Variety 與 Veracity，因為資料來源多元且需確保正確性\",\"Velocity 與 Value，因為需即時判斷資料是否具有分析價值\",\"Volume 與 Value，因為需從大量資料中篩選出有用資訊\"],0]": {
+      "attempts": 2,
+      "correctAttempts": 2,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T05:23:11.020Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某跨國企業計劃導入「多語言智慧客服系統」，希望系統既能精準捕捉各國語言的在地化文化與特性，又能共享核心的跨語言語意理解能力，以降低維護多套模型的營運成本。下列哪一種模型方案最適當？\",[\"採用具備跨語言參數共享機制的大型多語言模型，必要時搭配多專家混合(MoE)等架構提升不同語言的處理能力\",\"針對每一種目標語言，各自訓練與部署獨立的單語言模型\",\"採用標準、未經調整的通用輕量化模型，在不區分語言差異的情況下統一回應\",\"將所有非主要語言內容先翻譯成單一語言，再交由單語言模型處理，不保留原始語言資訊\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T07:12:44.585Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某製造業工廠規劃導入 AI 監控系統，持續分析設備感測數據（如溫度、震動與壓力）。系統需能在缺乏完整異常標註資料的情況下，辨識與一般運作型態顯著不同的狀態，並發出預警。在此需求下，下列何種技術較為適合？\",[\"使用支援向量機(Support Vector Machine, SVM)建立異常分類模型\",\"以決策樹(Decision Tree)學習異常類型的判斷規則\",\"採用變分自編碼器(Variational Autoencoder, VAE)學習正常資料分佈\",\"使用生成對抗網路(Generative Adversarial Network, GAN)直接預測異常標籤\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T07:14:53.727Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"某公司準備利用智慧電表資料建立AI模型分析用電趨勢。為了降低資料量，將原本每秒紀錄一次的資料改為每小時統計一次。這項調整最可能造成什麼影響？\",[\"因為資料維度大幅減少，AI模型的預測準確度一定會隨之提升\",\"保留了整體的用電趨勢，但可能失去短時間內設備啟動的用電變化資訊\",\"將連續的用電數值轉換成每小時統計後，資料型態會自動轉變為類別資料\",\"由於重新彙整資料，容易造成資料外洩(Data Leakage)，使模型評估結果偏高\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T07:26:16.480Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"某零售業者建立顧客行為預測模型，資料集中包含「年消費金額」、「平均單筆交易金額」及「會員年資」等數值型特徵。資料分析顯示，部分金額特徵呈現高度偏態分布，少數樣本的數值顯著高於多數觀測值。為降低極端值對模型學習穩定性的影響，下列哪一種特徵工程方法最適合？\",[\"對數轉換(Log Transformation)\",\"區間化(Binning)\",\"One-hot 編碼(One-hot Encoding)\",\"隨機重抽樣(Random Resampling)\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T07:28:51.953Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某企業導入大型語言模型作為客服助理。模型已具備穩定語言能力，但在回覆偏好一致性與組織規範遵循方面仍需優化，團隊因此規劃導入人類反饋強化學習(RLHF)流程，下列何者最不屬於 RLHF 階段的典型技術活動？\",[\"透過人工評估方式建立偏好資料，使模型的不同候選輸出可反映人類主觀品質差異\",\"訓練一個能依據人類偏好判斷輸出品質的模型，作為模型優化過程中的回饋依據\",\"依據品質評估結果，調整模型生成策略，使其輸出更符合偏好導向的行為表現\",\"以未標註語料為主進行長週期表示學習訓練，以提升模型基礎語言建模能力\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T08:00:13.252Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某金融機構計劃開發一套智慧理賠防詐欺與自動化審查系統。該系統的運作流程為：先由模型A分析客戶上傳的診斷書與收據影像，評估並輸出該案件屬於「正常理賠」或「疑似詐欺（高風險）」的機率值；確認為正常案件後，再由模型B根據診斷書內容進行上下文語意推理，自動撰寫客製化的理賠通知信函與案件摘要報告。下列關於兩個模型的敘述，何者最正確？\",[\"模型A負責判斷案件風險，屬於鑑別式AI；模型B負責產生通知信與摘要內容，屬於生成式AI\",\"模型A會產生風險分數，因此屬於生成式AI；模型B負責解讀與鑑定內容，因此屬於鑑別式AI\",\"兩個模型皆採用深度學習技術，因此皆屬於生成式AI\",\"兩個模型皆以分析資料內容為主，因此皆屬於鑑別式AI\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T08:04:38.772Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某法律科技公司開發一套合約風險審查系統，可自動分析合約內容並標示潛在的高風險條款。律師在使用過程中，希望了解模型做出風險判斷的依據，因此系統導入顯著性圖(Saliency Map)作為可解釋 AI 的方法。請問在此自然語言處理(Natural Language Processing, NLP)應用情境中，顯著性圖主要用來標示什麼？\",[\"合約中各段落之間的語意相似程度，協助辨識重複或可能矛盾的條款\",\"模型在進行預測時，輸入文字中對結果影響程度較高的文字片段\",\"不同版本合約之間的文字差異，用以標示新增或修改的條款位置\",\"模型在訓練資料中學習到的高頻詞彙，反映常見的風險相關用語\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T08:15:47.969Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"科目1：人工智慧基礎概論\",\"學習指引\",\"一組數據中，如果平均數小於中位數，那麼這組數據的分布可能是下列哪一種？\",[\"對稱分布\",\"正偏態分布\",\"負偏態分布\",\"無法判斷\"],2]": {
+      "attempts": 2,
+      "correctAttempts": 2,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T05:20:53.092Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"在保持 GPT-OSS 模型架構不變的前提下，若將參數量從 20 億提升至 120 億，且假設有足夠訓練資料，下列敘述何者最正確？\",[\"參數增加會線性提升效能，即使訓練資料不變也不會遇到瓶頸\",\"參數越多推理越快，因為每層可並行計算更多參數\",\"較大的參數量能提升表達能力與預測效能，但需足夠訓練資料支持\",\"增加參數量不影響記憶體使用，只會影響計算速度\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T08:16:11.523Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"下列哪一項是可解釋人工智慧(XAI)領域，LIME(Local Interpretable Model-agnostic Explanations)最可能被用於的情境？\",[\"分析即時通訊系統中訊息傳輸效率的瓶頸\",\"建立機制以強化系統中的資料安全與隱私保護\",\"當某筆貸款申請被模型拒絕時，分析該筆資料中各項因素與結果之間的關聯\",\"監控並優化推薦系統的回應速度與系統效能，以提升整體使用體驗\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T09:31:29.873Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"電商團隊取得使用者點擊、購買紀錄、流量來源與轉換率，希望先進行探索性資料分析(EDA)，下列哪一項最符合 EDA 的做法？\",[\"建立隨機森林模型，預測使用者是否會完成購買\",\"用 K-means 分群後立即制定對應促銷策略\",\"繪製各類流量來源對轉換率的關聯圖，尋找潛在關係\",\"對不同購物路徑設定統計假設並進行雙樣本 t 檢定\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T09:35:46.703Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某物流公司想導入 AI 以提升營運效率，評估不同資料型態與模型架構。下列哪一種應用情境最適合採用卷積神經網路(Convolutional Neural Network, CNN)作為主要模型架構？\",[\"依據包裹每日掃描紀錄的時間序列，預測下週各倉庫的進貨量波動\",\"根據客服對話逐句內容的先後順序，判斷客訴是否可能升級為申訴案件\",\"根據倉庫監視器影像，自動辨識貨架是否缺貨並標示缺貨區域位置\",\"依據車隊 GPS 路徑點的連續軌跡，預測下一段可能行駛路線\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T09:39:52.691Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"科目1：人工智慧基礎概論\",\"學習指引\",\"以下哪一種情況最適合用眾數來描述資料的集中趨勢？\",[\"一組學生身高資料，呈現出常態分布\",\"一組產品銷售量資料，其中一種產品的銷量遠高於其他產品\",\"一組考試成績資料，大部分學生的分數集中在 80 分左右\",\"一組房屋價格資料，其中包含少數豪宅的極端高價\"],1]": {
+      "attempts": 2,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T05:49:28.999Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"在資料處理中，下列何者屬於「結構化數據」的例子？\",[\"儲存在 MySQL 資料庫中的訂單記錄\",\"以 JSON 格式儲存的商品訂單資訊\",\"用 XML 標註的產品目錄\",\"儲存在純文字檔案中的客服對話紀錄\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T09:42:38.527Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某連鎖量販店計劃導入AI銷量預測系統，以優化每日進貨與庫存管理。團隊比較兩家軟體廠商提供的迴歸模型，兩個模型皆以相同的測試資料集進行評估，其中廠商甲模型的均方誤差(Mean Squared Error, MSE)為 12.5，廠商乙模型的均方誤差(MSE)為 42.0。僅依據MSE指標的數值與定義來評估模型表現，下列何者最適合作為模型評估結果的說明？\",[\"應優先選擇廠商甲的模型，因為其MSE較低，代表模型預測值與實際銷量的整體誤差較小\",\"應優先選擇廠商乙的模型，因為MSE較高，代表模型能涵蓋更多不同的銷售情境，因此預測能力較佳\",\"兩個模型無法直接比較，因為MSE主要反映平均預測誤差，無法用來評估不同模型的預測表現\",\"由於兩者的MSE皆大於 0，代表模型皆存在過擬合(Overfitting)現象，無法判定哪一個模型較佳\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-28T09:50:35.090Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"科目1：人工智慧基礎概論\",\"學習指引\",\"關於 K 平均法(K-means)，下列敘述何者「不」正確？\",[\"希望找出 k 個互不交集的群集\",\"不同的起始群集中心，可能會造成不同的分群結果\",\"容易受雜訊與離群值(Outlier)影響其群集中心\",\"可以處理類別型資料\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T09:54:54.969Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"在金融業導入 AI 模型與可解釋性技術時，反事實解釋(Counterfactual Explanation)最符合下列哪一種應用？\",[\"分析整體客戶群的信用風險分布，以預測未來違約率趨勢\",\"回溯歷史呆帳案例，辨識造成違約的主要影響因素\",\"分析在模型不變的前提下，客戶申請資料變動對授信決策結果的影響\",\"依據客戶輪廓與行為資料，推薦最適合的金融商品以提升交叉銷售\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T09:56:24.448Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某 AI 團隊正在訓練一個深度神經網路，用於辨識工廠產線上的瑕疵零件。工程師發現訓練過程中損失函數震盪幅度大，且不同批次資料造成模型學習方向不穩定。為改善此問題，團隊在各隱藏層加入 Batch Normalization 機制。請問此調整在訓練階段最主要的作用為何？\",[\"將輸入影像標準化，使不同類別的特徵分布更加一致\",\"自動調整模型權重初始化方式，以避免訓練初期震盪\",\"增加模型隱藏層的非線性能力，以提升分類精度上限\",\"降低不同批次輸入造成的內部特徵分布變動，使梯度更新更穩定\"],3]": {
+      "attempts": 2,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:06:15.973Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某醫院依患者年齡、血壓與 BMI 預測罹患糖尿病的機率(0~1)，並依是否超過 0.5 做風險警示。下列哪一種模型最適合此分類任務？\",[\"邏輯迴歸(Logistic Regression)\",\"支援向量機(Support Vector Machine)\",\"決策樹(Decision Tree)\",\"K 平均演算法(K-means)\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T10:00:05.790Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"小明剛加入一間電商公司擔任 AI 專案的業務窗口，在與技術團隊的交接會議中，工程師說明模型訓練時，會持續比對預測值與實際值之間的差距，並透過一套機制逐步調整模型內部參數，直到預測結果趨於穩定為止。請問工程師敘述的是深度學習中哪個元件的功能？\",[\"優化器(Optimizer)\",\"資料前處理模組\",\"模型架構\",\"激活函數(Activation Function)\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-28T10:03:55.239Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"關於監督式學習與非監督式學習的目標，下列敘述何者錯誤？(1)非監督式核心在發掘資料內在結構，如分群、關聯規則與降維，不依賴外部標籤。(2)監督式典型應用為分類與迴歸，通常不適合應用於異常偵測。(3)非監督式若搭配少量標註資料，即會完全轉化為監督式。(4)監督式仰賴已標註資料，透過最小化輸出與真實標籤差距學習對應函數。(5)所有監督式任務都必須要有大量完整標註資料，否則無法進行任何有效訓練。(6)非監督式不需目標變數，僅透過輸入資料本身的特徵分布進行模式學習。\",[\"3、5、6\",\"1、4、6\",\"2、4、6\",\"2、3、5\"],3]": {
+      "attempts": 2,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:04:10.748Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"科目1：人工智慧基礎概論\",\"學習指引\",\"機器學習模型過擬合的主要原因是什麼？\",[\"模型的複雜度不足\",\"訓練數據樣本過多\",\"模型過度學習數據中的雜訊\",\"使用過於簡單的損失函數\"],2]": {
+      "attempts": 2,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T08:08:23.802Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某房仲業者委託 AI 團隊開發一套房價預測系統，希望根據物件坪數、屋齡、樓層與地段等條件，自動估算每間房屋的成交價格，供業務人員作為議價參考依據。下列哪一種指標最適合在系統上線前評估模型的預測準確程度？\",[\"均方誤差(MSE)\",\"精確率(Precision)\",\"F1 分數(F1 Score)\",\"召回率(Recall)\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T05:20:41.841Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某團隊想用循環神經網路(RNN)建構長期氣候數據的預測模型，以下哪一項最符合使用 RNN 可能遇到的挑戰？\",[\"RNN 無法處理可變長度的序列輸入，實務限制極大\",\"RNN 在長序列訓練中可能出現梯度消失，影響模型效果\",\"RNN 無法捕捉時間上的依賴關係，因此預測準確度低\",\"RNN 只能用於分類任務，不能應用於時間序列預測\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T05:21:13.269Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"智慧投資系統依市場變化自動決定買進/持有/賣出，並依每次交易盈虧逐步優化策略，不依賴事先標記資料，而是依歷次行動的獎勵調整。最可能採用哪種學習方法？\",[\"強化式學習(Reinforcement Learning)\",\"監督式學習(Supervised Learning)\",\"非監督式學習(Unsupervised Learning)\",\"遷移學習(Transfer Learning)\"],0]": {
+      "attempts": 2,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T08:07:48.545Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某銀行的信用評分模型須向主管機關說明各項資料對評分結果的影響力。分析師採用排列特徵重要性(Permutation Feature Importance)方法，逐一打亂單一特徵的數值後重新測試模型表現。下列敘述何者最符合此方法判斷特徵重要性的原則？\",[\"必須先計算該特徵與信用評分結果的線性相關係數，數值越高代表越重要\",\"打亂後模型的預測誤差完全不變，代表該特徵對模型越重要\",\"打亂某特徵的數值後，若模型預測誤差增加越多，代表該特徵對模型越重要\",\"特徵打亂順序後，必須將模型搭配新資料重新訓練，才能判斷其重要性\"],2]": {
+      "attempts": 2,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:01:39.018Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"科目1：人工智慧基礎概論\",\"學習指引\",\"關於 AI，下列敘述何者較為正確？\",[\"AI 僅限於深度學習技術\",\"AI 包括各種技術，例如機器學習、專家系統等\",\"AI 系統只能在學術研究中應用\",\"AI 無法應用於金融領域\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T05:25:38.226Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"人工智慧概念\",\"歷屆考古題\",\"某金融科技公司的交易系統，在毫秒等級的時間內持續掃描跨市場價格差異、分析大量即時報價，並自動執行交易指令。系統架構師在技術選用評估時，需確認該系統於即時交易決策中最核心依賴的 AI 能力。下列何者最能正確說明其核心 AI 能力？\",[\"透過自然語言處理技術分析財經新聞語意，作為輔助性市場情緒指標\",\"快速分析龐大市場數據並在極短時間內識別交易機會，驅動自動化交易決策\",\"運用生成對抗網路模擬極端市場情境，預先產出各類黑天鵝事件的應對策略\",\"透過推薦系統技術，根據投資人歷史交易行為推薦最適合的投資組合標的\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T05:43:54.437Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"工業物聯網的設備預測性維護中，若異常事件頻率極低、樣本高度不平衡，下列哪一種方法最能兼顧模型穩定性與異常偵測效能？\",[\"將異常資料複製多次提升敏感度，搭配全序列訓練模型（如 LSTM）\",\"對時間序列差分與標準化後，用傳統監督式模型（如 SVM）分類\",\"用時間序列特化的 SMOTE 生成異常樣本以平衡比例\",\"採用基於重建誤差的自編碼器(Seq2Seq Autoencoder)做異常偵測，僅用正常資料訓練\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T05:45:14.731Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"人工智慧概念\",\"歷屆考古題\",\"某銀行導入AI信用貸款評分系統上線半年後，風險稽核部門發現，即使模型訓練資料中已不包含「職業別」欄位，仍可能透過「居住地區」與「消費類別」等高度相關特徵，對特定職業族群產生不合理差異待遇。依據AI治理精神，銀行應優先採取下列何種行動？\",[\"增設人工複核關卡，由授信人員針對系統所有的核貸結果重新逐案審查\",\"提高「居住地區」與「消費類別」兩項特徵的資料準確度，以強化該模型整體的預測效度\",\"引入公平性評估指標，檢視間接關聯特徵是否造成偏誤並對模型進行調整優化\",\"於核貸結果中另行加註該職業別標籤，以作為日後申請人提出申訴時的佐證依據\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T05:45:42.368Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某企業建置長時間對話的客服機器人，發現當對話回合數持續增加、上下文變得很長時，即使對話內容仍未超過模型可支援的上下文長度上限，模型仍常「忘記」或答錯先前提及的內容，回覆準確度明顯下降。下列關於此現象的敘述，何者最正確？\",[\"上下文越長，模型擷取與利用關鍵資訊的能力可能下降，因此容易忽略先前的核心內容\",\"上下文越長，模型會自動建立索引並優先檢索較早的對話內容，因而無法引用先前資訊\",\"上下文越長，模型在推論時會逐漸改變其原有的模型參數設定，因而導致記憶混亂\",\"只要對話內容未超過模型可支援的上下文長度，就不會出現遺漏先前資訊的情形\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T05:46:21.717Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"資料科學團隊在模型訓練前，需對數值特徵進行正規化(Normalization)或標準化(Standardization)。為確保模型評估結果具真實性並避免資料洩漏(Data Leakage)，下列何者為最適當的作法？\",[\"於資料分割前，先對完整資料集計算統計量並進行標準化處理\",\"先分割訓練資料(Training Data)和測試資料(Test Data)，並各自獨立計算統計量後進行標準化\",\"先分割訓練資料(Training Data)和測試資料(Test Data)，僅以訓練資料計算統計量，再套用至測試資料\",\"僅對訓練資料(Training Data)進行標準化處理，測試資料(Test Data)保持原始數值\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T05:47:00.266Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"某資料科學家利用房屋資料建立AI房價預測模型，資料中包含許多彼此高度相關的數值特徵（例如房屋總坪數、客廳坪數等）。為了降低資料維度並減少特徵間的重複資訊，最適合採用下列何種技術？\",[\"類別編碼(Categorical Encoding)\",\"主成分分析(PCA)降維\",\"特徵標準化(Standardization)\",\"異常值(Outlier)處理\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T05:47:41.503Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某智慧交通系統在城市主要路口安裝監視攝影機，需即時識別畫面中的汽車、機車、公車等不同車輛類型，並統計各路口的車輛流量以支援號誌控制優化。下列哪一種神經網路架構最適合處理此類影像中的物件類型識別任務？\",[\"循環神經網路(RNN)，適合處理序列資料\",\"卷積神經網路(CNN)，適合處理影像資料\",\"長短期記憶網路(LSTM)，適合處理長期依賴\",\"多層感知機(MLP)，將輸入資料轉換為數值後進行分類\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T05:48:12.383Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"科目1：人工智慧基礎概論\",\"學習指引\",\"下列哪種方法能解決生成式模型的訓練不穩定性問題？\",[\"使用更大的數據集\",\"採用 Waserstein GAN(WGAN)\",\"提高硬體效能\",\"增加模型層數\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T05:48:23.713Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某法律事務所導入生成式AI協助律師查詢法規與合約內容。系統需要根據使用者提問，即時查詢時常動態更新的外部法規資料及數百頁合約中的相關條文。為了避免每次提問都將數百頁文件全部輸入模型而導致極高的Token運算成本與回應延遲，下列何種架構最適合此需求？\",[\"將整份文件反覆摘要壓縮，再以摘要內容作為模型回答問題的依據\",\"依文件章節建立固定摘要，每次查詢皆由模型搜尋摘要內容回答問題\",\"每次新增法規或更新合約內容時，重新微調(Fine-tuning)地端模型，使模型學習最新內容\",\"採用檢索增強生成(RAG)架構，將完整文件向量化存於外部資料庫，依查詢內容即時檢索相關片段供模型參考\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T05:52:40.632Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"某電商平台計劃開發一個機器學習模型，目標是在每個月底自動預測哪些現有會員在下個月可能會流失（不再消費），以便行銷團隊提前發送優惠券進行挽留。若要提升模型預測會員流失的效果，在進行特徵工程(Feature Engineering)時，下列哪一項作法最適合？\",[\"為了提高預測的準確度，特徵與要預測的目標值（是否流失）之間，在統計上不需要具備任何關聯性或因果關係\",\"可以將「會員下個月是否仍有消費紀錄」加入模型特徵，因為該資訊與會員是否流失具有高度關聯性\",\"為了縮短模型推理(Inference)的反應時間，特徵所涵蓋的時間範圍越短越好，建議一律只保留前一天的單日行為資料\",\"所選取的特徵，必須是在每個月底模型進行預測的當下，系統就能實際取得且掌握的已知資料\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T06:03:21.539Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"為了更客觀地評估AI模型的效能，資料科學家將資料集分成 5 等份，輪流以其中1 等份作為測試資料，其餘 4 等份作為訓練資料，重複進行 5 次訓練與評估，最後將各次評估結果取平均。上述方法稱為下列何者？\",[\"隨機森林(Random Forest)\",\"保留法(Hold-out Validation)\",\"交叉驗證(Cross-Validation)\",\"自助抽樣(Bootstrapping)\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T06:05:13.733Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"生成式AI應用與工具\",\"歷屆考古題\",\"某保險公司欲建置AI代理(AI Agent)系統，協助理賠人員處理保單查詢及理賠文件核對等作業。技術團隊規劃導入模型內容協定(Model Context Protocol, MCP)，讓AI Agent能以統一介面存取保單資料庫及文件管理系統；並建立可重複調用的Skill（AI能力模組），將理賠文件核對等需要AI語意理解與專業判斷的工作封裝成可重複使用的能力。下列敘述何者正確？\",[\"MCP與Skill功能相同，皆負責建立AI與外部系統間的資料傳輸，因此可互相取代\",\"MCP負責提供AI代理統一存取外部工具與資料來源；Skill則封裝需要AI語意理解與專業判斷的可重複使用能力\",\"Skill僅能封裝固定規則的程式流程，不適合處理需要AI推理或語意理解的工作\",\"MCP與Skill每次執行皆必須重新訓練模型，才能完成外部工具存取與任務執行\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T06:06:02.936Z"
+    },
+    "[\"初級\",\"科目2：生成式AI應用與規劃\",\"No-code與Low-code\",\"歷屆考古題\",\"某精密機械製造廠計劃開發一套智慧生產排程系統，希望採用Low-Code平台縮短開發時程。然而，系統核心需實作企業多年累積的專屬排程演算法，且演算法需依不同生產條件進行大量客製化調整。若僅考量Low-Code平台原生能力，下列何者最可能成為開發上的限制？\",[\"平台通常不支援與既有ERP或MES系統整合，因此需重新建置所有資料\",\"平台主要提供通用元件與流程設計能力，若涉及高度複雜且企業專屬的演算法，通常仍需自行撰寫程式碼客製化或搭配傳統程式開發\",\"平台無法依據企業識別需求調整介面版面配置，且不支援甘特圖(Gantt Chart)或儀表板等圖表呈現\",\"平台開發完成的應用程式僅支援單一使用者操作，無法提供多部門協同作業與動態權限控管機制\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T06:07:18.919Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某軟體公司計劃開發一款手機App，需要在沒有網路的環境下，也能在手機本機端（邊緣裝置）執行微型大語言模型來提供即時語音翻譯服務。考量到行動裝置的記憶體(RAM)容量限制以及電池續航力，工程師建議在部署前先對模型進行模型量化(Quantization)處理。請問關於此作法所帶來的預期效益與影響，下列敘述何者最正確？\",[\"經過量化處理後的模型，在執行時必須即時連回雲端伺服器進行校正，否則手機端將無法獨立運作\",\"能在完全不影響模型原本輸出品質的前提下壓縮模型體積，並降低記憶體需求\",\"模型量化後會自動在邊緣裝置上動態增加參數數量，藉此彌補因為精度降低所帶來的能力損失\",\"能大幅減少模型檔案體積與記憶體佔用量，並加速本機推論回應，但模型輸出品質可能會受到輕微影響\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T06:08:18.086Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某製造工廠計劃導入AI預測產線設備的故障風險。維護團隊整理了過去五年的設備運作資料，並由資深工程師逐一完成人工標註，將每筆資料標示為「正常運作」或「發生故障」。若要利用這批已完成標註的歷史資料訓練分類模型，下列哪一種機器學習方法最適合？\",[\"監督式學習(Supervised Learning)\",\"非監督式學習(Unsupervised Learning)\",\"強化學習(Reinforcement Learning)\",\"半監督式學習(Semi-supervised Learning)\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T06:09:18.090Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某手機應用程式提供「舊照片修復」功能，使用者上傳模糊照片後即可產生清晰版本。其模型訓練流程為：先將清晰影像逐步加入隨機雜訊，直到完全變成雜訊影像，再訓練模型學習如何逐步去除雜訊，以還原出清晰影像。請問此功能最主要採用下列哪一種生成式AI模型架構？\",[\"生成對抗網路(GAN)\",\"卷積神經網路(CNN)\",\"變分自編碼器(VAE)\",\"擴散模型(Diffusion Model)\"],3]": {
+      "attempts": 2,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:06:01.917Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某農業合作社欲根據歷年各田區的日照時數、降雨量、施肥量及土壤酸鹼值等資料，搭配各田區當季實際收穫的稻米產量（公噸），建立模型，以預測下一季新田區的稻米產量（連續數值）。請問下列哪一組「學習類型／演算法／評估方式」的搭配最為合理？\",[\"監督式學習(Supervised Learning)／K-means／準確率(Accuracy)\",\"強化學習(Reinforcement Learning) ／ Q-learning ／ 累積報酬(CumulativeReward)\",\"監督式學習(Supervised Learning)／線性迴歸(Linear Regression)／平均絕對誤差(MAE)\",\"監督式學習(Supervised Learning)／ 支援向量機分類器(SVC)／ 混淆矩陣(Confusion Matrix)\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T06:56:18.000Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某金控公司計劃導入「美股即時分析AI助理」，該助理須同時滿足兩項需求：第一，回覆內容須遵循固定的合規格式與專業口吻；第二，能提供當日最新股價及財報等即時更新資訊。關於技術團隊對上述需求所提出的技術建議，下列何者最為正確？\",[\"對第二項需求，採用Fine-tuning比RAG更合適，因為可持續將最新資料微調至模型權重，以避免模型產生事實幻覺\",\"針對第一項需求，採用RAG比Fine-tuning更合適，因為RAG可將合規規範文件檢索後提供模型參考，使模型自然維持固定格式\",\"針對第二項需求，採用RAG較為合適，因為每日更新的股價與財報若持續透過Fine-tuning維護，難以兼顧時效性與維護成本\",\"針對第一項需求，採用Fine-tuning較為合適，因為微調能改變模型對特定知識的記憶，無法影響模型的輸出格式與口吻\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T06:57:35.612Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某交通局計劃預測未來 1 小時的路口車流量，以最佳化號誌時制配置。系統需要分析過去 24 小時的車流量資料。若模型設計著重於模擬「前一階段（如前 15 分鐘）的壅塞狀況會延續並影響下一階段」，下列哪一種深度學習架構最適合作為此預測模型的核心？\",[\"卷積神經網路(CNN)\",\"生成對抗網路(GAN)\",\"前饋神經網路(Feedforward)\",\"循環神經網路(RNN)\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T06:58:58.689Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某製造工廠導入人工智慧系統，持續蒐集設備的溫度、振動、電流及轉速等感測資料。當系統發現設備運轉狀態出現不尋常變化時，可立即通知維護人員，以降低非預期停機的風險。下列何者最符合上述系統功能？\",[\"根據設備歷史運轉與維修資料建立模型，預測設備未來一週發生故障的機率\",\"根據設備感測資料，自動判斷異常狀況屬於軸承磨損、馬達異常或冷卻系統異常等類別，以協助安排後續檢修作業\",\"依設備運轉特性將設備分為不同群組，作為安排保養週期的參考\",\"即時分析設備感測資料，偵測偏離正常運轉模式的異常訊號，並立即發出警示\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:00:54.320Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某市政府建置智慧城市巡檢系統，希望利用路面監視器影像，自動分析道路、人行道及綠地等公共設施的分布情形，並進一步統計各類設施受損區域所占面積，以作為維護決策的依據。系統需將影像中的每個像素標示其所屬類別。請問最適合採用下列哪一種電腦視覺技術？\",[\"影像分割(Image Segmentation)\",\"影像分類(Image Classification)\",\"物件偵測(Object Detection)\",\"人臉辨識(Face Recognition)\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T07:01:47.410Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某保險公司建置理賠風險預測模型，主管要求模型驗證流程需具備可重現性，以符合模型治理與稽核要求。若模型驗證採用包含隨機資料切分的k-fold交叉驗證，下列何者最能確保每次執行時樣本分割結果一致？\",[\"增加資料集的特徵數量，以提升模型預測能力\",\"固定隨機數種子(Random Seed)，使每次執行使用相同的亂數序列\",\"調整交叉驗證參數，將k值由 5 折提高至 10 折以增加模型評估的細緻度\",\"重複執行多次交叉驗證，並取其平均評估結果作為最終稽核依據\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T07:04:59.533Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"某零售電商平台計劃建置機器學習模型分析會員行為。在資料預處理階段，資料科學團隊發現會員的「年消費總額」與「月到訪次數」數值範圍差異較大，可能影響部分機器學習模型的訓練效果，因此決定採用Z-Score標準化(Standardization)進行特徵縮放。已知該平台全體會員的「年消費總額」平均值為 30,000 元，標準差為5,000 元。若某位VIP會員的年消費總額為 40,000 元，下列敘述何者正確？\",[\"經過Z-Score轉換後，該會員的年消費總額特徵值將被限制於 0 至 1 的範圍內，以利模型訓練\",\"計算後該會員的Z-Score值為 2，代表其消費金額高於平均值兩個標準差，可反映其消費金額相對於整體會員的高低程度\",\"不論原始消費資料的分布為何，只要經過Z-Score轉換，整組資料一定會轉換為標準常態分配\",\"即使完成Z-Score轉換，由於「月到訪次數」與「年消費總額」原始計量單位不同，兩項特徵仍不適合同時作為機器學習模型的輸入\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:05:49.370Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某證券公司開發AI輔助分析系統，需要分析長篇的法人說明會逐字稿。系統須有效建立逐字稿前後段落之間的長距離語意關聯，並在處理長篇文本時，能直接關聯相距較遠的文字內容，而無須依序傳遞前文資訊，以提升分析效率與準確性。下列哪一種模型架構最適合？\",[\"長短期記憶網路(LSTM)\",\"循環神經網路(RNN)\",\"Transformer\",\"卷積神經網路(CNN)\"],2]": {
+      "attempts": 3,
+      "correctAttempts": 2,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:06:23.635Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某銀行導入AI模型進行貸款核准判斷，主管要求必須具備可解釋人工智慧(XAI)機制，以便在客戶被拒貸時，能向審查人員說明該客戶被判定拒貸的主要原因。下列何者最符合LIME的運作方式，以用於提供單一客戶預測結果解釋？\",[\"找出與該客戶特徵相近的歷史案例，直接以相同案例的核准結果作為拒貸原因說明\",\"分析所有貸款案件的特徵重要性，建立整體模型的全局解釋，並套用至該客戶\",\"直接分析模型內部參數與運算流程，推導該客戶被拒貸的原因\",\"在該客戶資料附近建立模擬樣本，分析各項特徵對此次預測結果的影響程度\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:08:09.766Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"人工智慧概念\",\"歷屆考古題\",\"某壽險公司AI客服助理上線後進行測試。顧客與AI助理對話時，全程未察覺對方並非真人，回應自然且能適當安撫顧客情緒。然而，當顧客詢問「我同時符合兩項理賠條件，應優先申請哪一項？」時，AI助理前後提供不同建議；進一步詢問原因時，也無法說明判斷依據，只能持續提供語意通順但未能回答問題的內容。技術主管認為，既然AI已具備足以讓人誤認為真人的對話能力，就代表其判斷結果值得信賴。依據圖靈測試(Turing Test)的設計理念，下列何者最適合評估上述技術主管的觀點？\",[\"圖靈測試主要用於評估AI是否具有可解釋性，因此無法說明判斷依據即代表未通過圖靈測試\",\"圖靈測試通過後，即可合理推論AI在專業領域的判斷能力已達人類水準\",\"圖靈測試的目的在驗證AI是否能針對各類問題提供正確且一致的答案，因此回答內容是否正確是主要評估重點\",\"圖靈測試主要評估AI是否能展現近似人類的對話表現，並不能據此推論其具備可靠的專業判斷與決策能力\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:08:46.602Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"某公共衛生研究中心建置民眾健康資料分析平台，提供研究人員查詢各地區慢性病患者的統計資訊。為防範研究人員透過多次查詢不同條件的統計結果進行比對，而推論特定個人是否存在於資料庫中，平台在輸出統計結果時，會依據演算法加入適當的隨機雜訊(Random Noise)，使單一病患資料的新增或刪除，不會造成明顯改變統計查詢結果。下列何者最符合此系統採用的隱私保護技術？\",[\"k-匿名化(k-Anonymity)\",\"差分隱私(Differential Privacy)\",\"假名化(Pseudonymization)\",\"資料遮罩(Data Masking)\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:09:23.720Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某電商平台計劃針對既有會員進行精準行銷。行銷團隊收集了所有會員的平均消費金額、每月購物頻率及瀏覽商品類別次數等特徵資料，但並未預先設定客戶類型標籤。希望透過AI自動將特徵相似的會員分成數個群體，作為後續規劃客製化促銷方案的依據。下列哪一種機器學習方法最適合此需求？\",[\"採用監督式分類(Classification)，根據已標註的客戶類型建立分類模型\",\"採用迴歸分析(Regression)，預測每位會員下個月的消費金額\",\"採用叢集分析(Clustering)，依據會員特徵的相似性，自動將資料分成數個群體\",\"採用強化學習(Reinforcement Learning)，根據會員的即時回饋持續調整促銷策略\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:10:06.844Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"人工智慧概念\",\"歷屆考古題\",\"某物流公司希望導入人工智慧(AI)技術，目標是能依據即時交通路況、配送車輛位置及訂單需求，自動計算並決定最佳配送路線與車隊調度策略。下列何者最符合此智慧物流應用所採用的AI技術概念？\",[\"利用光學字元辨識(OCR)技術，在收到新增的訂單時，自動辨識並擷取紙本單據上的收件地址以完成系統建檔\",\"利用文字探勘(Text Mining)技術，分析配送車輛位置的GPS經緯度數字與即時交通路況的車速資料，據此規劃最佳配送路線\",\"運用生成式AI(Generative AI)技術，分析配送相關文件與服務紀錄，自動生成營運分析報告與改善建議\",\"利用機器學習與路徑優化演算法分析各項即時動態資料，由系統即時且持續優化行車路線與配送調度\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:11:01.843Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某半導體製造廠導入AI視覺檢測模型，用於自動判斷晶圓表面是否存在瑕疵。隨著模型正式上線運作，品質管理部門希望了解模型在大量檢測影像中的整體判斷規律，例如哪些影像特徵通常對瑕疵判定結果影響較大，以及模型整體傾向依據哪些特徵進行分類。上述需求屬於可解釋人工智慧(Explainable AI, XAI)中的何種解釋方式？\",[\"改善模型的泛化能力並降低過適配風險\",\"分析單一樣本的預測結果與決策過程\",\"闡述模型整體的決策機制與行為模式\",\"簡化模型架構以增強其透明度與理解性\"],2]": {
+      "attempts": 3,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:10:31.861Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"某健康管理AI系統透過智慧手環蒐集使用者的生理量測資料，資料以欄位標籤(Tag)記錄，例如「使用者ID：H123」、「量測項目：心率」、「量測數值：75」等。不同裝置可依功能需求上傳不同欄位（如：血氧濃度），因此各筆資料不一定具有完全相同的欄位結構。在資料格式與資料結構特徵的分類上，此類資料最屬於下列哪一種資料型態？\",[\"結構化資料(Structured Data)\",\"半結構化資料(Semi-structured Data)\",\"高頻資料(High-frequency Data)\",\"時序資料(Time Series Data)\"],1]": {
+      "attempts": 2,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:06:58.475Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"人工智慧概念\",\"歷屆考古題\",\"某科技新創公司欲開發一套人臉美化濾鏡應用程式，研發團隊自網路公開的社群媒體蒐集大量個人自拍照作為模型訓練資料。這些照片皆由使用者自行公開分享，未設定瀏覽權限限制。公司法務人員在進行專案合規性評估時，針對「將公開照片作為商業AI模型訓練資料」提出法律風險提醒。下列哪一項敘述最符合現行個人資料保護法及AI倫理的原則？\",[\"公開於網路的照片屬於可合法蒐集的公開資訊，因此企業可直接作為AI模型訓練資料，不需再考量原始蒐集目的\",\"當事人自行公開照片，不代表同意其影像可作為商業AI模型訓練資料，此利用行為可能涉及個人資料目的外利用的法律風險\",\"即使蒐集過程可能涉及法律風險，只要模型訓練完成後刪除原始照片，即可免除先前蒐集及處理可能產生的法律責任\",\"企業只要公開揭露AI模型的訓練目的，即可直接蒐集公開照片作為訓練資料，而無須再考量個資法相關規範\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:14:37.604Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某醫院導入AI輔助判讀胸部X光片，為了讓醫師了解模型依據影像哪些區域做出診斷，工程師規劃於判讀畫面中加入顯著性圖(Saliency Map)作為視覺化說明。關於此項規劃在實務應用上，下列敘述何者最正確？\",[\"顯著性圖可提升模型預測結果的可靠性，因此能有效降低AI模型誤判的機率\",\"顯著性圖所呈現的熱點區域，可直接作為病灶實際範圍與大小的判定依據，協助醫師進行病灶量測\",\"顯著性圖可呈現模型對預測結果具有較大影響的影像區域，協助醫師理解模型判斷依據並進行視覺化複核\",\"顯著性圖可自動標示病灶邊界，作為醫師進行病灶分割(Segmentation)與面積量測的依據\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:15:17.064Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"請問下列哪一項AI應用專案，最適合採用長短期記憶網路(LSTM)進行模型開發？\",[\"依據顧客本月的累積消費金額，將顧客自動分類為高、中、低三個行銷客群\",\"分析單一時間點的信用卡交易畫面截圖，判斷是否存在偽卡特徵\",\"比對顧客本次貸款申請書上的簽名影像，與五年前開戶時留存的簽名影像，判斷是否為同一人所簽署\",\"依據顧客過去 24 個月的每月信用卡消費金額資料，預測其下個月是否出現異常消費\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:18:52.790Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某製造業工廠導入AI模型預測設備故障風險，技術團隊向產線主管說明模型運作原理：模型在每一輪訓練中，會依據「預測故障機率」與「實際發生故障結果」之間的落差程度，產生一項量化指標，並將該數值提供給後續模型訓練流程，作為模型參數調整的重要依據。請問此敘述最符合深度學習訓練流程中哪個元件的功能？\",[\"評估指標(Evaluation Metric)\",\"損失函數(Loss Function)\",\"優化器(Optimizer)\",\"特徵工程(Feature Engineering)\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:20:31.036Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某食品加工廠建立水果瑕疵檢測系統，已蒐集約 10,000 張影像，其中 2,000 張已完成「正常」、「碰傷」及「病斑」標註，其餘 8,000 張尚未完成標註。公司希望在降低人工標註成本的前提下，提升影像分類模型的辨識能力。下列何種作法最適合？\",[\"引用已完成預訓練的通用影像分類模型，未經任何微調即直接用於水果瑕疵分類\",\"先利用已標註影像建立分類模型，再搭配未標註影像進一步改善模型表現\",\"將未標註影像進行分群，並直接將各群結果作為病害分類標籤\",\"將已標註與未標註影像一併納入監督式學習模型訓練，不另外處理未標註資料\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:21:11.257Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"人工智慧概念\",\"歷屆考古題\",\"某新創公司開發三款針對特定任務設計的AI產品，分別為：可自動生成社群貼文的「智慧行銷助理」、透過人臉辨識進行身分驗證的「辦公室門禁系統」，以及預測客戶流失風險的「資料分析模型」。上述產品依人工智慧的分類，皆屬於下列何者？\",[\"超級人工智慧(ASI)\",\"弱人工智慧(Weak AI)\",\"通用人工智慧(AGI)\",\"具身人工智慧(Embodied AI)\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:21:39.146Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某金控集團規劃導入下列四項AI應用。依據各項應用的主要功能特性，下列何者正確區分屬於「鑑別式AI」與「生成式AI」？甲、客服部門：為培訓新進客服人員，希望AI系統依據歷史客訴案例，自動產生不同客訴情境的對話劇本，供員工進行角色扮演演練。乙、法務部門：為加速合約審查流程，希望AI系統分析合約草稿，並標示屬於高風險或不符合公司規範的條款。丙、投顧部門：為提供投資建議，希望AI系統分析全球經濟指標與股市歷史資料，判斷下個月大盤指數可能上漲或下跌。丁、行銷部門：為提升廣告點閱率，希望AI系統依據產品說明，自動改寫出五種不同風格的全新宣傳文案。\",[\"鑑別式AI：乙、丙；生成式AI：甲、丁\",\"鑑別式AI：甲、丁；生成式AI：乙、丙\",\"鑑別式AI：乙、丁；生成式AI：甲、丙\",\"鑑別式AI：丙；生成式AI：甲、乙、丁\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:23:05.423Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某客服系統開發團隊希望聊天機器人的回覆風格更貼近人類偏好，因此在模型訓練後期導入人類回饋強化學習(Reinforcement Learning from Human Feedback, RLHF)技術。關於RLHF核心作法，下列敘述何者最正確？\",[\"蒐集人類對不同模型回覆的偏好評比，建立獎勵模型作為模型優化的依據\",\"蒐集更大量的公開網路文字重新進行預訓練，以提升模型回答的專業度\",\"調整系統提示(System Prompt)，引導模型採用指定的回覆風格\",\"蒐集高品質問答範例，直接進行監督式微調(Supervised Fine-Tuning, SFT)\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:24:45.122Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某製造企業欲建置AI品質檢測系統，利用生產線攝影機即時判斷零件表面是否存在細微刮痕。下列何種技術最適合用於此類應用？\",[\"強化學習(Reinforcement Learning)，透過獎勵機制改善影像辨識結果\",\"決策樹(Decision Tree)，透過人工設定規則判斷影像像素差異\",\"分群演算法(Clustering Algorithm)，依資料距離將影像自動分類\",\"卷積神經網路(CNN)，透過學習影像中的局部特徵進行缺陷辨識\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:26:12.627Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某電商平台希望利用AI分析消費者行為。團隊取得過去會員交易資料，其中部分資料已標註「是否流失會員」，另一部分資料僅包含會員瀏覽、購買及搜尋紀錄，但未標註任何結果。下列何者最適合描述兩類資料的應用方式？\",[\"已標註流失結果的資料適合用於監督式學習；未標註行為資料可用於非監督式學習探索消費族群特徵\",\"已標註流失結果的資料適合用於非監督式學習；未標註行為資料需先人工分類才能進行監督式學習\",\"兩類資料皆只能使用監督式學習，因企業應用皆需要明確預測結果\",\"兩類資料皆屬生成式AI的訓練資料，因此無法用於機器學習模型\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:27:52.160Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某電商公司訓練一套深度學習模型，用來預測顧客是否會退貨。工程師觀察訓練紀錄發現：模型在第 1 個Epoch（輪次）時預測表現不佳，隨著訓練進行，內部參數不斷被自動更新，到第 50 個Epoch時預測準確度已大幅提升。模型在訓練過程中，主要根據下列哪一項資訊決定模型參數的更新方向？\",[\"計算損失函數(Loss Function)的梯度(Gradient)，並依梯度反方向更新模型參數\",\"根據激活函數(Activation Function)的輸出值大小，直接決定模型參數的更新方向\",\"根據各模型參數目前的權重大小，自動調整各參數的更新方向\",\"根據每次Epoch的準確率(Accuracy)變化，直接決定模型參數的更新方向\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:29:14.259Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"企業在公開去識別化的消費資料集前，為避免他人透過郵遞區號、性別等間接識別資訊交叉比對後重新識別特定個人身分，同時保留資料的分析價值，最適合採用下列哪一種隱私保護技術？\",[\"差分隱私(Differential Privacy)技術\",\"隨機抽樣(Random Sampling)技術\",\"k-匿名化(k-Anonymity)技術\",\"密碼雜湊(Hashing)技術\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T07:30:03.318Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"人工智慧概念\",\"歷屆考古題\",\"根據數位發展部《公部門人工智慧應用參考手冊》，若AI系統的自動決策可能對民眾權益造成重大影響，最應優先確保下列哪一項機制？\",[\"演算法模型應經第三方公正機構進行技術合規檢測\",\"建立人在迴圈內(Human-in-the-loop)的最終審核機制\",\"系統應定期進行弱點掃描與資安檢測，以降低系統遭受攻擊的風險\",\"系統產製的所有決策及決策軌跡皆應全程公開於政府資訊網站\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:30:32.414Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某製造業廠區計劃導入AI影像分析系統，希望統計各產線員工穿戴安全帽與反光背心的整體遵從率，作為職業安全管理改善的參考依據。為兼顧職業安全管理與員工隱私保護，系統在分析及產出報表時不得識別或記錄任何特定員工的身分資訊。下列何種AI技術最適合此需求？\",[\"採用物件偵測(Object Detection)辨識影像中的安全帽與反光背心，並統計各產線的整體穿戴遵從率\",\"採用人臉辨識(Face Recognition)辨識未穿戴防護具的人員，再彙整各產線的穿戴遵從率\",\"採用步態分析(Gait Analysis)辨識員工身分，再分析各產線的穿戴情形，以利後續改善安全管理\",\"採用行為分析(Behavior Analytics)結合個人歷史紀錄，預測員工未來未穿戴防護具的風險，作為改善依據\"],0]": {
+      "attempts": 2,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:03:08.576Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某金融集團評估將大型語言模型導入客服與風控系統，團隊採用如 120B 參數等級的超大型語言模型以確保回應品質。請問下列何者最能說明企業在正式環境部署超大型語言模型時，最需要優先考量的因素？\",[\"模型參數量龐大，導致每次輸出結果差異極大，難以符合金融業對回應一致性的要求\",\"超大型模型無法支援批次處理，在高併發的客服場景下將造成嚴重的服務瓶頸\",\"推理延遲較高且運算資源消耗龐大，每次請求成本遠高於小型模型，需在模型效能與營運成本之間審慎權衡\",\"模型會依任務複雜度自動調整運算資源配置，因此不需特別考量推理成本\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:35:09.589Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某製造業評估在不同場景導入 AI，包含：（甲）依據設備感測器數值判斷是否出現異常；（乙）依據客服對話內容判斷客戶情緒；（丙）依據產品影像輪廓直接進行瑕疵分類。下列哪一種情境最適合以自編碼器(Autoencoder)作為主要模型架構？\",[\"甲\",\"乙\",\"丙\",\"甲與丙\"],0]": {
+      "attempts": 2,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:01:53.891Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"在機器學習中，「偏差與變異權衡(Bias-Variance Tradeoff)」主要用來解決下列哪一類型的問題？\",[\"因資料來源或收集方式限制，導致模型學習到的資訊不足\",\"測試資料樣本與訓練資料高度重複，造成模型泛化能力評估失準\",\"訓練資料中類別分布不均，使模型在少數類別上表現不佳\",\"如何在模型偏差與變異之間取得平衡，以避免過度擬合或欠擬合\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:40:31.446Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"在醫療診斷決策支援系統等高風險領域中，「可解釋人工智慧(XAI)」的核心價值最主要呈現在哪個面向？\",[\"透過提供可理解的決策依據，促進患者與醫療人員對系統診斷結果的信任與接受度\",\"以可解釋性方法優化臨床資料蒐集流程，降低醫療作業成本\",\"利用解釋機制增強模型預測的統計顯著性與準確度\",\"透過透明化運作過程，減輕臨床人員負擔並提升服務效率\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:41:17.664Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"下列哪一種圖表最適合用來呈現並分析「兩個數值型變數」之間的關係，例如觀察身高與體重的相關性？\",[\"散佈圖(Scatter Plot)\",\"折線圖(Line Chart)\",\"直方圖(Histogram)\",\"長條圖(Bar Chart)\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:41:29.125Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"在自然語言處理任務中，為了減少訓練語料中偏見對模型的影響，下列哪種資料處理策略屬於常見的「資料去偏(Data Debiasing)」做法？\",[\"讓模型訓練時隨機替換輸出，以抵消系統性偏差\",\"增加模型參數量，依賴更大模型自動消除偏見\",\"調整或擴充訓練語料，使不同群體資料比例更平衡，避免偏向高頻類別\",\"對訓練資料施加額外正則化或噪音，降低對偏見的敏感度\"],2]": {
+      "attempts": 4,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:10:00.636Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"下列何者並非我國數位發展部 AI 產品與評測中心在評估大型語言模型安全性時，所指出的常見使用指標？\",[\"資料複雜性\",\"事實正確性\",\"偏見與歧視\",\"惡意與濫用可能性\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:42:15.989Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"基於檢索增強生成(RAG)的知識查詢系統，回應偶爾過時，且每次更新文件都需完整重建索引導致更新期間無法服務。若要解決並提升穩健性，下列哪項做法最適合？\",[\"調整生成模型的回應隨機性參數，以降低答案偏差\",\"提升檢索與索引運算效能，以縮短查詢與更新時間\",\"採用索引的增量或分段更新，使新資料即時納入而不需全部重建\",\"建立常見問題的標準答案集，以快速檢索回應降低模型負擔\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:43:12.060Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"對非常長的輸入序列進行推理(Inference)，Transformer 模型推理的主要計算瓶頸通常是什麼？\",[\"輸出層產生文本的過程，因為每生成一個詞都要重新訓練整個模型\",\"詞嵌入查找操作，因為複雜度隨詞彙表大小指數增長\",\"Softmax 函數，因為對每個 Token 都需繁重運算\",\"自注意力層的計算與記憶體使用，因為注意力矩陣大小隨序列長度呈平方級增長\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T07:43:55.890Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"在訓練機器學習模型時，若任務為預測房價，應選用下列哪一種損失函數來衡量預測誤差？\",[\"均方誤差(MSE)\",\"交叉熵損失(Cross-Entropy Loss)\",\"Hinge 損失(Hinge Loss)\",\"KL 散度(Kullback-Leibler Divergence)\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:46:07.654Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"人工智慧概念\",\"歷屆考古題\",\"根據 2025 年 9 月行政院通過之《人工智慧基本法》草案，政府推動人工智慧之「創新實驗環境」制度，主要參考歐盟的何種制度？\",[\"Data Protection Impact Assessment\",\"Regulatory Sandbox\",\"AI Trust Label\",\"AI Ethics Review Board\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:46:14.896Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"某雲端公司以批次推論(Batch Inference)每日處理上百萬筆請求。評估挑戰時，下列哪一項通常不會被視為批次推論階段的主要難題？\",[\"如何確保訓練語料的涵蓋性與標註品質，以避免模型偏差影響輸出\",\"當批次規模增大時，如何降低推論延遲並保持即時回應能力\",\"推論過程中有效管理與分配龐大輸入資料量以避免資源壅塞\",\"在叢集環境中精確安排推論任務，以提升 GPU/TPU 等硬體利用率\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T07:48:51.862Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"在統計推論中，若樣本來自母體但呈現明顯偏態分布，且樣本數有限，下列哪一項策略最能減少推估母體參數的偏誤？\",[\"直接用樣本平均數與變異數估計母體參數，不做任何調整\",\"增加樣本數並考慮使用分位數或中位數作為中心趨勢估計\",\"將樣本隨機重新排列後，多次計算平均值以消除偏態影響\",\"完全依賴樣本標準差來估計母體參數，忽略分布形態\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:50:31.498Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"人工智慧概念\",\"歷屆考古題\",\"在人工智慧系統的決策流程中，下列哪一種情境最符合「人在迴圈上(Human-over-the-loop)」所強調的監督機制？\",[\"AI 系統只能提供建議，人類需主動下達命令才能進行決策\",\"人類對 AI 的運行進行日常監督，必要時可立即介入修正或干預\",\"人類平時不參與 AI 的運作，僅在發生異常或重大錯誤時才接手控制\",\"AI 的所有判斷與行動在執行前，皆須經過人類逐一審核與批准\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:51:09.529Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"為提升生成式 AI 系統回應的語境一致性，常會結合哪類模型技術？\",[\"決策樹分類器(Decision Tree Classifier)\",\"條件語言模型(Conditional Language Model)\",\"強化學習 Q-learning 函數模型\",\"基因演算法(Genetic Algorithm)\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 1,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:51:39.656Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"在深度學習模型的微調(Fine-tuning)過程中，可能出現「災難性遺忘(Catastrophic Forgetting)」。此現象最可能造成哪種情況？\",[\"因資源或步驟不足，模型微調無法完整收斂，學習效果受限\",\"微調後模型表現變得隨機，無法記憶新學到的模式\",\"微調後部分權重偏移，導致無法針對較長文字回應\",\"模型過度適應微調資料分佈，逐漸遺忘預訓練獲得的廣泛知識，在原任務上表現變差\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:52:33.211Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"關於 Q-Learning 與 Deep Q-Learning，下列敘述何者最正確？\",[\"兩者差異在於是否使用標記資料作為學習基礎\",\"Q-Learning 可處理任意維度的狀態空間，比 Deep Q-Learning 更靈活\",\"Deep Q-Learning 透過深度神經網路近似 Q 值，避免 Q 表在高維空間難以擴展\",\"Deep Q-Learning 無法搭配經驗回放，因為會打亂樣本順序\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:52:54.516Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"某團隊蒐集病患「收縮壓」數據，檢驗顯示大致呈常態分布。進行模型分析前希望妥善處理可能的極端血壓值，下列哪一種做法最為合適？\",[\"將所有極端偏高/偏低的數據直接刪除，以保留代表性樣本\",\"使用對數轉換將數據壓縮至更接近常態，降低極端值影響\",\"透過 Z 分數或標準差範圍檢測異常值，並依研究需求決定是否調整或移除\",\"將離群值以 Label Encoding 編碼為序號標籤以避免影響分布\"],2]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:53:26.622Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"若希望檢視某一連續型數據的分布情形（如集中程度、偏態或是否多峰），下列哪一種應用情境最適合使用直方圖(Histogram)?\",[\"探討顧客年齡資料的整體分布，並檢視是否存在異常集中或分散\",\"比較不同商品各月份的銷售額變化趨勢，觀察季節性波動\",\"追蹤公司近一年營收的時間序列變化，了解成長趨勢\",\"檢視產品價格與月銷售量之間的關聯性，評估是否線性相關\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:53:45.546Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"某模型使用 K-近鄰演算法(KNN)，K 設為 3。新資料最接近的 3 筆鄰居類別為：A、B、A。模型會將這筆資料預測為哪一類？\",[\"類別 A\",\"類別 B\",\"類別 A 與 B 各一半，無法分類\",\"類別 A 或 B，視距離遠近加權而定\"],0]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 0,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T07:54:20.751Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"鑑別式AI與生成式AI\",\"歷屆考古題\",\"下列何者不是我國數位發展部 AI 產品與系統評測中心對生成式 AI 的評測項目？\",[\"當責性\",\"可靠性\",\"隱私及資安\",\"互動性\"],3]": {
+      "attempts": 2,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:02:46.381Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"關於資料正則化(Regularization)L1、L2 方法，下列敘述何者正確？\",[\"L1 權重個數愈多，愈可以提升模型的正確率\",\"L2 稱為 Lasso 正則化\",\"L1 運用減少權重的絕對值來控制模型的複雜度\",\"L2 較 L1 正則化方法會將特徵權重趨近於零\"],2]": {
+      "attempts": 2,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 2,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:06:51.736Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"資料處理與分析\",\"歷屆考古題\",\"員工離職風險模型含「年度績效分數(1–5)」「平均每月加班時數(0–80)」「年齡(20–65)」等數值特徵，範圍差異極大，直接輸入梯度下降的邏輯迴歸可能收斂緩慢或權重偏斜。下列哪一種方法最適合？\",[\"布林轉換(Boolean Conversion)\",\"時間序列分解(Time Series Decomposition)\",\"One-hot 編碼(One-hot Encoding)\",\"數值標準化(Numerical Standardization)\"],3]": {
+      "attempts": 1,
+      "correctAttempts": 1,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": true,
+      "needsReview": false,
+      "lastAnsweredAt": "2026-10-29T08:49:46.273Z"
+    },
+    "[\"初級\",\"科目1：人工智慧基礎概論\",\"機器學習\",\"歷屆考古題\",\"下列哪一類問題最適合使用非監督式學習(Unsupervised Learning)來處理？\",[\"根據已標記的醫療影像訓練模型診斷疾病\",\"根據使用者行為將用戶分群，以優化行銷策略\",\"透過已知交通事故記錄預測未來事故發生機率\",\"根據歷史股價預測未來股市的走勢\"],1]": {
+      "attempts": 1,
+      "correctAttempts": 0,
+      "lastSelectedIndex": 3,
+      "lastAnswerCorrect": false,
+      "needsReview": true,
+      "lastAnsweredAt": "2026-10-29T08:51:56.053Z"
+    }
+  }
+}
