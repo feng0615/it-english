@@ -1,0 +1,2401 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f5ef">
+  <title>旅途清單｜旅遊行程規劃</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #20352f;
+      --muted: #718078;
+      --green: #2f6957;
+      --green-dark: #234f42;
+      --mint: #e8f0e9;
+      --paper: #fffefa;
+      --line: #e7e8df;
+      --sun: #f0c778;
+      --danger: #a4493d;
+      --shadow: 0 18px 50px rgb(34 57 47 / 8%);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 87% 2%, rgb(240 199 120 / 15%), transparent 27rem),
+        #f6f5ef;
+      font-family: "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 38px 0 56px;
+    }
+
+    .topbar,
+    .brand,
+    .hero,
+    .section-heading,
+    .itinerary-heading,
+    .item-actions,
+    .item-meta,
+    .form-actions {
+      display: flex;
+      align-items: center;
+    }
+
+    .topbar,
+    .hero,
+    .section-heading,
+    .itinerary-heading {
+      justify-content: space-between;
+    }
+
+    .brand {
+      gap: 11px;
+      font-size: 15px;
+      font-weight: 750;
+      letter-spacing: .04em;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border-radius: 13px;
+      color: white;
+      background: var(--green);
+      font-size: 20px;
+    }
+
+    .local-label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero {
+      gap: 32px;
+      margin: 54px 0 30px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 52px);
+      letter-spacing: -.055em;
+      line-height: 1.14;
+    }
+
+    .hero-copy {
+      max-width: 550px;
+      margin: 15px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .hero-stamp {
+      display: grid;
+      width: 116px;
+      height: 116px;
+      flex: 0 0 auto;
+      place-items: center;
+      border: 1px solid #e6dfcb;
+      border-radius: 50%;
+      color: var(--green);
+      background: rgb(255 254 250 / 75%);
+      transform: rotate(7deg);
+    }
+
+    .hero-stamp span {
+      font-size: 34px;
+    }
+
+    .hero-stamp small {
+      margin-top: -22px;
+      font-size: 10px;
+      font-weight: 750;
+      letter-spacing: .13em;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: minmax(290px, 350px) minmax(0, 1fr);
+      align-items: start;
+      gap: 22px;
+    }
+
+    .panel {
+      border: 1px solid rgb(231 232 223 / 85%);
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .form-panel {
+      padding: 25px;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 19px;
+      letter-spacing: -.025em;
+    }
+
+    .panel-description {
+      margin: 7px 0 23px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .field {
+      margin-bottom: 15px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      color: #485b52;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      outline: none;
+      color: var(--ink);
+      background: #fff;
+      transition: border-color .15s, box-shadow .15s;
+    }
+
+    .field input {
+      min-height: 43px;
+      padding: 0 12px;
+    }
+
+    .field textarea {
+      min-height: 83px;
+      padding: 11px 12px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: #7da591;
+      box-shadow: 0 0 0 3px rgb(47 105 87 / 10%);
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: #a3aca6;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 11px;
+    }
+
+    .form-actions {
+      gap: 9px;
+      margin-top: 21px;
+    }
+
+    .primary-button,
+    .secondary-button,
+    .text-button {
+      min-height: 42px;
+      border: 0;
+      border-radius: 11px;
+      font-size: 13px;
+      font-weight: 750;
+      transition: background .15s, transform .15s;
+    }
+
+    .primary-button {
+      flex: 1;
+      color: white;
+      background: var(--green);
+    }
+
+    .primary-button:hover {
+      background: var(--green-dark);
+      transform: translateY(-1px);
+    }
+
+    .secondary-button {
+      padding: 0 14px;
+      color: #52635a;
+      background: #f0f1eb;
+    }
+
+    .secondary-button:hover {
+      background: #e5e8df;
+    }
+
+    .itinerary-panel {
+      min-height: 440px;
+      padding: 25px;
+    }
+
+    .section-heading {
+      gap: 15px;
+      margin-bottom: 19px;
+    }
+
+    .section-heading p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .count-badge {
+      display: inline-grid;
+      min-width: 34px;
+      height: 34px;
+      padding: 0 9px;
+      place-items: center;
+      border-radius: 12px;
+      color: var(--green);
+      background: var(--mint);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .data-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 0 0 15px;
+    }
+
+    .data-actions .secondary-button {
+      flex: 1;
+    }
+
+    .file-sync-status {
+      margin: -5px 0 15px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .day-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 17px;
+      padding: 2px 2px 9px;
+    }
+
+    .day-tab {
+      flex: 0 1 auto;
+      min-height: 38px;
+      padding: 0 13px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: #52635a;
+      background: #fff;
+      font-size: 12px;
+      font-weight: 750;
+      white-space: normal;
+    }
+
+    .day-tab[aria-selected="true"] {
+      border-color: var(--green);
+      color: #fff;
+      background: var(--green);
+    }
+
+    .day-tab:focus-visible {
+      outline: 3px solid rgb(47 105 87 / 24%);
+      outline-offset: 2px;
+    }
+
+    .day-heading {
+      margin: 0 0 13px;
+      color: var(--green-dark);
+      font-size: 14px;
+    }
+
+    .notice {
+      margin: 0 0 14px;
+      padding: 11px 13px;
+      border-radius: 10px;
+      color: #4a665a;
+      background: #edf4ed;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .notice[hidden] {
+      display: none;
+    }
+
+    .notice.error {
+      color: #873e35;
+      background: #fbefec;
+    }
+
+    .itinerary-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .itinerary-item {
+      position: relative;
+      padding: 17px 18px 16px 21px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: #fff;
+      transition: border-color .15s, box-shadow .15s, opacity .15s;
+    }
+
+    .itinerary-item:hover,
+    .itinerary-item:focus-within {
+      z-index: 3;
+      border-color: #b7c9bc;
+      box-shadow: 0 10px 24px rgb(34 57 47 / 10%);
+    }
+
+    .itinerary-item.is-dragging {
+      opacity: .45;
+    }
+
+    .itinerary-item.drop-before::after,
+    .itinerary-item.drop-after::after {
+      position: absolute;
+      right: 12px;
+      left: 12px;
+      height: 3px;
+      border-radius: 3px;
+      background: var(--green);
+      content: "";
+    }
+
+    .itinerary-item.drop-before::after {
+      top: -7px;
+    }
+
+    .itinerary-item.drop-after::after {
+      bottom: -7px;
+    }
+
+    .itinerary-item::before {
+      position: absolute;
+      top: 17px;
+      bottom: 17px;
+      left: 0;
+      width: 3px;
+      border-radius: 0 4px 4px 0;
+      background: var(--sun);
+      content: "";
+    }
+
+    .itinerary-heading {
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .item-title {
+      min-width: 0;
+      margin: 0;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .item-time {
+      flex: 0 0 auto;
+      padding: 5px 8px;
+      border-radius: 8px;
+      color: var(--green);
+      background: var(--mint);
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .item-meta {
+      flex-wrap: wrap;
+      gap: 7px 14px;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .item-location {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 2px;
+    }
+
+    .item-location:hover,
+    .item-location:focus-visible {
+      color: var(--green);
+    }
+
+    .item-notes {
+      margin: 0;
+      color: #64736a;
+      font-size: 12px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .item-preview {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 12px;
+      z-index: 4;
+      width: min(460px, calc(100vw - 56px));
+      max-height: min(60vh, 360px);
+      padding: 15px 16px;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--paper);
+      box-shadow: 0 16px 38px rgb(34 57 47 / 16%);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-4px);
+      transition: opacity .15s, transform .15s, visibility .15s;
+    }
+
+    .itinerary-item:hover .item-preview,
+    .itinerary-item:focus-within .item-preview {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    body.is-reordering .item-preview {
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .item-actions {
+      justify-content: flex-end;
+      gap: 7px;
+      margin-top: 11px;
+    }
+
+    .text-button {
+      min-height: 30px;
+      padding: 0 9px;
+      color: #617168;
+      background: transparent;
+      font-size: 12px;
+    }
+
+    .drag-handle {
+      min-width: 32px;
+      padding: 0 7px;
+      color: #617168;
+      background: transparent;
+      cursor: grab;
+      font-size: 18px;
+      line-height: 1;
+      touch-action: none;
+    }
+
+    .drag-handle:active {
+      cursor: grabbing;
+    }
+
+    .drag-handle:focus-visible {
+      outline: 3px solid rgb(47 105 87 / 24%);
+      outline-offset: 2px;
+    }
+
+    .text-button:hover {
+      background: #f0f1eb;
+    }
+
+    .text-button.delete:hover {
+      color: var(--danger);
+      background: #fbefec;
+    }
+
+    .checklist-panel {
+      margin-top: 16px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .checklist-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 9px;
+      font-size: 15px;
+    }
+
+    .checklist-count {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .checklist-progress {
+      height: 7px;
+      margin: -2px 0 9px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e4e9e3;
+    }
+
+    .checklist-progress-bar {
+      display: block;
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: #18704e;
+      transition: width .2s ease;
+    }
+
+    .checklist-add-form {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 6px;
+    }
+
+    .checklist-input {
+      width: 100%;
+      min-height: 36px;
+      padding: 6px 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: #fff;
+      font: inherit;
+      font-size: 13px;
+    }
+
+    .checklist-add-form .secondary-button {
+      min-height: 36px;
+      padding: 0 13px;
+      border: 1px solid #194b38;
+      border-radius: 8px;
+      color: #fff;
+      background: #194b38;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .checklist-add-form .secondary-button:hover {
+      border-color: #103727;
+      background: #103727;
+    }
+
+    .checklist-list {
+      display: grid;
+      gap: 3px;
+      margin: 8px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .checklist-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 34px;
+      padding: 2px 5px;
+      border-radius: 7px;
+    }
+
+    .checklist-row:hover,
+    .checklist-row:focus-within {
+      background: #f7f8f3;
+    }
+
+    .checklist-checkbox {
+      flex: 0 0 auto;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--green);
+    }
+
+    .checklist-text {
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow-wrap: anywhere;
+      font-size: 13px;
+    }
+
+    .checklist-text.is-checked {
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+
+    .checklist-item-actions {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 5px;
+    }
+
+    .checklist-item-actions .text-button,
+    .checklist-edit-form .text-button {
+      display: inline-flex;
+      min-width: 46px;
+      min-height: 32px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 9px;
+      border: 1px solid #194b38;
+      border-radius: 7px;
+      color: #fff;
+      background: #194b38;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .checklist-item-actions .text-button:hover,
+    .checklist-edit-form .checklist-save-button:hover {
+      border-color: #103727;
+      background: #103727;
+    }
+
+    .checklist-item-actions .text-button.delete,
+    .checklist-edit-form .checklist-cancel-button {
+      border-color: #8e2924;
+      color: #fff;
+      background: #8e2924;
+    }
+
+    .checklist-item-actions .text-button.delete:hover,
+    .checklist-edit-form .checklist-cancel-button:hover {
+      border-color: #701e1a;
+      background: #701e1a;
+    }
+
+    .checklist-item-actions .text-button:focus-visible,
+    .checklist-edit-form .text-button:focus-visible,
+    .checklist-add-form .secondary-button:focus-visible {
+      outline: 3px solid #9a5700;
+      outline-offset: 2px;
+    }
+
+    .checklist-edit-form {
+      display: flex;
+      flex: 1 1 200px;
+      gap: 6px;
+    }
+
+    .checklist-empty {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .preview-toggle {
+      display: none;
+    }
+
+    .empty-state {
+      display: grid;
+      min-height: 290px;
+      padding: 28px;
+      place-content: center;
+      text-align: center;
+    }
+
+    .empty-icon {
+      display: grid;
+      width: 54px;
+      height: 54px;
+      margin: 0 auto 13px;
+      place-items: center;
+      border-radius: 18px;
+      color: var(--green);
+      background: var(--mint);
+      font-size: 25px;
+    }
+
+    .empty-state h3 {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .empty-state p {
+      max-width: 270px;
+      margin: 8px auto 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .footer-note {
+      margin: 20px 4px 0;
+      color: #879189;
+      font-size: 11px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        width: min(100% - 24px, 560px);
+        padding: 20px 0 calc(32px + env(safe-area-inset-bottom));
+      }
+
+      .hero {
+        margin: 32px 0 20px;
+      }
+
+      .hero-stamp {
+        width: 82px;
+        height: 82px;
+      }
+
+      .hero-stamp span {
+        font-size: 27px;
+      }
+
+      .hero-stamp small {
+        margin-top: -16px;
+        font-size: 8px;
+      }
+
+      .dashboard {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .day-tab {
+        min-height: 42px;
+      }
+
+      .data-actions .secondary-button {
+        min-height: 44px;
+      }
+
+      .itinerary-list {
+        gap: 10px;
+      }
+
+      .itinerary-item {
+        padding: 15px 14px 13px 18px;
+      }
+
+      .item-notes {
+        font-size: 14px;
+      }
+
+      .item-actions {
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+
+      .checklist-panel {
+        padding: 11px;
+      }
+
+      .checklist-row {
+        flex-wrap: wrap;
+      }
+
+      .checklist-item-actions .text-button,
+      .checklist-edit-form .text-button {
+        min-width: 42px;
+        min-height: 38px;
+      }
+
+      .checklist-input,
+      .checklist-add-form .secondary-button {
+        min-height: 38px;
+      }
+
+      .checklist-item-actions {
+        margin-left: auto;
+      }
+
+      .text-button,
+      .drag-handle {
+        min-width: 42px;
+        min-height: 42px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .page {
+        width: min(100% - 20px, 420px);
+      }
+
+      .local-label {
+        max-width: 132px;
+        text-align: right;
+      }
+
+      .hero-stamp {
+        display: none;
+      }
+
+      .form-panel,
+      .itinerary-panel {
+        padding: 16px;
+      }
+
+      .hero {
+        margin-top: 25px;
+      }
+
+      h1 {
+        font-size: clamp(29px, 8vw, 36px);
+      }
+
+      .hero-copy {
+        margin-top: 11px;
+        font-size: 14px;
+      }
+
+      .itinerary-heading {
+        gap: 8px;
+      }
+
+      .item-title {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .field-row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
+      }
+    }
+
+    @media (hover: none) {
+      .preview-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .item-preview {
+        position: static;
+        width: auto;
+        max-height: none;
+        margin-top: 11px;
+        padding: 11px 12px;
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        box-shadow: none;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+      }
+
+      .item-preview:not(.is-open) {
+        display: none;
+      }
+
+      .item-preview.is-open {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">↗</span>
+        <span>旅途清單</span>
+      </div>
+      <span class="local-label">簡單規劃，安心出發</span>
+    </header>
+
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">YOUR TRIP, YOUR PACE</p>
+        <h1 id="page-title">把期待，排進旅程裡。</h1>
+        <p class="hero-copy">記下每一站想去的地方與想做的事，留一點空白，讓旅途也有即興的驚喜。</p>
+      </div>
+      <div class="hero-stamp" aria-hidden="true">
+        <span>✳</span>
+        <small>LET'S GO</small>
+      </div>
+    </section>
+
+    <div class="dashboard">
+      <section class="panel form-panel" aria-labelledby="form-title">
+        <h2 class="panel-title" id="form-title">新增一站</h2>
+        <p class="panel-description" id="form-description">把想去的地方，慢慢排進行程。</p>
+
+        <form id="itinerary-form">
+          <div class="field-row">
+            <div class="field">
+              <label for="item-date">日期 <span aria-hidden="true">*</span></label>
+              <input id="item-date" name="date" type="date" required>
+            </div>
+            <div class="field">
+              <label for="item-time">時間區段</label>
+              <input id="item-time" name="time" type="text" maxlength="13" placeholder="例如：09:30–11:00">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="item-title">行程名稱 <span aria-hidden="true">*</span></label>
+            <input id="item-title" name="title" type="text" maxlength="80" placeholder="例如：漫步老街" required>
+          </div>
+
+          <div class="field">
+            <label for="item-location">地點</label>
+            <input id="item-location" name="location" type="text" maxlength="120" placeholder="例如：九份老街">
+          </div>
+
+          <div class="field">
+            <label for="item-notes">備註</label>
+            <textarea id="item-notes" name="notes" maxlength="2000" placeholder="交通、訂位資訊或想記住的小事"></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button class="primary-button" id="submit-button" type="submit">加入行程</button>
+            <button class="secondary-button" id="cancel-button" type="button" hidden>取消編輯</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel itinerary-panel" aria-labelledby="itinerary-title">
+        <div class="section-heading">
+          <div>
+            <h2 class="panel-title" id="itinerary-title">我的行程</h2>
+            <p id="summary">還沒有安排任何行程</p>
+          </div>
+          <span class="count-badge" id="item-count" aria-label="行程數量">0</span>
+        </div>
+        <div class="data-actions" aria-label="行程資料操作">
+          <button class="secondary-button" id="export-button" type="button">匯出 JSON</button>
+          <button class="secondary-button" id="import-button" type="button">匯入 JSON</button>
+          <button class="secondary-button" id="directory-button" type="button">設定自動存檔</button>
+          <input id="import-file" type="file" accept=".json,application/json" hidden>
+        </div>
+        <p class="file-sync-status" id="file-sync-status" role="status" aria-live="polite">尚未設定資料夾。設定後請選取 TravelingPlan.html 所在目錄，行程會自動寫入 TravelingPlan-autosave.json。</p>
+        <p class="notice" id="notice" role="status" aria-live="polite" hidden></p>
+        <div class="day-tabs" id="day-tabs" role="tablist" aria-label="依日期切換行程"></div>
+        <div id="itinerary-content" role="tabpanel"></div>
+      </section>
+    </div>
+
+    <p class="footer-note">行程會自動儲存在這個瀏覽器；授權資料夾後，也會同步寫入該目錄的 TravelingPlan-autosave.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
+  </main>
+
+  <script>
+    "use strict";
+
+    const STORAGE_KEY = "traveling-plan.itinerary.v1";
+    const CHECKLIST_STORAGE_KEY = "traveling-plan.checklists.v1";
+    const EXPORT_FORMAT = "traveling-plan";
+    const EXPORT_VERSION = 1;
+    const MAX_IMPORT_BYTES = 5 * 1024 * 1024;
+    const FILE_HANDLE_DB_NAME = "traveling-plan-file-sync";
+    const FILE_HANDLE_STORE_NAME = "settings";
+    const FILE_HANDLE_KEY = "directory-handle";
+    const AUTO_SAVE_FILE_NAME = "TravelingPlan-autosave.json";
+    const LEGACY_DEFAULT_ITEM_KEY = "traveling-plan.default-klook-2026-11-15.v1";
+    const DEFAULT_ITEMS_KEY = "traveling-plan.default-klook-2026-11-15.v2";
+    const LEGACY_DEFAULT_ITEM_ID = "klook-north-kyoto-autumn-2026-11-15";
+    const DEFAULT_ITEMS = [
+      {
+        id: "klook-north-kyoto-2026-11-15-taxi",
+        date: "2026-11-15",
+        time: "07:15–07:35",
+        title: "計程車前往集合地點",
+        location: "飯店 → 京都車站南側八條口",
+        notes: `【🚨重要集合叮嚀】今天的行程為巴士一日遊，必須準時抵達集合點！一早請在飯店大門使用 GO App 叫計程車直奔京都車站南側八條口（車程約 12 分鐘）。
+📍 集合地點：7-Eleven 門口前紅色地毯等候區域（地址：南區東九條西岩本町16-16）。請於 07:50 前抵達核對憑證，巴士 08:00 準時發車，逾時不候。
+洛北山區氣溫偏低（體感約 6–10 度），請務必幫媽媽穿上保暖外套、戴上帽子並準備好發熱暖暖包。`
+      },
+      {
+        id: "klook-north-kyoto-2026-11-15-nanzen-eikando",
+        date: "2026-11-15",
+        time: "09:30–11:00",
+        title: "南禪寺 ＆ 永觀堂",
+        location: "京都東山區",
+        notes: "自由活動 1.5 小時。抵達東山區，帶媽媽慢步欣賞南禪寺氣勢磅礡的「三門」與著名的水路閣，全區地形平坦寬敞。緊鄰的永觀堂（禪林寺）為京都紅葉之王，此時滿山楓紅與古刹交織，十分震撼。"
+      },
+      {
+        id: "klook-north-kyoto-2026-11-15-sanzenin",
+        date: "2026-11-15",
+        time: "11:30–13:00",
+        title: "大原三千院與午餐",
+        location: "京都大原",
+        notes: `自由活動 1.5 小時，自理午餐。巴士專車移防至大原山區。參觀以綠苔、古剎和療癒「童地藏」聞名的三千院（現場自理門票 700 日圓/人）。院內備有暖呼呼的金色梅茶。
+【長輩配速與用餐】三千院參道沿途有些許平緩坡道，請牽著媽媽慢行。中午直接在三千院表參道兩側的日式老店享用當地的野菜御膳或熱騰騰的蕎麥麵，省時又不耗費體力。`
+      },
+      {
+        id: "klook-north-kyoto-2026-11-15-eizan-train",
+        date: "2026-11-15",
+        time: "14:41–15:03",
+        title: "叡山電車紅葉隧道體驗",
+        location: "寶池站 → 鞍馬站",
+        notes: `體驗 22 分鐘。配合導遊安排，全家從「寶池站」上車搭乘至「鞍馬站」。
+媽媽全程坐在平穩的景觀列車內，穿梭在最著名的「紅葉隧道」中，完全不需步行即可飽覽車窗外滿山飛舞的秋楓，下車後巴士已在站點等候全家。`
+      },
+      {
+        id: "klook-north-kyoto-2026-11-15-kifune",
+        date: "2026-11-15",
+        time: "15:04–16:34",
+        title: "貴船神社",
+        location: "鞍馬山西麓・貴船",
+        notes: `自由活動 1.5 小時。專車送達鞍馬山西麓的貴船，慢步參觀經典的兩側「紅獻燈石階梯」與極具特色的水占卜。
+【安全避坑】貴船神社正門的石階較陡且可能有些微濕滑。請您與先生左右護航、攙扶媽媽慢行，或者可以選擇繞行旁邊相對平緩的柏油車道坡路斜切上去。`
+      },
+      {
+        id: "klook-north-kyoto-2026-11-15-return",
+        date: "2026-11-15",
+        time: "17:30–18:45",
+        title: "返回京都車站與飯店",
+        location: "京都車站八條口 → Hyatt Place Kyoto",
+        notes: "17:30 巴士團行程結束啟程返回市區，約於 18:45 前返抵京都車站解散。解散後直接在車站八條口排隊搭乘計程車回 Hyatt Place Kyoto 飯店，晚餐可叫外送或在飯店周邊簡餐解決，讓媽媽早點洗澡泡個熱水澡、躺下休息，為接下來出發去天橋立徹底充飽電力。"
+      }
+    ];
+    const V72_IMPORT_KEY = "traveling-plan.v7.2-2026-11-import.v1";
+    const LEGACY_KLOOK_RETURN_NOTES = "17:30 巴士團行程結束啟程返回市區，約於 18:45 前返抵京都車站解散。解散後直接在車站八條口排隊搭乘計程車回 Hyatt Place Kyoto 飯店，晚餐可叫外送或在飯店周邊簡餐解決，讓媽媽早點洗澡泡個熱水澡、躺下休息，為明天出發去天橋立徹底充飽電力。";
+    const V72_KLOOK_IDS = [
+      "klook-north-kyoto-2026-11-15-taxi",
+      "klook-north-kyoto-2026-11-15-nanzen-eikando",
+      "klook-north-kyoto-2026-11-15-sanzenin",
+      "klook-north-kyoto-2026-11-15-eizan-train",
+      "klook-north-kyoto-2026-11-15-kifune",
+      "klook-north-kyoto-2026-11-15-return"
+    ];
+    const V72_DAYS = [
+      ["2026-11-14", [
+        ["10:10","關西機場第一航廈降落","搭乘長榮航空 BR178 班次順利抵達，辦理入境並提領全家大行李箱。"],
+        ["11:30-12:30","一機刷三人過閘門","免換紙本票！打開手機登入 WEST QR 網站 按下「開始使用」。\n預設第一首選為 11:14 的 Haruka No.18；若稍微耽擱，系統在發車前30分鐘可無限次免費更改，亦可改劃 11:44 (No.20)、 12:14 (No.22) 或 12:44 (No.24)。\n由您在自動閘門旁切換 QR Code 嗶手機帶媽媽和先生過關，直接搭乘對號指定席前往京都。"],
+        ["13:45-14:30","辦理 JR 關西廣域周遊券取票與劃位","【🚨關鍵任務】 帶全家至京都車站綠色自動售票機，依照本手冊「實體取票與原地劃位指引」，一次領取 3 人的周遊券，並當場劃好 11/18 天橋立、11/19 城崎返程、11/21 HARUKA 的指定席座位，免除後顧之憂。"],
+        ["15:00-16:30","京都車站空中徑路漫步","帶媽媽搭電梯直達車站頂樓「空中徑路」觀景長廊，全平路遠眺震撼的京都塔秋季點燈夜景。"],
+        ["17:00-18:15","晚餐：Porta 地下街東洋亭","享用多汁的百年「東洋亭漢堡排」與招牌整顆番茄沙拉，全西式靠背椅，省體力不需排隊。"],
+        ["18:30","計程車護航 Check-in","至八條口排隊搭計程車，一車直達 Hyatt Place Kyoto 飯店大門（車程 12 分鐘）。服務人員協助接行李，長輩免提重物無痛進房休息。"]
+      ]],
+      ["2026-11-15", [
+        ["07:15-07:35","計程車護送至集合地點","【🚨重要集合叮嚀】 今天的行程為巴士一日遊，必須準時抵達集合點！一早請在飯店大門使用 GO App 叫計程車直奔京都車站南側八條口（車程約 12 分鐘）。\n📍 集合地點：7-Eleven 門口前紅色地毯等候區域（地址：南區東九條西岩本町16-16）。請於 07:50 前抵達核對憑證，巴士 08:00 準時發車，逾時不候。\n洛北山區氣溫偏低（體感約 6–10 度），請務必幫媽媽穿上保暖外套、戴上帽子並準備好發熱暖暖包。"],
+        ["09:30-11:00","第一站：南禪寺 ＆ 永觀堂（自由活動 1.5 小時）","抵達東山區。帶媽媽慢步欣賞南禪寺氣勢磅礡的「三門」與著名的水路閣，全區地形平坦寬敞。緊鄰的永觀堂（禪林寺）為京都紅葉之王，此時滿山楓紅與古刹交織，十分震撼。"],
+        ["11:30-13:00","第二站：大原三千院（自由活動 1.5 小時 ➔ 自理午餐）","巴士專車移防至大原山區。參觀以綠苔、古剎和療癒「童地藏」聞名的三千院（現場自理門票 700 日圓/人）。院內備有暖呼呼的金色梅茶。\n【長輩配速與用餐】 三千院參道沿途有些許平緩坡道，請牽著媽媽慢行。中午直接在三千院表參道兩側的日式老店享用當地的野菜御膳或熱騰騰的蕎麥麵，省時又不耗費體力。"],
+        ["14:41-15:03","第三站：比叡山電車（叡山電車紅葉隧道體驗 22 分鐘）","配合導遊安排，全家從「寶池站」上車搭乘至「鞍馬站」。\n媽媽全程坐在平穩的景觀列車內，穿梭在最著名的「紅葉隧道」中，完全不需步行即可飽覽車窗外滿山飛舞的秋楓，下車後巴士已在站點等候全家。"],
+        ["15:04-16:34","第四站：貴船神社（自由活動 1.5 小時）","專車送達鞍馬山西麓的貴船。慢步參觀經典的兩側「紅獻燈石階梯」與極具特色的水占卜。\n【安全避坑】 貴船神社正門的石階較陡且可能有些微濕滑。請您與先生左右護航、攙扶媽媽慢行，或者可以選擇繞行旁邊相對平緩的柏油車道坡路斜切上去。"],
+        ["17:30-18:45","回程 ➔ 京都車站解散 ➔ 計程車送回飯店","17:30 巴士團行程結束啟程返回市區，約於 18:45 前返抵京都車站解散。\n解散後直接在車站八條口排隊搭乘計程車回 Hyatt Place Kyoto 飯店，晚餐可叫外送或在飯店周邊簡餐解決，讓媽媽早點洗澡泡個熱水澡、躺下休息，為接下來出發去天橋立徹底充飽電力。"]
+      ]],
+      ["2026-11-16", [
+        ["08:30-09:30","飯店悠閒早餐","在飯店一樓舒適餐廳用餐，充飽電、帶上全家實體護照準備出門。"],
+        ["09:45-09:55","地鐵烏丸線地下直通","直接搭飯店電梯到地下丸太町站月台，坐地鐵烏丸線 4 站直達京都車站（車程 8 分鐘），全程免爬樓梯。"],
+        ["10:04-10:35","近鐵京都線快速移動","在京都車站轉乘「近鐵京都線（急行列車）」直達近鐵小倉站（車程約 21-25 分鐘）。"],
+        ["10:40-11:00","小倉站平路漫步至大門","由近鐵小倉站東出口搭乘無障礙電梯下樓，沿著平坦的純樸住宅區柏油路慢步 5 分鐘即達博物館。"],
+        ["11:30-14:30","任天堂博物館朝聖 ✅ 已付款 11:30 入場","【🚨核心安檢】入場將嚴格查驗全員「實體護照正本」以核對身分！\n館內全無障礙。一樓與二樓展區有大量沙發椅，互動遊戲與歷史展覽兼顧，逛累了隨時可到附設咖啡廳休息。"],
+        ["14:30-14:45","計程車短接宇治表參道","館方嚴禁計程車在大門臨停。出館步行 2 分鐘至外圍馬路，用 GO App 叫計程車直達宇治川畔（車程 10 分鐘）。\n在「中村藤吉平等院店」享用清爽的抹茶蕎麥麵與甜點（靠背椅）。"],
+        ["15:45-17:00","平等院鳳凰堂散策","順著全平路石磚步道欣賞鳳凰堂與阿字池的極樂淨土紅楓倒影。搭無障礙電梯參觀全室內鳳翔館寶物庫。\n回程由 JR 宇治站搭乘みやこ路快速 20 分鐘直達京都車站，於伊勢丹百貨 11 樓享用京料理後，搭地鐵回飯店。"]
+      ]],
+      ["2026-11-17", [
+        ["09:00-09:15","GO App 叫車直達東山","避開週日大擠的公車，直接從飯店大門口叫計程車直達東福寺外圍（車程 18 分鐘）。"],
+        ["09:15-11:00","東福寺（通天橋溪谷楓海）","站在「通天橋」上遠眺洗玉澗溪谷。2026年此時平地剛轉紅，可看到黃綠橘紅交織的層次楓景。"],
+        ["11:05-11:20","順路平地微散步 15 分鐘","由東福寺出口沿著平坦柏油路慢步 15 分鐘（約 600 公尺），直通隔壁山頭的泉涌寺雲龍院。"],
+        ["11:20-12:30","泉涌寺・雲龍院（窗景與抹茶充電）","看經典的「蓮華之窗」與「悟之窗」。\n【不累秘訣】 費用含現刷抹茶與和菓子. 帶媽媽在塌塌米上坐著（有靠背小矮椅），優雅喝茶歇息賞楓。（提醒：包包內幫媽媽備好一雙厚毛襪，脫鞋換上避免腳底受寒）。"],
+        ["12:35-12:45","計程車短接 ➔ 博物館前田咖啡午餐","雲龍院外叫計程車直達京都國立博物館大門（車程 7 分鐘）。\n免去出館排隊，直接在館內「前田咖啡」享用精緻牛肉咖哩飯與熱咖啡（全西式沙發靠背椅）。"],
+        ["14:00-16:00","京都國立博物館・源氏物語秋季特展","進入現代化「平成知新館」，全館設有完美無障礙坡道、巨型電梯與中央恆溫空調。\n帶媽媽近距離觀賞平安時代國寶源氏物語繪卷與奢裝屏風，大廳設有大量沙發，可隨時向服務台免費借用愛心輪椅。\n傍晚搭計程車回飯店午睡，18:00 前往四條烏丸享用「肉のひろ重」壽喜燒。"]
+      ]],
+      ["2026-11-18", [
+        ["07:45","退房與行李寄送","一早 07:45 在 Hyatt 辦理 Check-out 時，將全家 3 個大行李箱直接交給櫃檯，付費辦理黑貓宅急便跨日快遞（指定 11/19 送達舊客房）。全家今天只攜帶一個輕便一日背包，雙手空空穩穩攙扶媽媽出發！"],
+        ["08:00-08:15","地鐵丸太町站 ➔ 京都車站 🎫 JR 關西廣域券啟用","直接搭飯店電梯到地下丸太町站月台，坐地鐵烏丸線 8 分鐘直達京都車站。使用第一天在綠色售票機換好的「JR關西廣域鐵路周遊券」實體磁卡過閘門，全程電梯無障礙轉乘。"],
+        ["08:38-10:40","直達特急：Hashidate 1號（憑已換好之指定席券入座）","全天唯一一班完全免轉車的黃金直達車。媽媽在寬敞舒適的特急大座位上舒適補眠（車程 122 分鐘）。"],
+        ["10:40-11:15","天橋立站 ➔ 兌換實體票組（🚨核對櫃檯開放時間 09:15 - 16:45）","抵達天橋立站，至第一月台旁的天橋立觀光諮詢處「丹後海陸交通株式會社櫃檯」。\n出示 Klook 憑證 QR Code，現場一次會收到 4 張實體兌換券：\n京都天橋立 & 伊根觀光 2 日通票\n成相寺門票\n成相山登山巴士往返車票\n笠松公園投擲陶器兌換券\n隨後平路散步 3 分鐘至智恩寺觀光船碼頭。出示「2日通票」免費登船，讓媽媽坐在一樓室內恆溫船艙座位區觀賞海中沙洲（航行 12 分鐘）。"],
+        ["11:20-13:45","元伊勢籠神社 & 景觀蛤蜊飯午餐","下船順平坦石磚路步行 3 分鐘進入神社，全區完全平坦無階梯，紅楓襯托古樸鳥居。\n隨後在神社旁「よし乃や」享用當地名物蛤蜊飯（あさり丼）與現捕海鮮熱湯麵（全西式靠背椅）。"],
+        ["13:50-14:50","傘松公園（精準選擇交通 ＆ 新增解鎖活動）","避坑關鍵：直接出示 2 日通票，並務必選擇搭乘「單軌電車（Cable Car）」 大型玻璃包廂列車！每 15 分鐘一班，長輩坐著平穩安全，絕對不可讓媽媽搭乘旁邊雙腳懸空、無安全帶的單人吊椅。\n【🎁開運小活動】 登頂後，拿著剛換到的「投擲陶器兌換券」至觀景台換取小陶片，陪媽媽一起朝著智慧輪圈投擲，體驗當地開運祈福。\n（配速備忘：雖套票內含成相寺門票與接駁巴士，但因山路較陡且費體力，建議略過成相寺，在傘松公園悠閒看海、丟完陶器即可下山，不要讓媽媽過度勞累。）"],
+        ["15:00-15:15","不走回頭路：高架叫車短接車站","下山後不走回程船。直接在神社前使用 GO App 叫計程車，走陸路高架橋直達天橋立車站（車程 12 分鐘，車資約 2,000 日圓）。讓媽媽在車上吹冷氣休息，徹底省下回程步行的體力！"],
+        ["15:51-17:17","洛北鐵道順遊 ➔ 城崎溫泉站 🎫 憑 JR 廣域券免費搭乘","在天橋立站出示周遊券磁卡，搭乘京都丹後鐵道特急至豐岡站，免換月台原地轉乘 JR 山陰本線直達城崎溫泉站（車程約 1.5 小時）。出站搭乘朝霧莊無料接駁車或計程車 3 分鐘直達大門。"],
+        ["18:00 之後","入住【城崎溫泉 朝霧莊】松葉蟹奢華之夜","11 月正逢全日本最著名的「松葉蟹解禁捕撈期」！晚餐在飯店內享用極致奢華的松葉蟹會席料理與頂級但馬牛燒烤（皆為精饌和式桌椅座位，免跪坐）。飯後陪媽媽享受純淨溫泉大浴場。\n日本海刺骨寒風防護：天橋立與城崎溫泉靠近日本海，11 月中旬海風強烈，體感僅 4–7 度！在船上與山頂公園拍照時，務必幫媽媽戴上毛帽、圍巾與手套，切勿受寒。"]
+      ]],
+      ["2026-11-19", [
+        ["08:30-11:30","溫泉晨喚 & 柳樹小徑晨散","悠閒享用朝霧莊溫泉早餐。隨後帶媽媽沿著大溪川畔悠閒慢步，柳樹小徑、太鼓橋充滿了大正浪漫風情，全區地形筆直且完全平坦，極適合拍照。"],
+        ["12:32-14:55","黃金返城特急：直達京都（憑第一天換好之指定席券入座）","搭計程車到火車站，憑周遊券乘坐「特急 Kounotori 14號」或「Kinosaki」直達列車返城。特急一路直達，完全不需轉車！\n2.5小時車程剛好讓媽媽在火車大座位上舒適午睡補眠。下車後直接搭計程車回飯店，行李已在房間等您們。"],
+        ["16:00-17:30","Nintendo KYOTO 官方旗艦店","叫計程車直達四條河原町的高島屋百貨 7 樓。朝聖巨大的瑪利歐雕像與限定周邊，動線寬敞，媽媽可在百貨休息沙發區輕鬆歇息。"],
+        ["17:30-19:30","高台寺秋季夜間特別拜觀","從高島屋搭計程車，手動將 GO App 的下車點精準定位在「高台寺停車場（台所坂上）」。\n計程車可以直接沿後山車道開到山門口，讓媽媽完全不用爬陡峭的石階！\n慢步欣賞臥龍池的鏡面紅葉倒影與方丈庭園的 3D 燈光投影光雕秀。走完叫計程車回飯店享用晚餐。"]
+      ]],
+      ["2026-11-20", [
+        ["09:15-11:00","晴明神社（安倍晴明聖地）","從飯店搭計程車出發（車程 5 分鐘，極近）。正門口大鳥居緊鄰大馬路（堀川通），避車彎寬敞，上下車安全。\n長輩友善度：⭐⭐⭐⭐⭐ 全區完全是平坦的柏油路與石磚地，沒有任何一階階梯！ 帶媽媽看「五芒星鳥居」、摸摸可以除惡運的「厄除桃」，買極具特色的五芒星御守。"],
+        ["11:00-11:15","計程車短接 ➔ 百年老店豆腐午餐","神社門口叫車只需 5 分鐘即可抵達北野天滿宮。在鳥居旁百年老店品嚐京都傳統湯豆腐定食或清淡熱湯麵（西式靠背椅）。"],
+        ["12:30-14:45","北野天滿宮・御土居紅葉苑","園區內特別修築了 平整的木棧道與無障礙坡道，媽媽走起來非常輕鬆。一整片如隧道般的紅楓遮天。\n不累秘訣：門票附贈一份老字號「北野大茶湯」日式和菓子與熱茶！ 走完剛好可以帶媽媽坐下來歇息、一邊優雅地在紅楓溪谷旁喝下午茶。"],
+        ["15:15-17:30","大丸百貨京都店最後大採買","搭計程車直達四條烏丸。放棄人擠人的車站地下街，改逛離飯店不遠的大丸百貨。\n買完一輪抹茶伴手禮與藥妝後，由先生或您拎回飯店，媽媽在百貨休息區空手喝咖啡，體力負擔直接減半。晚上回房打包大行李箱。"]
+      ]],
+      ["2026-11-21", [
+        ["07:30","退房、JR Pass 與退稅準備","🎫 專屬您的 JR Pass 回程效期備忘：\n您的 Klook 關西廣域周遊券連續 5 日使用期為 11/18 至 11/22。\n11/21 回國日落在周遊券的第 4 天效期內！當天完全不需額外購買 HARUKA 車票。使用第一天在京都車站綠色售票機預先劃好的 HARUKA 指定席座位票直接乘車即可。\n🚨 時間提早與退稅新規：配合日本最新「先付後退」退稅新規，機場海關查驗需要排隊，全家提早 30 分鐘於 07:30 辦理 Check-out 出發！\n⚠️ 重要：抵達機場後「先不要辦理大行李托運」，必須先手提免稅商品至海關櫃檯進行實體核對查驗，稅款才會退回信用卡！"],
+        ["07:35","出發交通抉擇（依現場狀況三選一）","【方案 A：首選計程車 ➔ 憑 JR Pass 免費搭 HARUKA】\n使用 GO App 叫計程車直達京都車站「八條口」（車程 12 分鐘）。\n拿著全家的 JR 關西廣域周遊券磁卡與預先劃好的指定席券，直接過閘門搭乘 08:30 的 HARUKA 特急 直達關西機場（09:55 抵達，此段交通費用已包含在您的 Pass 中，免額外付費）。\n【方案 B：市區公車備案 ➔ 憑 JR Pass 免費搭 HARUKA】 (若遇到市區大塞車叫不到計程車)\n直接出飯店右轉 20 公尺至「烏丸丸太町」站，搭乘市營巴士 101 號直達「京都車站前烏丸口」（車程 15 分鐘）。下車全平路直走 1 分鐘進入 JR 中央口銜接 HARUKA。\n【方案 C：機場高速巴士終極救星】 (若遇到關西鐵路大意外、HARUKA 停駛)\n搭計程車直達京都車站八條口，前往 H2 月台 現場購買利木津巴士車票（2,600 日圓/人，注意：此時 JR Pass 無法使用於巴士）。站務人員會將大行李鎖入車底行李艙。\n搭乘 08:40 發車的利木津巴士，直達關西機場 4 樓大門口（10:10 抵達）。下車開門就是長榮航空報到大廳，最省長輩體力！"],
+        ["11:00-12:30","長榮航空報到與免稅店補貨","海關退稅查驗完畢後，至長榮航空櫃檯（BR131）託運大行李箱、辦理登機。\n進關後在免稅店進行最後大補貨，13:10 起飛返台，結束完美旅程。"]
+      ]]
+    ];
+    const V72_ITEMS = V72_DAYS.flatMap(([date, dayItems]) => dayItems.map(([time, title, notes], index) => ({
+      id: date === "2026-11-15"
+        ? V72_KLOOK_IDS[index]
+        : `v72-${date}-${String(index + 1).padStart(2, "0")}`,
+      date,
+      time,
+      title,
+      location: "",
+      notes
+    })));
+    const form = document.querySelector("#itinerary-form");
+    const formTitle = document.querySelector("#form-title");
+    const formDescription = document.querySelector("#form-description");
+    const submitButton = document.querySelector("#submit-button");
+    const cancelButton = document.querySelector("#cancel-button");
+    const itemCount = document.querySelector("#item-count");
+    const summary = document.querySelector("#summary");
+    const notice = document.querySelector("#notice");
+    const exportButton = document.querySelector("#export-button");
+    const importButton = document.querySelector("#import-button");
+    const importFile = document.querySelector("#import-file");
+    const directoryButton = document.querySelector("#directory-button");
+    const fileSyncStatus = document.querySelector("#file-sync-status");
+    const dayTabs = document.querySelector("#day-tabs");
+    const itineraryContent = document.querySelector("#itinerary-content");
+    let items = [];
+    let checklists = {};
+    let editingId = null;
+    let editingChecklistId = null;
+    let currentDay = null;
+    let draggedItemId = null;
+    let storageReady = true;
+    let checklistStorageReady = true;
+    let directoryHandle = null;
+    let fileSaveQueue = Promise.resolve();
+
+    function isValidDateString(dateString) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+        return false;
+      }
+
+      const date = new Date(`${dateString}T00:00:00.000Z`);
+      return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === dateString;
+    }
+
+    function isItineraryItem(item) {
+      return item !== null
+        && typeof item === "object"
+        && typeof item.id === "string"
+        && typeof item.date === "string"
+        && isValidDateString(item.date)
+        && typeof item.time === "string"
+        && typeof item.title === "string"
+        && typeof item.location === "string"
+        && typeof item.notes === "string"
+        && (item.order === undefined || Number.isSafeInteger(item.order));
+    }
+
+    function isChecklistItem(item) {
+      return item !== null
+        && typeof item === "object"
+        && typeof item.id === "string"
+        && item.id.trim().length > 0
+        && item.id.length <= 128
+        && typeof item.text === "string"
+        && item.text.trim().length > 0
+        && item.text.length <= 120
+        && typeof item.checked === "boolean";
+    }
+
+    function isValidChecklistData(data) {
+      if (data === null || typeof data !== "object" || Array.isArray(data)) {
+        return false;
+      }
+
+      const seenIds = new Set();
+      for (const [date, dayItems] of Object.entries(data)) {
+        if (!isValidDateString(date) || !Array.isArray(dayItems) || !dayItems.every(isChecklistItem)) {
+          return false;
+        }
+        for (const item of dayItems) {
+          if (seenIds.has(item.id)) {
+            return false;
+          }
+          seenIds.add(item.id);
+        }
+      }
+      return true;
+    }
+
+    function loadItems() {
+      try {
+        const savedItems = window.localStorage.getItem(STORAGE_KEY);
+        if (savedItems === null) {
+          return [];
+        }
+
+        const parsedItems = JSON.parse(savedItems);
+        if (!Array.isArray(parsedItems) || !parsedItems.every(isItineraryItem)) {
+          throw new Error("行程資料格式不正確。");
+        }
+        return parsedItems;
+      } catch {
+        storageReady = false;
+        showNotice("無法讀取本機行程資料，為避免覆蓋原資料，暫時停用編輯。請確認瀏覽器儲存空間後重新開啟頁面。", true);
+        form.querySelectorAll("input, textarea, button").forEach((control) => {
+          control.disabled = true;
+        });
+        exportButton.disabled = true;
+        importButton.disabled = true;
+        return [];
+      }
+    }
+
+    function loadChecklists() {
+      try {
+        const savedChecklists = window.localStorage.getItem(CHECKLIST_STORAGE_KEY);
+        if (savedChecklists === null) {
+          return {};
+        }
+
+        const parsedChecklists = JSON.parse(savedChecklists);
+        if (!isValidChecklistData(parsedChecklists)) {
+          throw new Error("Checklist 資料格式不正確。");
+        }
+        return parsedChecklists;
+      } catch {
+        checklistStorageReady = false;
+        showNotice("無法讀取本機 Checklist 資料，為避免覆蓋原資料，暫時停用 Checklist 編輯。", true);
+        return {};
+      }
+    }
+
+    function saveItems() {
+      try {
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+        queueDirectorySave();
+        return true;
+      } catch {
+        showNotice("行程已在目前頁面更新，但無法儲存到瀏覽器；重新整理後可能會遺失。請檢查瀏覽器儲存空間。", true);
+        return false;
+      }
+    }
+
+    function saveChecklists() {
+      if (!storageReady || !checklistStorageReady) {
+        return false;
+      }
+
+      try {
+        window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(checklists));
+        queueDirectorySave();
+        return true;
+      } catch {
+        showNotice("Checklist 無法儲存到瀏覽器；重新整理後可能會遺失。請檢查瀏覽器儲存空間。", true);
+        return false;
+      }
+    }
+
+    function openFileHandleDatabase() {
+      return new Promise((resolve, reject) => {
+        const request = window.indexedDB.open(FILE_HANDLE_DB_NAME, 1);
+        request.onupgradeneeded = () => {
+          if (!request.result.objectStoreNames.contains(FILE_HANDLE_STORE_NAME)) {
+            request.result.createObjectStore(FILE_HANDLE_STORE_NAME);
+          }
+        };
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error || new Error("無法開啟資料夾授權儲存區。"));
+        request.onblocked = () => reject(new Error("資料夾授權儲存區目前被其他分頁占用。"));
+      });
+    }
+
+    async function readDirectoryHandle() {
+      const database = await openFileHandleDatabase();
+      return new Promise((resolve, reject) => {
+        const transaction = database.transaction(FILE_HANDLE_STORE_NAME, "readonly");
+        const request = transaction.objectStore(FILE_HANDLE_STORE_NAME).get(FILE_HANDLE_KEY);
+        request.onsuccess = () => resolve(request.result || null);
+        request.onerror = () => reject(request.error || new Error("無法讀取已授權的資料夾。"));
+        transaction.oncomplete = () => database.close();
+        transaction.onerror = () => {
+          database.close();
+          reject(transaction.error || new Error("讀取資料夾授權時發生錯誤。"));
+        };
+        transaction.onabort = () => {
+          database.close();
+          reject(transaction.error || new Error("讀取資料夾授權已中止。"));
+        };
+      });
+    }
+
+    async function storeDirectoryHandle(handle) {
+      const database = await openFileHandleDatabase();
+      return new Promise((resolve, reject) => {
+        const transaction = database.transaction(FILE_HANDLE_STORE_NAME, "readwrite");
+        transaction.objectStore(FILE_HANDLE_STORE_NAME).put(handle, FILE_HANDLE_KEY);
+        transaction.oncomplete = () => {
+          database.close();
+          resolve();
+        };
+        transaction.onerror = () => {
+          database.close();
+          reject(transaction.error || new Error("無法保存資料夾授權。"));
+        };
+        transaction.onabort = () => {
+          database.close();
+          reject(transaction.error || new Error("保存資料夾授權已中止。"));
+        };
+      });
+    }
+
+    async function writeItemsToDirectory() {
+      if (!storageReady || !directoryHandle) {
+        return;
+      }
+
+      try {
+        const permission = await directoryHandle.queryPermission({ mode: "readwrite" });
+        if (permission !== "granted") {
+          fileSyncStatus.textContent = "自動存檔權限失效；請按下方按鈕重新選擇存檔目錄。行程仍保存在瀏覽器中。";
+          return;
+        }
+
+        const fileHandle = await directoryHandle.getFileHandle(AUTO_SAVE_FILE_NAME, { create: true });
+        const writable = await fileHandle.createWritable();
+        await writable.write(JSON.stringify(createExportPayload(), null, 2));
+        await writable.close();
+        fileSyncStatus.textContent = `自動存檔已啟用：${AUTO_SAVE_FILE_NAME}`;
+      } catch {
+        fileSyncStatus.textContent = "無法寫入自動存檔檔案；行程仍保存在瀏覽器中，請重新設定資料夾或使用匯出 JSON。";
+        showNotice("自動存檔失敗；瀏覽器本機行程仍已保存。請重新授權資料夾或匯出 JSON 備份。", true);
+      }
+    }
+
+    function queueDirectorySave() {
+      if (!directoryHandle) {
+        return;
+      }
+
+      fileSyncStatus.textContent = `正在寫入：${AUTO_SAVE_FILE_NAME}`;
+      fileSaveQueue = fileSaveQueue.then(writeItemsToDirectory);
+    }
+
+    async function initializeDirectoryAutoSave() {
+      if (!storageReady) {
+        return;
+      }
+      if (typeof window.showDirectoryPicker !== "function" || !window.indexedDB) {
+        directoryButton.disabled = true;
+        fileSyncStatus.textContent = "此瀏覽器不支援資料夾自動存檔；行程仍保存在瀏覽器中，可使用匯出 JSON 備份。";
+        return;
+      }
+
+      try {
+        directoryHandle = await readDirectoryHandle();
+        if (!directoryHandle) {
+          return;
+        }
+
+        const permission = await directoryHandle.queryPermission({ mode: "readwrite" });
+        if (permission !== "granted") {
+          directoryButton.textContent = "重新授權／變更資料夾";
+          fileSyncStatus.textContent = "已記住資料夾，但需要重新授權；請重新選擇存檔目錄。";
+          return;
+        }
+
+        directoryButton.textContent = "變更存檔目錄";
+        fileSyncStatus.textContent = `自動存檔已啟用：${AUTO_SAVE_FILE_NAME}`;
+        queueDirectorySave();
+      } catch {
+        fileSyncStatus.textContent = "無法讀取已授權的資料夾；請重新設定自動存檔。";
+      }
+    }
+
+    async function configureDirectoryAutoSave() {
+      if (typeof window.showDirectoryPicker !== "function" || !window.indexedDB) {
+        showNotice("此瀏覽器不支援資料夾自動存檔；請使用匯出 JSON 備份。", true);
+        return;
+      }
+
+      try {
+        const selectedHandle = await window.showDirectoryPicker({ mode: "readwrite" });
+        const permission = await selectedHandle.requestPermission({ mode: "readwrite" });
+        if (permission !== "granted") {
+          fileSyncStatus.textContent = "尚未取得資料夾寫入授權；行程仍保存在瀏覽器中。";
+          return;
+        }
+
+        let existingFile = false;
+        try {
+          await selectedHandle.getFileHandle(AUTO_SAVE_FILE_NAME);
+          existingFile = true;
+        } catch (error) {
+          if (error.name !== "NotFoundError") {
+            throw error;
+          }
+        }
+
+        const sameDirectory = directoryHandle
+          && typeof directoryHandle.isSameEntry === "function"
+          && await directoryHandle.isSameEntry(selectedHandle);
+        if (existingFile && !sameDirectory
+          && !window.confirm(`${AUTO_SAVE_FILE_NAME} 已存在於所選資料夾。要以目前瀏覽器中的行程覆寫嗎？`)) {
+          return;
+        }
+
+        await storeDirectoryHandle(selectedHandle);
+        directoryHandle = selectedHandle;
+        directoryButton.textContent = "變更存檔目錄";
+        fileSyncStatus.textContent = `正在寫入：${AUTO_SAVE_FILE_NAME}`;
+        queueDirectorySave();
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          showNotice("設定自動存檔失敗；請確認瀏覽器允許資料夾存取，並重新嘗試。", true);
+        }
+      }
+    }
+
+    function ensureDefaultItems() {
+      if (!storageReady) {
+        return;
+      }
+
+      try {
+        if (window.localStorage.getItem(DEFAULT_ITEMS_KEY) === "true") {
+          return;
+        }
+
+        const hasLegacySeed = window.localStorage.getItem(LEGACY_DEFAULT_ITEM_KEY) === "true";
+        const legacyItemExists = items.some((item) => item.id === LEGACY_DEFAULT_ITEM_ID);
+        if (legacyItemExists) {
+          items = items.filter((item) => item.id !== LEGACY_DEFAULT_ITEM_ID);
+        }
+
+        if (legacyItemExists || !hasLegacySeed) {
+          const existingIds = new Set(items.map((item) => item.id));
+          const missingItems = DEFAULT_ITEMS.filter((item) => !existingIds.has(item.id));
+          if (missingItems.length > 0) {
+            items.push(...missingItems);
+            if (!saveItems()) {
+              return;
+            }
+          }
+        }
+
+        window.localStorage.setItem(DEFAULT_ITEMS_KEY, "true");
+      } catch {
+        showNotice("無法更新預設行程分段，請確認瀏覽器儲存空間後重新開啟頁面。", true);
+      }
+    }
+
+    function ensureV72Items() {
+      if (!storageReady) {
+        return;
+      }
+
+      try {
+        if (window.localStorage.getItem(V72_IMPORT_KEY) === "true") {
+          return;
+        }
+
+        const existingIds = new Set(items.map((item) => item.id));
+        const newItems = V72_ITEMS.filter((item) => !existingIds.has(item.id));
+        const correctedReturnNotes = DEFAULT_ITEMS.find(
+          (item) => item.id === "klook-north-kyoto-2026-11-15-return"
+        )?.notes;
+        const updatedItems = correctedReturnNotes
+          ? items.map((item) => item.id === "klook-north-kyoto-2026-11-15-return"
+            && item.notes === LEGACY_KLOOK_RETURN_NOTES
+            ? { ...item, notes: correctedReturnNotes }
+            : item)
+          : items;
+        const returnNotesUpdated = updatedItems.some((item, index) => item !== items[index]);
+        const previousItems = items;
+        items = [...updatedItems, ...newItems];
+        if ((newItems.length > 0 || returnNotesUpdated) && !saveItems()) {
+          items = previousItems;
+          return;
+        }
+
+        window.localStorage.setItem(V72_IMPORT_KEY, "true");
+        showNotice(`已匯入 V7.2 八日行程：新增 ${newItems.length} 筆，略過 ${V72_ITEMS.length - newItems.length} 筆重複 ID。`);
+      } catch {
+        showNotice("無法匯入 V7.2 行程，請確認瀏覽器儲存空間後重新開啟頁面。", true);
+      }
+    }
+
+    function showNotice(message, isError = false) {
+      notice.textContent = message;
+      notice.classList.toggle("error", isError);
+      notice.hidden = false;
+    }
+
+    function clearNotice() {
+      notice.textContent = "";
+      notice.classList.remove("error");
+      notice.hidden = true;
+    }
+
+    function isValidImportedItem(item) {
+      return isItineraryItem(item)
+        && item.id.trim().length > 0
+        && item.id.length <= 128
+        && item.title.trim().length > 0
+        && item.title.length <= 80
+        && item.time.length <= 13
+        && item.location.length <= 120
+        && item.notes.length <= 2000;
+    }
+
+    function parseImportedData(jsonText) {
+      let payload;
+      try {
+        payload = JSON.parse(jsonText);
+      } catch {
+        showNotice("JSON 格式無法解析，請確認檔案內容後再匯入。", true);
+        return null;
+      }
+
+      let importedItems;
+      let importedChecklists = {};
+      if (Array.isArray(payload)) {
+        importedItems = payload;
+      } else if (payload !== null
+        && typeof payload === "object"
+        && payload.format === EXPORT_FORMAT
+        && payload.version === EXPORT_VERSION
+        && Array.isArray(payload.items)) {
+        importedItems = payload.items;
+        if (Object.prototype.hasOwnProperty.call(payload, "checklists")) {
+          if (!isValidChecklistData(payload.checklists)) {
+            showNotice("檔案中的 Checklist 格式錯誤，未匯入任何資料。", true);
+            return null;
+          }
+          importedChecklists = payload.checklists;
+        }
+      } else {
+        showNotice("檔案格式不支援；請選擇本行程頁匯出的 JSON 檔。", true);
+        return null;
+      }
+
+      if (!importedItems.every(isValidImportedItem)) {
+        showNotice("檔案中含有格式錯誤或超出欄位長度的行程，未匯入任何資料。", true);
+        return null;
+      }
+
+      const importedIds = new Set();
+      for (const item of importedItems) {
+        if (importedIds.has(item.id)) {
+          showNotice("檔案中有重複的行程 ID，未匯入任何資料。", true);
+          return null;
+        }
+        importedIds.add(item.id);
+      }
+
+      return {
+        items: importedItems.map((item) => ({
+          id: item.id,
+          date: item.date,
+          time: item.time,
+          title: item.title,
+          location: item.location,
+          notes: item.notes,
+          ...(item.order === undefined ? {} : { order: item.order })
+        })),
+        checklists: Object.fromEntries(
+          Object.entries(importedChecklists).map(([date, dayItems]) => [
+            date,
+            dayItems.map((item) => ({ id: item.id, text: item.text, checked: item.checked }))
+          ])
+        )
+      };
+    }
+
+    function mergeImportedData(importedData) {
+      const { items: importedItems, checklists: importedChecklists } = importedData;
+      const existingItemIds = new Set(items.map((item) => item.id));
+      const newItems = importedItems.filter((item) => !existingItemIds.has(item.id));
+      const skippedItemCount = importedItems.length - newItems.length;
+      const importedChecklistCount = Object.values(importedChecklists)
+        .reduce((count, dayItems) => count + dayItems.length, 0);
+
+      if (importedChecklistCount > 0 && !checklistStorageReady) {
+        showNotice("目前無法讀取本機 Checklist，為避免覆蓋原資料，已取消整份匯入。", true);
+        return;
+      }
+
+      let mergedItems = [...items, ...newItems];
+      const changedDates = new Set(newItems.map((item) => item.date));
+      for (const date of changedDates) {
+        const existingDay = sortDayItems(items.filter((item) => item.date === date));
+        const importedDay = sortDayItems(newItems.filter((item) => item.date === date));
+        const combinedDay = [...existingDay, ...importedDay];
+        if (combinedDay.some((item) => Number.isSafeInteger(item.order))) {
+          const orderedById = new Map(
+            combinedDay.map((item, index) => [item.id, { ...item, order: index }])
+          );
+          mergedItems = mergedItems.map((item) => orderedById.get(item.id) || item);
+        }
+      }
+
+      const existingChecklistIds = new Set(
+        Object.values(checklists).flat().map((item) => item.id)
+      );
+      const mergedChecklists = { ...checklists };
+      let addedChecklistCount = 0;
+      let skippedChecklistCount = 0;
+      for (const [date, importedDayItems] of Object.entries(importedChecklists)) {
+        const newDayItems = importedDayItems.filter((item) => {
+          if (existingChecklistIds.has(item.id)) {
+            skippedChecklistCount += 1;
+            return false;
+          }
+          existingChecklistIds.add(item.id);
+          addedChecklistCount += 1;
+          return true;
+        });
+        if (newDayItems.length > 0) {
+          mergedChecklists[date] = [...(mergedChecklists[date] || []), ...newDayItems];
+        }
+      }
+
+      if (newItems.length === 0 && addedChecklistCount === 0) {
+        showNotice(`沒有新增資料；略過 ${skippedItemCount} 筆重複行程、${skippedChecklistCount} 個重複 Checklist 項目。`);
+        return;
+      }
+
+      const previousItems = items;
+      const previousChecklists = checklists;
+      const previousDay = currentDay;
+      items = mergedItems;
+      checklists = mergedChecklists;
+      currentDay = newItems[0]?.date
+        || Object.keys(importedChecklists).find((date) => mergedChecklists[date]?.length > 0)
+        || currentDay;
+      if (!saveImportedState(previousItems, previousChecklists, newItems.length > 0, addedChecklistCount > 0)) {
+        items = previousItems;
+        checklists = previousChecklists;
+        currentDay = previousDay;
+        render();
+        return;
+      }
+
+      render();
+      showNotice(`匯入完成：新增 ${newItems.length} 筆行程、${addedChecklistCount} 個 Checklist；略過 ${skippedItemCount} 筆重複行程、${skippedChecklistCount} 個重複 Checklist。`);
+    }
+
+    function saveImportedState(previousItems, previousChecklists, updateItems, updateChecklists) {
+      if (!storageReady || (updateChecklists && !checklistStorageReady)) {
+        showNotice("目前無法安全儲存匯入資料，原有資料未變更。", true);
+        return false;
+      }
+
+      try {
+        if (updateItems) {
+          window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+        }
+        if (updateChecklists) {
+          window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(checklists));
+        }
+        queueDirectorySave();
+        return true;
+      } catch {
+        let rollbackFailed = false;
+        try {
+          if (updateItems) {
+            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(previousItems));
+          }
+          if (updateChecklists) {
+            window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(previousChecklists));
+          }
+        } catch {
+          rollbackFailed = true;
+        }
+        showNotice(
+          rollbackFailed
+            ? "匯入儲存失敗，且無法完整回復瀏覽器資料；請立即匯出可讀取的資料。"
+            : "匯入資料無法儲存到瀏覽器，已保留原有資料。",
+          true
+        );
+        if (!rollbackFailed) {
+          queueDirectorySave();
+        }
+        return false;
+      }
+    }
+
+    function createExportPayload() {
+      return {
+        format: EXPORT_FORMAT,
+        version: EXPORT_VERSION,
+        exportedAt: new Date().toISOString(),
+        items,
+        checklists
+      };
+    }
+
+    function exportItems() {
+      if (!storageReady) {
+        return;
+      }
+
+      try {
+        const blob = new Blob([JSON.stringify(createExportPayload(), null, 2)], {
+          type: "application/json;charset=utf-8"
+        });
+        const downloadUrl = URL.createObjectURL(blob);
+        const today = new Date();
+        const dateStamp = [
+          today.getFullYear(),
+          String(today.getMonth() + 1).padStart(2, "0"),
+          String(today.getDate()).padStart(2, "0")
+        ].join("-");
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.download = `TravelingPlan-${dateStamp}.json`;
+        document.body.append(link);
+        link.click();
+        link.remove();
+        window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+        const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
+        showNotice(`已匯出 ${items.length} 筆行程、${checklistCount} 個 Checklist 項目 JSON。`);
+      } catch {
+        showNotice("無法匯出 JSON，請確認瀏覽器是否允許下載檔案。", true);
+      }
+    }
+
+    async function importSelectedFile() {
+      const file = importFile.files?.[0];
+      importFile.value = "";
+      if (!file) {
+        return;
+      }
+      if (!storageReady) {
+        showNotice("目前無法讀取行程資料，已停用匯入以避免覆蓋原資料。", true);
+        return;
+      }
+      if (file.size > MAX_IMPORT_BYTES) {
+        showNotice("匯入檔案超過 5 MB，請選擇較小的 JSON 檔。", true);
+        return;
+      }
+
+      let jsonText;
+      try {
+        jsonText = await file.text();
+      } catch {
+        showNotice("無法讀取所選檔案，請確認檔案可正常開啟。", true);
+        return;
+      }
+
+      const importedData = parseImportedData(jsonText);
+      if (importedData !== null) {
+        mergeImportedData(importedData);
+      }
+    }
+
+    function makeElement(tagName, className, text) {
+      const element = document.createElement(tagName);
+      if (className) {
+        element.className = className;
+      }
+      if (text !== undefined) {
+        element.textContent = text;
+      }
+      return element;
+    }
+
+    function formatDate(dateString) {
+      const [year, month, day] = dateString.split("-").map(Number);
+      const date = new Date(year, month - 1, day);
+      return new Intl.DateTimeFormat("zh-TW", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        weekday: "short"
+      }).format(date);
+    }
+
+    function formatTabDate(dateString) {
+      const [year, month, day] = dateString.split("-").map(Number);
+      const date = new Date(year, month - 1, day);
+      return new Intl.DateTimeFormat("zh-TW", {
+        month: "numeric",
+        day: "numeric",
+        weekday: "short"
+      }).format(date);
+    }
+
+    function sortDayItems(dayItems) {
+      const hasManualOrder = dayItems.some((item) => Number.isSafeInteger(item.order));
+      return [...dayItems].sort((first, second) => {
+        if (hasManualOrder) {
+          const firstOrder = Number.isSafeInteger(first.order) ? first.order : Number.MAX_SAFE_INTEGER;
+          const secondOrder = Number.isSafeInteger(second.order) ? second.order : Number.MAX_SAFE_INTEGER;
+          if (firstOrder !== secondOrder) {
+            return firstOrder - secondOrder;
+          }
+        }
+
+        return (first.time.slice(0, 5) || "99:99").localeCompare(second.time.slice(0, 5) || "99:99");
+      });
+    }
+
+    function createItineraryCard(item, previewIndex) {
+      const card = makeElement("li", "itinerary-item");
+      card.dataset.itemId = item.id;
+      const heading = makeElement("div", "itinerary-heading");
+      const title = makeElement("h3", "item-title", item.title);
+      heading.append(title);
+
+      if (item.time) {
+        heading.append(makeElement("span", "item-time", item.time));
+      }
+
+      const meta = makeElement("div", "item-meta");
+      if (item.location) {
+        const mapLink = makeElement("a", "item-location", `⌖ ${item.location}`);
+        const mapsUrl = new URL("https://www.google.com/maps/search/");
+        mapsUrl.searchParams.set("api", "1");
+        mapsUrl.searchParams.set("query", item.location);
+        mapLink.href = mapsUrl.toString();
+        mapLink.target = "_blank";
+        mapLink.rel = "noopener noreferrer";
+        meta.append(mapLink);
+      }
+
+      card.append(heading, meta);
+
+      let previewToggle = null;
+      if (item.notes) {
+        const preview = makeElement("div", "item-preview");
+        preview.id = `item-preview-${currentDay}-${previewIndex}`;
+        preview.setAttribute("role", "note");
+        preview.setAttribute("aria-label", `行程備註：${item.title}`);
+        preview.append(makeElement("p", "item-notes", item.notes));
+        card.append(preview);
+
+        previewToggle = makeElement("button", "text-button preview-toggle", "查看詳情");
+        previewToggle.type = "button";
+        previewToggle.setAttribute("aria-controls", preview.id);
+        previewToggle.setAttribute("aria-expanded", "false");
+        previewToggle.addEventListener("click", () => {
+          const isOpen = preview.classList.toggle("is-open");
+          previewToggle.textContent = isOpen ? "收合詳情" : "查看詳情";
+          previewToggle.setAttribute("aria-expanded", String(isOpen));
+        });
+      }
+
+      const actions = makeElement("div", "item-actions");
+      const dragHandle = makeElement("button", "text-button drag-handle", "⠿");
+      dragHandle.type = "button";
+      dragHandle.draggable = true;
+      dragHandle.dataset.itemId = item.id;
+      dragHandle.setAttribute("aria-label", `拖曳或使用方向鍵調整排序：${item.title}`);
+      dragHandle.title = "拖曳排序；鍵盤可使用 ↑／↓";
+      dragHandle.addEventListener("dragstart", (event) => {
+        if (!event.dataTransfer) {
+          return;
+        }
+
+        draggedItemId = item.id;
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", item.id);
+        document.body.classList.add("is-reordering");
+        card.classList.add("is-dragging");
+      });
+      dragHandle.addEventListener("dragend", () => {
+        draggedItemId = null;
+        document.body.classList.remove("is-reordering");
+        card.classList.remove("is-dragging");
+        clearDropIndicators();
+      });
+      dragHandle.addEventListener("keydown", (event) => {
+        const offset = event.key === "ArrowDown" ? 1 : event.key === "ArrowUp" ? -1 : 0;
+        if (offset === 0) {
+          return;
+        }
+
+        const dayItems = sortDayItems(items.filter((entry) => entry.date === item.date));
+        const currentIndex = dayItems.findIndex((entry) => entry.id === item.id);
+        const targetIndex = currentIndex + offset;
+        if (targetIndex < 0 || targetIndex >= dayItems.length) {
+          return;
+        }
+
+        event.preventDefault();
+        const moved = reorderWithinDay(item.id, dayItems[targetIndex].id, offset > 0 ? "after" : "before");
+        if (moved) {
+          const nextHandle = [...itineraryContent.querySelectorAll(".drag-handle")]
+            .find((handle) => handle.dataset.itemId === item.id);
+          nextHandle?.focus();
+        }
+      });
+
+      card.addEventListener("dragover", (event) => {
+        const draggedItem = items.find((entry) => entry.id === draggedItemId);
+        if (!draggedItem || draggedItem.id === item.id || draggedItem.date !== item.date) {
+          return;
+        }
+
+        event.preventDefault();
+        if (event.dataTransfer) {
+          event.dataTransfer.dropEffect = "move";
+        }
+        clearDropIndicators();
+        const bounds = card.getBoundingClientRect();
+        card.classList.add(event.clientY >= bounds.top + bounds.height / 2 ? "drop-after" : "drop-before");
+      });
+      card.addEventListener("drop", (event) => {
+        const draggedItem = items.find((entry) => entry.id === draggedItemId);
+        if (!draggedItem || draggedItem.id === item.id || draggedItem.date !== item.date) {
+          return;
+        }
+
+        event.preventDefault();
+        const position = card.classList.contains("drop-after") ? "after" : "before";
+        reorderWithinDay(draggedItem.id, item.id, position);
+        draggedItemId = null;
+        document.body.classList.remove("is-reordering");
+        clearDropIndicators();
+      });
+
+      const editButton = makeElement("button", "text-button", "編輯");
+      editButton.type = "button";
+      editButton.setAttribute("aria-label", `編輯：${item.title}`);
+      editButton.addEventListener("click", () => startEditing(item));
+
+      const deleteButton = makeElement("button", "text-button delete", "刪除");
+      deleteButton.type = "button";
+      deleteButton.setAttribute("aria-label", `刪除：${item.title}`);
+      deleteButton.addEventListener("click", () => deleteItem(item.id));
+
+      actions.append(dragHandle);
+      if (previewToggle) {
+        actions.append(previewToggle);
+      }
+      actions.append(editButton, deleteButton);
+      card.append(actions);
+      return card;
+    }
+
+    function clearDropIndicators() {
+      itineraryContent.querySelectorAll(".drop-before, .drop-after").forEach((card) => {
+        card.classList.remove("drop-before", "drop-after");
+      });
+    }
+
+    function saveChecklistDay(date, dayItems) {
+      if (!storageReady || !checklistStorageReady) {
+        showNotice("目前無法安全儲存 Checklist，請確認瀏覽器儲存空間後重新開啟頁面。", true);
+        return false;
+      }
+
+      const previousChecklists = checklists;
+      const nextChecklists = { ...checklists };
+      if (dayItems.length > 0) {
+        nextChecklists[date] = dayItems;
+      } else {
+        delete nextChecklists[date];
+      }
+      checklists = nextChecklists;
+      if (!saveChecklists()) {
+        checklists = previousChecklists;
+        return false;
+      }
+      return true;
+    }
+
+    function renderChecklist(date) {
+      const panel = makeElement("section", "checklist-panel");
+      const heading = makeElement("h3", "checklist-heading");
+      heading.id = `checklist-heading-${date}`;
+      const dayItems = checklists[date] || [];
+      const completedCount = dayItems.filter((item) => item.checked).length;
+      const progressPercent = dayItems.length === 0
+        ? 0
+        : Math.round(completedCount / dayItems.length * 100);
+      heading.append(
+        makeElement("span", "", "Checklist"),
+        makeElement("span", "checklist-count", `${completedCount}/${dayItems.length} 完成・${progressPercent}%`)
+      );
+      panel.setAttribute("aria-labelledby", heading.id);
+      panel.append(heading);
+
+      const progress = makeElement("div", "checklist-progress");
+      progress.setAttribute("role", "progressbar");
+      progress.setAttribute("aria-label", "Checklist 完成度");
+      progress.setAttribute("aria-valuemin", "0");
+      progress.setAttribute("aria-valuemax", "100");
+      progress.setAttribute("aria-valuenow", String(progressPercent));
+      progress.setAttribute(
+        "aria-valuetext",
+        `${completedCount}/${dayItems.length} 項目完成，${progressPercent}%`
+      );
+      const progressBar = makeElement("span", "checklist-progress-bar");
+      progressBar.style.width = `${progressPercent}%`;
+      progress.append(progressBar);
+      panel.append(progress);
+
+      const addForm = makeElement("form", "checklist-add-form");
+      const addInput = makeElement("input", "checklist-input");
+      addInput.type = "text";
+      addInput.maxLength = 120;
+      addInput.required = true;
+      addInput.placeholder = "新增今天要確認的項目";
+      addInput.setAttribute("aria-label", "新增 Checklist 項目");
+      addInput.disabled = !storageReady || !checklistStorageReady;
+      const addButton = makeElement("button", "secondary-button", "新增");
+      addButton.type = "submit";
+      addButton.disabled = !storageReady || !checklistStorageReady;
+      addForm.append(addInput, addButton);
+      addForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const text = addInput.value.trim();
+        if (!text) {
+          addInput.focus();
+          return;
+        }
+
+        const nextDayItems = [...(checklists[date] || []), {
+          id: `check-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
+          text,
+          checked: false
+        }];
+        if (saveChecklistDay(date, nextDayItems)) {
+          clearNotice();
+          render();
+        }
+      });
+      panel.append(addForm);
+
+      if (dayItems.length === 0) {
+        panel.append(makeElement("p", "checklist-empty", "還沒有待辦，新增今天要確認的項目。"));
+        return panel;
+      }
+
+      const list = makeElement("ul", "checklist-list");
+      dayItems.forEach((item) => {
+        const row = makeElement("li", "checklist-row");
+        const checkbox = makeElement("input", "checklist-checkbox");
+        checkbox.type = "checkbox";
+        checkbox.checked = item.checked;
+        checkbox.disabled = !storageReady || !checklistStorageReady;
+        checkbox.setAttribute("aria-label", `標記完成：${item.text}`);
+        checkbox.addEventListener("change", () => {
+          const nextDayItems = dayItems.map((entry) => entry.id === item.id
+            ? { ...entry, checked: checkbox.checked }
+            : entry);
+          if (saveChecklistDay(date, nextDayItems)) {
+            render();
+          } else {
+            checkbox.checked = item.checked;
+          }
+        });
+        row.append(checkbox);
+
+        if (editingChecklistId === item.id) {
+          const editForm = makeElement("form", "checklist-edit-form");
+          const editInput = makeElement("input", "checklist-input");
+          editInput.type = "text";
+          editInput.maxLength = 120;
+          editInput.required = true;
+          editInput.value = item.text;
+          editInput.setAttribute("aria-label", "編輯 Checklist 項目");
+          editInput.disabled = !storageReady || !checklistStorageReady;
+          const saveButton = makeElement("button", "text-button checklist-save-button", "儲存");
+          saveButton.type = "submit";
+          saveButton.disabled = !storageReady || !checklistStorageReady;
+          const cancelEditButton = makeElement("button", "text-button checklist-cancel-button", "取消");
+          cancelEditButton.type = "button";
+          cancelEditButton.addEventListener("click", () => {
+            editingChecklistId = null;
+            render();
+          });
+          editForm.append(editInput, saveButton, cancelEditButton);
+          editForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const text = editInput.value.trim();
+            if (!text) {
+              editInput.focus();
+              return;
+            }
+
+            const nextDayItems = dayItems.map((entry) => entry.id === item.id
+              ? { ...entry, text }
+              : entry);
+            if (saveChecklistDay(date, nextDayItems)) {
+              editingChecklistId = null;
+              clearNotice();
+              render();
+            }
+          });
+          row.append(editForm);
+          window.requestAnimationFrame(() => editInput.focus());
+        } else {
+          const text = makeElement("span", `checklist-text${item.checked ? " is-checked" : ""}`, item.text);
+          row.append(text);
+
+          const actions = makeElement("div", "checklist-item-actions");
+          const editButton = makeElement("button", "text-button", "編輯");
+          editButton.type = "button";
+          editButton.disabled = !storageReady || !checklistStorageReady;
+          editButton.setAttribute("aria-label", `編輯 Checklist：${item.text}`);
+          editButton.addEventListener("click", () => {
+            editingChecklistId = item.id;
+            render();
+          });
+          const deleteButton = makeElement("button", "text-button delete", "刪除");
+          deleteButton.type = "button";
+          deleteButton.disabled = !storageReady || !checklistStorageReady;
+          deleteButton.setAttribute("aria-label", `刪除 Checklist：${item.text}`);
+          deleteButton.addEventListener("click", () => {
+            if (!window.confirm(`確定刪除 Checklist 項目「${item.text}」？`)) {
+              return;
+            }
+            const nextDayItems = dayItems.filter((entry) => entry.id !== item.id);
+            if (saveChecklistDay(date, nextDayItems)) {
+              render();
+            }
+          });
+          actions.append(editButton, deleteButton);
+          row.append(actions);
+        }
+        list.append(row);
+      });
+      panel.append(list);
+      return panel;
+    }
+
+    function render() {
+      itemCount.textContent = String(items.length);
+      itemCount.setAttribute("aria-label", `共 ${items.length} 個行程`);
+
+      const dates = [...new Set([
+        ...items.map((item) => item.date),
+        ...Object.keys(checklists)
+      ])].sort();
+      if (dates.length === 0) {
+        currentDay = null;
+        summary.textContent = "還沒有安排任何行程";
+        dayTabs.replaceChildren();
+        const emptyState = makeElement("div", "empty-state");
+        emptyState.append(makeElement("span", "empty-icon", "✦"));
+        emptyState.append(makeElement("h3", "", "旅程，從第一站開始"));
+        emptyState.append(makeElement("p", "", "先把最期待的景點或活動記下來，之後隨時都能修改。"));
+        itineraryContent.setAttribute("aria-labelledby", "itinerary-title");
+        itineraryContent.replaceChildren(emptyState);
+        return;
+      }
+
+      const dayCount = dates.length;
+      summary.textContent = `${dayCount} 天・${items.length} 個時段`;
+      if (!dates.includes(currentDay)) {
+        currentDay = dates[0];
+      }
+
+      dayTabs.replaceChildren();
+      dates.forEach((date, index) => {
+        const tab = makeElement("button", "day-tab", formatTabDate(date));
+        tab.type = "button";
+        tab.id = `day-tab-${date}`;
+        tab.dataset.date = date;
+        tab.setAttribute("role", "tab");
+        tab.setAttribute("aria-controls", "itinerary-content");
+        tab.setAttribute("aria-selected", String(date === currentDay));
+        tab.tabIndex = date === currentDay ? 0 : -1;
+        tab.addEventListener("click", () => {
+          currentDay = date;
+          render();
+        });
+        tab.addEventListener("keydown", (event) => {
+          let nextIndex = index;
+          if (event.key === "ArrowRight") {
+            nextIndex = (index + 1) % dates.length;
+          } else if (event.key === "ArrowLeft") {
+            nextIndex = (index - 1 + dates.length) % dates.length;
+          } else if (event.key === "Home") {
+            nextIndex = 0;
+          } else if (event.key === "End") {
+            nextIndex = dates.length - 1;
+          } else {
+            return;
+          }
+
+          event.preventDefault();
+          currentDay = dates[nextIndex];
+          render();
+          dayTabs.children[nextIndex].focus();
+        });
+        dayTabs.append(tab);
+      });
+
+      const selectedItems = sortDayItems(items.filter((item) => item.date === currentDay));
+      const dayHeading = makeElement("h3", "day-heading", formatDate(currentDay));
+      const list = makeElement("ol", "itinerary-list");
+      selectedItems.forEach((item, index) => list.append(createItineraryCard(item, index)));
+      itineraryContent.setAttribute("aria-labelledby", `day-tab-${currentDay}`);
+      itineraryContent.replaceChildren(dayHeading, list, renderChecklist(currentDay));
+    }
+
+    function reorderWithinDay(sourceId, targetId, position) {
+      if (!storageReady || sourceId === targetId) {
+        return false;
+      }
+
+      const sourceItem = items.find((item) => item.id === sourceId);
+      const targetItem = items.find((item) => item.id === targetId);
+      if (!sourceItem || !targetItem || sourceItem.date !== targetItem.date) {
+        return false;
+      }
+
+      const reorderedDay = sortDayItems(items.filter((item) => item.date === sourceItem.date));
+      const sourceIndex = reorderedDay.findIndex((item) => item.id === sourceId);
+      const [movingItem] = reorderedDay.splice(sourceIndex, 1);
+      let targetIndex = reorderedDay.findIndex((item) => item.id === targetId);
+      if (position === "after") {
+        targetIndex += 1;
+      }
+      reorderedDay.splice(targetIndex, 0, movingItem);
+
+      const reorderedById = new Map(reorderedDay.map((item, index) => [item.id, { ...item, order: index }]));
+      items = items.map((item) => reorderedById.get(item.id) || item);
+      currentDay = sourceItem.date;
+      saveItems();
+      render();
+      return true;
+    }
+
+    function resetForm() {
+      form.reset();
+      editingId = null;
+      formTitle.textContent = "新增一站";
+      formDescription.textContent = "把想去的地方，慢慢排進行程。";
+      submitButton.textContent = "加入行程";
+      cancelButton.hidden = true;
+    }
+
+    function startEditing(item) {
+      editingId = item.id;
+      form.elements.date.value = item.date;
+      form.elements.time.value = item.time;
+      form.elements.title.value = item.title;
+      form.elements.location.value = item.location;
+      form.elements.notes.value = item.notes;
+      formTitle.textContent = "編輯這一站";
+      formDescription.textContent = "修改完成後，儲存變更即可更新行程。";
+      submitButton.textContent = "儲存變更";
+      cancelButton.hidden = false;
+      clearNotice();
+      document.querySelector("#form-title").scrollIntoView({ behavior: "smooth", block: "start" });
+      form.elements.title.focus({ preventScroll: true });
+    }
+
+    function deleteItem(id) {
+      const item = items.find((entry) => entry.id === id);
+      if (!item || !window.confirm(`確定要刪除「${item.title}」嗎？`)) {
+        return;
+      }
+
+      items = items.filter((entry) => entry.id !== id);
+      saveItems();
+      if (editingId === id) {
+        resetForm();
+      }
+      render();
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!storageReady) {
+        return;
+      }
+
+      const formData = new FormData(form);
+      const date = String(formData.get("date") || "");
+      const existingItem = editingId ? items.find((item) => item.id === editingId) : null;
+      const otherDayItems = items.filter((item) => item.date === date && item.id !== editingId);
+      const orderedDayItems = otherDayItems.filter((item) => Number.isSafeInteger(item.order));
+      const order = existingItem?.date === date && Number.isSafeInteger(existingItem.order)
+        ? existingItem.order
+        : orderedDayItems.length > 0
+          ? Math.max(...orderedDayItems.map((item) => item.order)) + 1
+          : undefined;
+      const itineraryItem = {
+        id: editingId || `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        date,
+        time: String(formData.get("time") || ""),
+        title: String(formData.get("title") || "").trim(),
+        location: String(formData.get("location") || "").trim(),
+        notes: String(formData.get("notes") || "").trim(),
+        ...(order === undefined ? {} : { order })
+      };
+
+      if (!itineraryItem.date || !itineraryItem.title) {
+        return;
+      }
+
+      if (editingId) {
+        items = items.map((item) => item.id === editingId ? itineraryItem : item);
+      } else {
+        items.push(itineraryItem);
+      }
+
+      currentDay = itineraryItem.date;
+      const saved = saveItems();
+      resetForm();
+      if (saved) {
+        clearNotice();
+      }
+      render();
+    });
+
+    cancelButton.addEventListener("click", () => {
+      resetForm();
+      clearNotice();
+    });
+
+    exportButton.addEventListener("click", exportItems);
+    importButton.addEventListener("click", () => importFile.click());
+    directoryButton.addEventListener("click", configureDirectoryAutoSave);
+    importFile.addEventListener("change", importSelectedFile);
+
+    items = loadItems();
+    ensureDefaultItems();
+    ensureV72Items();
+    checklists = loadChecklists();
+    render();
+    initializeDirectoryAutoSave();
+  </script>
+</body>
+</html>
