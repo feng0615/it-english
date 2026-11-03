@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="zh-Hant"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f2eb">
+  <title>快速連結｜旅途清單</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: "Segoe UI", "Noto Sans TC", sans-serif;
+      color: #27322e;
+      background: #f5f2eb;
+      font-synthesis: none;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at 85% 4%, rgba(220, 232, 215, .72), transparent 34rem),
+        #f5f2eb;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .page {
+      width: min(100% - 32px, 1160px);
+      margin: 0 auto;
+      padding: 20px 0 32px;
+    }
+
+    .hero,
+    .section-heading,
+    .link-card,
+    .link-actions {
+      display: flex;
+      align-items: center;
+    }
+
+    .hero {
+      padding: 14px 0 18px;
+    }
+
+    .title-line {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px 10px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 3vw, 36px);
+      letter-spacing: .02em;
+    }
+
+    .version-badge,
+    .version-changelog > summary {
+      color: #526a58;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .version-badge {
+      padding: 3px 8px;
+      border: 1px solid #d5dfd1;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .version-changelog {
+      position: relative;
+    }
+
+    .version-changelog > summary {
+      cursor: pointer;
+      list-style: none;
+      text-underline-offset: 3px;
+    }
+
+    .version-changelog > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .version-changelog > summary::after {
+      content: "⌄";
+      margin-left: 4px;
+    }
+
+    .version-changelog[open] > summary::after {
+      content: "⌃";
+    }
+
+    .version-changelog > summary:focus-visible {
+      outline: 2px solid #91aa96;
+      outline-offset: 3px;
+    }
+
+    .version-changelog-panel {
+      position: absolute;
+      z-index: 5;
+      top: calc(100% + 8px);
+      left: 0;
+      width: min(340px, calc(100vw - 32px));
+      padding: 12px;
+      border: 1px solid #dfe4dc;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 8px 24px rgba(48, 62, 51, .12);
+    }
+
+    .version-changelog-title {
+      margin: 0 0 8px;
+      color: #45554a;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .version-changelog-list {
+      margin: 0;
+      padding-left: 20px;
+      color: #5e6961;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .version-changelog-list li + li {
+      margin-top: 8px;
+    }
+
+    .version-changelog-entry-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .version-changelog-version {
+      color: #42604c;
+    }
+
+    .version-changelog-date {
+      color: #89928b;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .version-changelog-list p {
+      margin: 3px 0 0;
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      margin: 6px 0 0;
+      color: #68716b;
+      line-height: 1.7;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(270px, 340px) minmax(0, 1fr);
+      align-items: start;
+      gap: 12px;
+    }
+
+    .panel {
+      padding: 16px;
+      border: 1px solid #e3e3dc;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .86);
+      box-shadow: 0 8px 22px rgba(48, 62, 51, .05);
+    }
+
+    .section-heading {
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .collapsible-heading {
+      margin-bottom: 0;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .collapsible-heading::-webkit-details-marker {
+      display: none;
+    }
+
+    .collapsible-heading::after {
+      color: #617767;
+      content: "＋";
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    .collapsible-heading:focus-visible {
+      outline: 2px solid #91aa96;
+      outline-offset: 3px;
+    }
+
+    .form-panel[open] .collapsible-heading {
+      margin-bottom: 10px;
+    }
+
+    .form-panel[open] .collapsible-heading::after {
+      content: "－";
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .link-count {
+      color: #7a827c;
+      font-size: 13px;
+    }
+
+    .link-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .link-card {
+      position: relative;
+      justify-content: space-between;
+      gap: 10px;
+      min-width: 0;
+      padding: 10px;
+      border: 1px solid #e6e9e2;
+      border-radius: 12px;
+      background: #fff;
+      transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
+    }
+
+    .link-card:hover,
+    .link-card:focus-within {
+      border-color: #b6cbb8;
+      background: #edf4eb;
+      box-shadow: 0 3px 10px rgba(48, 62, 51, .08);
+    }
+
+    .link-main {
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      display: flex;
+      min-width: 0;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 116px 10px 10px;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .link-main:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #91aa96;
+      outline-offset: 3px;
+    }
+
+    .link-icon {
+      display: grid;
+      flex: 0 0 32px;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border-radius: 10px;
+      background: #eef3eb;
+      color: #54705a;
+      font-size: 16px;
+    }
+
+    .link-copy {
+      min-width: 0;
+    }
+
+    .link-title,
+    .link-url {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .link-title {
+      font-weight: 700;
+    }
+
+    .link-url {
+      max-width: 460px;
+      margin-top: 2px;
+      color: #78817b;
+      font-size: 11px;
+    }
+
+    .link-actions {
+      position: relative;
+      z-index: 1;
+      flex: 0 0 auto;
+      margin-left: auto;
+      gap: 6px;
+    }
+
+    .button {
+      min-height: 34px;
+      padding: 7px 10px;
+      border: 1px solid #d9dfd6;
+      border-radius: 9px;
+      background: #fff;
+      color: #42584a;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background: #f3f6f1;
+    }
+
+    .button-primary {
+      border-color: #42604c;
+      background: #42604c;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .button-primary:hover {
+      background: #344f3d;
+    }
+
+    .button-danger {
+      color: #9a4f45;
+    }
+
+    .button-danger:hover {
+      background: #fff4f1;
+    }
+
+    .form-fields {
+      display: grid;
+      gap: 10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #45554a;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      min-height: 38px;
+      padding: 8px 10px;
+      border: 1px solid #d9dfd6;
+      border-radius: 9px;
+      background: #fff;
+      color: #27322e;
+    }
+
+    input::placeholder {
+      color: #9aa19b;
+    }
+
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .form-note {
+      margin: 10px 0 0;
+      color: #78817b;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .empty-state {
+      padding: 20px 14px;
+      border: 1px dashed #d9dfd6;
+      border-radius: 15px;
+      color: #78817b;
+      text-align: center;
+    }
+
+    .empty-state[hidden] {
+      display: none;
+    }
+
+    .status {
+      min-height: 18px;
+      margin: 8px 0 0;
+      color: #42604c;
+      font-size: 12px;
+    }
+
+    .status-error {
+      color: #a33f35;
+    }
+
+    fieldset {
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    fieldset:disabled {
+      opacity: .6;
+    }
+
+    @media (max-width: 740px) {
+      .page {
+        width: min(100% - 24px, 600px);
+        padding-top: 12px;
+        padding-bottom: 24px;
+      }
+
+      .hero {
+        padding: 12px 0 16px;
+      }
+
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        padding: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .link-main {
+        padding-right: 96px;
+      }
+
+      .link-actions {
+        gap: 4px;
+      }
+
+      .link-actions .button {
+        min-height: 32px;
+        padding: 6px 7px;
+        font-size: 12px;
+      }
+
+      .link-url {
+        max-width: min(42vw, 220px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <div class="title-line">
+          <h1 id="page-title">常用連結，一頁收好。</h1>
+          <span class="version-badge">v1.1.0</span>
+          <details class="version-changelog">
+            <summary>更新日誌</summary>
+            <div class="version-changelog-panel">
+              <p class="version-changelog-title">版本異動紀錄</p>
+              <ol class="version-changelog-list">
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.1.0</strong>
+                    <time class="version-changelog-date" datetime="2026-11-03">2026-11-03</time>
+                  </div>
+                  <p>調換快速連結與新增表單的位置，並將新增快速連結區塊改為預設收合。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.0.1</strong>
+                    <time class="version-changelog-date" datetime="2026-11-03">2026-11-03</time>
+                  </div>
+                  <p>修正相對連結在手機預覽器的 srcdoc 環境中無法載入快速連結清單的問題。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.0.0</strong>
+                    <time class="version-changelog-date" datetime="2026-11-03">2026-11-03</time>
+                  </div>
+                  <p>快速連結管理初始版本，支援新增、編輯、刪除、整列開啟與 HTML 下載保存。</p>
+                </li>
+              </ol>
+            </div>
+          </details>
+        </div>
+        <p class="hero-copy">整理旅途中常用的網站與工具，點選即可在新分頁開啟。</p>
+      </div>
+    </section>
+
+    <div class="content-grid">
+      <details class="panel form-panel" id="form-panel" aria-labelledby="form-heading">
+        <summary class="section-heading collapsible-heading">
+          <h2 id="form-heading">新增快速連結</h2>
+        </summary>
+        <form id="link-form">
+          <fieldset id="link-fields">
+            <div class="form-fields">
+              <div>
+                <label for="link-title">連結名稱</label>
+                <input id="link-title" name="title" type="text" maxlength="80" autocomplete="off" placeholder="例如：航空公司官網" required="">
+              </div>
+              <div>
+                <label for="link-url">網址</label>
+                <input id="link-url" name="url" type="text" inputmode="url" autocomplete="url" placeholder="https://example.com" required="">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="button button-primary" id="save-button" type="submit">新增連結</button>
+              <button class="button" id="cancel-button" type="button" hidden="">取消編輯</button>
+            </div>
+          </fieldset>
+          <p class="form-note">網址僅接受 HTTP／HTTPS，或同資料夾內的相對連結。每次異動後會下載更新版 HTML，請以下載檔取代原檔。</p>
+          <p class="status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </details>
+
+      <section class="panel" aria-labelledby="links-heading">
+        <div class="section-heading">
+          <h2 id="links-heading">快速連結</h2>
+          <span class="link-count" id="link-count">0 個連結</span>
+        </div>
+        <ul class="link-list" id="link-list"></ul>
+        <p class="empty-state" id="empty-state" hidden="">目前沒有快速連結，請展開新增快速連結區塊。</p>
+        <p class="status" id="list-status" role="status" aria-live="polite"></p>
+      </section>
+    </div>
+  </main>
+
+  <script type="application/json" id="embedded-links">[{"id":"traveling-plan","title":"旅遊行程規劃","url":"TravelingPlan.html"},{"id":"9f41265a-48b8-40fa-9b64-c676ee375840","title":"iPAS AI 應用規劃師刷題","url":"https://feng0615.github.io/it-english/iPAS_AI.html"}]</script>
+  <script>
+    (() => {
+      const embeddedLinks = document.getElementById("embedded-links");
+      const htmlTemplate = document.documentElement.cloneNode(true);
+      const linkList = document.getElementById("link-list");
+      const linkCount = document.getElementById("link-count");
+      const emptyState = document.getElementById("empty-state");
+      const listStatus = document.getElementById("list-status");
+      const formPanel = document.getElementById("form-panel");
+      const form = document.getElementById("link-form");
+      const fields = document.getElementById("link-fields");
+      const titleInput = document.getElementById("link-title");
+      const urlInput = document.getElementById("link-url");
+      const formHeading = document.getElementById("form-heading");
+      const formStatus = document.getElementById("form-status");
+      const saveButton = document.getElementById("save-button");
+      const cancelButton = document.getElementById("cancel-button");
+      let links = [];
+      let editingId = null;
+      let isReady = false;
+
+      function getSafeUrl(value) {
+        const candidate = value.trim();
+        if (!candidate || /[\u0000-\u001f\u007f]/.test(candidate)
+          || candidate.includes("\\") || candidate.startsWith("/")) {
+          return null;
+        }
+
+        if (/^https?:\/\//i.test(candidate)) {
+          try {
+            const parsed = new URL(candidate);
+            return parsed.protocol === "http:" || parsed.protocol === "https:"
+              ? candidate
+              : null;
+          } catch {
+            return null;
+          }
+        }
+
+        if (/^[a-z][a-z\d+.-]*:/i.test(candidate) || candidate.startsWith("//")) {
+          return null;
+        }
+
+        const path = candidate.split(/[?#]/, 1)[0];
+        if (path.split("/").includes("..")) {
+          return null;
+        }
+
+        return candidate;
+      }
+
+      function normalizeLink(item) {
+        if (!item || typeof item.id !== "string" || typeof item.title !== "string" || typeof item.url !== "string") {
+          throw new Error("快速連結資料格式不正確。");
+        }
+
+        const title = item.title.trim();
+        const url = getSafeUrl(item.url);
+        if (!item.id || !title || !url) {
+          throw new Error("快速連結包含空白欄位或不安全的網址。");
+        }
+
+        return { id: item.id, title, url };
+      }
+
+      function loadLinks() {
+        const parsed = JSON.parse(embeddedLinks.textContent || "[]");
+        if (!Array.isArray(parsed)) {
+          throw new Error("快速連結資料格式不正確。");
+        }
+
+        return parsed.map(normalizeLink);
+      }
+
+      function setStatus(element, message, isError = false) {
+        element.textContent = message;
+        element.classList.toggle("status-error", isError);
+      }
+
+      function downloadUpdatedHtml(nextLinks) {
+        try {
+          const updatedDocument = htmlTemplate.cloneNode(true);
+          const updatedData = updatedDocument.querySelector("#embedded-links");
+          updatedData.textContent = JSON.stringify(nextLinks).replace(/</g, "\\u003c");
+
+          const blob = new Blob(
+            [`<!doctype html>\n${updatedDocument.outerHTML}`],
+            { type: "text/html;charset=utf-8" }
+          );
+          const downloadUrl = URL.createObjectURL(blob);
+          const downloadLink = document.createElement("a");
+          downloadLink.href = downloadUrl;
+          downloadLink.download = "index.html";
+          downloadLink.hidden = true;
+          document.body.append(downloadLink);
+          downloadLink.click();
+          downloadLink.remove();
+          window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+          return true;
+        } catch {
+          setStatus(formStatus, "無法產生更新版 HTML；請確認瀏覽器允許下載後重試。", true);
+          return false;
+        }
+      }
+
+      function createElement(tagName, className, text) {
+        const element = document.createElement(tagName);
+        if (className) {
+          element.className = className;
+        }
+        if (text !== undefined) {
+          element.textContent = text;
+        }
+        return element;
+      }
+
+      function renderLinks() {
+        linkList.replaceChildren();
+        linkCount.textContent = `${links.length} 個連結`;
+        emptyState.hidden = links.length > 0;
+
+        for (const link of links) {
+          const item = document.createElement("li");
+          const card = createElement("div", "link-card");
+          const anchor = createElement("a", "link-main");
+          const icon = createElement("span", "link-icon", "↗");
+          const copy = createElement("span", "link-copy");
+          const title = createElement("span", "link-title", link.title);
+          const url = createElement("span", "link-url", link.url);
+          const actions = createElement("div", "link-actions");
+          const editButton = createElement("button", "button", "編輯");
+          const deleteButton = createElement("button", "button button-danger", "刪除");
+
+          anchor.href = getSafeUrl(link.url);
+          anchor.target = "_blank";
+          anchor.rel = "noopener noreferrer";
+          anchor.setAttribute("aria-label", `在新分頁開啟：${link.title}`);
+          icon.setAttribute("aria-hidden", "true");
+          editButton.type = "button";
+          deleteButton.type = "button";
+          editButton.addEventListener("click", () => beginEdit(link));
+          deleteButton.addEventListener("click", () => deleteLink(link));
+
+          copy.append(title, url);
+          anchor.append(icon, copy);
+          actions.append(editButton, deleteButton);
+          card.append(anchor, actions);
+          item.append(card);
+          linkList.append(item);
+        }
+      }
+
+      function resetForm() {
+        form.reset();
+        editingId = null;
+        formHeading.textContent = "新增快速連結";
+        saveButton.textContent = "新增連結";
+        cancelButton.hidden = true;
+        setStatus(formStatus, "");
+      }
+
+      function beginEdit(link) {
+        formPanel.open = true;
+        editingId = link.id;
+        titleInput.value = link.title;
+        urlInput.value = link.url;
+        formHeading.textContent = "編輯快速連結";
+        saveButton.textContent = "儲存變更";
+        cancelButton.hidden = false;
+        setStatus(formStatus, "");
+        titleInput.focus();
+      }
+
+      function deleteLink(link) {
+        if (!window.confirm(`確定要刪除「${link.title}」嗎？`)) {
+          return;
+        }
+
+        const nextLinks = links.filter(item => item.id !== link.id);
+        if (!downloadUpdatedHtml(nextLinks)) {
+          return;
+        }
+
+        links = nextLinks;
+        if (editingId === link.id) {
+          resetForm();
+        }
+        renderLinks();
+        setStatus(listStatus, "已產生更新版 HTML；請下載完成後以此檔取代原檔。");
+      }
+
+      form.addEventListener("submit", event => {
+        event.preventDefault();
+        const title = titleInput.value.trim();
+        const url = getSafeUrl(urlInput.value);
+
+        if (!title) {
+          setStatus(formStatus, "請輸入連結名稱。", true);
+          titleInput.focus();
+          return;
+        }
+        if (!url) {
+          setStatus(formStatus, "請輸入有效的 HTTP／HTTPS 網址或同資料夾相對連結。", true);
+          urlInput.focus();
+          return;
+        }
+
+        const wasEditing = editingId !== null;
+        const savedLink = {
+          id: editingId || (window.crypto?.randomUUID?.() ?? `link-${Date.now()}-${Math.random().toString(36).slice(2)}`),
+          title,
+          url
+        };
+        const nextLinks = editingId
+          ? links.map(link => link.id === editingId ? savedLink : link)
+          : [...links, savedLink];
+
+        if (!downloadUpdatedHtml(nextLinks)) {
+          return;
+        }
+
+        links = nextLinks;
+        resetForm();
+        renderLinks();
+        setStatus(
+          listStatus,
+          `${wasEditing ? "已更新" : "已新增"}快速連結，並產生更新版 HTML；請下載完成後以此檔取代原檔。`
+        );
+      });
+
+      cancelButton.addEventListener("click", resetForm);
+
+      try {
+        links = loadLinks();
+        isReady = true;
+        renderLinks();
+      } catch {
+        fields.disabled = true;
+        setStatus(listStatus, "無法讀取 HTML 內的快速連結資料；請確認資料區塊格式正確。", true);
+      }
+
+      if (!isReady) {
+        linkCount.textContent = "資料無法載入";
+      }
+    })();
+  </script></body></html>
