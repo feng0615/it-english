@@ -3,7 +3,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f2eb">
-  <title>快速連結｜旅途清單</title>
+  <title>常用連結 | 快速設定</title>
   <style>
     :root {
       color-scheme: light;
@@ -130,6 +130,11 @@
     }
 
     .version-changelog-list {
+      height: 24rem;
+      max-height: 70vh;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-gutter: stable;
       margin: 0;
       padding-left: 20px;
       color: #5e6961;
@@ -249,11 +254,29 @@
       transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
     }
 
+    .link-card {
+      cursor: grab;
+    }
+
     .link-card:hover,
     .link-card:focus-within {
       border-color: #b6cbb8;
       background: #edf4eb;
       box-shadow: 0 3px 10px rgba(48, 62, 51, .08);
+    }
+
+    .link-card:active {
+      cursor: grabbing;
+    }
+
+    .link-card.is-dragging {
+      opacity: .45;
+    }
+
+    .link-card.is-drop-target {
+      border-color: #91aa96;
+      background: #e2eee0;
+      box-shadow: 0 3px 12px rgba(48, 62, 51, .12);
     }
 
     .link-main {
@@ -474,12 +497,40 @@
       <div>
         <div class="title-line">
           <h1 id="page-title">常用連結，一頁收好。</h1>
-          <span class="version-badge">v1.2.0</span>
+          <span class="version-badge">版本v1.3.3</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.3</strong>
+                    <time class="version-changelog-date" datetime="2026-11-03">2026-11-03</time>
+                  </div>
+                  <p>更新日誌固定顯示約 20 行，超出內容可垂直捲動查看。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.2</strong>
+                    <time class="version-changelog-date" datetime="2026-11-03">2026-11-03</time>
+                  </div>
+                  <p>將瀏覽器分頁標題改為「常用連結 | 快速設定」。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.1</strong>
+                    <time class="version-changelog-date" datetime="2026-11-03">2026-11-03</time>
+                  </div>
+                  <p>改為以滑鼠拖曳快速連結列調整順序，並保存至目前瀏覽器。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.0</strong>
+                    <time class="version-changelog-date" datetime="2026-11-03">2026-11-03</time>
+                  </div>
+                  <p>新增快速連結上移／下移排序，調整後順序會儲存在目前瀏覽器。</p>
+                </li>
                 <li>
                   <div class="version-changelog-entry-header">
                     <strong class="version-changelog-version">v1.2.0</strong>
@@ -575,6 +626,7 @@
       const cancelButton = document.getElementById("cancel-button");
       let links = [];
       let editingId = null;
+      let draggedLinkId = null;
       let isReady = false;
 
       function getSafeUrl(value) {
@@ -663,7 +715,7 @@
 
       function renderLinks() {
         linkList.replaceChildren();
-        linkCount.textContent = `${links.length} 個連結`;
+        linkCount.textContent = `${links.length} 個連結 · 可拖曳排序`;
         emptyState.hidden = links.length > 0;
 
         for (const link of links) {
@@ -678,7 +730,9 @@
           const editButton = createElement("button", "button", "編輯");
           const deleteButton = createElement("button", "button button-danger", "刪除");
 
+          item.draggable = true;
           anchor.href = getSafeUrl(link.url);
+          anchor.draggable = false;
           anchor.target = "_blank";
           anchor.rel = "noopener noreferrer";
           anchor.setAttribute("aria-label", `在新分頁開啟：${link.title}`);
@@ -687,6 +741,50 @@
           deleteButton.type = "button";
           editButton.addEventListener("click", () => beginEdit(link));
           deleteButton.addEventListener("click", () => deleteLink(link));
+          item.addEventListener("dragstart", event => {
+            if (event.target.closest("button")) {
+              event.preventDefault();
+              return;
+            }
+            draggedLinkId = link.id;
+            card.classList.add("is-dragging");
+            if (event.dataTransfer) {
+              event.dataTransfer.effectAllowed = "move";
+              event.dataTransfer.setData("text/plain", link.id);
+            }
+          });
+          item.addEventListener("dragover", event => {
+            if (!draggedLinkId) {
+              return;
+            }
+            event.preventDefault();
+            if (event.dataTransfer) {
+              event.dataTransfer.dropEffect = "move";
+            }
+            if (draggedLinkId !== link.id) {
+              card.classList.add("is-drop-target");
+            }
+          });
+          item.addEventListener("dragleave", event => {
+            if (!item.contains(event.relatedTarget)) {
+              card.classList.remove("is-drop-target");
+            }
+          });
+          item.addEventListener("drop", event => {
+            event.preventDefault();
+            const sourceId = event.dataTransfer?.getData("text/plain") || draggedLinkId;
+            if (!sourceId) {
+              return;
+            }
+            const bounds = card.getBoundingClientRect();
+            reorderLinks(sourceId, link.id, event.clientY > bounds.top + bounds.height / 2);
+          });
+          item.addEventListener("dragend", () => {
+            draggedLinkId = null;
+            linkList.querySelectorAll(".is-dragging, .is-drop-target").forEach(element => {
+              element.classList.remove("is-dragging", "is-drop-target");
+            });
+          });
 
           copy.append(title, url);
           anchor.append(icon, copy);
@@ -716,6 +814,35 @@
         cancelButton.hidden = false;
         setStatus(formStatus, "");
         titleInput.focus();
+      }
+
+      function reorderLinks(sourceId, targetId, insertAfter) {
+        if (sourceId === targetId) {
+          return;
+        }
+
+        const fromIndex = links.findIndex(link => link.id === sourceId);
+        const targetIndex = links.findIndex(link => link.id === targetId);
+        if (fromIndex < 0 || targetIndex < 0) {
+          return;
+        }
+
+        const nextLinks = [...links];
+        const [movedLink] = nextLinks.splice(fromIndex, 1);
+        const adjustedTargetIndex = nextLinks.findIndex(link => link.id === targetId);
+        nextLinks.splice(adjustedTargetIndex + (insertAfter ? 1 : 0), 0, movedLink);
+        if (nextLinks.every((link, index) => link.id === links[index].id)) {
+          return;
+        }
+
+        if (!persistLinks(nextLinks, listStatus)) {
+          return;
+        }
+
+        draggedLinkId = null;
+        links = nextLinks;
+        renderLinks();
+        setStatus(listStatus, "已調整順序並儲存至目前瀏覽器。");
       }
 
       function deleteLink(link) {
