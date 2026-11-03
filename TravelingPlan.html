@@ -725,6 +725,17 @@
       font-size: 13px;
     }
 
+    .checklist-link {
+      color: var(--green-dark);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .checklist-link:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 2px;
+    }
+
     .checklist-text.is-checked {
       color: var(--muted);
       text-decoration: line-through;
@@ -1170,7 +1181,7 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.1.0</span></p>
+        <p class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.1.1</span></p>
         <h1 id="page-title">把期待，排進旅程裡。</h1>
         <p class="hero-copy">記下每一站想去的地方與想做的事，留一點空白，讓旅途也有即興的驚喜。</p>
       </div>
@@ -2168,6 +2179,48 @@
       return String(value).replace(/[&<>"']/g, (character) => entities[character]);
     }
 
+    function getSafeExternalUrl(value) {
+      try {
+        const url = new URL(value);
+        return url.protocol === "http:" || url.protocol === "https:" ? url.href : null;
+      } catch {
+        return null;
+      }
+    }
+
+    function findHttpUrls(text) {
+      const source = String(text);
+      const links = [];
+      for (const match of source.matchAll(/https?:\/\/[^\s<>"'，。；：！？、]+/gi)) {
+        const trailingPunctuation = /[.,!?;:，。！？；：、]+$/u.exec(match[0])?.[0] || "";
+        const linkText = match[0].slice(0, match[0].length - trailingPunctuation.length);
+        const href = getSafeExternalUrl(linkText);
+        if (href) {
+          links.push({ index: match.index, text: linkText, href });
+        }
+      }
+      return links;
+    }
+
+    function linkifyHtmlText(text, checkboxId) {
+      const source = String(text);
+      let output = "";
+      let lastIndex = 0;
+      for (const link of findHttpUrls(source)) {
+        const plainText = source.slice(lastIndex, link.index);
+        if (plainText) {
+          output += `<label for="${escapeHtml(checkboxId)}">${escapeHtml(plainText)}</label>`;
+        }
+        output += `<a class="checklist-link" href="${escapeHtml(link.href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.text)}</a>`;
+        lastIndex = link.index + link.text.length;
+      }
+      const remainingText = source.slice(lastIndex);
+      if (remainingText) {
+        output += `<label for="${escapeHtml(checkboxId)}">${escapeHtml(remainingText)}</label>`;
+      }
+      return output;
+    }
+
     function formatExportDayHeading(date, index) {
       const [year, month, day] = date.split("-").map(Number);
       const weekday = new Intl.DateTimeFormat("zh-TW", { weekday: "short" })
@@ -2220,7 +2273,10 @@
           }).join("")}</ol>`
           : `<p class="empty">當天尚未安排行程。</p>`;
         const checklist = dayChecklist.length > 0
-          ? `<p class="checklist-progress" data-checklist-progress>${completedCount}/${dayChecklist.length} 項完成（${progressPercent}%）</p><div class="checklist-progress-track" role="progressbar" aria-label="Checklist 完成度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${progressPercent}"><span class="checklist-progress-fill" style="width:${progressPercent}%"></span></div><ul class="checklist-list">${dayChecklist.map((item) => `<li><label class="checklist-item${item.checked ? " checked" : ""}"><input class="checklist-checkbox" type="checkbox" data-checklist-id="${escapeHtml(item.id)}"${item.checked ? " checked" : ""}><span>${escapeHtml(item.text)}</span></label></li>`).join("")}</ul>`
+          ? `<p class="checklist-progress" data-checklist-progress>${completedCount}/${dayChecklist.length} 項完成（${progressPercent}%）</p><div class="checklist-progress-track" role="progressbar" aria-label="Checklist 完成度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${progressPercent}"><span class="checklist-progress-fill" style="width:${progressPercent}%"></span></div><ul class="checklist-list">${dayChecklist.map((item, checklistIndex) => {
+            const checkboxId = `checklist-${index}-${checklistIndex}`;
+            return `<li><div class="checklist-item${item.checked ? " checked" : ""}"><input class="checklist-checkbox" id="${escapeHtml(checkboxId)}" type="checkbox" data-checklist-id="${escapeHtml(item.id)}" aria-label="Checklist 項目：${escapeHtml(item.text)}"${item.checked ? " checked" : ""}><span>${linkifyHtmlText(item.text, checkboxId)}</span></div></li>`;
+          }).join("")}</ul>`
           : `<p class="empty">當天沒有 Checklist 項目。</p>`;
         const expenseList = dayExpenses.length > 0
           ? `<ul class="expense-list">${dayExpenses.map((expense) => {
@@ -2278,9 +2334,11 @@
     .checklist-progress-fill { display: block; height: 100%; border-radius: inherit; background: #ef4d4d; transition: width .2s ease; }
     .checklist-list { padding-left: 0; list-style: none; }
     .checklist-list li { margin: .3em 0; }
-    .checklist-item { display: flex; align-items: flex-start; gap: .6em; cursor: pointer; }
+    .checklist-item { display: flex; align-items: flex-start; gap: .6em; }
     .checklist-checkbox { width: 18px; height: 18px; flex: 0 0 auto; margin: .2em 0 0; accent-color: #0969da; cursor: pointer; }
     .checklist-item > span { flex: 1; }
+    .checklist-item label { cursor: pointer; }
+    .checklist-link { overflow-wrap: anywhere; }
     .checklist-item.checked > span { color: #57606a; }
     .expense-section { padding: 0 22px 18px 45px; }
     .expense-section h4 { margin: 0 0 .35em; }
@@ -2527,6 +2585,27 @@
         element.textContent = text;
       }
       return element;
+    }
+
+    function appendLinkifiedText(container, text) {
+      const source = String(text);
+      let lastIndex = 0;
+      for (const link of findHttpUrls(source)) {
+        const plainText = source.slice(lastIndex, link.index);
+        if (plainText) {
+          container.append(document.createTextNode(plainText));
+        }
+        const anchor = makeElement("a", "checklist-link", link.text);
+        anchor.href = link.href;
+        anchor.target = "_blank";
+        anchor.rel = "noopener noreferrer";
+        container.append(anchor);
+        lastIndex = link.index + link.text.length;
+      }
+      const remainingText = source.slice(lastIndex);
+      if (remainingText) {
+        container.append(document.createTextNode(remainingText));
+      }
     }
 
     function formatDate(dateString) {
@@ -2860,7 +2939,8 @@
           row.append(editForm);
           window.requestAnimationFrame(() => editInput.focus());
         } else {
-          const text = makeElement("span", `checklist-text${item.checked ? " is-checked" : ""}`, item.text);
+          const text = makeElement("span", `checklist-text${item.checked ? " is-checked" : ""}`);
+          appendLinkifiedText(text, item.text);
           row.append(text);
 
           const actions = makeElement("div", "checklist-item-actions");
