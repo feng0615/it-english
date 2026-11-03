@@ -114,6 +114,22 @@
       line-height: 1.14;
     }
 
+    .app-version {
+      display: inline-block;
+      margin-left: .55em;
+      padding: .35em .65em;
+      vertical-align: .18em;
+      border: 1px solid #dce8df;
+      border-radius: 999px;
+      color: var(--green);
+      background: var(--mint);
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: normal;
+      line-height: 1.4;
+      white-space: nowrap;
+    }
+
     .hero-copy {
       max-width: 550px;
       margin: 15px 0 0;
@@ -162,6 +178,19 @@
 
     .form-panel {
       padding: 25px;
+    }
+
+    .form-panel-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .form-toggle {
+      min-height: 36px;
+      padding: 0 12px;
+      white-space: nowrap;
     }
 
     .panel-title {
@@ -303,6 +332,36 @@
 
     .data-actions .secondary-button {
       flex: 1;
+    }
+
+    .data-actions .format-select {
+      flex: 1;
+      min-height: 42px;
+      padding: 0 14px;
+      border: 0;
+      border-radius: 11px;
+      color: #fff;
+      background: var(--green);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 750;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .data-actions .format-select:hover {
+      background: var(--green-dark);
+    }
+
+    .data-actions .format-select:focus-visible {
+      outline: 3px solid rgb(47 105 87 / 24%);
+      outline-offset: 2px;
+    }
+
+    .data-actions .format-select option {
+      color: var(--ink);
+      background: var(--paper);
+      text-align: left;
     }
 
     .file-sync-status {
@@ -805,11 +864,23 @@
         gap: 14px;
       }
 
-      .day-tab {
-        min-height: 42px;
+      .day-tabs {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
       }
 
-      .data-actions .secondary-button {
+      .day-tab {
+        width: 100%;
+        min-width: 0;
+        min-height: 42px;
+        padding: 0 5px;
+        font-size: 11px;
+        line-height: 1.2;
+      }
+
+      .data-actions .secondary-button,
+      .data-actions .format-select {
         min-height: 44px;
       }
 
@@ -951,7 +1022,7 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">YOUR TRIP, YOUR PACE</p>
+        <p class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.0.0</span></p>
         <h1 id="page-title">把期待，排進旅程裡。</h1>
         <p class="hero-copy">記下每一站想去的地方與想做的事，留一點空白，讓旅途也有即興的驚喜。</p>
       </div>
@@ -963,41 +1034,46 @@
 
     <div class="dashboard">
       <section class="panel form-panel" aria-labelledby="form-title">
-        <h2 class="panel-title" id="form-title">新增一站</h2>
-        <p class="panel-description" id="form-description">把想去的地方，慢慢排進行程。</p>
+        <div class="form-panel-heading">
+          <h2 class="panel-title" id="form-title">新增一站</h2>
+          <button class="secondary-button form-toggle" id="form-toggle" type="button" aria-expanded="false" aria-controls="form-content">展開</button>
+        </div>
+        <div id="form-content" hidden>
+          <p class="panel-description" id="form-description">把想去的地方，慢慢排進行程。</p>
 
-        <form id="itinerary-form">
-          <div class="field-row">
-            <div class="field">
-              <label for="item-date">日期 <span aria-hidden="true">*</span></label>
-              <input id="item-date" name="date" type="date" required>
+          <form id="itinerary-form">
+            <div class="field-row">
+              <div class="field">
+                <label for="item-date">日期 <span aria-hidden="true">*</span></label>
+                <input id="item-date" name="date" type="date" required>
+              </div>
+              <div class="field">
+                <label for="item-time">時間區段</label>
+                <input id="item-time" name="time" type="text" maxlength="13" placeholder="例如：09:30–11:00">
+              </div>
             </div>
+
             <div class="field">
-              <label for="item-time">時間區段</label>
-              <input id="item-time" name="time" type="text" maxlength="13" placeholder="例如：09:30–11:00">
+              <label for="item-title">行程名稱 <span aria-hidden="true">*</span></label>
+              <input id="item-title" name="title" type="text" maxlength="80" placeholder="例如：漫步老街" required>
             </div>
-          </div>
 
-          <div class="field">
-            <label for="item-title">行程名稱 <span aria-hidden="true">*</span></label>
-            <input id="item-title" name="title" type="text" maxlength="80" placeholder="例如：漫步老街" required>
-          </div>
+            <div class="field">
+              <label for="item-location">地點</label>
+              <input id="item-location" name="location" type="text" maxlength="120" placeholder="例如：九份老街">
+            </div>
 
-          <div class="field">
-            <label for="item-location">地點</label>
-            <input id="item-location" name="location" type="text" maxlength="120" placeholder="例如：九份老街">
-          </div>
+            <div class="field">
+              <label for="item-notes">備註</label>
+              <textarea id="item-notes" name="notes" maxlength="2000" placeholder="交通、訂位資訊或想記住的小事"></textarea>
+            </div>
 
-          <div class="field">
-            <label for="item-notes">備註</label>
-            <textarea id="item-notes" name="notes" maxlength="2000" placeholder="交通、訂位資訊或想記住的小事"></textarea>
-          </div>
-
-          <div class="form-actions">
-            <button class="primary-button" id="submit-button" type="submit">加入行程</button>
-            <button class="secondary-button" id="cancel-button" type="button" hidden>取消編輯</button>
-          </div>
-        </form>
+            <div class="form-actions">
+              <button class="primary-button" id="submit-button" type="submit">加入行程</button>
+              <button class="secondary-button" id="cancel-button" type="button" hidden>取消編輯</button>
+            </div>
+          </form>
+        </div>
       </section>
 
       <section class="panel itinerary-panel" aria-labelledby="itinerary-title">
@@ -1009,11 +1085,20 @@
           <span class="count-badge" id="item-count" aria-label="行程數量">0</span>
         </div>
         <div class="data-actions" aria-label="行程資料操作">
-          <button class="secondary-button" id="export-button" type="button">匯出 JSON</button>
-          <button class="secondary-button" id="import-button" type="button">匯入 JSON</button>
+          <select class="format-select" id="export-format" aria-label="選擇匯出格式">
+            <option value="" selected disabled hidden>匯出</option>
+            <option value="json">匯出 JSON</option>
+            <option value="html">匯出 HTML</option>
+          </select>
+          <select class="format-select" id="import-format" aria-label="選擇匯入格式">
+            <option value="" selected disabled hidden>匯入</option>
+            <option value="json">匯入 JSON</option>
+            <option value="html">匯入 HTML</option>
+          </select>
           <button class="secondary-button" id="directory-button" type="button">設定自動存檔</button>
           <input id="import-file" type="file" accept=".json,application/json" hidden>
         </div>
+        <p class="file-sync-status">多人接力共編：匯出 JSON 傳給協作者；對方匯入、編輯後再匯出回傳。匯入會在確認後完整取代本機行程與 Checklist；行程檔可能含私人資訊，請只透過可信管道分享。</p>
         <p class="file-sync-status" id="file-sync-status" role="status" aria-live="polite">尚未設定資料夾。設定後請選取 TravelingPlan.html 所在目錄，行程會自動寫入 TravelingPlan-autosave.json。</p>
         <p class="notice" id="notice" role="status" aria-live="polite" hidden></p>
         <div class="day-tabs" id="day-tabs" role="tablist" aria-label="依日期切換行程"></div>
@@ -1180,14 +1265,17 @@
     const form = document.querySelector("#itinerary-form");
     const formTitle = document.querySelector("#form-title");
     const formDescription = document.querySelector("#form-description");
+    const formToggleButton = document.querySelector("#form-toggle");
+    const formContent = document.querySelector("#form-content");
     const submitButton = document.querySelector("#submit-button");
     const cancelButton = document.querySelector("#cancel-button");
     const itemCount = document.querySelector("#item-count");
     const summary = document.querySelector("#summary");
     const notice = document.querySelector("#notice");
-    const exportButton = document.querySelector("#export-button");
-    const importButton = document.querySelector("#import-button");
+    const exportFormat = document.querySelector("#export-format");
+    const importFormat = document.querySelector("#import-format");
     const importFile = document.querySelector("#import-file");
+    let selectedImportFormat = "";
     const directoryButton = document.querySelector("#directory-button");
     const fileSyncStatus = document.querySelector("#file-sync-status");
     const dayTabs = document.querySelector("#day-tabs");
@@ -1275,8 +1363,8 @@
         form.querySelectorAll("input, textarea, button").forEach((control) => {
           control.disabled = true;
         });
-        exportButton.disabled = true;
-        importButton.disabled = true;
+        exportFormat.disabled = true;
+        importFormat.disabled = true;
         return [];
       }
     }
@@ -1642,115 +1730,113 @@
       };
     }
 
-    function mergeImportedData(importedData) {
-      const { items: importedItems, checklists: importedChecklists } = importedData;
-      const existingItemIds = new Set(items.map((item) => item.id));
-      const newItems = importedItems.filter((item) => !existingItemIds.has(item.id));
-      const skippedItemCount = importedItems.length - newItems.length;
-      const importedChecklistCount = Object.values(importedChecklists)
-        .reduce((count, dayItems) => count + dayItems.length, 0);
-
-      if (importedChecklistCount > 0 && !checklistStorageReady) {
-        showNotice("目前無法讀取本機 Checklist，為避免覆蓋原資料，已取消整份匯入。", true);
-        return;
+    function parseImportedHtml(htmlText) {
+      const parsedDocument = new DOMParser().parseFromString(htmlText, "text/html");
+      const isExportedItinerary = parsedDocument.querySelector("article > h1")?.textContent.trim() === "🍁 旅遊行程規劃"
+        && parsedDocument.querySelector("#itinerary-overview")
+        && parsedDocument.querySelector("article > .footer");
+      if (!isExportedItinerary) {
+        showNotice("HTML 格式不支援；請選擇本行程頁匯出的 HTML 檔。", true);
+        return null;
       }
 
-      let mergedItems = [...items, ...newItems];
-      const changedDates = new Set(newItems.map((item) => item.date));
-      for (const date of changedDates) {
-        const existingDay = sortDayItems(items.filter((item) => item.date === date));
-        const importedDay = sortDayItems(newItems.filter((item) => item.date === date));
-        const combinedDay = [...existingDay, ...importedDay];
-        if (combinedDay.some((item) => Number.isSafeInteger(item.order))) {
-          const orderedById = new Map(
-            combinedDay.map((item, index) => [item.id, { ...item, order: index }])
-          );
-          mergedItems = mergedItems.map((item) => orderedById.get(item.id) || item);
+      const importedItems = [];
+      const importedChecklists = {};
+      const seenDates = new Set();
+      const daySections = [...parsedDocument.querySelectorAll("article > section.day")];
+      for (const section of daySections) {
+        const dateMatch = /^day-(\d{4}-\d{2}-\d{2})$/.exec(section.id);
+        if (!dateMatch || !isValidDateString(dateMatch[1]) || seenDates.has(dateMatch[1])
+          || !section.querySelector("[data-checklist-section]")) {
+          showNotice("HTML 檔案中的日期或區塊格式錯誤，未匯入任何資料。", true);
+          return null;
         }
-      }
 
-      const existingChecklistIds = new Set(
-        Object.values(checklists).flat().map((item) => item.id)
-      );
-      const mergedChecklists = { ...checklists };
-      let addedChecklistCount = 0;
-      let skippedChecklistCount = 0;
-      for (const [date, importedDayItems] of Object.entries(importedChecklists)) {
-        const newDayItems = importedDayItems.filter((item) => {
-          if (existingChecklistIds.has(item.id)) {
-            skippedChecklistCount += 1;
-            return false;
+        const date = dateMatch[1];
+        seenDates.add(date);
+        const dayItems = [...section.querySelectorAll(".itinerary-list > li")];
+        for (const [index, entry] of dayItems.entries()) {
+          const title = entry.querySelector(".event-title")?.textContent || "";
+          const locationElement = entry.querySelector(".location");
+          const item = {
+            id: `html-${date}-${index + 1}`,
+            date,
+            time: entry.querySelector(".time")?.textContent.trim() || "",
+            title,
+            location: locationElement?.querySelector("a")?.textContent
+              || locationElement?.textContent.replace(/^地點：\s*/, "")
+              || "",
+            notes: entry.querySelector(".notes")?.textContent || "",
+            order: index
+          };
+          if (!isValidImportedItem(item)) {
+            showNotice("HTML 檔案中含有格式錯誤或超出欄位長度的行程，未匯入任何資料。", true);
+            return null;
           }
-          existingChecklistIds.add(item.id);
-          addedChecklistCount += 1;
-          return true;
-        });
-        if (newDayItems.length > 0) {
-          mergedChecklists[date] = [...(mergedChecklists[date] || []), ...newDayItems];
+          importedItems.push(item);
         }
+
+        importedChecklists[date] = [...section.querySelectorAll(".checklist-checkbox")].map((checkbox) => ({
+          id: checkbox.getAttribute("data-checklist-id") || "",
+          text: checkbox.closest(".checklist-item")?.querySelector("span")?.textContent || "",
+          checked: checkbox.checked
+        }));
       }
 
-      if (newItems.length === 0 && addedChecklistCount === 0) {
-        showNotice(`沒有新增資料；略過 ${skippedItemCount} 筆重複行程、${skippedChecklistCount} 個重複 Checklist 項目。`);
+      if (!isValidChecklistData(importedChecklists)) {
+        showNotice("HTML 檔案中的 Checklist 格式錯誤，未匯入任何資料。", true);
+        return null;
+      }
+
+      return {
+        items: importedItems,
+        checklists: importedChecklists
+      };
+    }
+
+    function replaceImportedData(importedData) {
+      if (!storageReady || !checklistStorageReady) {
+        showNotice("目前無法安全讀取本機行程或 Checklist，原有資料未變更。", true);
         return;
       }
 
       const previousItems = items;
       const previousChecklists = checklists;
-      const previousDay = currentDay;
-      items = mergedItems;
-      checklists = mergedChecklists;
-      currentDay = newItems[0]?.date
-        || Object.keys(importedChecklists).find((date) => mergedChecklists[date]?.length > 0)
-        || currentDay;
-      if (!saveImportedState(previousItems, previousChecklists, newItems.length > 0, addedChecklistCount > 0)) {
-        items = previousItems;
-        checklists = previousChecklists;
-        currentDay = previousDay;
-        render();
+      if (!saveImportedState(importedData, previousItems, previousChecklists)) {
         return;
       }
 
+      items = importedData.items;
+      checklists = importedData.checklists;
+      const dates = [...new Set([...items.map((item) => item.date), ...Object.keys(checklists)])].sort();
+      currentDay = dates.includes(currentDay) ? currentDay : dates[0] || null;
+      queueDirectorySave();
       render();
-      showNotice(`匯入完成：新增 ${newItems.length} 筆行程、${addedChecklistCount} 個 Checklist；略過 ${skippedItemCount} 筆重複行程、${skippedChecklistCount} 個重複 Checklist。`);
+      const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
+      showNotice(`已匯入並取代本機資料：${items.length} 筆行程、${checklistCount} 個 Checklist 項目。`);
     }
 
-    function saveImportedState(previousItems, previousChecklists, updateItems, updateChecklists) {
-      if (!storageReady || (updateChecklists && !checklistStorageReady)) {
-        showNotice("目前無法安全儲存匯入資料，原有資料未變更。", true);
-        return false;
-      }
-
+    function saveImportedState(importedData, previousItems, previousChecklists) {
       try {
-        if (updateItems) {
-          window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-        }
-        if (updateChecklists) {
-          window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(checklists));
-        }
-        queueDirectorySave();
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(importedData.items));
+        window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(importedData.checklists));
         return true;
       } catch {
         let rollbackFailed = false;
         try {
-          if (updateItems) {
-            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(previousItems));
-          }
-          if (updateChecklists) {
-            window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(previousChecklists));
-          }
+          window.localStorage.setItem(STORAGE_KEY, JSON.stringify(previousItems));
+          window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(previousChecklists));
         } catch {
           rollbackFailed = true;
         }
+        items = previousItems;
+        checklists = previousChecklists;
         showNotice(
           rollbackFailed
-            ? "匯入儲存失敗，且無法完整回復瀏覽器資料；請立即匯出可讀取的資料。"
+            ? "匯入儲存失敗且無法完整回復瀏覽器資料；請立即匯出目前可讀取的資料。"
             : "匯入資料無法儲存到瀏覽器，已保留原有資料。",
           true
         );
-        if (!rollbackFailed) {
-          queueDirectorySave();
-        }
         return false;
       }
     }
@@ -1763,6 +1849,249 @@
         items,
         checklists
       };
+    }
+
+    function escapeHtml(value) {
+      const entities = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;"
+      };
+      return String(value).replace(/[&<>"']/g, (character) => entities[character]);
+    }
+
+    function formatExportDayHeading(date, index) {
+      const [year, month, day] = date.split("-").map(Number);
+      const weekday = new Intl.DateTimeFormat("zh-TW", { weekday: "short" })
+        .format(new Date(year, month - 1, day))
+        .replace(/^(週|星期)/, "");
+      return `${month}/${String(day).padStart(2, "0")} (${weekday}) Day ${index + 1}`;
+    }
+
+    function buildItineraryHtml() {
+      const dates = [...new Set([
+        ...items.map((item) => item.date),
+        ...Object.keys(checklists)
+      ])].sort();
+      const checklistStorageKey = JSON.stringify(
+        `traveling-plan-export-checklist.v1-${Date.now()}-${Math.random().toString(36).slice(2)}`
+      );
+      const summaryRows = dates.map((date, index) => {
+        const dayItems = sortDayItems(items.filter((item) => item.date === date));
+        const dayChecklist = checklists[date] || [];
+        const completedCount = dayChecklist.filter((item) => item.checked).length;
+        return `<tr><td><a href="#day-${escapeHtml(date)}">Day ${index + 1}・${escapeHtml(formatDate(date))}</a></td><td>${dayItems.length} 項</td><td>${completedCount}/${dayChecklist.length} 完成</td></tr>`;
+      }).join("");
+      const daySections = dates.map((date, index) => {
+        const dayItems = sortDayItems(items.filter((item) => item.date === date));
+        const dayChecklist = checklists[date] || [];
+        const completedCount = dayChecklist.filter((item) => item.checked).length;
+        const progressPercent = dayChecklist.length === 0
+          ? 0
+          : Math.round(completedCount / dayChecklist.length * 100);
+        const itinerary = dayItems.length > 0
+          ? `<ol class="itinerary-list">${dayItems.map((item) => {
+            const location = item.location
+              ? (() => {
+                const mapsUrl = new URL("https://www.google.com/maps/search/");
+                mapsUrl.searchParams.set("api", "1");
+                mapsUrl.searchParams.set("query", item.location);
+                return `<p class="location">地點：<a href="${escapeHtml(mapsUrl.toString())}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.location)}</a></p>`;
+              })()
+              : "";
+            const notes = item.notes
+              ? `<p class="notes">${escapeHtml(item.notes)}</p>`
+              : "";
+            const time = item.time
+              ? `<span class="time">${escapeHtml(item.time)}</span><span class="separator" aria-hidden="true">|</span>`
+              : "";
+            return `<li><div class="event-heading">${time}<strong class="event-title">${escapeHtml(item.title)}</strong></div>${location}${notes}</li>`;
+          }).join("")}</ol>`
+          : `<p class="empty">當天尚未安排行程。</p>`;
+        const checklist = dayChecklist.length > 0
+          ? `<p class="checklist-progress" data-checklist-progress>${completedCount}/${dayChecklist.length} 項完成（${progressPercent}%）</p><div class="checklist-progress-track" role="progressbar" aria-label="Checklist 完成度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${progressPercent}"><span class="checklist-progress-fill" style="width:${progressPercent}%"></span></div><ul class="checklist-list">${dayChecklist.map((item) => `<li><label class="checklist-item${item.checked ? " checked" : ""}"><input class="checklist-checkbox" type="checkbox" data-checklist-id="${escapeHtml(item.id)}"${item.checked ? " checked" : ""}><span>${escapeHtml(item.text)}</span></label></li>`).join("")}</ul>`
+          : `<p class="empty">當天沒有 Checklist 項目。</p>`;
+        return `<section class="day" id="day-${escapeHtml(date)}"><h3 class="day-heading">${escapeHtml(formatExportDayHeading(date, index))}</h3>${itinerary}<div class="checklist-section" data-checklist-section><h4>Checklist <small data-checklist-count>${completedCount}/${dayChecklist.length} 完成</small></h4>${checklist}</div><div class="day-footer"><a class="back-to-overview" href="#itinerary-overview" aria-label="返回行程總覽">↑ 回行程總覽</a></div></section>`;
+      }).join("");
+      const summary = dates.length > 0
+        ? `<table><thead><tr><th>日期</th><th>行程數</th><th>Checklist</th></tr></thead><tbody>${summaryRows}</tbody></table>`
+        : `<p class="empty">尚未安排任何行程或 Checklist。</p>`;
+      const title = "旅遊行程規劃";
+      const exportedAt = escapeHtml(new Date().toLocaleString("zh-TW"));
+
+      return `<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${title}</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif; font-size: 16px; line-height: 1.65; color: #24292f; max-width: 900px; margin: 32px auto; padding: 0 20px; overflow-wrap: anywhere; background: #f4f4f7; }
+    h1, h2, h3, h4 { color: #1f2328; line-height: 1.3; }
+    h1 { font-size: 1.8em; padding-bottom: .35em; border-bottom: 1px solid #d0d7de; }
+    h2 { margin-top: 1.6em; padding-bottom: .3em; border-bottom: 1px solid #d0d7de; }
+    h3 { margin: 1.5em 0 .7em; padding-bottom: .35em; border-bottom: 1px solid #d0d7de; }
+    h4 { margin: 1.2em 0 .4em; }
+    h4 small, .subtitle, .exported-at, .empty { color: #57606a; font-weight: 400; }
+    .subtitle { margin-top: -.5em; }
+    table { width: 100%; margin: 1em 0; border-collapse: collapse; }
+    th, td { padding: 7px 12px; border: 1px solid #d0d7de; text-align: left; vertical-align: top; }
+    th { background: #f6f8fa; }
+    tbody tr:nth-child(even) { background: #f6f8fa; }
+    a { color: #0969da; }
+    .day { margin: 1.4em 0; overflow: hidden; border: 1px solid #e8e8ed; border-radius: 12px; background: #fff; box-shadow: 0 5px 16px rgb(31 35 40 / 8%); }
+    .day-heading { margin: 0; padding: 13px 16px; border: 0; color: #fff; background: #ef4d4d; font-size: 1.05em; }
+    .itinerary-list { position: relative; margin: 0; padding: 12px 22px 14px 45px; list-style: none; }
+    .itinerary-list::before { position: absolute; top: 24px; bottom: 34px; left: 20px; width: 2px; background: #ff8a00; content: ""; }
+    .itinerary-list > li { position: relative; margin: 0; padding: 12px 0 16px; }
+    .itinerary-list > li::before { position: absolute; top: 19px; left: -30px; width: 10px; height: 10px; border-radius: 50%; background: #ff8a00; content: ""; }
+    .event-heading { display: flex; flex-wrap: wrap; gap: 0 .45em; align-items: baseline; }
+    .time { color: #f05a00; font-variant-numeric: tabular-nums; font-weight: 750; }
+    .separator { color: #f05a00; }
+    .event-title { color: #006bd6; font-weight: 750; }
+    .location { margin: .3em 0; }
+    .notes { margin: 1em 0 0; white-space: pre-wrap; }
+    .checklist-section { padding: 0 22px 18px 45px; }
+    .checklist-section h4 { margin: 0 0 .35em; }
+    .checklist-progress { margin: .3em 0; color: #57606a; }
+    .checklist-progress-track { height: 8px; margin: .45em 0 .7em; overflow: hidden; border-radius: 999px; background: #e9edf2; }
+    .checklist-progress-fill { display: block; height: 100%; border-radius: inherit; background: #ef4d4d; transition: width .2s ease; }
+    .checklist-list { padding-left: 0; list-style: none; }
+    .checklist-list li { margin: .3em 0; }
+    .checklist-item { display: flex; align-items: flex-start; gap: .6em; cursor: pointer; }
+    .checklist-checkbox { width: 18px; height: 18px; flex: 0 0 auto; margin: .2em 0 0; accent-color: #0969da; cursor: pointer; }
+    .checklist-item > span { flex: 1; }
+    .checklist-item.checked > span { color: #57606a; }
+    .day-footer { display: flex; justify-content: flex-end; padding: 0 22px 18px 45px; }
+    .back-to-overview { display: inline-block; padding: 7px 12px; border-radius: 7px; color: #fff; background: #0969da; font-size: .9em; font-weight: 650; text-decoration: none; }
+    .back-to-overview:hover { background: #0757b4; }
+    .checklist-storage-status { min-height: 1.4em; color: #57606a; font-size: .82em; }
+    .footer { margin-top: 2em; padding-top: .8em; border-top: 1px solid #d0d7de; color: #57606a; font-size: .85em; }
+    @media (max-width: 600px) {
+      body { margin: 18px auto; padding: 0 12px; font-size: 15px; }
+      th, td { padding: 6px 8px; }
+      .day-heading { padding: 12px 13px; }
+      .itinerary-list { padding-right: 14px; padding-left: 40px; }
+      .itinerary-list::before { left: 17px; }
+      .itinerary-list > li::before { left: -28px; }
+      .checklist-section { padding-right: 14px; padding-left: 40px; }
+      .day-footer { padding-right: 14px; padding-left: 40px; }
+    }
+    @media print {
+      body { max-width: none; margin: 0; padding: 0; }
+      a { color: inherit; text-decoration: none; }
+      .day { break-inside: auto; box-shadow: none; }
+      .day-footer { display: none; }
+      .itinerary-list > li, .checklist-list > li { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <article>
+    <h1>🍁 ${title}</h1>
+    <p class="subtitle">行程總覽與每日詳細安排</p>
+    <p class="exported-at">匯出時間：${exportedAt}</p>
+    <p class="checklist-storage-status" id="checklist-storage-status" role="status" aria-live="polite">Checklist 勾選狀態會保存在此裝置的瀏覽器，不會修改原始行程頁。</p>
+    <h2 id="itinerary-overview">🗓 行程總覽</h2>
+    ${summary}
+    <h2>📋 每日詳細行程</h2>
+    ${daySections || `<p class="empty">尚無每日資料。</p>`}
+    <p class="footer">此 HTML 為匯出當下的靜態行程檔；如需多人接力編修，請使用 JSON 匯出／匯入。</p>
+  </article>
+  <script>
+    (() => {
+      const storageKey = ${checklistStorageKey};
+      const storageStatus = document.querySelector("#checklist-storage-status");
+      const checkboxes = [...document.querySelectorAll(".checklist-checkbox")];
+      const updateProgress = (section) => {
+        const sectionCheckboxes = [...section.querySelectorAll(".checklist-checkbox")];
+        const completed = sectionCheckboxes.filter((checkbox) => checkbox.checked).length;
+        const total = sectionCheckboxes.length;
+        const percent = total === 0 ? 0 : Math.round(completed / total * 100);
+        const countLabel = section.querySelector("[data-checklist-count]");
+        const progressLabel = section.querySelector("[data-checklist-progress]");
+        const progressBar = section.querySelector('[role="progressbar"]');
+        const progressFill = section.querySelector(".checklist-progress-fill");
+        if (countLabel) countLabel.textContent = completed + "/" + total + " 完成";
+        if (progressLabel) progressLabel.textContent = completed + "/" + total + " 項完成（" + percent + "%）";
+        if (progressBar) progressBar.setAttribute("aria-valuenow", String(percent));
+        if (progressFill) progressFill.style.width = percent + "%";
+        sectionCheckboxes.forEach((checkbox) => {
+          checkbox.closest(".checklist-item")?.classList.toggle("checked", checkbox.checked);
+        });
+      };
+      const persistProgress = () => {
+        const state = Object.fromEntries(checkboxes.map((checkbox) => [
+          checkbox.dataset.checklistId,
+          checkbox.checked
+        ]));
+        window.localStorage.setItem(storageKey, JSON.stringify(state));
+        storageStatus.textContent = "Checklist 勾選狀態已儲存在此裝置的瀏覽器。";
+      };
+      try {
+        const savedState = window.localStorage.getItem(storageKey);
+        if (savedState !== null) {
+          const parsedState = JSON.parse(savedState);
+          if (parsedState === null || typeof parsedState !== "object" || Array.isArray(parsedState)
+            || Object.values(parsedState).some((value) => typeof value !== "boolean")) {
+            throw new Error("Checklist 儲存資料格式錯誤。");
+          }
+          checkboxes.forEach((checkbox) => {
+            if (Object.prototype.hasOwnProperty.call(parsedState, checkbox.dataset.checklistId)) {
+              checkbox.checked = parsedState[checkbox.dataset.checklistId];
+            }
+          });
+        }
+      } catch {
+        storageStatus.textContent = "無法讀取先前的 Checklist 勾選狀態；目前勾選可用，但關閉後可能不會保留。";
+      }
+      document.querySelectorAll("[data-checklist-section]").forEach(updateProgress);
+      document.addEventListener("change", (event) => {
+        const checkbox = event.target;
+        if (!(checkbox instanceof HTMLInputElement) || !checkbox.matches(".checklist-checkbox")) return;
+        const section = checkbox.closest("[data-checklist-section]");
+        if (section) updateProgress(section);
+        try {
+          persistProgress();
+        } catch {
+          storageStatus.textContent = "勾選已更新，但瀏覽器無法保存；關閉頁面後可能不會保留。";
+        }
+      });
+    })();
+  <\/script>
+</body>
+</html>`;
+    }
+
+    function exportHtml() {
+      if (!storageReady || !checklistStorageReady) {
+        showNotice("目前無法安全讀取行程或 Checklist，已停用 HTML 匯出。", true);
+        return;
+      }
+
+      try {
+        const blob = new Blob([buildItineraryHtml()], { type: "text/html;charset=utf-8" });
+        const downloadUrl = URL.createObjectURL(blob);
+        const today = new Date();
+        const dateStamp = [
+          today.getFullYear(),
+          String(today.getMonth() + 1).padStart(2, "0"),
+          String(today.getDate()).padStart(2, "0")
+        ].join("-");
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.download = `TravelingPlan-${dateStamp}.html`;
+        document.body.append(link);
+        link.click();
+        link.remove();
+        window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+        showNotice(`已匯出 ${items.length} 筆行程的 HTML 檔。`);
+      } catch {
+        showNotice("無法匯出 HTML，請確認瀏覽器是否允許下載檔案。", true);
+      }
     }
 
     function exportItems() {
@@ -1797,30 +2126,59 @@
 
     async function importSelectedFile() {
       const file = importFile.files?.[0];
+      const format = selectedImportFormat;
+      selectedImportFormat = "";
       importFile.value = "";
       if (!file) {
         return;
       }
-      if (!storageReady) {
-        showNotice("目前無法讀取行程資料，已停用匯入以避免覆蓋原資料。", true);
+      if (format !== "json" && format !== "html") {
+        showNotice("請先選擇 JSON 或 HTML 匯入格式。", true);
+        return;
+      }
+      const matchesFormat = format === "html" ? /\.html?$/i.test(file.name) : /\.json$/i.test(file.name);
+      if (!matchesFormat) {
+        showNotice(`所選檔案不是 ${format.toUpperCase()} 格式。`, true);
+        return;
+      }
+      if (!storageReady || !checklistStorageReady) {
+        showNotice("目前無法安全讀取行程或 Checklist，已停用匯入以避免覆蓋原資料。", true);
         return;
       }
       if (file.size > MAX_IMPORT_BYTES) {
-        showNotice("匯入檔案超過 5 MB，請選擇較小的 JSON 檔。", true);
+        showNotice("匯入檔案超過 5 MB，請選擇較小的 JSON 或 HTML 檔。", true);
         return;
       }
 
-      let jsonText;
+      let fileText;
       try {
-        jsonText = await file.text();
+        fileText = await file.text();
       } catch {
         showNotice("無法讀取所選檔案，請確認檔案可正常開啟。", true);
         return;
       }
 
-      const importedData = parseImportedData(jsonText);
+      const importedData = format === "html"
+        ? parseImportedHtml(fileText)
+        : parseImportedData(fileText);
       if (importedData !== null) {
-        mergeImportedData(importedData);
+        const checklistCount = Object.values(importedData.checklists)
+          .reduce((count, dayItems) => count + dayItems.length, 0);
+        const currentChecklistCount = Object.values(checklists)
+          .reduce((count, dayItems) => count + dayItems.length, 0);
+        const currentDateCount = new Set([...items.map((item) => item.date), ...Object.keys(checklists)]).size;
+        const importedDateCount = new Set([
+          ...importedData.items.map((item) => item.date),
+          ...Object.keys(importedData.checklists)
+        ]).size;
+        const confirmed = window.confirm(
+          `匯入 ${format.toUpperCase()} 資料比對：\n目前：${items.length} 筆行程、${currentChecklistCount} 個 Checklist、${currentDateCount} 天\n檔案：${importedData.items.length} 筆行程、${checklistCount} 個 Checklist、${importedDateCount} 天\n確認後會清除並取代全部本機資料。建議先匯出備份。確定繼續嗎？`
+        );
+        if (!confirmed) {
+          showNotice("已取消匯入；本機資料未變更。");
+          return;
+        }
+        replaceImportedData(importedData);
       }
     }
 
@@ -1920,6 +2278,7 @@
       const dragHandle = makeElement("button", "text-button drag-handle", "⠿");
       dragHandle.type = "button";
       dragHandle.draggable = true;
+      dragHandle.disabled = !storageReady;
       dragHandle.dataset.itemId = item.id;
       dragHandle.setAttribute("aria-label", `拖曳或使用方向鍵調整排序：${item.title}`);
       dragHandle.title = "拖曳排序；鍵盤可使用 ↑／↓";
@@ -1992,11 +2351,13 @@
 
       const editButton = makeElement("button", "text-button", "編輯");
       editButton.type = "button";
+      editButton.disabled = !storageReady;
       editButton.setAttribute("aria-label", `編輯：${item.title}`);
       editButton.addEventListener("click", () => startEditing(item));
 
       const deleteButton = makeElement("button", "text-button delete", "刪除");
       deleteButton.type = "button";
+      deleteButton.disabled = !storageReady;
       deleteButton.setAttribute("aria-label", `刪除：${item.title}`);
       deleteButton.addEventListener("click", () => deleteItem(item.id));
 
@@ -2200,6 +2561,12 @@
     function render() {
       itemCount.textContent = String(items.length);
       itemCount.setAttribute("aria-label", `共 ${items.length} 個行程`);
+      const controlsLocked = !storageReady;
+      form.querySelectorAll("input, textarea").forEach((control) => {
+        control.disabled = controlsLocked;
+      });
+      submitButton.disabled = controlsLocked;
+      importFormat.disabled = controlsLocked;
 
       const dates = [...new Set([
         ...items.map((item) => item.date),
@@ -2305,7 +2672,14 @@
       cancelButton.hidden = true;
     }
 
+    function setFormExpanded(expanded) {
+      formContent.hidden = !expanded;
+      formToggleButton.setAttribute("aria-expanded", String(expanded));
+      formToggleButton.textContent = expanded ? "收合" : "展開";
+    }
+
     function startEditing(item) {
+      setFormExpanded(true);
       editingId = item.id;
       form.elements.date.value = item.date;
       form.elements.time.value = item.time;
@@ -2320,6 +2694,10 @@
       document.querySelector("#form-title").scrollIntoView({ behavior: "smooth", block: "start" });
       form.elements.title.focus({ preventScroll: true });
     }
+
+    formToggleButton.addEventListener("click", () => {
+      setFormExpanded(formContent.hidden);
+    });
 
     function deleteItem(id) {
       const item = items.find((entry) => entry.id === id);
@@ -2385,11 +2763,28 @@
       clearNotice();
     });
 
-    exportButton.addEventListener("click", exportItems);
-    importButton.addEventListener("click", () => importFile.click());
+    exportFormat.addEventListener("change", () => {
+      const format = exportFormat.value;
+      exportFormat.value = "";
+      if (format === "json") {
+        exportItems();
+      } else if (format === "html") {
+        exportHtml();
+      }
+    });
+    importFormat.addEventListener("change", () => {
+      const format = importFormat.value;
+      importFormat.value = "";
+      if (!format) {
+        return;
+      }
+
+      selectedImportFormat = format;
+      importFile.accept = format === "html" ? ".html,.htm,text/html" : ".json,application/json";
+      importFile.click();
+    });
     directoryButton.addEventListener("click", configureDirectoryAutoSave);
     importFile.addEventListener("change", importSelectedFile);
-
     items = loadItems();
     ensureDefaultItems();
     ensureV72Items();
