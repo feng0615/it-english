@@ -790,6 +790,152 @@
       font-size: 13px;
     }
 
+    .expense-panel {
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .expense-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 9px;
+      font-size: 15px;
+    }
+
+    .expense-fields {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .expense-field {
+      display: grid;
+      min-width: 0;
+      gap: 4px;
+      color: #485b52;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .expense-name-field {
+      grid-column: 1 / -1;
+    }
+
+    .expense-input {
+      width: 100%;
+      min-height: 36px;
+      padding: 6px 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: #fff;
+      font: inherit;
+      font-size: 13px;
+    }
+
+    .expense-input:focus-visible {
+      outline: 3px solid rgb(47 105 87 / 24%);
+      outline-offset: 1px;
+    }
+
+    .expense-form-actions {
+      display: flex;
+      grid-column: 1 / -1;
+      justify-content: flex-end;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .expense-form-actions .secondary-button,
+    .expense-form-actions .expense-cancel-button {
+      min-height: 36px;
+      padding: 0 13px;
+      border: 1px solid #194b38;
+      border-radius: 8px;
+      color: #fff;
+      background: #194b38;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .expense-form-actions .secondary-button:hover {
+      border-color: #103727;
+      background: #103727;
+    }
+
+    .expense-form-actions .expense-cancel-button {
+      border-color: #d7ddd8;
+      color: var(--ink);
+      background: #f3f5f1;
+    }
+
+    .expense-form-actions .expense-cancel-button:hover {
+      border-color: #c3ccc5;
+      background: #e9eee9;
+    }
+
+    .expense-list {
+      display: grid;
+      gap: 4px;
+      margin: 9px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .expense-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      min-height: 38px;
+      padding: 4px 5px;
+      border-radius: 7px;
+    }
+
+    .expense-row:hover,
+    .expense-row:focus-within {
+      background: #f7f8f3;
+    }
+
+    .expense-details {
+      display: grid;
+      min-width: 0;
+      flex: 1 1 auto;
+      gap: 2px;
+    }
+
+    .expense-name {
+      overflow-wrap: anywhere;
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .expense-meta,
+    .expense-empty {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .expense-empty {
+      margin: 8px 0 0;
+    }
+
+    .expense-actions {
+      flex: 0 0 auto;
+    }
+
+    .expense-form-actions .secondary-button:focus-visible,
+    .expense-form-actions .expense-cancel-button:focus-visible {
+      outline: 3px solid #9a5700;
+      outline-offset: 2px;
+    }
+
     .preview-toggle {
       display: none;
     }
@@ -972,6 +1118,8 @@
       }
     }
 
+
+
     @media (max-width: 360px) {
       .field-row {
         grid-template-columns: minmax(0, 1fr);
@@ -1022,7 +1170,7 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.0.0</span></p>
+        <p class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.1.0</span></p>
         <h1 id="page-title">把期待，排進旅程裡。</h1>
         <p class="hero-copy">記下每一站想去的地方與想做的事，留一點空白，讓旅途也有即興的驚喜。</p>
       </div>
@@ -1098,15 +1246,15 @@
           <button class="secondary-button" id="directory-button" type="button">設定自動存檔</button>
           <input id="import-file" type="file" accept=".json,application/json" hidden>
         </div>
-        <p class="file-sync-status">多人接力共編：匯出 JSON 傳給協作者；對方匯入、編輯後再匯出回傳。匯入會在確認後完整取代本機行程與 Checklist；行程檔可能含私人資訊，請只透過可信管道分享。</p>
-        <p class="file-sync-status" id="file-sync-status" role="status" aria-live="polite">尚未設定資料夾。設定後請選取 TravelingPlan.html 所在目錄，行程會自動寫入 TravelingPlan-autosave.json。</p>
+        <p class="file-sync-status">多人接力共編：匯出 JSON 傳給協作者；對方匯入、編輯後再匯出回傳。匯入會在確認後完整取代本機行程、Checklist 與費用；資料檔可能含私人資訊，請只透過可信管道分享。</p>
+        <p class="file-sync-status" id="file-sync-status" role="status" aria-live="polite">尚未設定資料夾。設定後請選取 TravelingPlan.html 所在目錄，行程、Checklist 與費用會自動寫入 TravelingPlan-autosave.json。</p>
         <p class="notice" id="notice" role="status" aria-live="polite" hidden></p>
         <div class="day-tabs" id="day-tabs" role="tablist" aria-label="依日期切換行程"></div>
         <div id="itinerary-content" role="tabpanel"></div>
       </section>
     </div>
 
-    <p class="footer-note">行程會自動儲存在這個瀏覽器；授權資料夾後，也會同步寫入該目錄的 TravelingPlan-autosave.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
+    <p class="footer-note">行程、Checklist 與費用會自動儲存在這個瀏覽器；授權資料夾後，也會同步寫入該目錄的 TravelingPlan-autosave.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
   </main>
 
   <script>
@@ -1114,6 +1262,15 @@
 
     const STORAGE_KEY = "traveling-plan.itinerary.v1";
     const CHECKLIST_STORAGE_KEY = "traveling-plan.checklists.v1";
+    const EXPENSE_STORAGE_KEY = "traveling-plan.expenses.v1";
+    const EXPENSE_CURRENCIES = [
+      { code: "TWD", label: "新台幣" },
+      { code: "JPY", label: "日幣" },
+      { code: "USD", label: "美元" },
+      { code: "EUR", label: "歐元" },
+      { code: "CNY", label: "人民幣" }
+    ];
+    const EXPENSE_PAYMENT_METHODS = ["現金", "刷卡", "電子支付", "轉帳"];
     const EXPORT_FORMAT = "traveling-plan";
     const EXPORT_VERSION = 1;
     const MAX_IMPORT_BYTES = 5 * 1024 * 1024;
@@ -1282,12 +1439,16 @@
     const itineraryContent = document.querySelector("#itinerary-content");
     let items = [];
     let checklists = {};
+    let expenses = {};
     let editingId = null;
     let editingChecklistId = null;
+    let editingExpenseId = null;
+    let editingExpenseDate = null;
     let currentDay = null;
     let draggedItemId = null;
     let storageReady = true;
     let checklistStorageReady = true;
+    let expenseStorageReady = true;
     let directoryHandle = null;
     let fileSaveQueue = Promise.resolve();
 
@@ -1345,6 +1506,42 @@
       return true;
     }
 
+    function isExpenseItem(item) {
+      return item !== null
+        && typeof item === "object"
+        && typeof item.id === "string"
+        && item.id.trim().length > 0
+        && item.id.length <= 128
+        && typeof item.name === "string"
+        && item.name.trim().length > 0
+        && item.name.length <= 120
+        && EXPENSE_CURRENCIES.some((currency) => currency.code === item.currency)
+        && typeof item.amount === "number"
+        && Number.isFinite(item.amount)
+        && item.amount >= 0
+        && EXPENSE_PAYMENT_METHODS.includes(item.paymentMethod);
+    }
+
+    function isValidExpenseData(data) {
+      if (data === null || typeof data !== "object" || Array.isArray(data)) {
+        return false;
+      }
+
+      const seenIds = new Set();
+      for (const [date, dayExpenses] of Object.entries(data)) {
+        if (!isValidDateString(date) || !Array.isArray(dayExpenses) || !dayExpenses.every(isExpenseItem)) {
+          return false;
+        }
+        for (const expense of dayExpenses) {
+          if (seenIds.has(expense.id)) {
+            return false;
+          }
+          seenIds.add(expense.id);
+        }
+      }
+      return true;
+    }
+
     function loadItems() {
       try {
         const savedItems = window.localStorage.getItem(STORAGE_KEY);
@@ -1388,6 +1585,25 @@
       }
     }
 
+    function loadExpenses() {
+      try {
+        const savedExpenses = window.localStorage.getItem(EXPENSE_STORAGE_KEY);
+        if (savedExpenses === null) {
+          return {};
+        }
+
+        const parsedExpenses = JSON.parse(savedExpenses);
+        if (!isValidExpenseData(parsedExpenses)) {
+          throw new Error("費用資料格式不正確。");
+        }
+        return parsedExpenses;
+      } catch {
+        expenseStorageReady = false;
+        showNotice("無法讀取本機費用資料，為避免覆蓋原資料，暫時停用費用編輯。", true);
+        return {};
+      }
+    }
+
     function saveItems() {
       try {
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
@@ -1412,6 +1628,42 @@
         showNotice("Checklist 無法儲存到瀏覽器；重新整理後可能會遺失。請檢查瀏覽器儲存空間。", true);
         return false;
       }
+    }
+
+    function saveExpenses() {
+      if (!storageReady || !expenseStorageReady) {
+        return false;
+      }
+
+      try {
+        window.localStorage.setItem(EXPENSE_STORAGE_KEY, JSON.stringify(expenses));
+        queueDirectorySave();
+        return true;
+      } catch {
+        showNotice("費用無法儲存到瀏覽器；重新整理後可能會遺失。請檢查瀏覽器儲存空間。", true);
+        return false;
+      }
+    }
+
+    function saveExpenseDay(date, dayExpenses) {
+      if (!storageReady || !expenseStorageReady) {
+        showNotice("目前無法安全儲存費用，請確認瀏覽器儲存空間後重新開啟頁面。", true);
+        return false;
+      }
+
+      const previousExpenses = expenses;
+      const nextExpenses = { ...expenses };
+      if (dayExpenses.length > 0) {
+        nextExpenses[date] = dayExpenses;
+      } else {
+        delete nextExpenses[date];
+      }
+      expenses = nextExpenses;
+      if (!saveExpenses()) {
+        expenses = previousExpenses;
+        return false;
+      }
+      return true;
     }
 
     function openFileHandleDatabase() {
@@ -1468,7 +1720,7 @@
     }
 
     async function writeItemsToDirectory() {
-      if (!storageReady || !directoryHandle) {
+      if (!storageReady || !checklistStorageReady || !expenseStorageReady || !directoryHandle) {
         return;
       }
 
@@ -1491,7 +1743,7 @@
     }
 
     function queueDirectorySave() {
-      if (!directoryHandle) {
+      if (!storageReady || !checklistStorageReady || !expenseStorageReady || !directoryHandle) {
         return;
       }
 
@@ -1500,7 +1752,7 @@
     }
 
     async function initializeDirectoryAutoSave() {
-      if (!storageReady) {
+      if (!storageReady || !checklistStorageReady || !expenseStorageReady) {
         return;
       }
       if (typeof window.showDirectoryPicker !== "function" || !window.indexedDB) {
@@ -1677,6 +1929,7 @@
 
       let importedItems;
       let importedChecklists = {};
+      let importedExpenses = {};
       if (Array.isArray(payload)) {
         importedItems = payload;
       } else if (payload !== null
@@ -1691,6 +1944,13 @@
             return null;
           }
           importedChecklists = payload.checklists;
+        }
+        if (Object.prototype.hasOwnProperty.call(payload, "expenses")) {
+          if (!isValidExpenseData(payload.expenses)) {
+            showNotice("檔案中的費用格式錯誤，未匯入任何資料。", true);
+            return null;
+          }
+          importedExpenses = payload.expenses;
         }
       } else {
         showNotice("檔案格式不支援；請選擇本行程頁匯出的 JSON 檔。", true);
@@ -1726,6 +1986,18 @@
             date,
             dayItems.map((item) => ({ id: item.id, text: item.text, checked: item.checked }))
           ])
+        ),
+        expenses: Object.fromEntries(
+          Object.entries(importedExpenses).map(([date, dayExpenses]) => [
+            date,
+            dayExpenses.map((expense) => ({
+              id: expense.id,
+              name: expense.name,
+              currency: expense.currency,
+              amount: expense.amount,
+              paymentMethod: expense.paymentMethod
+            }))
+          ])
         )
       };
     }
@@ -1742,6 +2014,7 @@
 
       const importedItems = [];
       const importedChecklists = {};
+      const importedExpenses = {};
       const seenDates = new Set();
       const daySections = [...parsedDocument.querySelectorAll("article > section.day")];
       for (const section of daySections) {
@@ -1781,6 +2054,20 @@
           text: checkbox.closest(".checklist-item")?.querySelector("span")?.textContent || "",
           checked: checkbox.checked
         }));
+
+        const expenseSection = section.querySelector("[data-expense-section]");
+        if (expenseSection) {
+          importedExpenses[date] = [...expenseSection.querySelectorAll("[data-expense-id]")].map((entry) => {
+            const amount = entry.getAttribute("data-expense-amount");
+            return {
+              id: entry.getAttribute("data-expense-id") || "",
+              name: entry.getAttribute("data-expense-name") || "",
+              currency: entry.getAttribute("data-expense-currency") || "",
+              amount: amount === null ? Number.NaN : Number(amount),
+              paymentMethod: entry.getAttribute("data-expense-payment") || ""
+            };
+          });
+        }
       }
 
       if (!isValidChecklistData(importedChecklists)) {
@@ -1788,49 +2075,67 @@
         return null;
       }
 
+      if (!isValidExpenseData(importedExpenses)) {
+        showNotice("HTML 檔案中的費用格式錯誤，未匯入任何資料。", true);
+        return null;
+      }
+
       return {
         items: importedItems,
-        checklists: importedChecklists
+        checklists: importedChecklists,
+        expenses: importedExpenses
       };
     }
 
     function replaceImportedData(importedData) {
-      if (!storageReady || !checklistStorageReady) {
-        showNotice("目前無法安全讀取本機行程或 Checklist，原有資料未變更。", true);
+      if (!storageReady || !checklistStorageReady || !expenseStorageReady) {
+        showNotice("目前無法安全讀取本機行程、Checklist 或費用，原有資料未變更。", true);
         return;
       }
 
       const previousItems = items;
       const previousChecklists = checklists;
-      if (!saveImportedState(importedData, previousItems, previousChecklists)) {
+      const previousExpenses = expenses;
+      if (!saveImportedState(importedData, previousItems, previousChecklists, previousExpenses)) {
         return;
       }
 
       items = importedData.items;
       checklists = importedData.checklists;
-      const dates = [...new Set([...items.map((item) => item.date), ...Object.keys(checklists)])].sort();
+      expenses = importedData.expenses;
+      editingExpenseId = null;
+      editingExpenseDate = null;
+      const dates = [...new Set([
+        ...items.map((item) => item.date),
+        ...Object.keys(checklists),
+        ...Object.keys(expenses)
+      ])].sort();
       currentDay = dates.includes(currentDay) ? currentDay : dates[0] || null;
       queueDirectorySave();
       render();
       const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
-      showNotice(`已匯入並取代本機資料：${items.length} 筆行程、${checklistCount} 個 Checklist 項目。`);
+      const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
+      showNotice(`已匯入並取代本機資料：${items.length} 筆行程、${checklistCount} 個 Checklist 項目、${expenseCount} 筆費用。`);
     }
 
-    function saveImportedState(importedData, previousItems, previousChecklists) {
+    function saveImportedState(importedData, previousItems, previousChecklists, previousExpenses) {
       try {
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(importedData.items));
         window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(importedData.checklists));
+        window.localStorage.setItem(EXPENSE_STORAGE_KEY, JSON.stringify(importedData.expenses));
         return true;
       } catch {
         let rollbackFailed = false;
         try {
           window.localStorage.setItem(STORAGE_KEY, JSON.stringify(previousItems));
           window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(previousChecklists));
+          window.localStorage.setItem(EXPENSE_STORAGE_KEY, JSON.stringify(previousExpenses));
         } catch {
           rollbackFailed = true;
         }
         items = previousItems;
         checklists = previousChecklists;
+        expenses = previousExpenses;
         showNotice(
           rollbackFailed
             ? "匯入儲存失敗且無法完整回復瀏覽器資料；請立即匯出目前可讀取的資料。"
@@ -1847,7 +2152,8 @@
         version: EXPORT_VERSION,
         exportedAt: new Date().toISOString(),
         items,
-        checklists
+        checklists,
+        expenses
       };
     }
 
@@ -1873,7 +2179,8 @@
     function buildItineraryHtml() {
       const dates = [...new Set([
         ...items.map((item) => item.date),
-        ...Object.keys(checklists)
+        ...Object.keys(checklists),
+        ...Object.keys(expenses)
       ])].sort();
       const checklistStorageKey = JSON.stringify(
         `traveling-plan-export-checklist.v1-${Date.now()}-${Math.random().toString(36).slice(2)}`
@@ -1881,12 +2188,14 @@
       const summaryRows = dates.map((date, index) => {
         const dayItems = sortDayItems(items.filter((item) => item.date === date));
         const dayChecklist = checklists[date] || [];
+        const dayExpenses = expenses[date] || [];
         const completedCount = dayChecklist.filter((item) => item.checked).length;
-        return `<tr><td><a href="#day-${escapeHtml(date)}">Day ${index + 1}・${escapeHtml(formatDate(date))}</a></td><td>${dayItems.length} 項</td><td>${completedCount}/${dayChecklist.length} 完成</td></tr>`;
+        return `<tr><td><a href="#day-${escapeHtml(date)}">Day ${index + 1}・${escapeHtml(formatDate(date))}</a></td><td>${dayItems.length} 項</td><td>${completedCount}/${dayChecklist.length} 完成</td><td>${dayExpenses.length} 筆</td></tr>`;
       }).join("");
       const daySections = dates.map((date, index) => {
         const dayItems = sortDayItems(items.filter((item) => item.date === date));
         const dayChecklist = checklists[date] || [];
+        const dayExpenses = expenses[date] || [];
         const completedCount = dayChecklist.filter((item) => item.checked).length;
         const progressPercent = dayChecklist.length === 0
           ? 0
@@ -1913,11 +2222,19 @@
         const checklist = dayChecklist.length > 0
           ? `<p class="checklist-progress" data-checklist-progress>${completedCount}/${dayChecklist.length} 項完成（${progressPercent}%）</p><div class="checklist-progress-track" role="progressbar" aria-label="Checklist 完成度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${progressPercent}"><span class="checklist-progress-fill" style="width:${progressPercent}%"></span></div><ul class="checklist-list">${dayChecklist.map((item) => `<li><label class="checklist-item${item.checked ? " checked" : ""}"><input class="checklist-checkbox" type="checkbox" data-checklist-id="${escapeHtml(item.id)}"${item.checked ? " checked" : ""}><span>${escapeHtml(item.text)}</span></label></li>`).join("")}</ul>`
           : `<p class="empty">當天沒有 Checklist 項目。</p>`;
-        return `<section class="day" id="day-${escapeHtml(date)}"><h3 class="day-heading">${escapeHtml(formatExportDayHeading(date, index))}</h3>${itinerary}<div class="checklist-section" data-checklist-section><h4>Checklist <small data-checklist-count>${completedCount}/${dayChecklist.length} 完成</small></h4>${checklist}</div><div class="day-footer"><a class="back-to-overview" href="#itinerary-overview" aria-label="返回行程總覽">↑ 回行程總覽</a></div></section>`;
+        const expenseList = dayExpenses.length > 0
+          ? `<ul class="expense-list">${dayExpenses.map((expense) => {
+            const currencyLabel = EXPENSE_CURRENCIES.find((currency) => currency.code === expense.currency).label;
+            const amountText = new Intl.NumberFormat("zh-TW", { maximumFractionDigits: 2 }).format(expense.amount);
+            return `<li class="expense-entry" data-expense-id="${escapeHtml(expense.id)}" data-expense-name="${escapeHtml(expense.name)}" data-expense-currency="${escapeHtml(expense.currency)}" data-expense-amount="${escapeHtml(expense.amount)}" data-expense-payment="${escapeHtml(expense.paymentMethod)}"><span class="expense-name">${escapeHtml(expense.name)}</span><span class="expense-meta">${currencyLabel}・${amountText} 元・${escapeHtml(expense.paymentMethod)}</span></li>`;
+          }).join("")}</ul>`
+          : `<p class="empty">當天沒有費用紀錄。</p>`;
+        const expenseSection = `<div class="expense-section" data-expense-section><h4>費用列表 <small>${dayExpenses.length} 筆</small></h4>${expenseList}</div>`;
+        return `<section class="day" id="day-${escapeHtml(date)}"><h3 class="day-heading">${escapeHtml(formatExportDayHeading(date, index))}</h3>${itinerary}<div class="checklist-section" data-checklist-section><h4>Checklist <small data-checklist-count>${completedCount}/${dayChecklist.length} 完成</small></h4>${checklist}</div>${expenseSection}<div class="day-footer"><a class="back-to-overview" href="#itinerary-overview" aria-label="返回行程總覽">↑ 回行程總覽</a></div></section>`;
       }).join("");
       const summary = dates.length > 0
-        ? `<table><thead><tr><th>日期</th><th>行程數</th><th>Checklist</th></tr></thead><tbody>${summaryRows}</tbody></table>`
-        : `<p class="empty">尚未安排任何行程或 Checklist。</p>`;
+        ? `<table><thead><tr><th>日期</th><th>行程數</th><th>Checklist</th><th>費用</th></tr></thead><tbody>${summaryRows}</tbody></table>`
+        : `<p class="empty">尚未安排任何行程、Checklist 或費用。</p>`;
       const title = "旅遊行程規劃";
       const exportedAt = escapeHtml(new Date().toLocaleString("zh-TW"));
 
@@ -1965,6 +2282,12 @@
     .checklist-checkbox { width: 18px; height: 18px; flex: 0 0 auto; margin: .2em 0 0; accent-color: #0969da; cursor: pointer; }
     .checklist-item > span { flex: 1; }
     .checklist-item.checked > span { color: #57606a; }
+    .expense-section { padding: 0 22px 18px 45px; }
+    .expense-section h4 { margin: 0 0 .35em; }
+    .expense-list { display: grid; gap: .45em; margin: .6em 0 0; padding: 0; list-style: none; }
+    .expense-entry { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .2em .8em; padding: .35em 0; border-bottom: 1px solid #e8e8ed; }
+    .expense-name { font-weight: 700; }
+    .expense-meta { color: #57606a; }
     .day-footer { display: flex; justify-content: flex-end; padding: 0 22px 18px 45px; }
     .back-to-overview { display: inline-block; padding: 7px 12px; border-radius: 7px; color: #fff; background: #0969da; font-size: .9em; font-weight: 650; text-decoration: none; }
     .back-to-overview:hover { background: #0757b4; }
@@ -1978,6 +2301,7 @@
       .itinerary-list::before { left: 17px; }
       .itinerary-list > li::before { left: -28px; }
       .checklist-section { padding-right: 14px; padding-left: 40px; }
+      .expense-section { padding-right: 14px; padding-left: 40px; }
       .day-footer { padding-right: 14px; padding-left: 40px; }
     }
     @media print {
@@ -1985,7 +2309,7 @@
       a { color: inherit; text-decoration: none; }
       .day { break-inside: auto; box-shadow: none; }
       .day-footer { display: none; }
-      .itinerary-list > li, .checklist-list > li { break-inside: avoid; }
+      .itinerary-list > li, .checklist-list > li, .expense-entry { break-inside: avoid; }
     }
   </style>
 </head>
@@ -2067,8 +2391,8 @@
     }
 
     function exportHtml() {
-      if (!storageReady || !checklistStorageReady) {
-        showNotice("目前無法安全讀取行程或 Checklist，已停用 HTML 匯出。", true);
+      if (!storageReady || !checklistStorageReady || !expenseStorageReady) {
+        showNotice("目前無法安全讀取行程、Checklist 或費用，已停用 HTML 匯出。", true);
         return;
       }
 
@@ -2088,14 +2412,16 @@
         link.click();
         link.remove();
         window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
-        showNotice(`已匯出 ${items.length} 筆行程的 HTML 檔。`);
+        const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
+        showNotice(`已匯出 ${items.length} 筆行程與 ${expenseCount} 筆費用的 HTML 檔。`);
       } catch {
         showNotice("無法匯出 HTML，請確認瀏覽器是否允許下載檔案。", true);
       }
     }
 
     function exportItems() {
-      if (!storageReady) {
+      if (!storageReady || !checklistStorageReady || !expenseStorageReady) {
+        showNotice("目前無法安全讀取行程、Checklist 或費用，已停用 JSON 匯出。", true);
         return;
       }
 
@@ -2118,7 +2444,8 @@
         link.remove();
         window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
         const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
-        showNotice(`已匯出 ${items.length} 筆行程、${checklistCount} 個 Checklist 項目 JSON。`);
+        const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
+        showNotice(`已匯出 ${items.length} 筆行程、${checklistCount} 個 Checklist 項目與 ${expenseCount} 筆費用 JSON。`);
       } catch {
         showNotice("無法匯出 JSON，請確認瀏覽器是否允許下載檔案。", true);
       }
@@ -2141,8 +2468,8 @@
         showNotice(`所選檔案不是 ${format.toUpperCase()} 格式。`, true);
         return;
       }
-      if (!storageReady || !checklistStorageReady) {
-        showNotice("目前無法安全讀取行程或 Checklist，已停用匯入以避免覆蓋原資料。", true);
+      if (!storageReady || !checklistStorageReady || !expenseStorageReady) {
+        showNotice("目前無法安全讀取行程、Checklist 或費用，已停用匯入以避免覆蓋原資料。", true);
         return;
       }
       if (file.size > MAX_IMPORT_BYTES) {
@@ -2166,13 +2493,22 @@
           .reduce((count, dayItems) => count + dayItems.length, 0);
         const currentChecklistCount = Object.values(checklists)
           .reduce((count, dayItems) => count + dayItems.length, 0);
-        const currentDateCount = new Set([...items.map((item) => item.date), ...Object.keys(checklists)]).size;
+        const expenseCount = Object.values(importedData.expenses)
+          .reduce((count, dayExpenses) => count + dayExpenses.length, 0);
+        const currentExpenseCount = Object.values(expenses)
+          .reduce((count, dayExpenses) => count + dayExpenses.length, 0);
+        const currentDateCount = new Set([
+          ...items.map((item) => item.date),
+          ...Object.keys(checklists),
+          ...Object.keys(expenses)
+        ]).size;
         const importedDateCount = new Set([
           ...importedData.items.map((item) => item.date),
-          ...Object.keys(importedData.checklists)
+          ...Object.keys(importedData.checklists),
+          ...Object.keys(importedData.expenses)
         ]).size;
         const confirmed = window.confirm(
-          `匯入 ${format.toUpperCase()} 資料比對：\n目前：${items.length} 筆行程、${currentChecklistCount} 個 Checklist、${currentDateCount} 天\n檔案：${importedData.items.length} 筆行程、${checklistCount} 個 Checklist、${importedDateCount} 天\n確認後會清除並取代全部本機資料。建議先匯出備份。確定繼續嗎？`
+          `匯入 ${format.toUpperCase()} 資料比對：\n目前：${items.length} 筆行程、${currentChecklistCount} 個 Checklist、${currentExpenseCount} 筆費用、${currentDateCount} 天\n檔案：${importedData.items.length} 筆行程、${checklistCount} 個 Checklist、${expenseCount} 筆費用、${importedDateCount} 天\n確認後會清除並取代全部本機資料。建議先匯出備份。確定繼續嗎？`
         );
         if (!confirmed) {
           showNotice("已取消匯入；本機資料未變更。");
@@ -2558,6 +2894,170 @@
       return panel;
     }
 
+    function renderExpenses(date) {
+      const panel = makeElement("section", "expense-panel");
+      const heading = makeElement("h3", "expense-heading");
+      heading.id = `expense-heading-${date}`;
+      const dayExpenses = expenses[date] || [];
+      heading.append(
+        makeElement("span", "", "費用列表"),
+        makeElement("span", "checklist-count", `${dayExpenses.length} 筆`)
+      );
+      panel.setAttribute("aria-labelledby", heading.id);
+      panel.append(heading);
+
+      let editingExpense = editingExpenseDate === date
+        ? dayExpenses.find((expense) => expense.id === editingExpenseId)
+        : null;
+      if (editingExpenseDate === date && editingExpenseId && !editingExpense) {
+        editingExpenseId = null;
+        editingExpenseDate = null;
+      }
+
+      if (dayExpenses.length === 0) {
+        panel.append(makeElement("p", "expense-empty", "尚無費用紀錄。"));
+      } else {
+        const list = makeElement("ul", "expense-list");
+        dayExpenses.forEach((expense) => {
+          const row = makeElement("li", "expense-row");
+          const details = makeElement("div", "expense-details");
+          const currencyLabel = EXPENSE_CURRENCIES.find((currency) => currency.code === expense.currency).label;
+          const amountText = new Intl.NumberFormat("zh-TW", { maximumFractionDigits: 2 }).format(expense.amount);
+          details.append(
+            makeElement("span", "expense-name", expense.name),
+            makeElement("span", "expense-meta", `${currencyLabel}・${amountText} 元・${expense.paymentMethod}`)
+          );
+          row.append(details);
+
+          const actions = makeElement("div", "checklist-item-actions expense-actions");
+          const editButton = makeElement("button", "text-button", "編輯");
+          editButton.type = "button";
+          editButton.disabled = !storageReady || !expenseStorageReady;
+          editButton.setAttribute("aria-label", `編輯費用：${expense.name}`);
+          editButton.addEventListener("click", () => {
+            editingExpenseId = expense.id;
+            editingExpenseDate = date;
+            render();
+          });
+          const deleteButton = makeElement("button", "text-button delete", "刪除");
+          deleteButton.type = "button";
+          deleteButton.disabled = !storageReady || !expenseStorageReady;
+          deleteButton.setAttribute("aria-label", `刪除費用：${expense.name}`);
+          deleteButton.addEventListener("click", () => {
+            if (!window.confirm(`確定刪除費用「${expense.name}」？`)) {
+              return;
+            }
+            if (saveExpenseDay(date, dayExpenses.filter((entry) => entry.id !== expense.id))) {
+              if (editingExpenseId === expense.id) {
+                editingExpenseId = null;
+                editingExpenseDate = null;
+              }
+              render();
+            }
+          });
+          actions.append(editButton, deleteButton);
+          row.append(actions);
+          list.append(row);
+        });
+        panel.append(list);
+      }
+
+      const form = makeElement("form", "expense-fields");
+      const nameInput = makeElement("input", "expense-input");
+      nameInput.type = "text";
+      nameInput.maxLength = 120;
+      nameInput.required = true;
+      nameInput.placeholder = "例如：交通費";
+      nameInput.value = editingExpense?.name || "";
+      nameInput.setAttribute("aria-label", "費用名稱");
+      nameInput.disabled = !storageReady || !expenseStorageReady;
+      const nameField = makeElement("label", "expense-field expense-name-field");
+      nameField.append(makeElement("span", "", "費用名稱"), nameInput);
+
+      const currencySelect = makeElement("select", "expense-input");
+      currencySelect.setAttribute("aria-label", "幣別");
+      currencySelect.disabled = !storageReady || !expenseStorageReady;
+      EXPENSE_CURRENCIES.forEach((currency) => {
+        const option = makeElement("option", "", currency.label);
+        option.value = currency.code;
+        currencySelect.append(option);
+      });
+      currencySelect.value = editingExpense?.currency || "TWD";
+      const currencyField = makeElement("label", "expense-field");
+      currencyField.append(makeElement("span", "", "幣別"), currencySelect);
+
+      const amountInput = makeElement("input", "expense-input");
+      amountInput.type = "number";
+      amountInput.min = "0";
+      amountInput.step = "0.01";
+      amountInput.required = true;
+      amountInput.placeholder = "0";
+      amountInput.value = editingExpense ? String(editingExpense.amount) : "";
+      amountInput.setAttribute("aria-label", "金額（元）");
+      amountInput.disabled = !storageReady || !expenseStorageReady;
+      const amountField = makeElement("label", "expense-field");
+      amountField.append(makeElement("span", "", "金額（元）"), amountInput);
+
+      const paymentSelect = makeElement("select", "expense-input");
+      paymentSelect.setAttribute("aria-label", "支付方式");
+      paymentSelect.disabled = !storageReady || !expenseStorageReady;
+      EXPENSE_PAYMENT_METHODS.forEach((method) => {
+        paymentSelect.append(makeElement("option", "", method));
+      });
+      paymentSelect.value = editingExpense?.paymentMethod || EXPENSE_PAYMENT_METHODS[0];
+      const paymentField = makeElement("label", "expense-field");
+      paymentField.append(makeElement("span", "", "支付方式"), paymentSelect);
+
+      const formActions = makeElement("div", "expense-form-actions");
+      const submitButton = makeElement("button", "secondary-button", editingExpense ? "儲存變更" : "新增費用");
+      submitButton.type = "submit";
+      submitButton.disabled = !storageReady || !expenseStorageReady;
+      formActions.append(submitButton);
+      if (editingExpense) {
+        const cancelButton = makeElement("button", "expense-cancel-button", "取消");
+        cancelButton.type = "button";
+        cancelButton.addEventListener("click", () => {
+          editingExpenseId = null;
+          editingExpenseDate = null;
+          render();
+        });
+        formActions.append(cancelButton);
+      }
+
+      form.append(nameField, currencyField, amountField, paymentField, formActions);
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const name = nameInput.value.trim();
+        const amount = Number(amountInput.value);
+        const nextExpense = {
+          id: editingExpense?.id || `expense-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
+          name,
+          currency: currencySelect.value,
+          amount,
+          paymentMethod: paymentSelect.value
+        };
+        if (amountInput.value === "" || !isExpenseItem(nextExpense)) {
+          showNotice("請輸入費用名稱、有效金額，並選擇有效的幣別與支付方式。", true);
+          return;
+        }
+
+        const nextDayExpenses = editingExpense
+          ? dayExpenses.map((expense) => expense.id === editingExpense.id ? nextExpense : expense)
+          : [...dayExpenses, nextExpense];
+        if (saveExpenseDay(date, nextDayExpenses)) {
+          editingExpenseId = null;
+          editingExpenseDate = null;
+          clearNotice();
+          render();
+        }
+      });
+      panel.append(form);
+      if (editingExpense) {
+        window.requestAnimationFrame(() => nameInput.focus());
+      }
+      return panel;
+    }
+
     function render() {
       itemCount.textContent = String(items.length);
       itemCount.setAttribute("aria-label", `共 ${items.length} 個行程`);
@@ -2566,14 +3066,18 @@
         control.disabled = controlsLocked;
       });
       submitButton.disabled = controlsLocked;
-      importFormat.disabled = controlsLocked;
+      exportFormat.disabled = controlsLocked || !checklistStorageReady || !expenseStorageReady;
+      importFormat.disabled = controlsLocked || !checklistStorageReady || !expenseStorageReady;
 
       const dates = [...new Set([
         ...items.map((item) => item.date),
-        ...Object.keys(checklists)
+        ...Object.keys(checklists),
+        ...Object.keys(expenses)
       ])].sort();
       if (dates.length === 0) {
         currentDay = null;
+        editingExpenseId = null;
+        editingExpenseDate = null;
         summary.textContent = "還沒有安排任何行程";
         dayTabs.replaceChildren();
         const emptyState = makeElement("div", "empty-state");
@@ -2590,6 +3094,10 @@
       if (!dates.includes(currentDay)) {
         currentDay = dates[0];
       }
+      if (editingExpenseDate && editingExpenseDate !== currentDay) {
+        editingExpenseId = null;
+        editingExpenseDate = null;
+      }
 
       dayTabs.replaceChildren();
       dates.forEach((date, index) => {
@@ -2602,6 +3110,10 @@
         tab.setAttribute("aria-selected", String(date === currentDay));
         tab.tabIndex = date === currentDay ? 0 : -1;
         tab.addEventListener("click", () => {
+          if (currentDay !== date) {
+            editingExpenseId = null;
+            editingExpenseDate = null;
+          }
           currentDay = date;
           render();
         });
@@ -2620,6 +3132,10 @@
           }
 
           event.preventDefault();
+          if (currentDay !== dates[nextIndex]) {
+            editingExpenseId = null;
+            editingExpenseDate = null;
+          }
           currentDay = dates[nextIndex];
           render();
           dayTabs.children[nextIndex].focus();
@@ -2632,7 +3148,7 @@
       const list = makeElement("ol", "itinerary-list");
       selectedItems.forEach((item, index) => list.append(createItineraryCard(item, index)));
       itineraryContent.setAttribute("aria-labelledby", `day-tab-${currentDay}`);
-      itineraryContent.replaceChildren(dayHeading, list, renderChecklist(currentDay));
+      itineraryContent.replaceChildren(dayHeading, list, renderChecklist(currentDay), renderExpenses(currentDay));
     }
 
     function reorderWithinDay(sourceId, targetId, position) {
@@ -2786,9 +3302,10 @@
     directoryButton.addEventListener("click", configureDirectoryAutoSave);
     importFile.addEventListener("change", importSelectedFile);
     items = loadItems();
+    checklists = loadChecklists();
+    expenses = loadExpenses();
     ensureDefaultItems();
     ensureV72Items();
-    checklists = loadChecklists();
     render();
     initializeDirectoryAutoSave();
   </script>
