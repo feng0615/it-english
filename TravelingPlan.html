@@ -130,6 +130,122 @@
       white-space: nowrap;
     }
 
+    .version-changelog {
+      position: relative;
+      display: inline-block;
+      margin-left: .45em;
+      vertical-align: .18em;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: normal;
+      text-transform: none;
+    }
+
+    .version-changelog > summary {
+      display: inline-flex;
+      min-height: 28px;
+      align-items: center;
+      padding: 4px 9px;
+      border: 1px solid #dce8df;
+      border-radius: 999px;
+      color: var(--green);
+      background: var(--paper);
+      font-size: 12px;
+      font-weight: 750;
+      line-height: 1.4;
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .version-changelog > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .version-changelog > summary::after {
+      margin-left: 6px;
+      content: "＋";
+      font-size: 10px;
+    }
+
+    .version-changelog[open] > summary::after {
+      content: "−";
+    }
+
+    .version-changelog > summary:focus-visible {
+      outline: 3px solid rgb(47 105 87 / 24%);
+      outline-offset: 2px;
+    }
+
+    .version-changelog-panel {
+      position: absolute;
+      z-index: 20;
+      top: calc(100% + 8px);
+      left: 0;
+      width: min(360px, calc(100vw - 32px));
+      max-height: min(65vh, 420px);
+      overflow: auto;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      color: var(--ink);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      text-align: left;
+      letter-spacing: normal;
+      text-transform: none;
+    }
+
+    .version-changelog-title {
+      margin: 0 0 9px;
+      font-size: 14px;
+      letter-spacing: normal;
+    }
+
+    .version-changelog-list {
+      display: grid;
+      gap: 9px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .version-changelog-list li {
+      padding-bottom: 9px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .version-changelog-list li:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .version-changelog-entry-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 3px;
+    }
+
+    .version-changelog-version {
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .version-changelog-date {
+      color: var(--muted);
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .version-changelog-list p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
     .hero-copy {
       max-width: 550px;
       margin: 15px 0 0;
@@ -1021,6 +1137,11 @@
         gap: 14px;
       }
 
+      .version-changelog-panel {
+        right: 0;
+        left: auto;
+      }
+
       .day-tabs {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1181,7 +1302,43 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.1.1</span></p>
+        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.2.0</span>
+          <details class="version-changelog">
+            <summary>更新日誌</summary>
+            <div class="version-changelog-panel">
+              <p class="version-changelog-title">版本異動紀錄</p>
+              <ol class="version-changelog-list">
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.2.0</strong>
+                    <time class="version-changelog-date" datetime="2026-11-03">2026-11-03</time>
+                  </div>
+                  <p>新增更新日誌，集中查看各版本異動與調整內容。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.1.1</strong>
+                    <time class="version-changelog-date" datetime="2026-11-03">2026-11-03</time>
+                  </div>
+                  <p>Checklist 網址可直接點擊，並在新分頁開啟；主頁與匯出 HTML 均適用。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.1.0</strong>
+                    <time class="version-changelog-date" datetime="2026-11-03">2026-11-03</time>
+                  </div>
+                  <p>新增每日費用 CRUD，並納入 JSON／HTML 匯入匯出。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.0.0</strong>
+                  </div>
+                  <p>初始版本標記：提供旅遊行程與 Checklist 管理，以及 JSON／HTML 匯入匯出。</p>
+                </li>
+              </ol>
+            </div>
+          </details>
+        </div>
         <h1 id="page-title">把期待，排進旅程裡。</h1>
         <p class="hero-copy">記下每一站想去的地方與想做的事，留一點空白，讓旅途也有即興的驚喜。</p>
       </div>
