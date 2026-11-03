@@ -474,12 +474,19 @@
       <div>
         <div class="title-line">
           <h1 id="page-title">常用連結，一頁收好。</h1>
-          <span class="version-badge">v1.1.0</span>
+          <span class="version-badge">v1.2.0</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.2.0</strong>
+                    <time class="version-changelog-date" datetime="2026-11-03">2026-11-03</time>
+                  </div>
+                  <p>改用 localStorage 依瀏覽器設定檔保存快速連結；不再下載更新版 HTML。</p>
+                </li>
                 <li>
                   <div class="version-changelog-entry-header">
                     <strong class="version-changelog-version">v1.1.0</strong>
@@ -531,7 +538,7 @@
               <button class="button" id="cancel-button" type="button" hidden="">取消編輯</button>
             </div>
           </fieldset>
-          <p class="form-note">網址僅接受 HTTP／HTTPS，或同資料夾內的相對連結。每次異動後會下載更新版 HTML，請以下載檔取代原檔。</p>
+          <p class="form-note">網址僅接受 HTTP／HTTPS，或同資料夾內的相對連結。連結設定儲存在目前瀏覽器設定檔，不會同步到其他瀏覽器或裝置。</p>
           <p class="status" id="form-status" role="status" aria-live="polite"></p>
         </form>
       </details>
@@ -551,8 +558,8 @@
   <script type="application/json" id="embedded-links">[{"id":"traveling-plan","title":"旅遊行程規劃","url":"TravelingPlan.html"},{"id":"9f41265a-48b8-40fa-9b64-c676ee375840","title":"iPAS AI 應用規劃師刷題","url":"https://feng0615.github.io/it-english/iPAS_AI.html"}]</script>
   <script>
     (() => {
+      const storageKey = "traveling-plan.quick-links.v1";
       const embeddedLinks = document.getElementById("embedded-links");
-      const htmlTemplate = document.documentElement.cloneNode(true);
       const linkList = document.getElementById("link-list");
       const linkCount = document.getElementById("link-count");
       const emptyState = document.getElementById("empty-state");
@@ -615,12 +622,17 @@
       }
 
       function loadLinks() {
-        const parsed = JSON.parse(embeddedLinks.textContent || "[]");
+        const saved = localStorage.getItem(storageKey);
+        const parsed = JSON.parse(saved ?? embeddedLinks.textContent ?? "[]");
         if (!Array.isArray(parsed)) {
           throw new Error("快速連結資料格式不正確。");
         }
 
-        return parsed.map(normalizeLink);
+        const normalizedLinks = parsed.map(normalizeLink);
+        if (saved === null) {
+          localStorage.setItem(storageKey, JSON.stringify(normalizedLinks));
+        }
+        return normalizedLinks;
       }
 
       function setStatus(element, message, isError = false) {
@@ -628,28 +640,12 @@
         element.classList.toggle("status-error", isError);
       }
 
-      function downloadUpdatedHtml(nextLinks) {
+      function persistLinks(nextLinks, statusElement) {
         try {
-          const updatedDocument = htmlTemplate.cloneNode(true);
-          const updatedData = updatedDocument.querySelector("#embedded-links");
-          updatedData.textContent = JSON.stringify(nextLinks).replace(/</g, "\\u003c");
-
-          const blob = new Blob(
-            [`<!doctype html>\n${updatedDocument.outerHTML}`],
-            { type: "text/html;charset=utf-8" }
-          );
-          const downloadUrl = URL.createObjectURL(blob);
-          const downloadLink = document.createElement("a");
-          downloadLink.href = downloadUrl;
-          downloadLink.download = "index.html";
-          downloadLink.hidden = true;
-          document.body.append(downloadLink);
-          downloadLink.click();
-          downloadLink.remove();
-          window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+          localStorage.setItem(storageKey, JSON.stringify(nextLinks));
           return true;
         } catch {
-          setStatus(formStatus, "無法產生更新版 HTML；請確認瀏覽器允許下載後重試。", true);
+          setStatus(statusElement, "無法儲存快速連結，請確認瀏覽器允許本機儲存。", true);
           return false;
         }
       }
@@ -728,7 +724,7 @@
         }
 
         const nextLinks = links.filter(item => item.id !== link.id);
-        if (!downloadUpdatedHtml(nextLinks)) {
+        if (!persistLinks(nextLinks, listStatus)) {
           return;
         }
 
@@ -737,7 +733,7 @@
           resetForm();
         }
         renderLinks();
-        setStatus(listStatus, "已產生更新版 HTML；請下載完成後以此檔取代原檔。");
+        setStatus(listStatus, "已刪除快速連結並儲存至目前瀏覽器。");
       }
 
       form.addEventListener("submit", event => {
@@ -766,7 +762,7 @@
           ? links.map(link => link.id === editingId ? savedLink : link)
           : [...links, savedLink];
 
-        if (!downloadUpdatedHtml(nextLinks)) {
+        if (!persistLinks(nextLinks, formStatus)) {
           return;
         }
 
@@ -775,7 +771,7 @@
         renderLinks();
         setStatus(
           listStatus,
-          `${wasEditing ? "已更新" : "已新增"}快速連結，並產生更新版 HTML；請下載完成後以此檔取代原檔。`
+          `${wasEditing ? "已更新" : "已新增"}快速連結，並儲存至目前瀏覽器。`
         );
       });
 
@@ -787,7 +783,7 @@
         renderLinks();
       } catch {
         fields.disabled = true;
-        setStatus(listStatus, "無法讀取 HTML 內的快速連結資料；請確認資料區塊格式正確。", true);
+        setStatus(listStatus, "無法讀取快速連結；請確認瀏覽器允許本機儲存並檢查資料格式。", true);
       }
 
       if (!isReady) {
