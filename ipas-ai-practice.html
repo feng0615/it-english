@@ -1,0 +1,3222 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="使用公開題庫練習 iPAS AI 應用規劃師題目，支援科目篩選與即時作答解析。">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>iPAS AI 應用規劃師刷題</title>
+  <style>
+    :root {
+      font-family: "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      color: #17243a;
+      background: #f3f6fb;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      --navy: #173b68;
+      --blue: #2366b1;
+      --border: #dce4ef;
+      --muted: #62738b;
+      --green: #176b43;
+      --red: #a63137;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      padding: 28px 16px 48px;
+    }
+
+    button, select { font: inherit; }
+
+    .page-layout {
+      display: grid;
+      grid-template-columns: 190px minmax(0, 900px);
+      align-items: start;
+      gap: 18px;
+      width: min(1120px, 100%);
+      margin: 0 auto;
+    }
+
+    .app {
+      width: 100%;
+      margin: 0;
+    }
+
+    .side-menu {
+      position: sticky;
+      top: 18px;
+      display: grid;
+      gap: 7px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 4px 14px #173b6809;
+    }
+
+    .side-menu-title {
+      margin: 0 0 3px;
+      padding: 2px 9px 7px;
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 800;
+    }
+
+    .side-menu-link {
+      display: block;
+      padding: 10px 11px;
+      border-radius: 9px;
+      color: #24425f;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .side-menu-link:hover, .side-menu-link:focus-visible {
+      color: #173b68;
+      background: #eaf2fc;
+      outline: none;
+    }
+
+    .side-menu-link[aria-current="page"] {
+      color: #173b68;
+      background: #eaf2fc;
+    }
+
+    .app-view[hidden] { display: none; }
+
+    .jump-target { scroll-margin-top: 18px; }
+
+    .font-settings-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      max-width: 680px;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 820px) {
+      .page-layout { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+      .side-menu {
+        position: static;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 7px;
+        padding: 10px;
+      }
+      .side-menu-title { grid-column: 1 / -1; padding-bottom: 2px; }
+      .side-menu-link { text-align: center; }
+    }
+
+    .hero {
+      padding: 28px 30px;
+      border-radius: 20px;
+      color: #fff;
+      background: linear-gradient(125deg, #173b68, #2869ad);
+      box-shadow: 0 12px 28px #173b6824;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: #d9e9fb;
+      font-size: .88rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+
+    .version-badge {
+      display: inline-block;
+      margin-left: .45rem;
+      padding: .18rem .48rem;
+      border: 1px solid #ffffff80;
+      border-radius: 999px;
+      background: #ffffff1a;
+      font-size: .75rem;
+      letter-spacing: 0;
+      vertical-align: middle;
+    }
+
+    .update-log-button {
+      margin-left: .45rem;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #e6effa;
+      font: inherit;
+      font-size: .78rem;
+      letter-spacing: 0;
+      text-decoration: underline;
+      cursor: pointer;
+      vertical-align: middle;
+    }
+
+    .update-log-button:hover,
+    .update-log-button:focus-visible {
+      color: #fff;
+    }
+
+    .update-log-dialog {
+      width: min(560px, calc(100vw - 32px));
+      max-height: min(70vh, 620px);
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      color: var(--ink);
+      box-shadow: 0 18px 50px #102a4652;
+    }
+
+    .update-log-dialog::backdrop {
+      background: #102a467a;
+    }
+
+    .update-log-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      background: #f7faff;
+    }
+
+    .update-log-header h2 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 1.15rem;
+    }
+
+    .update-log-close {
+      border: 0;
+      border-radius: 8px;
+      padding: 6px 10px;
+      background: #e8eef5;
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .update-log-entries {
+      max-height: calc(min(70vh, 620px) - 62px);
+      padding: 18px 20px;
+      overflow: auto;
+    }
+
+    .update-log-entry + .update-log-entry {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .update-log-entry-heading {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--navy);
+      font-weight: 750;
+    }
+
+    .update-log-entry time {
+      color: var(--muted);
+      font-size: .85rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .update-log-entry ul {
+      margin: 8px 0 0;
+      padding-left: 1.25rem;
+      color: #43566d;
+      line-height: 1.65;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.55rem, 5vw, 2.15rem);
+      line-height: 1.3;
+    }
+
+    .hero > p:not(.eyebrow) {
+      margin: 10px 0 0;
+      color: #e6effa;
+      line-height: 1.7;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .stat, .panel {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: 0 4px 14px #173b6809;
+    }
+
+    .stat { padding: 15px 18px; }
+    .stat-label { color: var(--muted); font-size: .88rem; }
+    .stat-value { display: block; margin-top: 4px; color: var(--navy); font-size: 1.4rem; font-weight: 750; }
+    .stat-sub { display: block; margin-top: 3px; color: #64748b; font-size: .8rem; font-weight: 600; }
+    .stat.is-countdown .stat-value { color: #1765c1; }
+    .stat.is-countdown-today .stat-value { color: #c02626; }
+    .stat.is-countdown-past .stat-value { color: #8a99ad; }
+
+    .panel { margin-top: 16px; padding: 22px; }
+
+    .progress-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .progress-filter-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .progress-filter-control label {
+      margin: 0;
+      color: #34465e;
+      font-size: .88rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .progress-source-select {
+      min-width: 160px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      color: #203a5b;
+      font-size: .88rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .progress-source-select:focus-visible {
+      outline: 2px solid #2869ad;
+      outline-offset: 1px;
+    }
+
+    .progress-title { font-size: 1.25rem; }
+    .progress-note { margin: 8px 0 0; color: var(--muted); font-size: .86rem; line-height: 1.6; }
+    .progress-note.error { color: var(--red); }
+    .learning-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+    .email-export-option { flex: 1 1 100%; }
+    .email-export-option label { display: flex; align-items: center; gap: 8px; color: #34465e; font-weight: 700; cursor: pointer; }
+    .email-export-option input { width: 18px; height: 18px; margin: 0; }
+    .email-export-status { margin: 4px 0 0 26px; }
+
+    .subject-progress-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .level-progress-section + .level-progress-section {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .review-level-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .level-progress-heading { margin: 0; color: var(--navy); font-size: 1.08rem; }
+    .level-progress-count { margin: 5px 0 0; color: var(--muted); font-size: .84rem; }
+    .review-level-section + .review-level-section {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .review-button { white-space: nowrap; }
+    .review-subject-card .secondary-button { width: 100%; margin-top: 12px; }
+    .review-progress-fill { background: linear-gradient(90deg, #d48724, #bd3942); }
+
+    .subject-card {
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fbfcfe;
+    }
+    .subject-card.is-selected {
+      border-color: #2b78bd;
+      box-shadow: 0 0 0 1px #2b78bd, 0 4px 12px rgba(43, 120, 189, 0.08);
+      background: #f8fbff;
+    }
+
+    .subject-card h3, .subject-card h4 {
+      margin: 0 0 12px;
+      color: #203a5b;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    .progress-count { display: flex; justify-content: space-between; gap: 10px; margin: 0; color: #34465e; font-size: .88rem; }
+    .progress-percent { color: var(--navy); font-weight: 800; }
+
+    .progress-track {
+      height: 10px;
+      margin-top: 9px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e7edf5;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #2b78bd, #38a276);
+      transition: width .2s ease;
+    }
+
+    .subject-result { margin: 10px 0 0; color: var(--muted); font-size: .84rem; line-height: 1.6; }
+
+    .source-breakdown {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .source-breakdown-title {
+      margin: 0 0 8px;
+      color: #24425f;
+      font-size: .84rem;
+      font-weight: 750;
+      letter-spacing: .01em;
+    }
+    .source-breakdown-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .source-breakdown-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 6px 8px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: #ffffff;
+      cursor: pointer;
+      transition: background .15s ease, border-color .15s ease;
+    }
+    .source-breakdown-item:hover, .source-breakdown-item:focus-visible {
+      background: #eef5fc;
+      border-color: #cbdcf0;
+      outline: none;
+    }
+    .source-breakdown-item.is-active {
+      background: #e8f2fc;
+      border-color: #8bb6e2;
+    }
+    .source-breakdown-item.is-sub {
+      margin-left: 10px;
+      border-left: 2px solid #cbdcf0;
+      border-radius: 4px 8px 8px 4px;
+    }
+    .source-breakdown-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: .8rem;
+      line-height: 1.4;
+    }
+    .source-breakdown-name {
+      color: #2b4360;
+      font-weight: 650;
+    }
+    .source-breakdown-item.is-active .source-breakdown-name {
+      color: #173b68;
+      font-weight: 800;
+    }
+    .source-breakdown-stat {
+      color: #55687d;
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .source-breakdown-item.is-active .source-breakdown-stat {
+      color: #1a4f85;
+      font-weight: 750;
+    }
+    .progress-track.mini {
+      height: 6px;
+      margin-top: 2px;
+      background: #e3ebf4;
+    }
+    .progress-track.mini .progress-fill {
+      background: linear-gradient(90deg, #3284ce, #2bb282);
+    }
+    .result-details { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 10px; }
+    .result-details summary { color: #285681; font-size: .88rem; font-weight: 700; cursor: pointer; }
+    .record-list { display: grid; gap: 10px; margin: 12px 0 0; padding: 0; list-style: none; }
+    .record-item { padding: 10px; border-radius: 9px; background: #fff; }
+    .record-badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: .76rem; font-weight: 800; }
+    .record-badge.correct { color: #145d3b; background: #e6f5ec; }
+    .record-badge.incorrect { color: #8b262c; background: #ffeded; }
+    .record-badge.pending { margin-left: 6px; color: #78510c; background: #fff3d5; }
+    .record-question { margin: 7px 0 4px; color: #253b56; font-size: .86rem; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .record-meta { margin: 0; color: var(--muted); font-size: .78rem; line-height: 1.5; }
+
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      color: #34465e;
+      font-size: .9rem;
+      font-weight: 700;
+    }
+
+    select, input[type="date"] {
+      width: 100%;
+      min-height: 46px;
+      padding: 9px 12px;
+      border: 1px solid #bac8da;
+      border-radius: 10px;
+      color: #17243a;
+      background: #fff;
+      font-family: inherit;
+      font-size: .95rem;
+      box-sizing: border-box;
+    }
+
+    select {
+      padding-right: 36px;
+    }
+
+    select:focus-visible, input[type="date"]:focus-visible, button:focus-visible {
+      outline: 3px solid #71aaf0;
+      outline-offset: 2px;
+    }
+
+    .date-input-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .date-input-group input[type="date"] {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .clear-date-button {
+      min-height: 46px;
+      padding: 0 12px;
+      font-size: .84rem;
+      white-space: nowrap;
+    }
+
+    .countdown-tag {
+      color: #155799;
+      background: #e3effd;
+      font-weight: 750;
+    }
+
+    .question-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      color: #214d7d;
+      background: #eaf2fc;
+      font-size: .82rem;
+      font-weight: 700;
+    }
+
+    .tag.muted { color: #53657b; background: #edf0f4; }
+
+    .question-count {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    h2 {
+      margin: 0;
+      color: #162b47;
+      font-size: clamp(1.12rem, 3.5vw, 1.38rem);
+      line-height: 1.7;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .app[data-question-font-scale="80"] #questionText {
+      font-size: clamp(.896rem, 2.8vw, 1.104rem);
+    }
+    .app[data-question-font-scale="120"] #questionText {
+      font-size: clamp(1.344rem, 4.2vw, 1.656rem);
+    }
+
+    .options {
+      display: grid;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .option {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      align-items: start;
+      gap: 10px;
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #d4deeb;
+      border-radius: 12px;
+      color: #233750;
+      background: #fff;
+      text-align: left;
+      font-size: 1.1em;
+      line-height: 1.65;
+      cursor: pointer;
+      transition: border-color .15s ease, background-color .15s ease, box-shadow .15s ease;
+    }
+
+    .app[data-answer-font-scale="80"] .option { font-size: .88em; }
+    .app[data-answer-font-scale="120"] .option { font-size: 1.32em; }
+    .app[data-answer-font-scale="80"] .feedback-answer { font-size: .8em; }
+    .app[data-answer-font-scale="120"] .feedback-answer { font-size: 1.2em; }
+
+    .option:hover:not(:disabled) {
+      border-color: #3c7fc4;
+      background: #eef6ff;
+      box-shadow: 0 0 0 2px #3c7fc426;
+    }
+
+    .option:disabled { cursor: default; opacity: 1; }
+
+    .option-letter {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border-radius: 50%;
+      color: #315b89;
+      background: #edf3fa;
+      font-weight: 800;
+    }
+
+    .option.is-correct {
+      border-color: #3a9367;
+      color: #145d3b;
+      background: #edf8f1;
+    }
+
+    .option.is-correct .option-letter { color: #fff; background: #24794f; }
+
+    .option.is-wrong {
+      border-color: #cf6468;
+      color: #8b262c;
+      background: #fff1f1;
+    }
+
+    .option.is-wrong .option-letter { color: #fff; background: #ad3c42; }
+
+    .feedback {
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #f8fafc;
+      line-height: 1.75;
+    }
+
+    .feedback[hidden], .question-content[hidden], .question-image[hidden] { display: none; }
+    .feedback-title { margin: 0 0 6px; font-weight: 800; }
+    .feedback-title.correct { color: var(--green); }
+    .feedback-title.incorrect { color: var(--red); }
+    .feedback-answer, .explanation { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .explanation { margin-top: 8px; color: #34465e; }
+
+    .question-image {
+      display: block;
+      max-width: 100%;
+      max-height: 420px;
+      margin: 18px auto 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      object-fit: contain;
+      background: #fff;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .actions-buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .source-note { margin: 0; color: var(--muted); font-size: .84rem; line-height: 1.6; }
+
+    .primary-button, .secondary-button {
+      min-height: 46px;
+      padding: 10px 18px;
+      border: 0;
+      border-radius: 10px;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    .primary-button { color: #fff; background: var(--blue); }
+    .primary-button:hover:not(:disabled) { background: #174f90; }
+    .secondary-button { color: #24425f; background: #eaf0f7; }
+    .secondary-button:hover { background: #dce7f4; }
+    button:disabled { cursor: not-allowed; opacity: .55; }
+
+    .status {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .status.error { color: #992b32; }
+    .status[hidden] { display: none; }
+    .empty-state { padding: 30px 10px; text-align: center; }
+
+    @media (max-width: 900px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 14px 12px 32px; }
+      .hero { padding: 23px 20px; border-radius: 16px; }
+      .stats { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .stat { padding: 12px 10px; }
+      .stat-label { font-size: .78rem; }
+      .stat-value { font-size: 1.2rem; }
+      .panel { padding: 17px 15px; }
+      .progress-filter-control { width: 100%; justify-content: space-between; }
+      .progress-source-select { flex: 1; }
+      .learning-actions { width: 100%; }
+      .learning-actions .secondary-button { flex: 1 1 auto; }
+      .filters { grid-template-columns: 1fr; gap: 11px; }
+      .font-settings-grid { grid-template-columns: 1fr; }
+      .question-count { width: 100%; margin-left: 0; }
+      .actions { align-items: stretch; }
+      .actions-buttons { width: 100%; flex-direction: column; }
+      .actions .primary-button, .actions .secondary-button { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-layout">
+  <nav class="side-menu" aria-label="頁面功能選單">
+    <p class="side-menu-title">功能選單</p>
+    <a class="side-menu-link" href="#practiceSection">過濾條件</a>
+    <a class="side-menu-link" href="#practiceView">題目練習</a>
+    <a class="side-menu-link" href="#progressSection">學習進度</a>
+    <a class="side-menu-link" href="#wrongReviewSection">錯題複習</a>
+    <a class="side-menu-link" href="#exportView">檔案匯出</a>
+    <a class="side-menu-link" href="#settingsView">參數設定</a>
+  </nav>
+
+  <main class="app">
+    <div class="app-view" id="practiceSection" tabindex="-1">
+    <header class="hero">
+      <p class="eyebrow">iPAS AI 應用規劃師 <span class="version-badge" id="ipasVersionBadge">版本v1.0.0</span><button class="update-log-button" id="openUpdateLogButton" type="button">更新日誌</button></p>
+      <h1>iPAS AI 應用規劃師刷題</h1>
+      <p>從公開題庫隨機抽題，即時核對答案與解析；匯出單檔 HTML 時會一併內嵌題庫與目前學習紀錄。</p>
+      <dialog class="update-log-dialog" id="updateLogDialog" aria-labelledby="updateLogHeading">
+        <div class="update-log-header">
+          <h2 id="updateLogHeading">更新日誌</h2>
+          <button class="update-log-close" id="closeUpdateLogButton" type="button">關閉</button>
+        </div>
+        <div class="update-log-entries" id="updateLogEntries"></div>
+      </dialog>
+    </header>
+
+    <section class="stats" aria-label="作答統計">
+      <div class="stat">
+        <span class="stat-label">本次作答</span>
+        <strong class="stat-value" id="answeredCount">0</strong>
+      </div>
+      <div class="stat">
+        <span class="stat-label">本次答對</span>
+        <strong class="stat-value" id="correctCount">0</strong>
+      </div>
+      <div class="stat">
+        <span class="stat-label">本次答對率</span>
+        <strong class="stat-value" id="accuracy">—</strong>
+      </div>
+      <div class="stat" id="countdownCard">
+        <span class="stat-label">考試倒數</span>
+        <strong class="stat-value" id="examCountdown">—</strong>
+        <span class="stat-sub" id="examDateBadge" hidden></span>
+      </div>
+    </section>
+
+    <section class="panel jump-target" id="filterPanel" tabindex="-1" aria-label="題目篩選">
+      <div class="filters">
+        <div class="field">
+          <label for="levelFilter">程度</label>
+          <select id="levelFilter" disabled>
+            <option value="">全部程度</option>
+            <option value="初級">初級</option>
+            <option value="中級">中級</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="subjectFilter">科目</label>
+          <select id="subjectFilter" disabled>
+            <option value="">全部科目</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="sourceFilter">來源</label>
+          <select id="sourceFilter" disabled>
+            <option value="">全部來源</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="examDateFilter">考試日期</label>
+          <div class="date-input-group">
+            <input type="date" id="examDateFilter" aria-label="考試日期" />
+            <button type="button" class="secondary-button clear-date-button" id="clearExamDateButton" title="清除考試日期" aria-label="清除考試日期" hidden>清除</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    </div>
+
+    <div class="app-view" id="practiceView" tabindex="-1">
+    <section class="panel" aria-label="題目與作答">
+      <p class="status" id="status" role="status" aria-live="polite">正在載入公開題庫…</p>
+      <div id="questionContent" class="question-content" hidden>
+        <div class="question-top">
+          <span class="tag" id="levelTag"></span>
+          <span class="tag muted" id="subjectTag"></span>
+          <span class="tag muted" id="chapterTag" hidden></span>
+          <span class="tag muted" id="sourceTag"></span>
+          <span class="tag" id="reviewModeTag" hidden></span>
+          <span class="tag countdown-tag" id="examCountdownTag" hidden></span>
+          <span class="question-count" id="questionCount"></span>
+        </div>
+        <h2 id="questionText"></h2>
+        <div class="options" id="options" role="group" aria-label="答案選項"></div>
+        <div class="feedback" id="feedback" aria-live="polite" hidden>
+          <p class="feedback-title" id="feedbackTitle"></p>
+          <p class="feedback-answer" id="feedbackAnswer"></p>
+          <p class="explanation" id="explanation" hidden></p>
+          <img class="question-image" id="questionImage" alt="本題相關圖片" hidden>
+        </div>
+        <div class="actions">
+          <p class="source-note">題庫來源：yazelin.github.io/ipas-ai-quiz</p>
+          <div class="actions-buttons">
+            <button class="secondary-button" id="exitReviewButton" type="button" hidden>結束錯題複習</button>
+            <button class="primary-button" id="nextButton" type="button">抽下一題</button>
+            <button class="secondary-button" id="resetDeckButton" type="button" hidden>重置題目</button>
+          </div>
+        </div>
+      </div>
+      <div class="empty-state" id="emptyState" hidden>
+        <p class="status" id="emptyMessage"></p>
+        <button class="secondary-button" id="retryButton" type="button" hidden>重新載入題庫</button>
+      </div>
+    </section>
+    </div>
+
+    <section class="panel app-view jump-target" id="progressSection" tabindex="-1" aria-labelledby="progressHeading">
+      <div class="progress-header">
+        <div>
+          <h2 class="progress-title" id="progressHeading">各科學習進度</h2>
+          <p class="progress-note" id="storageNote" role="status" aria-live="polite">
+            學習紀錄保存在此瀏覽器，不會上傳至伺服器；可匯出 JSON 檔帶到其他裝置，再匯入繼續使用。
+          </p>
+        </div>
+        <div class="progress-filter-control">
+          <label for="progressSourceFilter">來源篩選</label>
+          <select id="progressSourceFilter" class="progress-source-select" disabled>
+            <option value="">全部來源</option>
+          </select>
+        </div>
+      </div>
+      <div class="level-progress-container" id="subjectProgress">
+        <p class="status">題庫載入後將顯示各科完成率。</p>
+      </div>
+    </section>
+
+    <section class="panel app-view jump-target" id="exportView" tabindex="-1" aria-labelledby="exportHeading">
+      <div class="progress-header">
+        <div>
+          <h2 class="progress-title" id="exportHeading">檔案匯出與學習資料</h2>
+          <p class="progress-note">匯出單檔離線刷題頁，或備份與還原此瀏覽器的學習紀錄。</p>
+        </div>
+        <div class="learning-actions" id="fileExport">
+          <div class="email-export-option">
+            <label for="sendArchiveEmail">
+              <input id="sendArchiveEmail" type="checkbox" disabled>
+              同時寄送 ZIP 至目前登入帳號的已驗證 Email
+            </label>
+            <p class="progress-note email-export-status" id="emailExportStatus" role="status" aria-live="polite">
+              正在確認 Email 寄送資格…
+            </p>
+          </div>
+          <button class="secondary-button" id="exportArchive" type="button" disabled>
+            匯出 HTML + 學習資料 ZIP
+          </button>
+          <button class="secondary-button" id="exportOfflineHtml" type="button" disabled>
+            匯出單檔 HTML
+          </button>
+          <button class="secondary-button" id="exportLearningRecords" type="button" disabled>
+            匯出學習資料
+          </button>
+          <button class="secondary-button" id="importLearningRecordsButton" type="button" disabled>
+            匯入學習資料
+          </button>
+          <button class="secondary-button" id="clearLearningRecords" type="button" disabled>
+            清除本機紀錄
+          </button>
+          <input id="learningRecordsFile" type="file" accept=".json,application/json" hidden>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel app-view jump-target" id="wrongReviewSection" tabindex="-1" aria-labelledby="wrongReviewHeading">
+      <div class="progress-header">
+        <div>
+          <h2 class="progress-title" id="wrongReviewHeading">錯題複習分析</h2>
+          <p class="progress-note" id="reviewSummary" role="status" aria-live="polite">
+            題庫載入後將顯示各科待複習錯題數量。
+          </p>
+        </div>
+      </div>
+      <div class="level-progress-container" id="wrongReviewStats">
+        <p class="status">題庫載入後將顯示錯題分析。</p>
+      </div>
+    </section>
+
+    <section class="panel app-view jump-target" id="settingsView" tabindex="-1" aria-labelledby="settingsHeading">
+      <h2 class="progress-title" id="settingsHeading">參數設定</h2>
+      <p class="progress-note">以現行字體大小為標準調整題目與答案；設定只儲存在此瀏覽器。</p>
+      <div class="font-settings-grid">
+        <div class="field">
+          <label for="questionFontScale">題目字體大小</label>
+          <select id="questionFontScale">
+            <option value="80">縮小（80%）</option>
+            <option value="100" selected>標準（100%）</option>
+            <option value="120">放大（120%）</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="answerFontScale">答案字體大小</label>
+          <select id="answerFontScale">
+            <option value="80">縮小（80%）</option>
+            <option value="100" selected>標準（100%）</option>
+            <option value="120">放大（120%）</option>
+          </select>
+        </div>
+      </div>
+      <p class="progress-note" id="fontSettingsNote" role="status" aria-live="polite">
+        字體設定已儲存在此瀏覽器。
+      </p>
+    </section>
+  </main>
+</div>
+
+  <script>
+    "use strict";
+
+    const DATA_URL = "https://yazelin.github.io/ipas-ai-quiz/questions.json";
+    const IMAGE_BASE_URL = "https://yazelin.github.io/ipas-ai-quiz/";
+    const IPAS_VERSION = "1.0.0";
+    const IPAS_UPDATE_LOG = [{"Version":"1.0.0","Date":"2026-11-04","Changes":["錯題複習依來源類別顯示待複習題數與比例，並可直接開始該來源複習。","點選學習進度來源類別後，直接進入題目練習並套用對應篩選條件。","錯題複習可直接切換至題目練習。","版號由中央設定控制，離線匯出一併保留版號與更新日誌。"]}];
+    const SOURCE_DEFAULT = "歷屆考古題";
+    const LEARNING_STORAGE_KEY = "ipas-ai-practice-learning-v1";
+    const LEARNING_EXPORT_FORMAT = "ipas-ai-practice-learning";
+    const FONT_SETTINGS_STORAGE_KEY = "ipas-ai-practice-font-settings-v1";
+    const FONT_SCALE_OPTIONS = ["80", "100", "120"];
+    const MAX_IMPORT_FILE_BYTES = 5 * 1024 * 1024;
+    const MAX_EMAIL_ARCHIVE_BYTES = 10 * 1024 * 1024;
+    const OPTION_LABELS = ["A", "B", "C", "D"];
+    const EMBEDDED_QUESTIONS = null;
+    const EMBEDDED_LEARNING_RECORDS = null;
+    const EMBEDDED_EXAM_DATE = null;
+    const EMBEDDED_FONT_SETTINGS = null;
+    const EXAM_DATE_STORAGE_KEY = "ipas-ai-practice-exam-date";
+    const ZIP_CRC32_TABLE = new Uint32Array(256);
+    const ROUND_NUMBER_MAP = { "第一次": 1, "第二次": 2, "第三次": 3, "第四次": 4, "第五次": 5 };
+
+    for (let index = 0; index < ZIP_CRC32_TABLE.length; index += 1) {
+      let value = index;
+      for (let bit = 0; bit < 8; bit += 1) {
+        value = value & 1 ? 0xedb88320 ^ (value >>> 1) : value >>> 1;
+      }
+      ZIP_CRC32_TABLE[index] = value >>> 0;
+    }
+
+    const elements = {
+      answeredCount: document.getElementById("answeredCount"),
+      correctCount: document.getElementById("correctCount"),
+      accuracy: document.getElementById("accuracy"),
+      ipasVersionBadge: document.getElementById("ipasVersionBadge"),
+      openUpdateLogButton: document.getElementById("openUpdateLogButton"),
+      updateLogDialog: document.getElementById("updateLogDialog"),
+      closeUpdateLogButton: document.getElementById("closeUpdateLogButton"),
+      updateLogEntries: document.getElementById("updateLogEntries"),
+      app: document.querySelector(".app"),
+      levelFilter: document.getElementById("levelFilter"),
+      subjectFilter: document.getElementById("subjectFilter"),
+      sourceFilter: document.getElementById("sourceFilter"),
+      progressSourceFilter: document.getElementById("progressSourceFilter"),
+      examDateFilter: document.getElementById("examDateFilter"),
+      clearExamDateButton: document.getElementById("clearExamDateButton"),
+      examCountdown: document.getElementById("examCountdown"),
+      examDateBadge: document.getElementById("examDateBadge"),
+      countdownCard: document.getElementById("countdownCard"),
+      examCountdownTag: document.getElementById("examCountdownTag"),
+      status: document.getElementById("status"),
+      questionContent: document.getElementById("questionContent"),
+      levelTag: document.getElementById("levelTag"),
+      subjectTag: document.getElementById("subjectTag"),
+      chapterTag: document.getElementById("chapterTag"),
+      sourceTag: document.getElementById("sourceTag"),
+      questionCount: document.getElementById("questionCount"),
+      questionText: document.getElementById("questionText"),
+      options: document.getElementById("options"),
+      feedback: document.getElementById("feedback"),
+      feedbackTitle: document.getElementById("feedbackTitle"),
+      feedbackAnswer: document.getElementById("feedbackAnswer"),
+      explanation: document.getElementById("explanation"),
+      questionImage: document.getElementById("questionImage"),
+      reviewModeTag: document.getElementById("reviewModeTag"),
+      exitReviewButton: document.getElementById("exitReviewButton"),
+      emptyState: document.getElementById("emptyState"),
+      emptyMessage: document.getElementById("emptyMessage"),
+      retryButton: document.getElementById("retryButton"),
+      nextButton: document.getElementById("nextButton"),
+      resetDeckButton: document.getElementById("resetDeckButton"),
+      progressHeading: document.getElementById("progressHeading"),
+      wrongReviewHeading: document.getElementById("wrongReviewHeading"),
+      storageNote: document.getElementById("storageNote"),
+      subjectProgress: document.getElementById("subjectProgress"),
+      reviewSummary: document.getElementById("reviewSummary"),
+      wrongReviewStats: document.getElementById("wrongReviewStats"),
+      clearLearningRecords: document.getElementById("clearLearningRecords"),
+      exportArchive: document.getElementById("exportArchive"),
+      sendArchiveEmail: document.getElementById("sendArchiveEmail"),
+      emailExportStatus: document.getElementById("emailExportStatus"),
+      exportLearningRecords: document.getElementById("exportLearningRecords"),
+      exportOfflineHtml: document.getElementById("exportOfflineHtml"),
+      importLearningRecordsButton: document.getElementById("importLearningRecordsButton"),
+      learningRecordsFile: document.getElementById("learningRecordsFile"),
+      questionFontScale: document.getElementById("questionFontScale"),
+      answerFontScale: document.getElementById("answerFontScale"),
+      fontSettingsNote: document.getElementById("fontSettingsNote")
+    };
+
+    let questions = [];
+    let currentQuestion = null;
+    let currentQuestionIndex = -1;
+    let deck = [];
+    let wrongDrawnKeys = new Set();
+    let questionQueueExhausted = false;
+    let previousQuestion = null;
+    let reviewModeLevel = "";
+    let reviewModeSubject = "";
+    let reviewModeSource = "";
+    let reviewDeck = [];
+    let previousReviewQuestion = null;
+    let reviewCompletionNotice = "";
+    let answered = 0;
+    let correct = 0;
+    let learningRecords = Object.create(null);
+    let storageReadFailed = false;
+    let storageWriteFailed = false;
+    let lastHandledLevel = "";
+    let emailRequestVerificationToken = "";
+    let canSendExportEmail = false;
+
+    function asText(value) {
+      return typeof value === "string" ? value.trim() : "";
+    }
+
+    function getQuestionRecordKey(question) {
+      return JSON.stringify([
+        question.level,
+        question.subject,
+        question.chapter,
+        question.source,
+        question.question,
+        question.options,
+        question.answer
+      ]);
+    }
+
+    function normalizeQuestion(value) {
+      if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+      if (typeof value.question !== "string" || !Array.isArray(value.options) ||
+          value.options.length !== 4 || !value.options.every(option => typeof option === "string") ||
+          !Number.isInteger(value.answer) || value.answer < 0 || value.answer > 3) {
+        return null;
+      }
+
+      const question = {
+        question: value.question,
+        options: value.options,
+        answer: value.answer,
+        explanation: asText(value.explanation),
+        level: asText(value.level) || "未分類",
+        subject: asText(value.subject) || "未分類",
+        chapter: asText(value.chapter),
+        source: asText(value.source) || (value.round === "學習指引" ? "學習指引" : SOURCE_DEFAULT),
+        round: asText(value.round),
+        image: asText(value.image)
+      };
+      question.recordKey = getQuestionRecordKey(question);
+      return question;
+    }
+
+    function setStatus(message, isError) {
+      elements.status.textContent = message;
+      elements.status.classList.toggle("error", Boolean(isError));
+      elements.status.hidden = false;
+      elements.questionContent.hidden = true;
+      elements.emptyState.hidden = true;
+    }
+
+    function addFilterOptions(select, values) {
+      const fragment = document.createDocumentFragment();
+      for (const value of values) {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = value;
+        fragment.append(option);
+      }
+      select.append(fragment);
+    }
+
+    function updateSourceOptions() {
+      const currentSelected = elements.sourceFilter.value;
+      const selectedLevel = elements.levelFilter.value;
+      const levelQuestions = questions.filter(question =>
+        (!selectedLevel || question.level === selectedLevel)
+      );
+
+      const options = [
+        { value: "", text: "全部來源" }
+      ];
+
+      const hasLearningGuide = levelQuestions.some(q =>
+        q.source === "學習指引" || q.round === "學習指引"
+      );
+      if (hasLearningGuide) {
+        options.push({ value: "學習指引", text: "學習指引" });
+      }
+
+      const pastExamQuestions = levelQuestions.filter(q =>
+        q.round && q.round !== "學習指引"
+      );
+      if (pastExamQuestions.length > 0) {
+        options.push({ value: "歷屆考古題", text: "歷屆考古題" });
+
+        const years = [...new Set(pastExamQuestions
+          .map(q => q.round.match(/^(\d+年)/)?.[1])
+          .filter(Boolean)
+        )].sort((a, b) => a.localeCompare(b, "zh-Hant"));
+
+        for (const year of years) {
+          options.push({ value: year, text: `${year}歷屆考古題` });
+
+          const yearRounds = [...new Set(pastExamQuestions
+            .filter(q => q.round.startsWith(year))
+            .map(q => q.round)
+          )].sort((a, b) => {
+            const numA = Object.keys(ROUND_NUMBER_MAP).find(k => a.includes(k));
+            const numB = Object.keys(ROUND_NUMBER_MAP).find(k => b.includes(k));
+            const valA = numA ? ROUND_NUMBER_MAP[numA] : 99;
+            const valB = numB ? ROUND_NUMBER_MAP[numB] : 99;
+            return valA - valB || a.localeCompare(b, "zh-Hant");
+          });
+
+          for (const round of yearRounds) {
+            options.push({ value: round, text: round });
+          }
+        }
+      }
+
+      elements.sourceFilter.replaceChildren();
+      const fragment = document.createDocumentFragment();
+      for (const item of options) {
+        const option = document.createElement("option");
+        option.value = item.value;
+        option.textContent = item.text;
+        fragment.append(option);
+      }
+      elements.sourceFilter.append(fragment);
+
+      if (elements.progressSourceFilter) {
+        elements.progressSourceFilter.replaceChildren();
+        const progressFragment = document.createDocumentFragment();
+        for (const item of options) {
+          const option = document.createElement("option");
+          option.value = item.value;
+          option.textContent = item.text;
+          progressFragment.append(option);
+        }
+        elements.progressSourceFilter.append(progressFragment);
+      }
+
+      const isValidSelection = options.some(item => item.value === currentSelected);
+      const finalSelected = isValidSelection ? currentSelected : "";
+      elements.sourceFilter.value = finalSelected;
+      if (elements.progressSourceFilter) {
+        elements.progressSourceFilter.value = finalSelected;
+      }
+    }
+
+    function initializeFilters() {
+      updateSubjectOptions();
+      updateSourceOptions();
+      elements.levelFilter.disabled = false;
+      elements.subjectFilter.disabled = false;
+      elements.sourceFilter.disabled = false;
+      if (elements.progressSourceFilter) {
+        elements.progressSourceFilter.disabled = false;
+      }
+      lastHandledLevel = elements.levelFilter.value;
+    }
+
+    function updateSubjectOptions() {
+      const selectedSubject = elements.subjectFilter.value;
+      const selectedLevel = elements.levelFilter.value;
+      const subjects = [...new Set(questions
+        .filter(question => !selectedLevel || question.level === selectedLevel)
+        .map(question => question.subject))]
+        .sort((a, b) => a.localeCompare(b, "zh-Hant"));
+
+      elements.subjectFilter.replaceChildren();
+      const allSubjects = document.createElement("option");
+      allSubjects.value = "";
+      allSubjects.textContent = "全部科目";
+      elements.subjectFilter.append(allSubjects);
+      addFilterOptions(elements.subjectFilter, subjects);
+      elements.subjectFilter.value = subjects.includes(selectedSubject)
+        ? selectedSubject
+        : "";
+    }
+
+    function matchesSource(question, selectedSource) {
+      if (!selectedSource) return true;
+      if (selectedSource === "學習指引") {
+        return question.source === "學習指引" || question.round === "學習指引";
+      }
+      if (selectedSource === "歷屆考古題") {
+        return question.source === "歷屆考古題" && question.round !== "學習指引";
+      }
+      if (/^\d+年(歷屆考古題)?$/.test(selectedSource)) {
+        const year = selectedSource.match(/^\d+年/)[0];
+        return Boolean(question.round && question.round.startsWith(year));
+      }
+      return question.round === selectedSource;
+    }
+
+    function getFilteredQuestions() {
+      const level = elements.levelFilter.value;
+      const subject = elements.subjectFilter.value;
+      const source = elements.sourceFilter.value;
+      return questions.filter(question =>
+        (!level || question.level === level) &&
+        (!subject || question.subject === subject) &&
+        matchesSource(question, source)
+      );
+    }
+
+    function shuffle(items) {
+      const result = [...items];
+      for (let index = result.length - 1; index > 0; index -= 1) {
+        const other = Math.floor(Math.random() * (index + 1));
+        [result[index], result[other]] = [result[other], result[index]];
+      }
+      return result;
+    }
+
+    function drawQuestion() {
+      if (reviewModeLevel) {
+        const pendingQuestions = questions.filter(question =>
+          question.level === reviewModeLevel &&
+          (!reviewModeSubject || question.subject === reviewModeSubject) &&
+          matchesSource(question, reviewModeSource) &&
+          learningRecords[question.recordKey]?.needsReview
+        );
+        if (pendingQuestions.length === 0) {
+          const completedLevel = reviewModeLevel;
+          const completedSubject = reviewModeSubject;
+          const completedSource = reviewModeSource;
+          reviewModeLevel = "";
+          reviewModeSubject = "";
+          reviewModeSource = "";
+          reviewDeck = [];
+          previousReviewQuestion = null;
+          reviewCompletionNotice = completedSource
+            ? `${completedLevel}「${completedSubject}」${completedSource}來源錯題已複習完成，已返回一般練習。`
+            : completedSubject
+            ? `${completedLevel}「${completedSubject}」錯題已複習完成，已返回一般練習。`
+            : `${completedLevel}錯題已複習完成，已返回一般練習。`;
+          drawQuestion();
+          return;
+        }
+
+        const pendingKeys = new Set(pendingQuestions.map(question => question.recordKey));
+        reviewDeck = reviewDeck.filter(question => pendingKeys.has(question.recordKey));
+        if (reviewDeck.length === 0) {
+          reviewDeck = shuffle(pendingQuestions);
+          if (reviewDeck.length > 1 && reviewDeck[reviewDeck.length - 1] === previousReviewQuestion) {
+            [reviewDeck[0], reviewDeck[reviewDeck.length - 1]] =
+              [reviewDeck[reviewDeck.length - 1], reviewDeck[0]];
+          }
+        }
+
+        elements.status.hidden = true;
+        elements.emptyState.hidden = true;
+        elements.questionContent.hidden = false;
+        currentQuestion = reviewDeck.pop();
+        currentQuestionIndex = questions.indexOf(currentQuestion);
+        previousReviewQuestion = currentQuestion;
+        renderQuestion(pendingQuestions.length);
+        return;
+      }
+
+      const available = getFilteredQuestions();
+      if (available.length === 0) {
+        currentQuestion = null;
+        elements.status.hidden = true;
+        elements.questionContent.hidden = true;
+        elements.emptyState.hidden = false;
+        elements.nextButton.hidden = true;
+        elements.resetDeckButton.hidden = true;
+        elements.emptyMessage.textContent = questions.length
+          ? "目前篩選條件沒有題目，請調整程度、科目或來源。"
+          : "題庫中沒有可用題目。";
+        elements.retryButton.hidden = questions.length > 0;
+        return;
+      }
+
+      if (reviewCompletionNotice) {
+        elements.status.textContent = reviewCompletionNotice;
+        elements.status.classList.remove("error");
+        elements.status.hidden = false;
+        reviewCompletionNotice = "";
+      } else {
+        elements.status.hidden = true;
+      }
+      elements.emptyState.hidden = true;
+      elements.questionContent.hidden = false;
+      elements.nextButton.hidden = false;
+      elements.resetDeckButton.hidden = true;
+
+      const unseenQuestions = available.filter(question =>
+        !learningRecords[question.recordKey]
+      );
+      if (unseenQuestions.length > 0) {
+        const unseenKeys = new Set(unseenQuestions.map(question => question.recordKey));
+        deck = deck.filter(question => unseenKeys.has(question.recordKey));
+        if (deck.length === 0) {
+          deck = shuffle(unseenQuestions);
+        }
+        if (deck.length > 1 && deck[deck.length - 1] === previousQuestion) {
+          [deck[0], deck[deck.length - 1]] = [deck[deck.length - 1], deck[0]];
+        }
+        currentQuestion = deck.pop();
+      } else {
+        deck = [];
+        const wrongQuestions = available.filter(question =>
+          learningRecords[question.recordKey]?.needsReview &&
+          !wrongDrawnKeys.has(question.recordKey)
+        );
+        if (wrongQuestions.length === 0) {
+          questionQueueExhausted = true;
+          elements.nextButton.hidden = true;
+          elements.resetDeckButton.hidden = false;
+          elements.status.textContent =
+            "本輪題目已完成，請重置後重新抽題。";
+          elements.status.classList.remove("error");
+          elements.status.hidden = false;
+          return;
+        }
+        currentQuestion = shuffle(wrongQuestions)[0];
+        wrongDrawnKeys.add(currentQuestion.recordKey);
+      }
+
+      currentQuestionIndex = questions.indexOf(currentQuestion);
+      previousQuestion = currentQuestion;
+      renderQuestion(available.length);
+    }
+
+    function imageUrlFor(path) {
+      if (!path || path.startsWith("/") || path.startsWith("\\") ||
+          path.startsWith("//") || /^[a-z][a-z\d+.-]*:/i.test(path) ||
+          path.split(/[\\/]/).includes("..")) {
+        return null;
+      }
+
+      try {
+        const url = new URL(path, IMAGE_BASE_URL);
+        if (url.protocol !== "https:" || url.origin !== new URL(IMAGE_BASE_URL).origin) return null;
+        return url.href;
+      } catch {
+        return null;
+      }
+    }
+
+    function renderQuestion(filteredCount) {
+      const question = currentQuestion;
+      elements.levelTag.textContent = question.level;
+      elements.subjectTag.textContent = question.subject;
+      elements.chapterTag.textContent = question.chapter;
+      elements.chapterTag.hidden = !question.chapter;
+      elements.sourceTag.textContent = question.round || question.source;
+      elements.reviewModeTag.textContent = reviewModeLevel
+        ? `${reviewModeLevel}${reviewModeSubject ? `・${reviewModeSubject}` : ""}${reviewModeSource ? `・${reviewModeSource}` : ""}錯題複習`
+        : "";
+      elements.reviewModeTag.hidden = !reviewModeLevel;
+      elements.questionCount.textContent = reviewModeLevel
+        ? `待複習錯題 ${filteredCount} 題`
+        : `篩選結果 ${filteredCount} 題`;
+      elements.questionText.textContent = question.question;
+      elements.options.replaceChildren();
+      elements.feedback.hidden = true;
+      elements.feedbackTitle.textContent = "";
+      elements.feedbackTitle.className = "feedback-title";
+      elements.feedbackAnswer.textContent = "";
+      elements.explanation.textContent = "";
+      elements.explanation.hidden = true;
+      elements.questionImage.hidden = true;
+      elements.questionImage.removeAttribute("src");
+      elements.nextButton.disabled = false;
+      elements.nextButton.hidden = false;
+      elements.resetDeckButton.hidden = true;
+      elements.nextButton.textContent = reviewModeLevel ? "下一題錯題" : "抽下一題";
+      elements.exitReviewButton.hidden = !reviewModeLevel;
+
+      question.options.forEach((optionText, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "option";
+        button.dataset.answerIndex = String(index);
+
+        const letter = document.createElement("span");
+        letter.className = "option-letter";
+        letter.textContent = OPTION_LABELS[index];
+
+        const text = document.createElement("span");
+        text.textContent = optionText;
+
+        button.append(letter, text);
+        button.addEventListener("click", () => submitAnswer(index));
+        elements.options.append(button);
+      });
+    }
+
+    function submitAnswer(selectedIndex) {
+      if (!currentQuestion || !elements.feedback.hidden) return;
+
+      const isCorrect = selectedIndex === currentQuestion.answer;
+      answered += 1;
+      if (isCorrect) correct += 1;
+      updateStats();
+      recordAnswer(currentQuestion, selectedIndex, isCorrect);
+
+      for (const button of elements.options.querySelectorAll(".option")) {
+        const index = Number(button.dataset.answerIndex);
+        button.disabled = true;
+        if (index === currentQuestion.answer) button.classList.add("is-correct");
+        if (index === selectedIndex && !isCorrect) button.classList.add("is-wrong");
+      }
+
+      elements.feedback.hidden = false;
+      elements.feedbackTitle.textContent = isCorrect ? "回答正確！" : "回答錯誤";
+      elements.feedbackTitle.classList.add(isCorrect ? "correct" : "incorrect");
+      elements.feedbackAnswer.textContent =
+        `正確答案：${OPTION_LABELS[currentQuestion.answer]}．${currentQuestion.options[currentQuestion.answer]}`;
+      if (isCorrect && reviewModeLevel === currentQuestion.level &&
+          (!reviewModeSubject || reviewModeSubject === currentQuestion.subject) &&
+          matchesSource(currentQuestion, reviewModeSource)) {
+        elements.feedbackAnswer.textContent += "（已從錯題複習清單移除）";
+      }
+
+      if (currentQuestion.explanation) {
+        elements.explanation.textContent = `解析：${currentQuestion.explanation}`;
+        elements.explanation.hidden = false;
+      }
+
+      const imageUrl = imageUrlFor(currentQuestion.image);
+      if (imageUrl) {
+        elements.questionImage.hidden = false;
+        elements.questionImage.src = imageUrl;
+      }
+    }
+
+    function updateStats() {
+      elements.answeredCount.textContent = String(answered);
+      elements.correctCount.textContent = String(correct);
+      elements.accuracy.textContent = answered
+        ? `${Math.round((correct / answered) * 100)}%`
+        : "—";
+    }
+
+    function calculateDaysDifference(targetDateStr) {
+      if (!targetDateStr) return null;
+      const parts = targetDateStr.split("-").map(Number);
+      if (parts.length !== 3 || parts.some(isNaN)) return null;
+      const target = new Date(parts[0], parts[1] - 1, parts[2]);
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const diffTime = target.getTime() - today.getTime();
+      return Math.round(diffTime / (1000 * 60 * 60 * 24));
+    }
+
+    function updateExamCountdown() {
+      const dateVal = elements.examDateFilter?.value || "";
+      const hasDate = Boolean(dateVal);
+
+      if (elements.clearExamDateButton) {
+        elements.clearExamDateButton.hidden = !hasDate;
+      }
+
+      if (!hasDate) {
+        if (elements.examCountdown) elements.examCountdown.textContent = "—";
+        if (elements.examDateBadge) {
+          elements.examDateBadge.hidden = true;
+          elements.examDateBadge.textContent = "";
+        }
+        if (elements.countdownCard) {
+          elements.countdownCard.classList.remove("is-countdown", "is-countdown-today", "is-countdown-past");
+        }
+        if (elements.examCountdownTag) {
+          elements.examCountdownTag.hidden = true;
+          elements.examCountdownTag.textContent = "";
+        }
+        return;
+      }
+
+      const diffDays = calculateDaysDifference(dateVal);
+      if (diffDays === null) return;
+
+      const [year, month, day] = dateVal.split("-");
+      const shortDate = `${Number(month)}/${Number(day)}`;
+
+      if (diffDays > 0) {
+        if (elements.examCountdown) elements.examCountdown.textContent = `剩 ${diffDays} 天`;
+        if (elements.examDateBadge) {
+          elements.examDateBadge.hidden = false;
+          elements.examDateBadge.textContent = `考試日：${shortDate}`;
+        }
+        if (elements.countdownCard) {
+          elements.countdownCard.classList.add("is-countdown");
+          elements.countdownCard.classList.remove("is-countdown-today", "is-countdown-past");
+        }
+        if (elements.examCountdownTag) {
+          elements.examCountdownTag.hidden = false;
+          elements.examCountdownTag.textContent = `📅 倒數 ${diffDays} 天`;
+        }
+      } else if (diffDays === 0) {
+        if (elements.examCountdown) elements.examCountdown.textContent = "今日考試！";
+        if (elements.examDateBadge) {
+          elements.examDateBadge.hidden = false;
+          elements.examDateBadge.textContent = "祝考試順利！";
+        }
+        if (elements.countdownCard) {
+          elements.countdownCard.classList.add("is-countdown-today");
+          elements.countdownCard.classList.remove("is-countdown", "is-countdown-past");
+        }
+        if (elements.examCountdownTag) {
+          elements.examCountdownTag.hidden = false;
+          elements.examCountdownTag.textContent = "📅 今日考試！";
+        }
+      } else {
+        const pastDays = Math.abs(diffDays);
+        if (elements.examCountdown) elements.examCountdown.textContent = "已結束";
+        if (elements.examDateBadge) {
+          elements.examDateBadge.hidden = false;
+          elements.examDateBadge.textContent = `已過 ${pastDays} 天`;
+        }
+        if (elements.countdownCard) {
+          elements.countdownCard.classList.add("is-countdown-past");
+          elements.countdownCard.classList.remove("is-countdown", "is-countdown-today");
+        }
+        if (elements.examCountdownTag) {
+          elements.examCountdownTag.hidden = true;
+        }
+      }
+    }
+
+    function loadExamDate() {
+      try {
+        let savedDate = null;
+        if (typeof EMBEDDED_EXAM_DATE === "string" && /^\d{4}-\d{2}-\d{2}$/.test(EMBEDDED_EXAM_DATE)) {
+          savedDate = EMBEDDED_EXAM_DATE;
+        } else {
+          const stored = window.localStorage.getItem(EXAM_DATE_STORAGE_KEY);
+          if (stored && /^\d{4}-\d{2}-\d{2}$/.test(stored)) {
+            savedDate = stored;
+          }
+        }
+        if (savedDate && elements.examDateFilter) {
+          elements.examDateFilter.value = savedDate;
+        }
+      } catch {
+        // localStorage 讀取異常忽略
+      }
+      updateExamCountdown();
+    }
+
+    function handleExamDateChange() {
+      const val = elements.examDateFilter?.value || "";
+      try {
+        if (val) {
+          window.localStorage.setItem(EXAM_DATE_STORAGE_KEY, val);
+        } else {
+          window.localStorage.removeItem(EXAM_DATE_STORAGE_KEY);
+        }
+      } catch {
+        // localStorage 寫入異常忽略
+      }
+      updateExamCountdown();
+    }
+
+    function normalizeFontScale(value) {
+      const scale = String(value ?? "");
+      return FONT_SCALE_OPTIONS.includes(scale) ? scale : "100";
+    }
+
+    function getFontSettings() {
+      return {
+        question: normalizeFontScale(elements.questionFontScale.value),
+        answer: normalizeFontScale(elements.answerFontScale.value)
+      };
+    }
+
+    function applyFontSettings() {
+      const settings = getFontSettings();
+      elements.questionFontScale.value = settings.question;
+      elements.answerFontScale.value = settings.answer;
+      elements.app.dataset.questionFontScale = settings.question;
+      elements.app.dataset.answerFontScale = settings.answer;
+    }
+
+    function loadFontSettings() {
+      let settings = EMBEDDED_FONT_SETTINGS;
+      try {
+        const stored = window.localStorage.getItem(FONT_SETTINGS_STORAGE_KEY);
+        if (stored) {
+          settings = JSON.parse(stored);
+        }
+      } catch {
+        elements.fontSettingsNote.textContent =
+          "無法讀取已儲存的字體設定，已使用預設或匯出檔內的設定。";
+      }
+
+      if (settings && typeof settings === "object" && !Array.isArray(settings)) {
+        elements.questionFontScale.value = normalizeFontScale(settings.question);
+        elements.answerFontScale.value = normalizeFontScale(settings.answer);
+      }
+
+      applyFontSettings();
+    }
+
+    function saveFontSettings() {
+      applyFontSettings();
+      try {
+        window.localStorage.setItem(
+          FONT_SETTINGS_STORAGE_KEY,
+          JSON.stringify(getFontSettings())
+        );
+        elements.fontSettingsNote.textContent = "字體設定已儲存在此瀏覽器。";
+      } catch {
+        elements.fontSettingsNote.textContent =
+          "無法儲存字體設定；目前頁面仍會套用選擇，重新載入後將恢復標準大小。";
+      }
+    }
+
+    function setStorageNote(message, isError) {
+      elements.storageNote.textContent = message;
+      elements.storageNote.classList.toggle("error", Boolean(isError));
+    }
+
+    function validateStoredRecords(value) {
+      if (!value || typeof value !== "object" || Array.isArray(value) || value.version !== 1 ||
+          !value.records || typeof value.records !== "object" || Array.isArray(value.records)) {
+        throw new Error("學習紀錄格式不正確");
+      }
+
+      const records = Object.create(null);
+      for (const [key, record] of Object.entries(value.records)) {
+        if (!key || key.length > 100000 || !record || typeof record !== "object" ||
+            Array.isArray(record) || !Number.isSafeInteger(record.attempts) || record.attempts < 1 ||
+            !Number.isSafeInteger(record.correctAttempts) || record.correctAttempts < 0 ||
+            record.correctAttempts > record.attempts ||
+            !Number.isInteger(record.lastSelectedIndex) ||
+            record.lastSelectedIndex < 0 || record.lastSelectedIndex > 3 ||
+            typeof record.lastAnswerCorrect !== "boolean" ||
+            (record.needsReview !== undefined && typeof record.needsReview !== "boolean") ||
+            typeof record.lastAnsweredAt !== "string" ||
+            !Number.isFinite(Date.parse(record.lastAnsweredAt))) {
+          throw new Error("學習紀錄格式不正確");
+        }
+
+        records[key] = {
+          attempts: record.attempts,
+          correctAttempts: record.correctAttempts,
+          lastSelectedIndex: record.lastSelectedIndex,
+          lastAnswerCorrect: record.lastAnswerCorrect,
+          needsReview: typeof record.needsReview === "boolean"
+            ? record.needsReview
+            : !record.lastAnswerCorrect,
+          lastAnsweredAt: record.lastAnsweredAt
+        };
+      }
+      return records;
+    }
+
+    function loadLearningRecords() {
+      let embeddedRecordsLoaded = false;
+      try {
+        const stored = window.localStorage.getItem(LEARNING_STORAGE_KEY);
+        if (stored) {
+          learningRecords = validateStoredRecords(JSON.parse(stored));
+        } else if (EMBEDDED_LEARNING_RECORDS) {
+          learningRecords = validateStoredRecords({
+            version: 1,
+            records: EMBEDDED_LEARNING_RECORDS
+          });
+          embeddedRecordsLoaded = true;
+        }
+        setStorageNote("學習紀錄保存在此瀏覽器，不會上傳至伺服器。", false);
+      } catch {
+        storageReadFailed = true;
+        if (EMBEDDED_LEARNING_RECORDS) {
+          try {
+            learningRecords = validateStoredRecords({
+              version: 1,
+              records: EMBEDDED_LEARNING_RECORDS
+            });
+            embeddedRecordsLoaded = true;
+          } catch {
+            learningRecords = Object.create(null);
+          }
+        }
+        setStorageNote(
+          embeddedRecordsLoaded
+            ? "無法存取瀏覽器儲存區；已載入匯出檔內的學習紀錄，本次作答只暫存在頁面。"
+            : "無法讀取本機學習紀錄；為避免覆寫舊資料，本次作答暫存於目前頁面。若要重新開始，請清除本機紀錄。",
+          true
+        );
+      }
+      renderLearningDashboard();
+    }
+
+    function saveLearningRecords() {
+      if (storageReadFailed || storageWriteFailed) return;
+
+      try {
+        window.localStorage.setItem(
+          LEARNING_STORAGE_KEY,
+          JSON.stringify({ version: 1, records: learningRecords })
+        );
+        setStorageNote("學習紀錄已保存在此瀏覽器，不會上傳至伺服器。", false);
+      } catch {
+        storageWriteFailed = true;
+        setStorageNote(
+          "無法儲存本機學習紀錄；本次作答暫存於目前頁面，重新載入後可能遺失。",
+          true
+        );
+      }
+    }
+
+    function createLearningRecordsJson() {
+      return JSON.stringify({
+        format: LEARNING_EXPORT_FORMAT,
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        records: learningRecords
+      }, null, 2);
+    }
+
+    function getLearningExportFileName(date = new Date()) {
+      const pad = number => String(number).padStart(2, "0");
+      const year = date.getFullYear();
+      const month = pad(date.getMonth() + 1);
+      const day = pad(date.getDate());
+      const hours = pad(date.getHours());
+      const minutes = pad(date.getMinutes());
+      const seconds = pad(date.getSeconds());
+      return `ipas-ai-learning-${year}${month}${day}-${hours}${minutes}${seconds}.json`;
+    }
+
+    function exportLearningRecords() {
+      if (Object.keys(learningRecords).length === 0) {
+        setStorageNote("目前沒有可匯出的學習紀錄。", true);
+        return;
+      }
+
+      let downloadUrl = "";
+      try {
+        const blob = new Blob(
+          [createLearningRecordsJson()],
+          { type: "application/json;charset=utf-8" }
+        );
+        downloadUrl = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.download = getLearningExportFileName();
+        link.hidden = true;
+        document.body.append(link);
+        link.click();
+        link.remove();
+        window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 0);
+        setStorageNote(
+          `已匯出 ${Object.keys(learningRecords).length} 題學習紀錄；檔案只下載至此裝置，不會上傳。`,
+          false
+        );
+      } catch {
+        if (downloadUrl) URL.revokeObjectURL(downloadUrl);
+        setStorageNote("無法匯出學習資料，請確認瀏覽器允許下載檔案後重試。", true);
+      }
+    }
+
+    function toSafeScriptJson(value) {
+      return JSON.stringify(value).replace(/[<>&\u2028\u2029]/g, character => ({
+        "<": "\\u003c",
+        ">": "\\u003e",
+        "&": "\\u0026",
+        "\u2028": "\\u2028",
+        "\u2029": "\\u2029"
+      })[character]);
+    }
+
+    async function loadIpasVersion() {
+      if (window.location.protocol === "file:" || EMBEDDED_QUESTIONS) {
+        elements.ipasVersionBadge.textContent = `版本v${IPAS_VERSION}`;
+        renderUpdateLog(IPAS_UPDATE_LOG);
+        return true;
+      }
+
+      try {
+        const response = await fetch(
+          new URL("ipas-version.json", document.baseURI),
+          { cache: "no-store" }
+        );
+        if (!response.ok) {
+          throw new Error("iPAS 版號設定讀取失敗。");
+        }
+
+        const configuration = await response.json();
+        const version = configuration?.Ipas?.Version;
+        const updateLog = configuration?.Ipas?.UpdateLog;
+        if (typeof version !== "string" || !/^\d+\.\d+\.\d+$/.test(version)) {
+          throw new Error("iPAS 版號設定格式無效。");
+        }
+        if (!Array.isArray(updateLog) || updateLog.some(entry =>
+          typeof entry?.Version !== "string" ||
+          typeof entry?.Date !== "string" ||
+          !Array.isArray(entry?.Changes) ||
+          entry.Changes.some(change => typeof change !== "string")
+        )) {
+          throw new Error("iPAS 更新日誌格式無效。");
+        }
+
+        currentIpasVersion = version;
+        elements.ipasVersionBadge.textContent = `版本v${currentIpasVersion}`;
+        currentIpasUpdateLog = updateLog;
+        renderUpdateLog(currentIpasUpdateLog);
+        return true;
+      } catch (error) {
+        elements.ipasVersionBadge.textContent = "版號載入失敗";
+        const errorMessage = document.createElement("p");
+        errorMessage.textContent = "無法載入更新日誌，請稍後重試。";
+        elements.updateLogEntries.replaceChildren(errorMessage);
+        console.error("無法載入 iPAS 版號設定。", error);
+        return false;
+      }
+    }
+
+    function renderUpdateLog(entries) {
+      const fragment = document.createDocumentFragment();
+      if (entries.length === 0) {
+        const emptyMessage = document.createElement("p");
+        emptyMessage.textContent = "尚無更新紀錄。";
+        fragment.append(emptyMessage);
+      }
+
+      for (const entry of entries) {
+        const article = document.createElement("article");
+        article.className = "update-log-entry";
+
+        const heading = document.createElement("div");
+        heading.className = "update-log-entry-heading";
+
+        const version = document.createElement("span");
+        version.textContent = `版本v${entry.Version}`;
+
+        const date = document.createElement("time");
+        date.dateTime = entry.Date;
+        date.textContent = entry.Date;
+        heading.append(version, date);
+
+        const changes = document.createElement("ul");
+        for (const change of entry.Changes) {
+          const item = document.createElement("li");
+          item.textContent = change;
+          changes.append(item);
+        }
+
+        article.append(heading, changes);
+        fragment.append(article);
+      }
+
+      elements.updateLogEntries.replaceChildren(fragment);
+    }
+
+    function replaceScriptConstant(scriptText, constantName, value) {
+      const declaration = `const ${constantName} = `;
+      const start = scriptText.indexOf(declaration);
+      if (start < 0) return null;
+      const lineEnd = scriptText.indexOf("\n", start);
+      if (lineEnd < 0) return null;
+      const end = scriptText.lastIndexOf(";", lineEnd);
+      if (end < start) return null;
+      return `${scriptText.slice(0, start)}${declaration}${toSafeScriptJson(value)};${scriptText.slice(lineEnd)}`;
+    }
+
+    async function createOfflineHtml() {
+      if (!(await ipasVersionReady)) {
+        setStorageNote("無法載入中央版號設定，未產生離線檔案。", true);
+        return null;
+      }
+      if (questions.length === 0) {
+        setStorageNote("題庫載入完成後才能匯出單檔 HTML。", true);
+        return null;
+      }
+
+      const offlineQuestions = questions.map(({
+        recordKey,
+        ...question
+      }) => question);
+      const standaloneDocument = document.documentElement.cloneNode(true);
+      const appScript = [...standaloneDocument.querySelectorAll("script")]
+        .find(script => script.textContent.includes("const EMBEDDED_QUESTIONS = "));
+      if (!appScript) {
+        setStorageNote("找不到離線匯出所需的應用程式指令碼，未產生檔案。", true);
+        return null;
+      }
+
+      let scriptText = replaceScriptConstant(
+        appScript.textContent,
+        "EMBEDDED_QUESTIONS",
+        offlineQuestions
+      );
+      if (scriptText !== null) {
+        scriptText = replaceScriptConstant(
+          scriptText,
+          "EMBEDDED_LEARNING_RECORDS",
+          learningRecords
+        );
+      }
+      if (scriptText !== null) {
+        scriptText = replaceScriptConstant(
+          scriptText,
+          "EMBEDDED_EXAM_DATE",
+          elements.examDateFilter?.value || ""
+        );
+      }
+      if (scriptText !== null) {
+        scriptText = replaceScriptConstant(
+          scriptText,
+          "EMBEDDED_FONT_SETTINGS",
+          getFontSettings()
+        );
+      }
+      if (scriptText !== null) {
+        scriptText = replaceScriptConstant(
+          scriptText,
+          "IPAS_VERSION",
+          currentIpasVersion
+        );
+      }
+      if (scriptText !== null) {
+        scriptText = replaceScriptConstant(
+          scriptText,
+          "IPAS_UPDATE_LOG",
+          currentIpasUpdateLog
+        );
+      }
+      if (scriptText === null) {
+        setStorageNote("無法建立離線題庫或學習紀錄資料，未產生檔案。", true);
+        return null;
+      }
+
+      appScript.textContent = scriptText;
+      return `<!doctype html>\n${standaloneDocument.outerHTML}`;
+    }
+
+    async function exportOfflineHtml() {
+      const html = await createOfflineHtml();
+      if (html === null) return;
+
+      const fileName = "iPAS_AI_應用規劃師_刷題離線版.html";
+      const htmlBlob = new Blob([html], { type: "text/html;charset=utf-8" });
+      let downloadUrl = "";
+      try {
+        const offlineFile = new File([htmlBlob], fileName, {
+          type: "text/html;charset=utf-8"
+        });
+        if (navigator.share && navigator.canShare?.({ files: [offlineFile] })) {
+          try {
+            await navigator.share({ files: [offlineFile], title: fileName });
+            setStorageNote(
+              `已匯出單檔 HTML，內含 ${questions.length} 題題庫及 ${Object.keys(learningRecords).length} 題學習紀錄。iPhone/iPad 可在分享選單選擇「儲存到檔案」。題目圖片仍需網路連線。`,
+              false
+            );
+            return;
+          } catch (error) {
+            if (error?.name === "AbortError") {
+              setStorageNote("已取消分享，尚未匯出檔案。", false);
+              return;
+            }
+            setStorageNote("無法開啟系統分享選單，改用瀏覽器下載方式匯出。", true);
+          }
+        }
+
+        downloadUrl = URL.createObjectURL(htmlBlob);
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.download = fileName;
+        link.hidden = true;
+        document.body.append(link);
+        link.click();
+        link.remove();
+        window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 0);
+        setStorageNote(
+          `已匯出單檔 HTML，內含 ${questions.length} 題題庫及 ${Object.keys(learningRecords).length} 題學習紀錄。題目圖片仍需網路連線。`,
+          false
+        );
+      } catch {
+        if (downloadUrl) URL.revokeObjectURL(downloadUrl);
+        setStorageNote("無法匯出單檔 HTML，請確認瀏覽器允許下載檔案後重試。", true);
+      }
+    }
+
+    function calculateZipCrc32(bytes) {
+      let crc = 0xffffffff;
+      for (const byte of bytes) {
+        crc = ZIP_CRC32_TABLE[(crc ^ byte) & 0xff] ^ (crc >>> 8);
+      }
+      return (crc ^ 0xffffffff) >>> 0;
+    }
+
+    function createZipBlob(entries) {
+      const encoder = new TextEncoder();
+      const now = new Date();
+      const dosTime = (now.getHours() << 11) |
+        (now.getMinutes() << 5) |
+        Math.floor(now.getSeconds() / 2);
+      const dosDate = ((Math.max(1980, now.getFullYear()) - 1980) << 9) |
+        ((now.getMonth() + 1) << 5) |
+        now.getDate();
+      const localParts = [];
+      const centralParts = [];
+      let localOffset = 0;
+      let centralSize = 0;
+
+      for (const entry of entries) {
+        const nameBytes = encoder.encode(entry.name);
+        const dataBytes = encoder.encode(entry.content);
+        if (nameBytes.length > 0xffff ||
+            dataBytes.length > 0xffffffff ||
+            localOffset > 0xffffffff) {
+          throw new RangeError("ZIP 內容超過支援大小。");
+        }
+        const crc = calculateZipCrc32(dataBytes);
+        const localHeader = new Uint8Array(30 + nameBytes.length);
+        const localView = new DataView(localHeader.buffer);
+        localView.setUint32(0, 0x04034b50, true);
+        localView.setUint16(4, 20, true);
+        localView.setUint16(6, 0x0800, true);
+        localView.setUint16(8, 0, true);
+        localView.setUint16(10, dosTime, true);
+        localView.setUint16(12, dosDate, true);
+        localView.setUint32(14, crc, true);
+        localView.setUint32(18, dataBytes.length, true);
+        localView.setUint32(22, dataBytes.length, true);
+        localView.setUint16(26, nameBytes.length, true);
+        localView.setUint16(28, 0, true);
+        localHeader.set(nameBytes, 30);
+        localParts.push(localHeader, dataBytes);
+
+        const centralHeader = new Uint8Array(46 + nameBytes.length);
+        const centralView = new DataView(centralHeader.buffer);
+        centralView.setUint32(0, 0x02014b50, true);
+        centralView.setUint16(4, 20, true);
+        centralView.setUint16(6, 20, true);
+        centralView.setUint16(8, 0x0800, true);
+        centralView.setUint16(10, 0, true);
+        centralView.setUint16(12, dosTime, true);
+        centralView.setUint16(14, dosDate, true);
+        centralView.setUint32(16, crc, true);
+        centralView.setUint32(20, dataBytes.length, true);
+        centralView.setUint32(24, dataBytes.length, true);
+        centralView.setUint16(28, nameBytes.length, true);
+        centralView.setUint16(30, 0, true);
+        centralView.setUint16(32, 0, true);
+        centralView.setUint16(34, 0, true);
+        centralView.setUint16(36, 0, true);
+        centralView.setUint32(38, 0, true);
+        centralView.setUint32(42, localOffset, true);
+        centralHeader.set(nameBytes, 46);
+        centralParts.push(centralHeader);
+
+        localOffset += localHeader.length + dataBytes.length;
+        centralSize += centralHeader.length;
+      }
+
+      if (entries.length > 0xffff ||
+          localOffset > 0xffffffff ||
+          centralSize > 0xffffffff) {
+        throw new RangeError("ZIP 內容超過支援大小。");
+      }
+      const endRecord = new Uint8Array(22);
+      const endView = new DataView(endRecord.buffer);
+      endView.setUint32(0, 0x06054b50, true);
+      endView.setUint16(4, 0, true);
+      endView.setUint16(6, 0, true);
+      endView.setUint16(8, entries.length, true);
+      endView.setUint16(10, entries.length, true);
+      endView.setUint32(12, centralSize, true);
+      endView.setUint32(16, localOffset, true);
+      endView.setUint16(20, 0, true);
+
+      const parts = [...localParts, ...centralParts, endRecord];
+      const archiveBytes = new Uint8Array(
+        parts.reduce((total, part) => total + part.length, 0)
+      );
+      let offset = 0;
+      for (const part of parts) {
+        archiveBytes.set(part, offset);
+        offset += part.length;
+      }
+      return new Blob([archiveBytes], { type: "application/zip" });
+    }
+
+    function setEmailExportStatus(message, isError) {
+      elements.emailExportStatus.textContent = message;
+      elements.emailExportStatus.classList.toggle("error", Boolean(isError));
+    }
+
+    async function loadEmailExportOptions() {
+      elements.sendArchiveEmail.disabled = true;
+      try {
+        const response = await fetch("/api/ipas-practice-export/email-options", {
+          headers: { Accept: "application/json" },
+          credentials: "same-origin"
+        });
+        const result = await response.json();
+        if (!response.ok || !result || typeof result.canSend !== "boolean") {
+          throw new Error("無法取得 Email 寄送資格。");
+        }
+
+        canSendExportEmail = result.canSend;
+        emailRequestVerificationToken =
+          typeof result.requestVerificationToken === "string"
+            ? result.requestVerificationToken
+            : "";
+        elements.sendArchiveEmail.disabled =
+          !canSendExportEmail || !emailRequestVerificationToken;
+        setEmailExportStatus(
+          result.message || "登入並完成 Email 驗證後即可寄送。",
+          !canSendExportEmail
+        );
+      } catch {
+        canSendExportEmail = false;
+        emailRequestVerificationToken = "";
+        elements.sendArchiveEmail.disabled = true;
+        setEmailExportStatus(
+          "目前無法確認 Email 寄送資格；仍可下載 ZIP 檔。",
+          true
+        );
+      }
+    }
+
+    async function sendArchiveEmail(archiveBlob, fileName) {
+      if (!canSendExportEmail ||
+          !emailRequestVerificationToken ||
+          archiveBlob.size > MAX_EMAIL_ARCHIVE_BYTES) {
+        setEmailExportStatus(
+          archiveBlob.size > MAX_EMAIL_ARCHIVE_BYTES
+            ? "ZIP 超過 10 MB，已下載至此裝置但無法以 Email 寄送。"
+            : "目前無法寄送 Email；ZIP 已下載至此裝置。",
+          true
+        );
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append(
+        "archive",
+        new File([archiveBlob], fileName, { type: "application/zip" })
+      );
+      setEmailExportStatus("ZIP 已下載，正在寄送至已驗證的帳號 Email…", false);
+
+      try {
+        const response = await fetch("/api/ipas-practice-export/email", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            RequestVerificationToken: emailRequestVerificationToken
+          },
+          credentials: "same-origin",
+          body: formData
+        });
+        const contentType = response.headers.get("content-type") || "";
+        if (response.redirected ||
+            !contentType.toLowerCase().includes("application/json")) {
+          setEmailExportStatus(
+            "登入狀態已失效或服務回應無效；ZIP 已下載，請重新登入後再寄送。",
+            true
+          );
+          return;
+        }
+        const result = await response.json().catch(() => null);
+        if (!response.ok) {
+          setEmailExportStatus(
+            result?.message || "Email 寄送失敗；ZIP 已下載至此裝置。",
+            true
+          );
+          return;
+        }
+        setEmailExportStatus(
+          result?.message || "ZIP 已寄送至已驗證的帳號 Email。",
+          false
+        );
+      } catch {
+        setEmailExportStatus(
+          "無法連線寄送 Email；ZIP 已下載至此裝置，請稍後重試。",
+          true
+        );
+      }
+    }
+
+    async function exportOfflineArchive() {
+      const html = await createOfflineHtml();
+      if (html === null) return;
+
+      const fileName = "iPAS_AI_應用規劃師_刷題與學習資料.zip";
+      let archiveBlob;
+      try {
+        archiveBlob = createZipBlob([
+          {
+            name: "iPAS_AI_應用規劃師_刷題離線版.html",
+            content: html
+          },
+          {
+            name: "iPAS_AI_學習資料.json",
+            content: createLearningRecordsJson()
+          }
+        ]);
+      } catch {
+        setStorageNote("無法建立 ZIP 檔案，請稍後再試。", true);
+        return;
+      }
+
+      let downloadUrl = "";
+      try {
+        downloadUrl = URL.createObjectURL(archiveBlob);
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.download = fileName;
+        link.hidden = true;
+        document.body.append(link);
+        link.click();
+        link.remove();
+        window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+      } catch {
+        if (downloadUrl) URL.revokeObjectURL(downloadUrl);
+        setStorageNote("無法下載 ZIP 檔案，請確認瀏覽器允許下載後重試。", true);
+        return;
+      }
+
+      setStorageNote(
+        "已匯出 ZIP，內含單檔 HTML 刷題頁與學習資料 JSON；題目圖片仍需網路連線。",
+        false
+      );
+      if (elements.sendArchiveEmail.checked) {
+        await sendArchiveEmail(archiveBlob, fileName);
+      }
+    }
+
+    async function importLearningRecords(file) {
+      if (!file) return;
+      if (questions.length === 0) {
+        setStorageNote("題庫載入完成後才能匯入學習資料。", true);
+        return;
+      }
+      if (file.size > MAX_IMPORT_FILE_BYTES) {
+        setStorageNote("匯入檔案超過 5 MB，請選擇有效的學習資料 JSON 檔。", true);
+        return;
+      }
+
+      let exportData;
+      try {
+        exportData = JSON.parse(await file.text());
+      } catch {
+        setStorageNote("無法讀取匯入檔案；請確認檔案是完整且有效的 JSON。", true);
+        return;
+      }
+
+      if (!exportData || typeof exportData !== "object" || Array.isArray(exportData) ||
+          exportData.format !== LEARNING_EXPORT_FORMAT || exportData.version !== 1 ||
+          typeof exportData.exportedAt !== "string" ||
+          !Number.isFinite(Date.parse(exportData.exportedAt))) {
+        setStorageNote("匯入檔案格式或版本不相容；本機紀錄未變更。", true);
+        return;
+      }
+
+      let importedRecords;
+      try {
+        importedRecords = validateStoredRecords(exportData);
+      } catch {
+        setStorageNote("匯入檔案的學習紀錄資料無效；本機紀錄未變更。", true);
+        return;
+      }
+
+      const currentCount = Object.keys(learningRecords).length;
+      const importedCount = Object.keys(importedRecords).length;
+      if (!window.confirm(
+        `即將匯入 ${importedCount} 題學習紀錄，並取代本機目前的 ${currentCount} 題紀錄。` +
+        "此操作無法還原；若要保留本機資料，請先匯出備份。確定繼續嗎？"
+      )) {
+        return;
+      }
+
+      try {
+        window.localStorage.setItem(
+          LEARNING_STORAGE_KEY,
+          JSON.stringify({ version: 1, records: importedRecords })
+        );
+      } catch {
+        storageWriteFailed = true;
+        setStorageNote("無法儲存匯入資料；本機原有紀錄未變更，請檢查瀏覽器儲存空間。", true);
+        return;
+      }
+
+      learningRecords = importedRecords;
+      storageReadFailed = false;
+      storageWriteFailed = false;
+      setStorageNote(
+        `已匯入 ${importedCount} 題學習紀錄；本機紀錄已由匯入檔取代，資料仍只保存在此瀏覽器。`,
+        false
+      );
+      renderLearningDashboard();
+      reviewModeLevel = "";
+      reviewModeSubject = "";
+      reviewModeSource = "";
+      reviewDeck = [];
+      previousReviewQuestion = null;
+      reviewCompletionNotice = "學習資料已匯入，學習進度與錯題清單已更新。";
+      resetQuestionQueue();
+      drawQuestion();
+    }
+
+    function recordAnswer(question, selectedIndex, isCorrect) {
+      const previous = learningRecords[question.recordKey];
+      const needsReview = !isCorrect
+        ? true
+        : reviewModeLevel === question.level &&
+          (!reviewModeSubject || reviewModeSubject === question.subject) &&
+          matchesSource(question, reviewModeSource)
+          ? false
+          : previous?.needsReview ?? false;
+      learningRecords[question.recordKey] = {
+        attempts: (previous?.attempts ?? 0) + 1,
+        correctAttempts: (previous?.correctAttempts ?? 0) + (isCorrect ? 1 : 0),
+        lastSelectedIndex: selectedIndex,
+        lastAnswerCorrect: isCorrect,
+        needsReview,
+        lastAnsweredAt: new Date().toISOString()
+      };
+      if (questionQueueExhausted &&
+          !isCorrect &&
+          !reviewModeLevel &&
+          !wrongDrawnKeys.has(question.recordKey)) {
+        questionQueueExhausted = false;
+        elements.nextButton.hidden = false;
+        elements.resetDeckButton.hidden = true;
+        elements.status.hidden = true;
+      }
+      saveLearningRecords();
+      renderLearningDashboard();
+    }
+
+    function createProgressRecord(question, record) {
+      const item = document.createElement("li");
+      item.className = "record-item";
+
+      const result = document.createElement("span");
+      result.className = `record-badge ${record.lastAnswerCorrect ? "correct" : "incorrect"}`;
+      result.textContent = record.lastAnswerCorrect
+        ? "最近答對"
+        : `最近答錯（選 ${OPTION_LABELS[record.lastSelectedIndex]}；正解 ${OPTION_LABELS[question.answer]}）`;
+      item.append(result);
+      if (record.needsReview) {
+        const pending = document.createElement("span");
+        pending.className = "record-badge pending";
+        pending.textContent = "待複習";
+        item.append(pending);
+      }
+
+      const questionText = document.createElement("p");
+      questionText.className = "record-question";
+      questionText.textContent = question.question;
+
+      const meta = document.createElement("p");
+      meta.className = "record-meta";
+      meta.textContent =
+        `作答 ${record.attempts} 次、答對 ${record.correctAttempts} 次；最近作答 ${new Date(record.lastAnsweredAt).toLocaleString("zh-TW")}`;
+
+      item.append(questionText, meta);
+      return item;
+    }
+
+    function buildSourceCategories(subjectQuestions) {
+      const categories = [];
+
+      const guideQs = subjectQuestions.filter(q =>
+        q.source === "學習指引" || q.round === "學習指引"
+      );
+      if (guideQs.length > 0) {
+        const done = guideQs.filter(q => learningRecords[q.recordKey]).length;
+        categories.push({
+          value: "學習指引",
+          text: "學習指引",
+          total: guideQs.length,
+          completed: done,
+          rate: Math.round((done / guideQs.length) * 100)
+        });
+      }
+
+      const pastQs = subjectQuestions.filter(q => q.round && q.round !== "學習指引");
+      if (pastQs.length > 0) {
+        const years = [...new Set(pastQs
+          .map(q => q.round.match(/^(\d+年)/)?.[1])
+          .filter(Boolean)
+        )].sort((a, b) => a.localeCompare(b, "zh-Hant"));
+
+        for (const year of years) {
+          const yearQs = pastQs.filter(q => q.round.startsWith(year));
+          const yearRounds = [...new Set(yearQs.map(q => q.round))].sort((a, b) => {
+            const numA = Object.keys(ROUND_NUMBER_MAP).find(k => a.includes(k));
+            const numB = Object.keys(ROUND_NUMBER_MAP).find(k => b.includes(k));
+            const valA = numA ? ROUND_NUMBER_MAP[numA] : 99;
+            const valB = numB ? ROUND_NUMBER_MAP[numB] : 99;
+            return valA - valB || a.localeCompare(b, "zh-Hant");
+          });
+
+          if (yearRounds.length > 1) {
+            const yearDone = yearQs.filter(q => learningRecords[q.recordKey]).length;
+            categories.push({
+              value: year,
+              text: `${year}歷屆考古題`,
+              total: yearQs.length,
+              completed: yearDone,
+              rate: Math.round((yearDone / yearQs.length) * 100),
+              isGroup: true
+            });
+          }
+
+          for (const round of yearRounds) {
+            const roundQs = yearQs.filter(q => q.round === round);
+            const roundDone = roundQs.filter(q => learningRecords[q.recordKey]).length;
+            categories.push({
+              value: round,
+              text: round,
+              total: roundQs.length,
+              completed: roundDone,
+              rate: Math.round((roundDone / roundQs.length) * 100),
+              isSub: yearRounds.length > 1
+            });
+          }
+        }
+      }
+
+      return categories;
+    }
+
+    function renderSubjectProgress() {
+      elements.clearLearningRecords.disabled =
+        Object.keys(learningRecords).length === 0 && !storageReadFailed && !storageWriteFailed;
+      elements.exportArchive.disabled = questions.length === 0;
+      elements.exportLearningRecords.disabled = Object.keys(learningRecords).length === 0;
+      elements.exportOfflineHtml.disabled = questions.length === 0;
+      elements.importLearningRecordsButton.disabled = questions.length === 0;
+      if (questions.length === 0) return;
+
+      const selectedLevel = elements.levelFilter.value;
+      const selectedSource = elements.sourceFilter.value;
+      const selectedSourceText = elements.sourceFilter.options[elements.sourceFilter.selectedIndex]?.textContent || selectedSource;
+
+      let headingText = selectedLevel ? `${selectedLevel}各科學習進度` : "各程度學習進度";
+      if (selectedSource) {
+        headingText += `（${selectedSourceText}）`;
+      }
+      elements.progressHeading.textContent = headingText;
+
+      const byLevel = getQuestionsByLevelAndSubject(selectedLevel);
+      const fragment = document.createDocumentFragment();
+      const levelOrder = (level) => {
+        if (level === "初級") return 0;
+        if (level === "中級") return 1;
+        return 2;
+      };
+      const levels = [...byLevel.keys()].sort((a, b) =>
+        levelOrder(a) - levelOrder(b) || a.localeCompare(b, "zh-Hant")
+      );
+
+      for (const level of levels) {
+        const bySubject = byLevel.get(level);
+        const section = document.createElement("section");
+        section.className = "level-progress-section";
+
+        const heading = document.createElement("h3");
+        heading.className = "level-progress-heading";
+        heading.textContent = level;
+
+        const allLevelQuestions = [...bySubject.values()]
+          .reduce((total, subjectMap) => total + subjectMap.size, 0);
+        const filteredLevelQuestions = [...bySubject.values()]
+          .reduce((total, subjectMap) => {
+            const list = [...subjectMap.values()];
+            return total + (selectedSource ? list.filter(q => matchesSource(q, selectedSource)).length : list.length);
+          }, 0);
+
+        const levelCount = document.createElement("p");
+        levelCount.className = "level-progress-count";
+        levelCount.textContent = selectedSource
+          ? `共 ${bySubject.size} 科、${filteredLevelQuestions} 題（篩選：${selectedSourceText}，原 ${allLevelQuestions} 題）`
+          : `共 ${bySubject.size} 科、${allLevelQuestions} 題`;
+
+        const grid = document.createElement("div");
+        grid.className = "subject-progress-grid";
+        const subjects = [...bySubject.keys()].sort((a, b) => a.localeCompare(b, "zh-Hant"));
+        for (const subject of subjects) {
+          const subjectQuestions = [...bySubject.get(subject).values()];
+          const filteredQuestions = selectedSource
+            ? subjectQuestions.filter(question => matchesSource(question, selectedSource))
+            : subjectQuestions;
+
+          const completed = filteredQuestions
+            .map(question => ({ question, record: learningRecords[question.recordKey] }))
+            .filter(item => item.record);
+          const attempts = completed.reduce((total, item) => total + item.record.attempts, 0);
+          const correctAttempts = completed.reduce(
+            (total, item) => total + item.record.correctAttempts,
+            0
+          );
+          const completionRate = filteredQuestions.length
+            ? Math.round((completed.length / filteredQuestions.length) * 100)
+            : 0;
+          const accuracyRate = attempts ? Math.round((correctAttempts / attempts) * 100) : 0;
+
+          const card = document.createElement("article");
+          card.className = "subject-card";
+          if (elements.levelFilter.value === level && elements.subjectFilter.value === subject) {
+            card.classList.add("is-selected");
+          }
+
+          const subjectHeading = document.createElement("h3");
+          subjectHeading.textContent = subject;
+
+          const count = document.createElement("p");
+          count.className = "progress-count";
+          const completedText = document.createElement("span");
+          completedText.textContent = selectedSource
+            ? `已完成 ${completed.length} / ${filteredQuestions.length} 題（${selectedSourceText}）`
+            : `已完成 ${completed.length} / ${subjectQuestions.length} 題`;
+          const percent = document.createElement("span");
+          percent.className = "progress-percent";
+          percent.textContent = `${completionRate}%`;
+          count.append(completedText, percent);
+
+          const track = document.createElement("div");
+          track.className = "progress-track";
+          track.setAttribute("role", "progressbar");
+          track.setAttribute("aria-label", `${level} ${subject}完成率`);
+          track.setAttribute("aria-valuemin", "0");
+          track.setAttribute("aria-valuemax", "100");
+          track.setAttribute("aria-valuenow", String(completionRate));
+
+          const fill = document.createElement("div");
+          fill.className = "progress-fill";
+          fill.style.width = `${completionRate}%`;
+          track.append(fill);
+
+          const result = document.createElement("p");
+          result.className = "subject-result";
+          result.textContent = attempts
+            ? `累計答對率 ${accuracyRate}%（答對 ${correctAttempts} / ${attempts} 次）`
+            : (filteredQuestions.length === 0 ? "此來源無相關題目" : "尚無作答紀錄");
+
+          const categories = buildSourceCategories(subjectQuestions);
+          if (categories.length > 0) {
+            const breakdown = document.createElement("div");
+            breakdown.className = "source-breakdown";
+
+            const breakdownTitle = document.createElement("h4");
+            breakdownTitle.className = "source-breakdown-title";
+            breakdownTitle.textContent = "來源類別學習百分比（點擊進入練習）";
+
+            const breakdownList = document.createElement("div");
+            breakdownList.className = "source-breakdown-list";
+
+            for (const cat of categories) {
+              const item = document.createElement("div");
+              const currentFilterLevel = elements.levelFilter.value;
+              const currentFilterSubject = elements.subjectFilter.value;
+              const isSelected = selectedSource === cat.value &&
+                (!currentFilterLevel || currentFilterLevel === level) &&
+                (!currentFilterSubject || currentFilterSubject === subject);
+              item.className = "source-breakdown-item" +
+                (cat.isSub ? " is-sub" : "") +
+                (isSelected ? " is-active" : "");
+              item.setAttribute("role", "button");
+              item.setAttribute("tabindex", "0");
+              item.setAttribute("title", `篩選「${level} ${subject} - ${cat.text}」並進入題目練習`);
+
+              const header = document.createElement("div");
+              header.className = "source-breakdown-header";
+
+              const nameSpan = document.createElement("span");
+              nameSpan.className = "source-breakdown-name";
+              nameSpan.textContent = cat.text;
+
+              const statSpan = document.createElement("span");
+              statSpan.className = "source-breakdown-stat";
+              statSpan.textContent = `${cat.completed} / ${cat.total} 題 (${cat.rate}%)`;
+
+              header.append(nameSpan, statSpan);
+
+              const miniTrack = document.createElement("div");
+              miniTrack.className = "progress-track mini";
+              miniTrack.setAttribute("role", "progressbar");
+              miniTrack.setAttribute("aria-label", `${cat.text}完成率`);
+              miniTrack.setAttribute("aria-valuemin", "0");
+              miniTrack.setAttribute("aria-valuemax", "100");
+              miniTrack.setAttribute("aria-valuenow", String(cat.rate));
+
+              const miniFill = document.createElement("div");
+              miniFill.className = "progress-fill";
+              miniFill.style.width = `${cat.rate}%`;
+              miniTrack.append(miniFill);
+
+              item.append(header, miniTrack);
+
+              const handleCategoryClick = () => {
+                const currentLevel = elements.levelFilter.value;
+                const currentSubject = elements.subjectFilter.value;
+                const currentSource = elements.sourceFilter.value;
+
+                const isAlreadySelected =
+                  currentLevel === level &&
+                  currentSubject === subject &&
+                  currentSource === cat.value;
+
+                if (isAlreadySelected) {
+                  // 再次點選相同項目：取消篩選，還原為全部
+                  elements.levelFilter.value = "";
+                  lastHandledLevel = "";
+                  updateSubjectOptions();
+                  elements.subjectFilter.value = "";
+                  updateSourceOptions();
+                  elements.sourceFilter.value = "";
+                  if (elements.progressSourceFilter) {
+                    elements.progressSourceFilter.value = "";
+                  }
+                } else {
+                  // 自動將程度、科目與來源類別帶入過濾條件
+                  elements.levelFilter.value = level;
+                  lastHandledLevel = level;
+                  updateSubjectOptions();
+                  elements.subjectFilter.value = subject;
+                  updateSourceOptions();
+                  elements.sourceFilter.value = cat.value;
+                  if (elements.progressSourceFilter) {
+                    elements.progressSourceFilter.value = cat.value;
+                  }
+                }
+                resetDeckAndDraw();
+                renderLearningDashboard();
+                window.location.hash = "practiceView";
+                showActiveAppView();
+              };
+
+              item.addEventListener("click", handleCategoryClick);
+              item.addEventListener("keydown", event => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  handleCategoryClick();
+                }
+              });
+
+              breakdownList.append(item);
+            }
+
+            breakdown.append(breakdownTitle, breakdownList);
+            card.append(subjectHeading, count, track, result, breakdown);
+          } else {
+            card.append(subjectHeading, count, track, result);
+          }
+
+          const details = document.createElement("details");
+          details.className = "result-details";
+          const summary = document.createElement("summary");
+          summary.textContent = selectedSource
+            ? `查看作答紀錄（${completed.length} 題，${selectedSourceText}）`
+            : `查看作答紀錄（${completed.length} 題）`;
+          details.append(summary);
+
+          if (completed.length > 0) {
+            const list = document.createElement("ul");
+            list.className = "record-list";
+            completed.sort((a, b) =>
+              Date.parse(b.record.lastAnsweredAt) - Date.parse(a.record.lastAnsweredAt)
+            );
+            for (const item of completed) {
+              list.append(createProgressRecord(item.question, item.record));
+            }
+            details.append(list);
+          } else {
+            const empty = document.createElement("p");
+            empty.className = "record-meta";
+            empty.textContent = selectedSource
+              ? `在「${selectedSourceText}」尚無作答紀錄。`
+              : "作答後會在此顯示答題結果。";
+            details.append(empty);
+          }
+
+          card.append(details);
+          grid.append(card);
+        }
+
+        section.append(heading, levelCount, grid);
+        fragment.append(section);
+      }
+
+      elements.subjectProgress.replaceChildren(fragment);
+    }
+
+    function getQuestionsByLevelAndSubject(selectedLevel = "") {
+      const byLevel = new Map();
+      for (const question of questions) {
+        if (selectedLevel && question.level !== selectedLevel) continue;
+        if (!byLevel.has(question.level)) {
+          byLevel.set(question.level, new Map());
+        }
+        const bySubject = byLevel.get(question.level);
+        if (!bySubject.has(question.subject)) {
+          bySubject.set(question.subject, new Map());
+        }
+        bySubject.get(question.subject).set(question.recordKey, question);
+      }
+      return byLevel;
+    }
+
+    function renderWrongReviewSummary() {
+      if (questions.length === 0) return;
+
+      const selectedLevel = elements.levelFilter.value;
+      elements.wrongReviewHeading.textContent = selectedLevel
+        ? `${selectedLevel}錯題複習分析`
+        : "各程度錯題複習分析";
+      const byLevel = getQuestionsByLevelAndSubject(selectedLevel);
+      const fragment = document.createDocumentFragment();
+      let totalPending = 0;
+
+      const levelOrder = (level) => {
+        if (level === "初級") return 0;
+        if (level === "中級") return 1;
+        return 2;
+      };
+      const levels = [...byLevel.keys()].sort((a, b) =>
+        levelOrder(a) - levelOrder(b) || a.localeCompare(b, "zh-Hant")
+      );
+
+      for (const level of levels) {
+        const bySubject = byLevel.get(level);
+        const subjects = [...bySubject.keys()].sort((a, b) => a.localeCompare(b, "zh-Hant"));
+        const levelQuestions = subjects.flatMap(subject =>
+          [...bySubject.get(subject).values()]
+        );
+        const levelPending = levelQuestions.filter(question =>
+          learningRecords[question.recordKey]?.needsReview
+        ).length;
+        totalPending += levelPending;
+
+        const section = document.createElement("section");
+        section.className = "review-level-section";
+
+        const heading = document.createElement("h3");
+        heading.className = "level-progress-heading";
+        heading.textContent = level;
+
+        const levelCount = document.createElement("p");
+        levelCount.className = "level-progress-count";
+        levelCount.textContent =
+          `${levelPending} 題待複習／${levelQuestions.length} 題（${subjects.length} 科）`;
+
+        const levelHeader = document.createElement("div");
+        levelHeader.className = "review-level-header";
+        const levelTitle = document.createElement("div");
+        levelTitle.append(heading, levelCount);
+
+        const levelButton = document.createElement("button");
+        levelButton.type = "button";
+        levelButton.className = "secondary-button review-button";
+        levelButton.textContent = `複習本程度錯題（${levelPending}）`;
+        levelButton.disabled = levelPending === 0;
+        levelButton.addEventListener("click", () => startWrongReview(level));
+        levelHeader.append(levelTitle, levelButton);
+
+        const grid = document.createElement("div");
+        grid.className = "subject-progress-grid";
+
+        for (const subject of subjects) {
+          const subjectQuestions = [...bySubject.get(subject).values()];
+          const pendingQuestions = subjectQuestions.filter(question =>
+            learningRecords[question.recordKey]?.needsReview
+          );
+          const reviewRate = Math.round(
+            (pendingQuestions.length / subjectQuestions.length) * 100
+          );
+
+          const card = document.createElement("article");
+          card.className = "subject-card review-subject-card";
+
+          const subjectHeading = document.createElement("h4");
+          subjectHeading.textContent = subject;
+
+          const count = document.createElement("p");
+          count.className = "progress-count";
+          const pendingText = document.createElement("span");
+          pendingText.textContent = `待複習 ${pendingQuestions.length} 題`;
+          const percent = document.createElement("span");
+          percent.className = "progress-percent";
+          percent.textContent = `${reviewRate}%`;
+          count.append(pendingText, percent);
+
+          const track = document.createElement("div");
+          track.className = "progress-track";
+          track.setAttribute("role", "progressbar");
+          track.setAttribute("aria-label", `${level} ${subject}待複習錯題比例`);
+          track.setAttribute("aria-valuemin", "0");
+          track.setAttribute("aria-valuemax", "100");
+          track.setAttribute("aria-valuenow", String(reviewRate));
+
+          const fill = document.createElement("div");
+          fill.className = "progress-fill review-progress-fill";
+          fill.style.width = `${reviewRate}%`;
+          track.append(fill);
+
+          const result = document.createElement("p");
+          result.className = "subject-result";
+          result.textContent =
+            `待複習 ${pendingQuestions.length} / ${subjectQuestions.length} 題`;
+
+          const categories = buildSourceCategories(subjectQuestions);
+          if (categories.length > 0) {
+            const breakdown = document.createElement("div");
+            breakdown.className = "source-breakdown";
+
+            const breakdownTitle = document.createElement("h5");
+            breakdownTitle.className = "source-breakdown-title";
+            breakdownTitle.textContent = "來源類別錯題分布（點擊複習）";
+
+            const breakdownList = document.createElement("div");
+            breakdownList.className = "source-breakdown-list";
+
+            for (const category of categories) {
+              const categoryQuestions = subjectQuestions.filter(question =>
+                matchesSource(question, category.value)
+              );
+              const categoryPending = categoryQuestions.filter(question =>
+                learningRecords[question.recordKey]?.needsReview
+              );
+              const categoryRate = categoryQuestions.length
+                ? Math.round((categoryPending.length / categoryQuestions.length) * 100)
+                : 0;
+              const item = document.createElement("div");
+              item.className = "source-breakdown-item" +
+                (category.isSub ? " is-sub" : "");
+              item.setAttribute("role", "button");
+              item.setAttribute("tabindex", categoryPending.length > 0 ? "0" : "-1");
+              item.setAttribute("aria-disabled", String(categoryPending.length === 0));
+              item.setAttribute(
+                "aria-label",
+                `${level} ${subject} ${category.text}待複習 ${categoryPending.length} / ${categoryQuestions.length} 題，${categoryRate}%，點擊開始錯題複習`
+              );
+              item.setAttribute(
+                "title",
+                `複習「${level} ${subject} - ${category.text}」待複習錯題`
+              );
+
+              const header = document.createElement("div");
+              header.className = "source-breakdown-header";
+
+              const nameSpan = document.createElement("span");
+              nameSpan.className = "source-breakdown-name";
+              nameSpan.textContent = category.text;
+
+              const statSpan = document.createElement("span");
+              statSpan.className = "source-breakdown-stat";
+              statSpan.textContent =
+                `待複習 ${categoryPending.length} / ${categoryQuestions.length} 題 (${categoryRate}%)`;
+              header.append(nameSpan, statSpan);
+
+              const miniTrack = document.createElement("div");
+              miniTrack.className = "progress-track mini";
+              miniTrack.setAttribute("role", "progressbar");
+              miniTrack.setAttribute("aria-label", `${category.text}待複習比例`);
+              miniTrack.setAttribute("aria-valuemin", "0");
+              miniTrack.setAttribute("aria-valuemax", "100");
+              miniTrack.setAttribute("aria-valuenow", String(categoryRate));
+
+              const miniFill = document.createElement("div");
+              miniFill.className = "progress-fill review-progress-fill";
+              miniFill.style.width = `${categoryRate}%`;
+              miniTrack.append(miniFill);
+              item.append(header, miniTrack);
+
+              const startCategoryReview = () => {
+                if (categoryPending.length > 0) {
+                  startWrongReview(level, subject, category.value);
+                }
+              };
+              item.addEventListener("click", startCategoryReview);
+              item.addEventListener("keydown", event => {
+                if (categoryPending.length > 0 &&
+                    (event.key === "Enter" || event.key === " ")) {
+                  event.preventDefault();
+                  startCategoryReview();
+                }
+              });
+              breakdownList.append(item);
+            }
+
+            breakdown.append(breakdownTitle, breakdownList);
+            card.append(subjectHeading, count, track, result, breakdown);
+          } else {
+            card.append(subjectHeading, count, track, result);
+          }
+
+          const subjectButton = document.createElement("button");
+          subjectButton.type = "button";
+          subjectButton.className = "secondary-button";
+          subjectButton.textContent = `複習此科錯題（${pendingQuestions.length}）`;
+          subjectButton.disabled = pendingQuestions.length === 0;
+          subjectButton.addEventListener("click", () => startWrongReview(level, subject));
+
+          card.append(subjectButton);
+          grid.append(card);
+        }
+
+        section.append(levelHeader, grid);
+        fragment.append(section);
+      }
+
+      elements.reviewSummary.textContent =
+        `${selectedLevel || "全部程度"}目前共 ${totalPending} 題待複習；各科數量為尚未答對解除的題目數，比例以該科全部題目計算。`;
+      elements.wrongReviewStats.replaceChildren(fragment);
+    }
+
+    function renderLearningDashboard() {
+      renderSubjectProgress();
+      renderWrongReviewSummary();
+    }
+
+    function clearLearningRecords() {
+      if (!window.confirm("確定清除這個瀏覽器儲存的所有 iPAS 學習紀錄？此操作無法復原。")) {
+        return;
+      }
+
+      try {
+        window.localStorage.removeItem(LEARNING_STORAGE_KEY);
+        learningRecords = Object.create(null);
+        storageReadFailed = false;
+        storageWriteFailed = false;
+        setStorageNote("本機學習紀錄已清除。", false);
+        renderLearningDashboard();
+      } catch {
+        setStorageNote("無法清除本機學習紀錄，請檢查瀏覽器儲存權限。", true);
+      }
+    }
+
+    function startWrongReview(level, subject = "", source = "") {
+      const pendingQuestions = questions.filter(question =>
+        question.level === level &&
+        (!subject || question.subject === subject) &&
+        matchesSource(question, source) &&
+        learningRecords[question.recordKey]?.needsReview
+      );
+      if (pendingQuestions.length === 0) return;
+
+      elements.levelFilter.value = level;
+      lastHandledLevel = level;
+      updateSubjectOptions();
+      elements.subjectFilter.value = subject;
+      updateSourceOptions();
+      elements.sourceFilter.value = source;
+      if (elements.progressSourceFilter) {
+        elements.progressSourceFilter.value = source;
+      }
+      renderLearningDashboard();
+      resetQuestionQueue();
+      reviewModeLevel = level;
+      reviewModeSubject = subject;
+      reviewModeSource = source;
+      reviewDeck = shuffle(pendingQuestions);
+      previousReviewQuestion = null;
+      reviewCompletionNotice = "";
+      window.location.hash = "practiceView";
+      showActiveAppView();
+      drawQuestion();
+    }
+
+    function exitWrongReview() {
+      if (!reviewModeLevel) return;
+      reviewCompletionNotice = "已結束錯題複習，返回一般練習。";
+      reviewModeLevel = "";
+      reviewModeSubject = "";
+      reviewModeSource = "";
+      reviewDeck = [];
+      previousReviewQuestion = null;
+      resetQuestionQueue();
+      drawQuestion();
+    }
+
+    function resetQuestionQueue() {
+      deck = [];
+      wrongDrawnKeys.clear();
+      questionQueueExhausted = false;
+      previousQuestion = null;
+    }
+
+    function resetQuestionCycle() {
+      resetQuestionQueue();
+      reviewCompletionNotice = "";
+      answered = 0;
+      correct = 0;
+      updateStats();
+      drawQuestion();
+    }
+
+    function resetDeckAndDraw() {
+      if (reviewModeLevel) {
+        reviewCompletionNotice = "已離開錯題複習，改為一般練習。";
+      }
+      reviewModeLevel = "";
+      reviewModeSubject = "";
+      reviewModeSource = "";
+      reviewDeck = [];
+      previousReviewQuestion = null;
+      resetQuestionQueue();
+      drawQuestion();
+    }
+
+    async function loadQuestions() {
+      elements.retryButton.hidden = true;
+      setStatus("正在載入公開題庫…", false);
+      elements.levelFilter.disabled = true;
+      elements.subjectFilter.disabled = true;
+      elements.sourceFilter.disabled = true;
+      if (elements.progressSourceFilter) {
+        elements.progressSourceFilter.disabled = true;
+      }
+
+      try {
+        let data;
+        if (Array.isArray(EMBEDDED_QUESTIONS)) {
+          data = { questions: EMBEDDED_QUESTIONS };
+        } else {
+          const response = await fetch(DATA_URL, {
+            headers: { Accept: "application/json" }
+          });
+          if (!response.ok) {
+            throw new Error(`題庫伺服器回應 HTTP ${response.status}`);
+          }
+          data = await response.json();
+        }
+        if (!data || !Array.isArray(data.questions)) {
+          throw new Error("題庫資料格式不正確");
+        }
+
+        const normalized = data.questions.map(normalizeQuestion);
+        questions = normalized.filter(question => question !== null);
+        if (questions.length === 0) {
+          throw new Error("題庫沒有符合格式的題目");
+        }
+
+        resetQuestionQueue();
+        initializeFilters();
+        const invalidCount = normalized.length - questions.length;
+        elements.status.textContent = invalidCount
+          ? `已載入 ${questions.length} 題；另有 ${invalidCount} 題資料格式不符，未納入練習。`
+          : `已載入 ${questions.length} 題公開題目。`;
+        elements.status.classList.remove("error");
+        elements.status.hidden = false;
+        renderLearningDashboard();
+        drawQuestion();
+      } catch {
+        elements.status.hidden = true;
+        elements.questionContent.hidden = true;
+        elements.emptyState.hidden = false;
+        elements.emptyMessage.textContent =
+          "無法載入題庫，請確認網路連線後重試。題目僅由指定公開 JSON 載入，不會使用自編題目。";
+        elements.retryButton.hidden = false;
+      }
+    }
+
+    function handleLevelFilterChange() {
+      const selectedLevel = elements.levelFilter.value;
+      if (selectedLevel === lastHandledLevel) return;
+      lastHandledLevel = selectedLevel;
+      updateSubjectOptions();
+      updateSourceOptions();
+      resetDeckAndDraw();
+      renderLearningDashboard();
+    }
+
+    elements.levelFilter.addEventListener("input", handleLevelFilterChange);
+    elements.levelFilter.addEventListener("change", handleLevelFilterChange);
+    elements.subjectFilter.addEventListener("change", () => {
+      resetDeckAndDraw();
+      renderLearningDashboard();
+    });
+    elements.sourceFilter.addEventListener("change", () => {
+      if (elements.progressSourceFilter) {
+        elements.progressSourceFilter.value = elements.sourceFilter.value;
+      }
+      resetDeckAndDraw();
+      renderLearningDashboard();
+    });
+    if (elements.progressSourceFilter) {
+      elements.progressSourceFilter.addEventListener("change", () => {
+        elements.sourceFilter.value = elements.progressSourceFilter.value;
+        resetDeckAndDraw();
+        renderLearningDashboard();
+      });
+    }
+    elements.nextButton.addEventListener("click", drawQuestion);
+    elements.resetDeckButton.addEventListener("click", resetQuestionCycle);
+    elements.retryButton.addEventListener("click", loadQuestions);
+    elements.clearLearningRecords.addEventListener("click", clearLearningRecords);
+    elements.exportArchive.addEventListener("click", exportOfflineArchive);
+    elements.exportLearningRecords.addEventListener("click", exportLearningRecords);
+    elements.exportOfflineHtml.addEventListener("click", exportOfflineHtml);
+    elements.openUpdateLogButton.addEventListener("click", async () => {
+      await ipasVersionReady;
+      elements.updateLogDialog.showModal();
+    });
+    elements.closeUpdateLogButton.addEventListener("click", () => {
+      elements.updateLogDialog.close();
+    });
+    elements.importLearningRecordsButton.addEventListener("click", () =>
+      elements.learningRecordsFile.click()
+    );
+    elements.learningRecordsFile.addEventListener("change", async () => {
+      const file = elements.learningRecordsFile.files?.[0];
+      elements.learningRecordsFile.value = "";
+      await importLearningRecords(file);
+    });
+    elements.exitReviewButton.addEventListener("click", exitWrongReview);
+
+    if (elements.examDateFilter) {
+      elements.examDateFilter.addEventListener("input", handleExamDateChange);
+      elements.examDateFilter.addEventListener("change", handleExamDateChange);
+    }
+    if (elements.clearExamDateButton) {
+      elements.clearExamDateButton.addEventListener("click", () => {
+        if (elements.examDateFilter) {
+          elements.examDateFilter.value = "";
+        }
+        handleExamDateChange();
+      });
+    }
+    elements.questionFontScale.addEventListener("change", saveFontSettings);
+    elements.answerFontScale.addEventListener("change", saveFontSettings);
+
+    const appViews = [...document.querySelectorAll(".app-view")];
+    const sideMenuLinks = [...document.querySelectorAll(".side-menu-link")];
+    let currentIpasVersion = IPAS_VERSION;
+    let currentIpasUpdateLog = IPAS_UPDATE_LOG;
+    const ipasVersionReady = loadIpasVersion();
+    function showActiveAppView() {
+      const requestedId = window.location.hash.slice(1);
+      const activeViewId = appViews.some(view => view.id === requestedId)
+        ? requestedId
+        : "practiceSection";
+
+      for (const view of appViews) {
+        view.hidden = view.id !== activeViewId;
+      }
+      for (const link of sideMenuLinks) {
+        if (link.hash === `#${activeViewId}`) {
+          link.setAttribute("aria-current", "page");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      }
+      if (activeViewId === "progressSection" || activeViewId === "wrongReviewSection") {
+        renderLearningDashboard();
+      }
+    }
+
+    window.addEventListener("hashchange", showActiveAppView);
+    showActiveAppView();
+
+    loadFontSettings();
+    loadLearningRecords();
+    loadExamDate();
+    loadEmailExportOptions();
+    loadQuestions();
+  </script>
+</body>
+</html>
