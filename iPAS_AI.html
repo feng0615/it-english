@@ -143,6 +143,100 @@
       vertical-align: middle;
     }
 
+    .update-log-button {
+      margin-left: .45rem;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #e6effa;
+      font: inherit;
+      font-size: .78rem;
+      letter-spacing: 0;
+      text-decoration: underline;
+      cursor: pointer;
+      vertical-align: middle;
+    }
+
+    .update-log-button:hover,
+    .update-log-button:focus-visible {
+      color: #fff;
+    }
+
+    .update-log-dialog {
+      width: min(560px, calc(100vw - 32px));
+      max-height: min(70vh, 620px);
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      color: var(--ink);
+      box-shadow: 0 18px 50px #102a4652;
+    }
+
+    .update-log-dialog::backdrop {
+      background: #102a467a;
+    }
+
+    .update-log-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      background: #f7faff;
+    }
+
+    .update-log-header h2 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 1.15rem;
+    }
+
+    .update-log-close {
+      border: 0;
+      border-radius: 8px;
+      padding: 6px 10px;
+      background: #e8eef5;
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .update-log-entries {
+      max-height: calc(min(70vh, 620px) - 62px);
+      padding: 18px 20px;
+      overflow: auto;
+    }
+
+    .update-log-entry + .update-log-entry {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .update-log-entry-heading {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--navy);
+      font-weight: 750;
+    }
+
+    .update-log-entry time {
+      color: var(--muted);
+      font-size: .85rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .update-log-entry ul {
+      margin: 8px 0 0;
+      padding-left: 1.25rem;
+      color: #43566d;
+      line-height: 1.65;
+    }
+
     h1 {
       margin: 0;
       font-size: clamp(1.55rem, 5vw, 2.15rem);
@@ -660,9 +754,16 @@
   <main class="app">
     <div class="app-view" id="practiceSection" tabindex="-1">
     <header class="hero">
-      <p class="eyebrow">iPAS AI 應用規劃師 <span class="version-badge">版本 v1.0.98</span></p>
+      <p class="eyebrow">iPAS AI 應用規劃師 <span class="version-badge" id="ipasVersionBadge">版本v1.0.0</span><button class="update-log-button" id="openUpdateLogButton" type="button">更新日誌</button></p>
       <h1>iPAS AI 應用規劃師刷題</h1>
       <p>從公開題庫隨機抽題，即時核對答案與解析；匯出單檔 HTML 時會一併內嵌題庫與目前學習紀錄。</p>
+      <dialog class="update-log-dialog" id="updateLogDialog" aria-labelledby="updateLogHeading">
+        <div class="update-log-header">
+          <h2 id="updateLogHeading">更新日誌</h2>
+          <button class="update-log-close" id="closeUpdateLogButton" type="button">關閉</button>
+        </div>
+        <div class="update-log-entries" id="updateLogEntries"></div>
+      </dialog>
     </header>
 
     <section class="stats" aria-label="作答統計">
@@ -858,6 +959,8 @@
 
     const DATA_URL = "https://yazelin.github.io/ipas-ai-quiz/questions.json";
     const IMAGE_BASE_URL = "https://yazelin.github.io/ipas-ai-quiz/";
+    const IPAS_VERSION = "1.0.0";
+    const IPAS_UPDATE_LOG = [{"Version":"1.0.0","Date":"2026-11-04","Changes":["錯題複習依來源類別顯示待複習題數與比例，並可直接開始該來源複習。","點選學習進度來源類別後，直接進入題目練習並套用對應篩選條件。","錯題複習可直接切換至題目練習。","版號由中央設定控制，離線匯出一併保留版號與更新日誌。"]}];
     const SOURCE_DEFAULT = "歷屆考古題";
     const LEARNING_STORAGE_KEY = "ipas-ai-practice-learning-v1";
     const LEARNING_EXPORT_FORMAT = "ipas-ai-practice-learning";
@@ -886,6 +989,11 @@
       answeredCount: document.getElementById("answeredCount"),
       correctCount: document.getElementById("correctCount"),
       accuracy: document.getElementById("accuracy"),
+      ipasVersionBadge: document.getElementById("ipasVersionBadge"),
+      openUpdateLogButton: document.getElementById("openUpdateLogButton"),
+      updateLogDialog: document.getElementById("updateLogDialog"),
+      closeUpdateLogButton: document.getElementById("closeUpdateLogButton"),
+      updateLogEntries: document.getElementById("updateLogEntries"),
       app: document.querySelector(".app"),
       levelFilter: document.getElementById("levelFilter"),
       subjectFilter: document.getElementById("subjectFilter"),
@@ -946,6 +1054,7 @@
     let previousQuestion = null;
     let reviewModeLevel = "";
     let reviewModeSubject = "";
+    let reviewModeSource = "";
     let reviewDeck = [];
     let previousReviewQuestion = null;
     let reviewCompletionNotice = "";
@@ -1167,16 +1276,21 @@
         const pendingQuestions = questions.filter(question =>
           question.level === reviewModeLevel &&
           (!reviewModeSubject || question.subject === reviewModeSubject) &&
+          matchesSource(question, reviewModeSource) &&
           learningRecords[question.recordKey]?.needsReview
         );
         if (pendingQuestions.length === 0) {
           const completedLevel = reviewModeLevel;
           const completedSubject = reviewModeSubject;
+          const completedSource = reviewModeSource;
           reviewModeLevel = "";
           reviewModeSubject = "";
+          reviewModeSource = "";
           reviewDeck = [];
           previousReviewQuestion = null;
-          reviewCompletionNotice = completedSubject
+          reviewCompletionNotice = completedSource
+            ? `${completedLevel}「${completedSubject}」${completedSource}來源錯題已複習完成，已返回一般練習。`
+            : completedSubject
             ? `${completedLevel}「${completedSubject}」錯題已複習完成，已返回一般練習。`
             : `${completedLevel}錯題已複習完成，已返回一般練習。`;
           drawQuestion();
@@ -1293,7 +1407,7 @@
       elements.chapterTag.hidden = !question.chapter;
       elements.sourceTag.textContent = question.round || question.source;
       elements.reviewModeTag.textContent = reviewModeLevel
-        ? `${reviewModeLevel}${reviewModeSubject ? `・${reviewModeSubject}` : ""}錯題複習`
+        ? `${reviewModeLevel}${reviewModeSubject ? `・${reviewModeSubject}` : ""}${reviewModeSource ? `・${reviewModeSource}` : ""}錯題複習`
         : "";
       elements.reviewModeTag.hidden = !reviewModeLevel;
       elements.questionCount.textContent = reviewModeLevel
@@ -1356,7 +1470,8 @@
       elements.feedbackAnswer.textContent =
         `正確答案：${OPTION_LABELS[currentQuestion.answer]}．${currentQuestion.options[currentQuestion.answer]}`;
       if (isCorrect && reviewModeLevel === currentQuestion.level &&
-          (!reviewModeSubject || reviewModeSubject === currentQuestion.subject)) {
+          (!reviewModeSubject || reviewModeSubject === currentQuestion.subject) &&
+          matchesSource(currentQuestion, reviewModeSource)) {
         elements.feedbackAnswer.textContent += "（已從錯題複習清單移除）";
       }
 
@@ -1711,6 +1826,89 @@
       })[character]);
     }
 
+    async function loadIpasVersion() {
+      if (window.location.protocol === "file:" || EMBEDDED_QUESTIONS) {
+        elements.ipasVersionBadge.textContent = `版本v${IPAS_VERSION}`;
+        renderUpdateLog(IPAS_UPDATE_LOG);
+        return true;
+      }
+
+      try {
+        const response = await fetch(
+          new URL("ipas-version.json", document.baseURI),
+          { cache: "no-store" }
+        );
+        if (!response.ok) {
+          throw new Error("iPAS 版號設定讀取失敗。");
+        }
+
+        const configuration = await response.json();
+        const version = configuration?.Ipas?.Version;
+        const updateLog = configuration?.Ipas?.UpdateLog;
+        if (typeof version !== "string" || !/^\d+\.\d+\.\d+$/.test(version)) {
+          throw new Error("iPAS 版號設定格式無效。");
+        }
+        if (!Array.isArray(updateLog) || updateLog.some(entry =>
+          typeof entry?.Version !== "string" ||
+          typeof entry?.Date !== "string" ||
+          !Array.isArray(entry?.Changes) ||
+          entry.Changes.some(change => typeof change !== "string")
+        )) {
+          throw new Error("iPAS 更新日誌格式無效。");
+        }
+
+        currentIpasVersion = version;
+        elements.ipasVersionBadge.textContent = `版本v${currentIpasVersion}`;
+        currentIpasUpdateLog = updateLog;
+        renderUpdateLog(currentIpasUpdateLog);
+        return true;
+      } catch (error) {
+        elements.ipasVersionBadge.textContent = "版號載入失敗";
+        const errorMessage = document.createElement("p");
+        errorMessage.textContent = "無法載入更新日誌，請稍後重試。";
+        elements.updateLogEntries.replaceChildren(errorMessage);
+        console.error("無法載入 iPAS 版號設定。", error);
+        return false;
+      }
+    }
+
+    function renderUpdateLog(entries) {
+      const fragment = document.createDocumentFragment();
+      if (entries.length === 0) {
+        const emptyMessage = document.createElement("p");
+        emptyMessage.textContent = "尚無更新紀錄。";
+        fragment.append(emptyMessage);
+      }
+
+      for (const entry of entries) {
+        const article = document.createElement("article");
+        article.className = "update-log-entry";
+
+        const heading = document.createElement("div");
+        heading.className = "update-log-entry-heading";
+
+        const version = document.createElement("span");
+        version.textContent = `版本v${entry.Version}`;
+
+        const date = document.createElement("time");
+        date.dateTime = entry.Date;
+        date.textContent = entry.Date;
+        heading.append(version, date);
+
+        const changes = document.createElement("ul");
+        for (const change of entry.Changes) {
+          const item = document.createElement("li");
+          item.textContent = change;
+          changes.append(item);
+        }
+
+        article.append(heading, changes);
+        fragment.append(article);
+      }
+
+      elements.updateLogEntries.replaceChildren(fragment);
+    }
+
     function replaceScriptConstant(scriptText, constantName, value) {
       const declaration = `const ${constantName} = `;
       const start = scriptText.indexOf(declaration);
@@ -1722,7 +1920,11 @@
       return `${scriptText.slice(0, start)}${declaration}${toSafeScriptJson(value)};${scriptText.slice(lineEnd)}`;
     }
 
-    function createOfflineHtml() {
+    async function createOfflineHtml() {
+      if (!(await ipasVersionReady)) {
+        setStorageNote("無法載入中央版號設定，未產生離線檔案。", true);
+        return null;
+      }
       if (questions.length === 0) {
         setStorageNote("題庫載入完成後才能匯出單檔 HTML。", true);
         return null;
@@ -1766,6 +1968,20 @@
           getFontSettings()
         );
       }
+      if (scriptText !== null) {
+        scriptText = replaceScriptConstant(
+          scriptText,
+          "IPAS_VERSION",
+          currentIpasVersion
+        );
+      }
+      if (scriptText !== null) {
+        scriptText = replaceScriptConstant(
+          scriptText,
+          "IPAS_UPDATE_LOG",
+          currentIpasUpdateLog
+        );
+      }
       if (scriptText === null) {
         setStorageNote("無法建立離線題庫或學習紀錄資料，未產生檔案。", true);
         return null;
@@ -1776,7 +1992,7 @@
     }
 
     async function exportOfflineHtml() {
-      const html = createOfflineHtml();
+      const html = await createOfflineHtml();
       if (html === null) return;
 
       const fileName = "iPAS_AI_應用規劃師_刷題離線版.html";
@@ -2022,7 +2238,7 @@
     }
 
     async function exportOfflineArchive() {
-      const html = createOfflineHtml();
+      const html = await createOfflineHtml();
       if (html === null) return;
 
       const fileName = "iPAS_AI_應用規劃師_刷題與學習資料.zip";
@@ -2134,6 +2350,7 @@
       renderLearningDashboard();
       reviewModeLevel = "";
       reviewModeSubject = "";
+      reviewModeSource = "";
       reviewDeck = [];
       previousReviewQuestion = null;
       reviewCompletionNotice = "學習資料已匯入，學習進度與錯題清單已更新。";
@@ -2146,7 +2363,8 @@
       const needsReview = !isCorrect
         ? true
         : reviewModeLevel === question.level &&
-          (!reviewModeSubject || reviewModeSubject === question.subject)
+          (!reviewModeSubject || reviewModeSubject === question.subject) &&
+          matchesSource(question, reviewModeSource)
           ? false
           : previous?.needsReview ?? false;
       learningRecords[question.recordKey] = {
@@ -2385,7 +2603,7 @@
 
             const breakdownTitle = document.createElement("h4");
             breakdownTitle.className = "source-breakdown-title";
-            breakdownTitle.textContent = "來源類別學習百分比（點擊可篩選）";
+            breakdownTitle.textContent = "來源類別學習百分比（點擊進入練習）";
 
             const breakdownList = document.createElement("div");
             breakdownList.className = "source-breakdown-list";
@@ -2402,7 +2620,7 @@
                 (isSelected ? " is-active" : "");
               item.setAttribute("role", "button");
               item.setAttribute("tabindex", "0");
-              item.setAttribute("title", `點擊篩選「${level} ${subject} - ${cat.text}」並帶入過濾條件`);
+              item.setAttribute("title", `篩選「${level} ${subject} - ${cat.text}」並進入題目練習`);
 
               const header = document.createElement("div");
               header.className = "source-breakdown-header";
@@ -2467,6 +2685,8 @@
                 }
                 resetDeckAndDraw();
                 renderLearningDashboard();
+                window.location.hash = "practiceView";
+                showActiveAppView();
               };
 
               item.addEventListener("click", handleCategoryClick);
@@ -2641,6 +2861,92 @@
           result.textContent =
             `待複習 ${pendingQuestions.length} / ${subjectQuestions.length} 題`;
 
+          const categories = buildSourceCategories(subjectQuestions);
+          if (categories.length > 0) {
+            const breakdown = document.createElement("div");
+            breakdown.className = "source-breakdown";
+
+            const breakdownTitle = document.createElement("h5");
+            breakdownTitle.className = "source-breakdown-title";
+            breakdownTitle.textContent = "來源類別錯題分布（點擊複習）";
+
+            const breakdownList = document.createElement("div");
+            breakdownList.className = "source-breakdown-list";
+
+            for (const category of categories) {
+              const categoryQuestions = subjectQuestions.filter(question =>
+                matchesSource(question, category.value)
+              );
+              const categoryPending = categoryQuestions.filter(question =>
+                learningRecords[question.recordKey]?.needsReview
+              );
+              const categoryRate = categoryQuestions.length
+                ? Math.round((categoryPending.length / categoryQuestions.length) * 100)
+                : 0;
+              const item = document.createElement("div");
+              item.className = "source-breakdown-item" +
+                (category.isSub ? " is-sub" : "");
+              item.setAttribute("role", "button");
+              item.setAttribute("tabindex", categoryPending.length > 0 ? "0" : "-1");
+              item.setAttribute("aria-disabled", String(categoryPending.length === 0));
+              item.setAttribute(
+                "aria-label",
+                `${level} ${subject} ${category.text}待複習 ${categoryPending.length} / ${categoryQuestions.length} 題，${categoryRate}%，點擊開始錯題複習`
+              );
+              item.setAttribute(
+                "title",
+                `複習「${level} ${subject} - ${category.text}」待複習錯題`
+              );
+
+              const header = document.createElement("div");
+              header.className = "source-breakdown-header";
+
+              const nameSpan = document.createElement("span");
+              nameSpan.className = "source-breakdown-name";
+              nameSpan.textContent = category.text;
+
+              const statSpan = document.createElement("span");
+              statSpan.className = "source-breakdown-stat";
+              statSpan.textContent =
+                `待複習 ${categoryPending.length} / ${categoryQuestions.length} 題 (${categoryRate}%)`;
+              header.append(nameSpan, statSpan);
+
+              const miniTrack = document.createElement("div");
+              miniTrack.className = "progress-track mini";
+              miniTrack.setAttribute("role", "progressbar");
+              miniTrack.setAttribute("aria-label", `${category.text}待複習比例`);
+              miniTrack.setAttribute("aria-valuemin", "0");
+              miniTrack.setAttribute("aria-valuemax", "100");
+              miniTrack.setAttribute("aria-valuenow", String(categoryRate));
+
+              const miniFill = document.createElement("div");
+              miniFill.className = "progress-fill review-progress-fill";
+              miniFill.style.width = `${categoryRate}%`;
+              miniTrack.append(miniFill);
+              item.append(header, miniTrack);
+
+              const startCategoryReview = () => {
+                if (categoryPending.length > 0) {
+                  startWrongReview(level, subject, category.value);
+                }
+              };
+              item.addEventListener("click", startCategoryReview);
+              item.addEventListener("keydown", event => {
+                if (categoryPending.length > 0 &&
+                    (event.key === "Enter" || event.key === " ")) {
+                  event.preventDefault();
+                  startCategoryReview();
+                }
+              });
+              breakdownList.append(item);
+            }
+
+            breakdown.append(breakdownTitle, breakdownList);
+            card.append(subjectHeading, count, track, result, breakdown);
+          } else {
+            card.append(subjectHeading, count, track, result);
+          }
+
           const subjectButton = document.createElement("button");
           subjectButton.type = "button";
           subjectButton.className = "secondary-button";
@@ -2648,7 +2954,7 @@
           subjectButton.disabled = pendingQuestions.length === 0;
           subjectButton.addEventListener("click", () => startWrongReview(level, subject));
 
-          card.append(subjectHeading, count, track, result, subjectButton);
+          card.append(subjectButton);
           grid.append(card);
         }
 
@@ -2683,10 +2989,11 @@
       }
     }
 
-    function startWrongReview(level, subject = "") {
+    function startWrongReview(level, subject = "", source = "") {
       const pendingQuestions = questions.filter(question =>
         question.level === level &&
         (!subject || question.subject === subject) &&
+        matchesSource(question, source) &&
         learningRecords[question.recordKey]?.needsReview
       );
       if (pendingQuestions.length === 0) return;
@@ -2696,17 +3003,20 @@
       updateSubjectOptions();
       elements.subjectFilter.value = subject;
       updateSourceOptions();
-      elements.sourceFilter.value = "";
+      elements.sourceFilter.value = source;
       if (elements.progressSourceFilter) {
-        elements.progressSourceFilter.value = "";
+        elements.progressSourceFilter.value = source;
       }
       renderLearningDashboard();
       resetQuestionQueue();
       reviewModeLevel = level;
       reviewModeSubject = subject;
+      reviewModeSource = source;
       reviewDeck = shuffle(pendingQuestions);
       previousReviewQuestion = null;
       reviewCompletionNotice = "";
+      window.location.hash = "practiceView";
+      showActiveAppView();
       drawQuestion();
     }
 
@@ -2715,6 +3025,7 @@
       reviewCompletionNotice = "已結束錯題複習，返回一般練習。";
       reviewModeLevel = "";
       reviewModeSubject = "";
+      reviewModeSource = "";
       reviewDeck = [];
       previousReviewQuestion = null;
       resetQuestionQueue();
@@ -2743,6 +3054,7 @@
       }
       reviewModeLevel = "";
       reviewModeSubject = "";
+      reviewModeSource = "";
       reviewDeck = [];
       previousReviewQuestion = null;
       resetQuestionQueue();
@@ -2839,6 +3151,13 @@
     elements.exportArchive.addEventListener("click", exportOfflineArchive);
     elements.exportLearningRecords.addEventListener("click", exportLearningRecords);
     elements.exportOfflineHtml.addEventListener("click", exportOfflineHtml);
+    elements.openUpdateLogButton.addEventListener("click", async () => {
+      await ipasVersionReady;
+      elements.updateLogDialog.showModal();
+    });
+    elements.closeUpdateLogButton.addEventListener("click", () => {
+      elements.updateLogDialog.close();
+    });
     elements.importLearningRecordsButton.addEventListener("click", () =>
       elements.learningRecordsFile.click()
     );
@@ -2866,6 +3185,9 @@
 
     const appViews = [...document.querySelectorAll(".app-view")];
     const sideMenuLinks = [...document.querySelectorAll(".side-menu-link")];
+    let currentIpasVersion = IPAS_VERSION;
+    let currentIpasUpdateLog = IPAS_UPDATE_LOG;
+    const ipasVersionReady = loadIpasVersion();
     function showActiveAppView() {
       const requestedId = window.location.hash.slice(1);
       const activeViewId = appViews.some(view => view.id === requestedId)
