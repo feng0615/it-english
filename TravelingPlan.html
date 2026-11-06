@@ -1425,12 +1425,19 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.20</span>
+        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.21</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.21</strong>
+                    <time class="version-changelog-date" datetime="2026-11-06">2026-11-06</time>
+                  </div>
+                  <p>「行前檢查清單」、「新增一站」與「雨天備案」三個區塊預設均設為收合，進入頁面時更簡潔，可依需要點擊展開。</p>
+                </li>
                 <li>
                   <div class="version-changelog-entry-header">
                     <strong class="version-changelog-version">v1.3.20</strong>
@@ -1623,9 +1630,9 @@
         <section class="panel pre-trip-panel" aria-labelledby="pre-trip-title">
           <div class="form-panel-heading">
             <h2 class="panel-title" id="pre-trip-title">行前檢查清單</h2>
-            <button class="secondary-button form-toggle" id="pre-trip-toggle" type="button" aria-expanded="true" aria-controls="pre-trip-content">收合</button>
+            <button class="secondary-button form-toggle" id="pre-trip-toggle" type="button" aria-expanded="false" aria-controls="pre-trip-content">展開</button>
           </div>
-          <div id="pre-trip-content">
+          <div id="pre-trip-content" hidden>
             <p class="panel-description">整理出發前要準備或確認的事項。</p>
             <div id="pre-trip-checklist-content"></div>
           </div>
@@ -1677,9 +1684,9 @@
         <section class="panel rainy-day-panel" aria-labelledby="rainy-day-title">
           <div class="form-panel-heading">
             <h2 class="panel-title" id="rainy-day-title">雨天備案</h2>
-            <button class="secondary-button form-toggle" id="rainy-day-toggle" type="button" aria-expanded="true" aria-controls="rainy-day-content">收合</button>
+            <button class="secondary-button form-toggle" id="rainy-day-toggle" type="button" aria-expanded="false" aria-controls="rainy-day-content">展開</button>
           </div>
-          <div id="rainy-day-content">
+          <div id="rainy-day-content" hidden>
             <p class="panel-description">預先準備室內與替代景點，遇雨也能彈性應對。</p>
             <div id="rainy-day-list-content"></div>
             <form class="rainy-day-form" id="rainy-day-form">
