@@ -449,28 +449,33 @@
     }
 
     .data-actions {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 9px;
       margin: 0 0 15px;
     }
 
-    .data-actions .secondary-button {
-      flex: 1;
+    .data-actions .secondary-button,
+    .data-actions .format-select {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-width: 0;
+      min-height: 42px;
+      padding: 0 10px;
+      font-size: 13px;
+      white-space: nowrap;
+      text-align: center;
     }
 
     .data-actions .format-select {
-      flex: 1;
-      min-height: 42px;
-      padding: 0 14px;
       border: 0;
       border-radius: 11px;
       color: #fff;
       background: var(--green);
       font: inherit;
-      font-size: 13px;
       font-weight: 750;
-      text-align: center;
       cursor: pointer;
     }
 
@@ -1170,9 +1175,16 @@
         line-height: 1.2;
       }
 
+      .data-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
       .data-actions .secondary-button,
       .data-actions .format-select {
         min-height: 44px;
+        padding: 0 6px;
+        font-size: 13px;
       }
 
       .itinerary-list {
@@ -1267,6 +1279,16 @@
 
 
     @media (max-width: 360px) {
+      .data-actions {
+        gap: 6px;
+      }
+
+      .data-actions .secondary-button,
+      .data-actions .format-select {
+        padding: 0 4px;
+        font-size: 12px;
+      }
+
       .field-row {
         grid-template-columns: minmax(0, 1fr);
         gap: 0;
@@ -1316,12 +1338,19 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.15</span>
+        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.16</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.16</strong>
+                    <time class="version-changelog-date" datetime="2026-11-06">2026-11-06</time>
+                  </div>
+                  <p>優化行動版行程操作按鈕為 2x2 對稱網格排版，解決手機畫面上按鈕擠壓、文字換行與高矮不一的問題。</p>
+                </li>
                 <li>
                   <div class="version-changelog-entry-header">
                     <strong class="version-changelog-version">v1.3.15</strong>
