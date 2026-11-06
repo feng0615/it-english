@@ -1546,12 +1546,19 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.25</span>
+        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.26</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.26</strong>
+                    <time class="version-changelog-date" datetime="2026-11-06">2026-11-06</time>
+                  </div>
+                  <p>雨天備案依區域排序，區域相同時再依地點排序，主頁清單與 HTML 匯出均適用。</p>
+                </li>
                 <li>
                   <div class="version-changelog-entry-header">
                     <strong class="version-changelog-version">v1.3.25</strong>
@@ -3217,7 +3224,7 @@
         }).join("")}</ul>`
         : `<p class="empty">尚未新增行前檢查事項。</p>`}</div></section>`;
       const rainyDaySection = `<section class="day rainy-day-day" data-rainy-day-section><h3 class="day-heading">☔ 雨天備案</h3><div class="rainy-day-export-section"><h4>雨天備選景點 <small>${rainyDays.length} 處</small></h4>${rainyDays.length > 0
-        ? `<ul class="rainy-day-export-list">${rainyDays.map((item) => {
+        ? `<ul class="rainy-day-export-list">${sortRainyDays(rainyDays).map((item) => {
           const mapsUrl = new URL("https://www.google.com/maps/search/");
           mapsUrl.searchParams.set("api", "1");
           mapsUrl.searchParams.set("query", item.location);
@@ -3880,6 +3887,14 @@
       });
     }
 
+    function sortRainyDays(dayItems) {
+      const collator = new Intl.Collator("zh-TW", { numeric: true, sensitivity: "base" });
+      return [...dayItems].sort((first, second) => {
+        const areaOrder = collator.compare((first.area || "").trim(), (second.area || "").trim());
+        return areaOrder || collator.compare(first.location.trim(), second.location.trim());
+      });
+    }
+
     function createItineraryCard(item, previewIndex) {
       const card = makeElement("li", "itinerary-item");
       card.dataset.itemId = item.id;
@@ -4171,7 +4186,7 @@
       }
 
       const list = makeElement("ul", "rainy-day-list");
-      rainyDays.forEach((item) => {
+      sortRainyDays(rainyDays).forEach((item) => {
         const row = makeElement("li", "rainy-day-row");
         const header = makeElement("div", "rainy-day-header");
         const titleWrap = makeElement("div", "rainy-day-title-wrap");
