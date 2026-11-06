@@ -638,6 +638,14 @@
       --rainy-day-font-scale: 1;
     }
 
+    #pre-trip-checklist-content {
+      --pre-trip-font-scale: 1;
+    }
+
+    #pre-trip-checklist-content .checklist-text {
+      font-size: calc(13px * var(--pre-trip-font-scale));
+    }
+
     #rainy-day-list-content .rainy-day-area-tag {
       font-size: calc(11px * var(--rainy-day-font-scale));
     }
@@ -1546,12 +1554,26 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.26</span>
+        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.28</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.28</strong>
+                    <time class="version-changelog-date" datetime="2026-11-06">2026-11-06</time>
+                  </div>
+                  <p>Setting 區塊新增展開／收合功能，預設收合。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.27</strong>
+                    <time class="version-changelog-date" datetime="2026-11-06">2026-11-06</time>
+                  </div>
+                  <p>Setting 新增行前檢查清單字體大小滑桿，提供 60%、80%、100%、120%、150% 五種模式，並於本機瀏覽器保存設定。</p>
+                </li>
                 <li>
                   <div class="version-changelog-entry-header">
                     <strong class="version-changelog-version">v1.3.26</strong>
@@ -1905,22 +1927,39 @@
       </section>
 
       <section class="panel settings-panel" aria-labelledby="settings-title">
-        <div>
+        <div class="form-panel-heading">
           <h2 class="panel-title" id="settings-title">Setting</h2>
-          <p class="panel-description">調整雨天備案的顯示字體大小。</p>
+          <button class="secondary-button form-toggle" id="settings-toggle" type="button" aria-expanded="false" aria-controls="settings-content">展開</button>
         </div>
-        <div class="setting-field">
-          <label for="rainy-day-font-size">雨天備案字體</label>
-          <div class="setting-slider-wrap">
-            <input class="setting-slider" id="rainy-day-font-size" type="range" min="0" max="4" step="1" value="2" aria-label="雨天備案字體大小" aria-valuetext="100%">
-            <div class="setting-slider-labels" aria-hidden="true">
-              <span>60%</span>
-              <span>80%</span>
-              <span>100%</span>
-              <span>120%</span>
-              <span>150%</span>
+        <div id="settings-content" hidden>
+          <p class="panel-description">調整雨天備案與行前檢查清單的顯示字體大小。</p>
+          <div class="setting-field">
+            <label for="rainy-day-font-size">雨天備案字體</label>
+            <div class="setting-slider-wrap">
+              <input class="setting-slider" id="rainy-day-font-size" type="range" min="0" max="4" step="1" value="2" aria-label="雨天備案字體大小" aria-valuetext="100%">
+              <div class="setting-slider-labels" aria-hidden="true">
+                <span>60%</span>
+                <span>80%</span>
+                <span>100%</span>
+                <span>120%</span>
+                <span>150%</span>
+              </div>
+              <output class="setting-slider-value" id="rainy-day-font-size-value" for="rainy-day-font-size">100%</output>
             </div>
-            <output class="setting-slider-value" id="rainy-day-font-size-value" for="rainy-day-font-size">100%</output>
+          </div>
+          <div class="setting-field">
+            <label for="pre-trip-font-size">行前檢查清單字體</label>
+            <div class="setting-slider-wrap">
+              <input class="setting-slider" id="pre-trip-font-size" type="range" min="0" max="4" step="1" value="2" aria-label="行前檢查清單字體大小" aria-valuetext="100%">
+              <div class="setting-slider-labels" aria-hidden="true">
+                <span>60%</span>
+                <span>80%</span>
+                <span>100%</span>
+                <span>120%</span>
+                <span>150%</span>
+              </div>
+              <output class="setting-slider-value" id="pre-trip-font-size-value" for="pre-trip-font-size">100%</output>
+            </div>
           </div>
         </div>
       </section>
@@ -1935,6 +1974,7 @@
     const STORAGE_KEY = "traveling-plan.itinerary.v1";
     const CHECKLIST_STORAGE_KEY = "traveling-plan.checklists.v1";
     const PRE_TRIP_CHECKLIST_STORAGE_KEY = "traveling-plan.pre-trip-checklist.v1";
+    const PRE_TRIP_FONT_SIZE_STORAGE_KEY = "traveling-plan.pre-trip-font-size.v1";
     const RAINY_DAY_STORAGE_KEY = "traveling-plan.rainy-days.v1";
     const RAINY_DAY_FONT_SIZE_STORAGE_KEY = "traveling-plan.rainy-day-font-size.v1";
     const EXPENSE_STORAGE_KEY = "traveling-plan.expenses.v1";
@@ -2110,6 +2150,8 @@
     const preTripContent = document.querySelector("#pre-trip-content");
     const rainyDayToggleButton = document.querySelector("#rainy-day-toggle");
     const rainyDayContent = document.querySelector("#rainy-day-content");
+    const settingsToggleButton = document.querySelector("#settings-toggle");
+    const settingsContent = document.querySelector("#settings-content");
     const rainyDayListContent = document.querySelector("#rainy-day-list-content");
     const rainyDayForm = document.querySelector("#rainy-day-form");
     const rainyDayLocationInput = document.querySelector("#rainy-day-location");
@@ -2119,6 +2161,8 @@
     const itineraryPanelContent = document.querySelector("#itinerary-panel-content");
     const rainyDayFontSizeSlider = document.querySelector("#rainy-day-font-size");
     const rainyDayFontSizeValue = document.querySelector("#rainy-day-font-size-value");
+    const preTripFontSizeSlider = document.querySelector("#pre-trip-font-size");
+    const preTripFontSizeValue = document.querySelector("#pre-trip-font-size-value");
     const submitButton = document.querySelector("#submit-button");
     const cancelButton = document.querySelector("#cancel-button");
     const itemCount = document.querySelector("#item-count");
@@ -2146,7 +2190,7 @@
     let editingExpenseDate = null;
     let editingRainyDayId = null;
     const expandedRainyDayIds = new Set();
-    const validRainyDayFontSizes = ["0.6", "0.8", "1", "1.2", "1.5"];
+    const validFontSizes = ["0.6", "0.8", "1", "1.2", "1.5"];
     let currentDay = null;
     let draggedItemId = null;
     let storageReady = true;
@@ -4815,30 +4859,66 @@
       preTripToggleButton.textContent = expanded ? "收合" : "展開";
     }
 
+    function setSettingsExpanded(expanded) {
+      settingsContent.hidden = !expanded;
+      settingsToggleButton.setAttribute("aria-expanded", String(expanded));
+      settingsToggleButton.textContent = expanded ? "收合" : "展開";
+    }
+
     function setItineraryExpanded(expanded) {
       itineraryPanelContent.hidden = !expanded;
       itineraryToggleButton.setAttribute("aria-expanded", String(expanded));
       itineraryToggleButton.textContent = expanded ? "收合" : "展開";
     }
 
-    function applyRainyDayFontSize(size) {
-      const sizeIndex = validRainyDayFontSizes.indexOf(size);
-      rainyDayFontSizeSlider.value = String(sizeIndex);
+    function applyFontSize(slider, output, target, cssVariable, size) {
+      const sizeIndex = validFontSizes.indexOf(size);
+      slider.value = String(sizeIndex);
       const label = `${Math.round(Number(size) * 100)}%`;
-      rainyDayFontSizeValue.value = label;
-      rainyDayFontSizeSlider.setAttribute("aria-valuetext", label);
-      document.querySelector("#rainy-day-list-content").style.setProperty("--rainy-day-font-scale", size);
+      output.value = label;
+      slider.setAttribute("aria-valuetext", label);
+      target.style.setProperty(cssVariable, size);
     }
 
-    function initializeRainyDayFontSize() {
+    function initializeFontSizeControl(slider, output, target, storageKey, cssVariable, settingName) {
+      const applySize = (size) => applyFontSize(slider, output, target, cssVariable, size);
       try {
-        const savedSize = window.localStorage.getItem(RAINY_DAY_FONT_SIZE_STORAGE_KEY);
-        const size = validRainyDayFontSizes.includes(savedSize) ? savedSize : "1";
-        applyRainyDayFontSize(size);
+        const savedSize = window.localStorage.getItem(storageKey);
+        applySize(validFontSizes.includes(savedSize) ? savedSize : "1");
       } catch {
-        applyRainyDayFontSize("1");
-        showNotice("無法讀取雨天備案字體設定，已使用 100% 預設大小。", true);
+        applySize("1");
+        showNotice(`無法讀取${settingName}字體設定，已使用 100% 預設大小。`, true);
       }
+
+      slider.addEventListener("input", () => {
+        const selectedIndex = Number(slider.value);
+        const selectedSize = validFontSizes[selectedIndex];
+        if (!Number.isInteger(selectedIndex) || !selectedSize) {
+          applySize("1");
+          showNotice(`${settingName}字體設定無效，已還原為 100%。`, true);
+          return;
+        }
+
+        applySize(selectedSize);
+      });
+
+      slider.addEventListener("change", () => {
+        const selectedIndex = Number(slider.value);
+        const selectedSize = validFontSizes[selectedIndex];
+        if (!Number.isInteger(selectedIndex) || !selectedSize) {
+          applySize("1");
+          showNotice(`${settingName}字體設定無效，已還原為 100%。`, true);
+          return;
+        }
+
+        try {
+          window.localStorage.setItem(storageKey, selectedSize);
+          clearNotice();
+        } catch {
+          applySize("1");
+          showNotice(`無法儲存${settingName}字體設定，已還原為 100%。請檢查瀏覽器儲存空間。`, true);
+        }
+      });
     }
 
     function startEditing(item) {
@@ -4866,38 +4946,12 @@
       setPreTripExpanded(preTripContent.hidden);
     });
 
+    settingsToggleButton.addEventListener("click", () => {
+      setSettingsExpanded(settingsContent.hidden);
+    });
+
     itineraryToggleButton.addEventListener("click", () => {
       setItineraryExpanded(itineraryPanelContent.hidden);
-    });
-
-    rainyDayFontSizeSlider.addEventListener("input", () => {
-      const selectedIndex = Number(rainyDayFontSizeSlider.value);
-      const selectedSize = validRainyDayFontSizes[selectedIndex];
-      if (!Number.isInteger(selectedIndex) || !selectedSize) {
-        applyRainyDayFontSize("1");
-        showNotice("雨天備案字體設定無效，已還原為 100%。", true);
-        return;
-      }
-
-      applyRainyDayFontSize(selectedSize);
-    });
-
-    rainyDayFontSizeSlider.addEventListener("change", () => {
-      const selectedIndex = Number(rainyDayFontSizeSlider.value);
-      const selectedSize = validRainyDayFontSizes[selectedIndex];
-      if (!Number.isInteger(selectedIndex) || !selectedSize) {
-        applyRainyDayFontSize("1");
-        showNotice("雨天備案字體設定無效，已還原為 100%。", true);
-        return;
-      }
-
-      try {
-        window.localStorage.setItem(RAINY_DAY_FONT_SIZE_STORAGE_KEY, selectedSize);
-        clearNotice();
-      } catch {
-        applyRainyDayFontSize("1");
-        showNotice("無法儲存雨天備案字體設定，已還原為 100%。請檢查瀏覽器儲存空間。", true);
-      }
     });
 
     rainyDayToggleButton.addEventListener("click", () => {
@@ -5043,7 +5097,22 @@
     preTripChecklist = loadPreTripChecklist();
     rainyDays = loadRainyDays();
     expenses = loadExpenses();
-    initializeRainyDayFontSize();
+    initializeFontSizeControl(
+      rainyDayFontSizeSlider,
+      rainyDayFontSizeValue,
+      rainyDayListContent,
+      RAINY_DAY_FONT_SIZE_STORAGE_KEY,
+      "--rainy-day-font-scale",
+      "雨天備案"
+    );
+    initializeFontSizeControl(
+      preTripFontSizeSlider,
+      preTripFontSizeValue,
+      preTripChecklistContent,
+      PRE_TRIP_FONT_SIZE_STORAGE_KEY,
+      "--pre-trip-font-scale",
+      "行前檢查清單"
+    );
     ensureDefaultItems();
     ensureV72Items();
     render();
