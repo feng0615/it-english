@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-06T08:42:43.204Z",
+  "exportedAt": "2026-11-06T08:57:16.655Z",
   "items": [
     {
       "id": "html-2026-11-14-1",
@@ -455,11 +455,6 @@
     {
       "id": "pretrip-1793934218811-tmhve9zr",
       "text": "預辦登機網路報到 https://booking.evaair.com/flyeva/eva/b2c/manage-your-trip/online-checked-in-login.aspx?lang=zh-tw",
-      "checked": false
-    },
-    {
-      "id": "pretrip-1793943059368-59ugctuh",
-      "text": "雨天備案",
       "checked": false
     }
   ],
