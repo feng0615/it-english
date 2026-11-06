@@ -1316,12 +1316,19 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.14</span>
+        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.15</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.15</strong>
+                    <time class="version-changelog-date" datetime="2026-11-06">2026-11-06</time>
+                  </div>
+                  <p>原「設定自動存檔」改為「上傳行程到雲端」，點選後可將本地行程、Checklist 與費用直接上傳更新至 GitHub 雲端 TravelingPlan.json。</p>
+                </li>
                 <li>
                   <div class="version-changelog-entry-header">
                     <strong class="version-changelog-version">v1.3.14</strong>
@@ -1546,11 +1553,11 @@
             <option value="pre-trip-checklist">匯入行前檢查清單 JSON</option>
           </select>
           <button class="secondary-button" id="cloud-sync-button" type="button">同步雲端行程</button>
-          <button class="secondary-button" id="directory-button" type="button">設定自動存檔</button>
+          <button class="secondary-button" id="cloud-upload-button" type="button">上傳行程到雲端</button>
           <input id="import-file" type="file" accept=".json,application/json" hidden>
         </div>
         <p class="file-sync-status">多人接力共編：匯出 JSON 傳給協作者；對方匯入、編輯後再匯出回傳。匯入會在確認後完整取代本機行程、每日 Checklist、行前檢查清單與費用；資料檔可能含私人資訊，請只透過可信管道分享。</p>
-        <p class="file-sync-status" id="file-sync-status" role="status" aria-live="polite">尚未設定資料夾。設定後請選取 TravelingPlan.html 所在目錄，行程、每日 Checklist、行前檢查清單與費用會自動寫入 TravelingPlan.json。</p>
+        <p class="file-sync-status" id="file-sync-status" role="status" aria-live="polite">雲端同步：「同步雲端行程」可從 GitHub 下載最新 TravelingPlan.json；「上傳行程到雲端」可將本地儲存結果直接上傳回 GitHub 雲端檔案。</p>
         <p class="notice" id="notice" role="status" aria-live="polite" hidden></p>
         <div class="day-tabs" id="day-tabs" role="tablist" aria-label="依日期切換行程"></div>
         <div id="itinerary-content" role="tabpanel"></div>
@@ -1585,6 +1592,10 @@
     const FILE_HANDLE_KEY = "directory-handle";
     const AUTO_SAVE_FILE_NAME = "TravelingPlan.json";
     const REMOTE_SYNC_URL = "https://feng0615.github.io/it-english/TravelingPlan.json";
+    const GITHUB_REPO_OWNER = "feng0615";
+    const GITHUB_REPO_NAME = "it-english";
+    const GITHUB_FILE_PATH = "TravelingPlan.json";
+    const GITHUB_TOKEN_STORAGE_KEY = "traveling-plan.github-token.v1";
     const LEGACY_DEFAULT_ITEM_KEY = "traveling-plan.default-klook-2026-11-15.v1";
     const DEFAULT_ITEMS_KEY = "traveling-plan.default-klook-2026-11-15.v2";
     const LEGACY_DEFAULT_ITEM_ID = "klook-north-kyoto-autumn-2026-11-15";
@@ -1743,6 +1754,7 @@
     const importFile = document.querySelector("#import-file");
     let selectedImportFormat = "";
     const cloudSyncButton = document.querySelector("#cloud-sync-button");
+    const cloudUploadButton = document.querySelector("#cloud-upload-button");
     const directoryButton = document.querySelector("#directory-button");
     const fileSyncStatus = document.querySelector("#file-sync-status");
     const dayTabs = document.querySelector("#day-tabs");
@@ -2119,7 +2131,9 @@
         return;
       }
       if (typeof window.showDirectoryPicker !== "function" || !window.indexedDB) {
-        directoryButton.disabled = true;
+        if (directoryButton) {
+          directoryButton.disabled = true;
+        }
         fileSyncStatus.textContent = "此瀏覽器不支援資料夾自動存檔；行程仍保存在瀏覽器中，可使用匯出 JSON 備份。";
         return;
       }
@@ -2132,12 +2146,16 @@
 
         const permission = await directoryHandle.queryPermission({ mode: "readwrite" });
         if (permission !== "granted") {
-          directoryButton.textContent = "重新授權／變更資料夾";
+          if (directoryButton) {
+            directoryButton.textContent = "重新授權／變更資料夾";
+          }
           fileSyncStatus.textContent = "已記住資料夾，但需要重新授權；請重新選擇存檔目錄。";
           return;
         }
 
-        directoryButton.textContent = "變更存檔目錄";
+        if (directoryButton) {
+          directoryButton.textContent = "變更存檔目錄";
+        }
         fileSyncStatus.textContent = `自動存檔已啟用：${AUTO_SAVE_FILE_NAME}`;
         queueDirectorySave();
       } catch {
@@ -2179,7 +2197,9 @@
 
         await storeDirectoryHandle(selectedHandle);
         directoryHandle = selectedHandle;
-        directoryButton.textContent = "變更存檔目錄";
+        if (directoryButton) {
+          directoryButton.textContent = "變更存檔目錄";
+        }
         fileSyncStatus.textContent = `正在寫入：${AUTO_SAVE_FILE_NAME}`;
         queueDirectorySave();
       } catch (error) {
@@ -3069,6 +3089,115 @@
       }
     }
 
+    async function uploadToCloud() {
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady) {
+        showNotice("目前無法安全讀取本機儲存空間，暫停上傳。", true);
+        return;
+      }
+
+      let token = window.localStorage.getItem(GITHUB_TOKEN_STORAGE_KEY) || "";
+      if (!token) {
+        const inputToken = window.prompt(
+          "首次上傳至 GitHub 雲端檔案，請輸入 GitHub Personal Access Token (PAT)：\n\n" +
+          "• 權限需求：it-english 儲存庫的 Contents (Read and write)\n" +
+          "• 安全保證：Token 僅會儲存在您目前的本機瀏覽器中，不會外流\n\n" +
+          "（若要更換 Token，可隨時在瀏覽器 localStorage 清除後重試）"
+        );
+        if (!inputToken || !inputToken.trim()) {
+          showNotice("已取消上傳：未提供 GitHub Token。");
+          return;
+        }
+        token = inputToken.trim();
+        try {
+          window.localStorage.setItem(GITHUB_TOKEN_STORAGE_KEY, token);
+        } catch {
+          // localStorage 限制不影響單次執行
+        }
+      }
+
+      const confirmed = window.confirm(
+        "確定要將本機目前的行程、Checklist 與費用上傳至 GitHub 雲端嗎？\n\n" +
+        `目標：${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/${GITHUB_FILE_PATH}\n` +
+        "這將會更新線上現有的 TravelingPlan.json。"
+      );
+      if (!confirmed) {
+        showNotice("已取消上傳；雲端資料未變更。");
+        return;
+      }
+
+      cloudUploadButton.disabled = true;
+      cloudUploadButton.textContent = "上傳中...";
+      showNotice("正在連線至 GitHub 準備上傳...");
+
+      try {
+        const apiUrl = `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/${GITHUB_FILE_PATH}`;
+
+        let sha = null;
+        try {
+          const checkRes = await fetch(apiUrl, {
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Accept": "application/vnd.github+json"
+            },
+            cache: "no-cache"
+          });
+          if (checkRes.ok) {
+            const data = await checkRes.json();
+            sha = data.sha;
+          } else if (checkRes.status === 401 || checkRes.status === 403) {
+            window.localStorage.removeItem(GITHUB_TOKEN_STORAGE_KEY);
+            throw new Error(`GitHub 認證失敗（HTTP ${checkRes.status}），已清除已存 Token，請重新點擊上傳並輸入有效 Token。`);
+          }
+        } catch (err) {
+          if (err.message.includes("GitHub 認證失敗")) {
+            throw err;
+          }
+        }
+
+        const payload = createExportPayload();
+        const jsonText = JSON.stringify(payload, null, 2);
+        const utf8Bytes = new TextEncoder().encode(jsonText);
+        let binary = "";
+        const len = utf8Bytes.byteLength;
+        for (let i = 0; i < len; i++) {
+          binary += String.fromCharCode(utf8Bytes[i]);
+        }
+        const base64Content = btoa(binary);
+
+        const putRes = await fetch(apiUrl, {
+          method: "PUT",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/vnd.github+json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: `更新行程資料 (TravelingPlan.json) [Web] - ${new Date().toLocaleString("zh-TW")}`,
+            content: base64Content,
+            ...(sha ? { sha } : {})
+          })
+        });
+
+        if (!putRes.ok) {
+          const errData = await putRes.json().catch(() => ({}));
+          if (putRes.status === 401 || putRes.status === 403) {
+            window.localStorage.removeItem(GITHUB_TOKEN_STORAGE_KEY);
+            throw new Error(`Token 權限不足或無效（HTTP ${putRes.status}）：${errData.message || "請檢查 Token 權限"}`);
+          }
+          throw new Error(`上傳失敗（HTTP ${putRes.status}）：${errData.message || "請稍後重試"}`);
+        }
+
+        const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
+        const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
+        showNotice(`已成功上傳至 GitHub 雲端！共 ${items.length} 筆行程、${checklistCount} 個 Checklist、${preTripChecklist.length} 個行前檢查項目與 ${expenseCount} 筆費用。`);
+      } catch (error) {
+        showNotice(`雲端上傳失敗：${error.message}`, true);
+      } finally {
+        cloudUploadButton.disabled = false;
+        cloudUploadButton.textContent = "上傳行程到雲端";
+      }
+    }
+
     async function importSelectedFile() {
       const file = importFile.files?.[0];
       const format = selectedImportFormat;
@@ -3865,6 +3994,7 @@
       exportFormat.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady;
       importFormat.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady;
       cloudSyncButton.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady;
+      cloudUploadButton.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady;
       preTripChecklistContent.replaceChildren(renderPreTripChecklist());
 
       const dates = [...new Set([
@@ -4110,7 +4240,10 @@
       importFile.click();
     });
     cloudSyncButton.addEventListener("click", syncFromCloud);
-    directoryButton.addEventListener("click", configureDirectoryAutoSave);
+    cloudUploadButton.addEventListener("click", uploadToCloud);
+    if (directoryButton) {
+      directoryButton.addEventListener("click", configureDirectoryAutoSave);
+    }
     importFile.addEventListener("change", importSelectedFile);
     items = loadItems();
     checklists = loadChecklists();
