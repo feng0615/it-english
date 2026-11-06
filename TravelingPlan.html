@@ -1316,12 +1316,19 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.11</span>
+        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.12</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.12</strong>
+                    <time class="version-changelog-date" datetime="2026-11-06">2026-11-06</time>
+                  </div>
+                  <p>目錄自動存檔檔名調整為同目錄下的 TravelingPlan.json。</p>
+                </li>
                 <li>
                   <div class="version-changelog-entry-header">
                     <strong class="version-changelog-version">v1.3.11</strong>
@@ -1528,14 +1535,14 @@
           <input id="import-file" type="file" accept=".json,application/json" hidden>
         </div>
         <p class="file-sync-status">多人接力共編：匯出 JSON 傳給協作者；對方匯入、編輯後再匯出回傳。匯入會在確認後完整取代本機行程、每日 Checklist、行前檢查清單與費用；資料檔可能含私人資訊，請只透過可信管道分享。</p>
-        <p class="file-sync-status" id="file-sync-status" role="status" aria-live="polite">尚未設定資料夾。設定後請選取 TravelingPlan.html 所在目錄，行程、每日 Checklist、行前檢查清單與費用會自動寫入 TravelingPlan-autosave.json。</p>
+        <p class="file-sync-status" id="file-sync-status" role="status" aria-live="polite">尚未設定資料夾。設定後請選取 TravelingPlan.html 所在目錄，行程、每日 Checklist、行前檢查清單與費用會自動寫入 TravelingPlan.json。</p>
         <p class="notice" id="notice" role="status" aria-live="polite" hidden></p>
         <div class="day-tabs" id="day-tabs" role="tablist" aria-label="依日期切換行程"></div>
         <div id="itinerary-content" role="tabpanel"></div>
       </section>
     </div>
 
-    <p class="footer-note">行程、每日 Checklist、行前檢查清單與費用會自動儲存在這個瀏覽器；授權資料夾後，也會同步寫入該目錄的 TravelingPlan-autosave.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
+    <p class="footer-note">行程、每日 Checklist、行前檢查清單與費用會自動儲存在這個瀏覽器；授權資料夾後，也會同步寫入該目錄的 TravelingPlan.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
   </main>
 
   <script>
@@ -1561,7 +1568,7 @@
     const FILE_HANDLE_DB_NAME = "traveling-plan-file-sync";
     const FILE_HANDLE_STORE_NAME = "settings";
     const FILE_HANDLE_KEY = "directory-handle";
-    const AUTO_SAVE_FILE_NAME = "TravelingPlan-autosave.json";
+    const AUTO_SAVE_FILE_NAME = "TravelingPlan.json";
     const LEGACY_DEFAULT_ITEM_KEY = "traveling-plan.default-klook-2026-11-15.v1";
     const DEFAULT_ITEMS_KEY = "traveling-plan.default-klook-2026-11-15.v2";
     const LEGACY_DEFAULT_ITEM_ID = "klook-north-kyoto-autumn-2026-11-15";
