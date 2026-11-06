@@ -1316,12 +1316,19 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.12</span>
+        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.13</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.13</strong>
+                    <time class="version-changelog-date" datetime="2026-11-06">2026-11-06</time>
+                  </div>
+                  <p>新增「同步雲端行程」按鈕，可直接從線上 GitHub Pages 讀取 TravelingPlan.json 並同步更新本機資料。</p>
+                </li>
                 <li>
                   <div class="version-changelog-entry-header">
                     <strong class="version-changelog-version">v1.3.12</strong>
@@ -1531,6 +1538,7 @@
             <option value="html">匯入 HTML</option>
             <option value="pre-trip-checklist">匯入行前檢查清單 JSON</option>
           </select>
+          <button class="secondary-button" id="cloud-sync-button" type="button">同步雲端行程</button>
           <button class="secondary-button" id="directory-button" type="button">設定自動存檔</button>
           <input id="import-file" type="file" accept=".json,application/json" hidden>
         </div>
@@ -1569,6 +1577,7 @@
     const FILE_HANDLE_STORE_NAME = "settings";
     const FILE_HANDLE_KEY = "directory-handle";
     const AUTO_SAVE_FILE_NAME = "TravelingPlan.json";
+    const REMOTE_SYNC_URL = "https://feng0615.github.io/it-english/TravelingPlan.json";
     const LEGACY_DEFAULT_ITEM_KEY = "traveling-plan.default-klook-2026-11-15.v1";
     const DEFAULT_ITEMS_KEY = "traveling-plan.default-klook-2026-11-15.v2";
     const LEGACY_DEFAULT_ITEM_ID = "klook-north-kyoto-autumn-2026-11-15";
@@ -1726,6 +1735,7 @@
     const importFormat = document.querySelector("#import-format");
     const importFile = document.querySelector("#import-file");
     let selectedImportFormat = "";
+    const cloudSyncButton = document.querySelector("#cloud-sync-button");
     const directoryButton = document.querySelector("#directory-button");
     const fileSyncStatus = document.querySelector("#file-sync-status");
     const dayTabs = document.querySelector("#day-tabs");
@@ -3017,6 +3027,41 @@
       }
     }
 
+    async function syncFromCloud() {
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady) {
+        showNotice("目前無法安全讀取本機儲存空間，暫停同步以避免覆蓋原資料。", true);
+        return;
+      }
+
+      if (!window.confirm("確定要從雲端同步行程嗎？\n這將會下載線上最新的 TravelingPlan.json，並覆蓋目前本機的行程、Checklist 與費用。")) {
+        return;
+      }
+
+      cloudSyncButton.disabled = true;
+      cloudSyncButton.textContent = "同步中...";
+      showNotice("正在連線至雲端下載最新行程資料...");
+
+      try {
+        const response = await fetch(REMOTE_SYNC_URL, { cache: "no-cache" });
+        if (!response.ok) {
+          throw new Error(`HTTP 錯誤 ${response.status}`);
+        }
+
+        const jsonText = await response.text();
+        const importedData = parseImportedJson(jsonText);
+        if (!importedData) {
+          return;
+        }
+
+        replaceImportedData(importedData);
+      } catch (error) {
+        showNotice(`雲端同步失敗：無法取得線上資料（${error.message}），本機行程未變更。`, true);
+      } finally {
+        cloudSyncButton.disabled = false;
+        cloudSyncButton.textContent = "同步雲端行程";
+      }
+    }
+
     async function importSelectedFile() {
       const file = importFile.files?.[0];
       const format = selectedImportFormat;
@@ -3812,6 +3857,7 @@
       submitButton.disabled = controlsLocked;
       exportFormat.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady;
       importFormat.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady;
+      cloudSyncButton.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady;
       preTripChecklistContent.replaceChildren(renderPreTripChecklist());
 
       const dates = [...new Set([
@@ -4056,6 +4102,7 @@
       importFile.accept = format === "html" ? ".html,.htm,text/html" : ".json,application/json";
       importFile.click();
     });
+    cloudSyncButton.addEventListener("click", syncFromCloud);
     directoryButton.addEventListener("click", configureDirectoryAutoSave);
     importFile.addEventListener("change", importSelectedFile);
     items = loadItems();
