@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-06T05:48:30.029Z",
+  "exportedAt": "2026-11-06T06:04:09.278Z",
   "items": [
     {
       "id": "html-2026-11-14-1",
@@ -430,7 +430,7 @@
     {
       "id": "pretrip-1793932768118-1rq7rrvc",
       "text": "旅平險購買",
-      "checked": true
+      "checked": false
     },
     {
       "id": "pretrip-1793932794376-xr0qhtdv",
@@ -440,7 +440,7 @@
     {
       "id": "pretrip-1793932903589-oa3rlw6u",
       "text": "公司請假11/16-11/20",
-      "checked": true
+      "checked": false
     },
     {
       "id": "pretrip-1793932912433-b81mmf4e",
