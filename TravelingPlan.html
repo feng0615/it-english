@@ -364,7 +364,9 @@
     }
 
     .rainy-day-notes {
-      margin: 0;
+      margin: 4px 0 0;
+      padding-top: 6px;
+      border-top: 1px dashed #e4e7e4;
       color: #4b5852;
       font-size: 12px;
       line-height: 1.55;
@@ -372,11 +374,23 @@
       word-break: break-word;
     }
 
+    .rainy-day-notes[hidden] {
+      display: none;
+    }
+
     .rainy-day-actions {
       display: flex;
-      justify-content: flex-end;
+      align-items: center;
+      justify-content: space-between;
       gap: 8px;
-      margin-top: 4px;
+      margin-top: 6px;
+    }
+
+    .rainy-day-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
     }
 
     .rainy-day-form {
@@ -1425,12 +1439,19 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.21</span>
+        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.22</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.22</strong>
+                    <time class="version-changelog-date" datetime="2026-11-06">2026-11-06</time>
+                  </div>
+                  <p>雨天備案卡片預設僅顯示區域與地點，並新增「查看詳細」按鈕，點選後可展開或收合備註說明。</p>
+                </li>
                 <li>
                   <div class="version-changelog-entry-header">
                     <strong class="version-changelog-version">v1.3.21</strong>
@@ -1958,6 +1979,7 @@
     let editingExpenseId = null;
     let editingExpenseDate = null;
     let editingRainyDayId = null;
+    const expandedRainyDayIds = new Set();
     let currentDay = null;
     let draggedItemId = null;
     let storageReady = true;
@@ -2849,6 +2871,7 @@
       preTripChecklist = importedData.preTripChecklist;
       expenses = importedData.expenses;
       rainyDays = importedData.rainyDays || [];
+      expandedRainyDayIds.clear();
       editingExpenseId = null;
       editingExpenseDate = null;
       cancelEditingRainyDay();
@@ -4010,13 +4033,44 @@
         header.append(titleWrap);
         row.append(header);
 
-        if (item.notes && item.notes.trim()) {
-          const notes = makeElement("p", "rainy-day-notes");
+        const hasNotes = Boolean(item.notes && item.notes.trim());
+        let notes = null;
+        if (hasNotes) {
+          notes = makeElement("p", "rainy-day-notes");
           appendLinkifiedText(notes, item.notes.trim());
+          const isExpanded = expandedRainyDayIds.has(item.id);
+          notes.hidden = !isExpanded;
           row.append(notes);
         }
 
         const actions = makeElement("div", "rainy-day-actions");
+        if (hasNotes) {
+          const isExpanded = expandedRainyDayIds.has(item.id);
+          const toggleDetailsButton = makeElement(
+            "button",
+            "text-button",
+            isExpanded ? "收合詳細" : "查看詳細"
+          );
+          toggleDetailsButton.type = "button";
+          toggleDetailsButton.setAttribute("aria-expanded", String(isExpanded));
+          toggleDetailsButton.setAttribute("aria-label", `${isExpanded ? "收合" : "查看"}「${item.location}」的詳細備註`);
+          toggleDetailsButton.addEventListener("click", () => {
+            const nextExpanded = !expandedRainyDayIds.has(item.id);
+            if (nextExpanded) {
+              expandedRainyDayIds.add(item.id);
+            } else {
+              expandedRainyDayIds.delete(item.id);
+            }
+            if (notes) {
+              notes.hidden = !nextExpanded;
+            }
+            toggleDetailsButton.textContent = nextExpanded ? "收合詳細" : "查看詳細";
+            toggleDetailsButton.setAttribute("aria-expanded", String(nextExpanded));
+          });
+          actions.append(toggleDetailsButton);
+        }
+
+        const rightGroup = makeElement("div", "rainy-day-btn-group");
         const editButton = makeElement("button", "text-button", "編輯");
         editButton.type = "button";
         editButton.disabled = !storageReady || !rainyDayStorageReady;
@@ -4024,7 +4078,7 @@
         editButton.addEventListener("click", () => {
           startEditingRainyDay(item);
         });
-        actions.append(editButton);
+        rightGroup.append(editButton);
 
         const deleteButton = makeElement("button", "text-button delete", "刪除");
         deleteButton.type = "button";
@@ -4036,6 +4090,7 @@
           }
           const prevRainyDays = rainyDays;
           rainyDays = rainyDays.filter((entry) => entry.id !== item.id);
+          expandedRainyDayIds.delete(item.id);
           if (editingRainyDayId === item.id) {
             cancelEditingRainyDay();
           }
@@ -4046,7 +4101,8 @@
             render();
           }
         });
-        actions.append(deleteButton);
+        rightGroup.append(deleteButton);
+        actions.append(rightGroup);
         row.append(actions);
 
         list.append(row);
