@@ -301,8 +301,94 @@
       padding: 25px;
     }
 
-    .pre-trip-panel {
+    .pre-trip-panel,
+    .rainy-day-panel {
       padding: 20px;
+    }
+
+    .rainy-day-list {
+      display: grid;
+      gap: 10px;
+      margin: 12px 0 16px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .rainy-day-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 11px 13px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fafbfa;
+    }
+
+    .rainy-day-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .rainy-day-title-wrap {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .rainy-day-area-tag {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 6px;
+      color: #234839;
+      background: #e1eee8;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .rainy-day-link {
+      color: var(--green);
+      font-size: 14px;
+      font-weight: 750;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      word-break: break-word;
+    }
+
+    .rainy-day-link:hover {
+      color: var(--green-dark);
+    }
+
+    .rainy-day-notes {
+      margin: 0;
+      color: #4b5852;
+      font-size: 12px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .rainy-day-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .rainy-day-form {
+      display: grid;
+      gap: 8px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--line);
+    }
+
+    .rainy-day-form textarea.expense-input {
+      min-height: 56px;
+      resize: vertical;
     }
 
     .form-panel-heading {
@@ -1250,6 +1336,7 @@
 
       .form-panel,
       .pre-trip-panel,
+      .rainy-day-panel,
       .itinerary-panel {
         padding: 16px;
       }
@@ -1338,12 +1425,33 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.17</span>
+        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.20</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.20</strong>
+                    <time class="version-changelog-date" datetime="2026-11-06">2026-11-06</time>
+                  </div>
+                  <p>雨天備案備註若含網址，自動轉換為文字超連結，點選文字即可開啟網頁，不直接顯示冗長網址。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.19</strong>
+                    <time class="version-changelog-date" datetime="2026-11-06">2026-11-06</time>
+                  </div>
+                  <p>新增一站下方新增「雨天備案」區塊，支援區域、必填地點與備註之維護，點選地點可直接於 Google Maps 開啟，並完整整合雲端同步與備份。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.18</strong>
+                    <time class="version-changelog-date" datetime="2026-11-06">2026-11-06</time>
+                  </div>
+                  <p>儲存行程到雲端前，自動將雲端現有檔案備份為 TravelingPlan_YYYYMMDD_hhmmss.json，防止舊資料遺失。</p>
+                </li>
                 <li>
                   <div class="version-changelog-entry-header">
                     <strong class="version-changelog-version">v1.3.17</strong>
@@ -1565,6 +1673,35 @@
             </form>
           </div>
         </section>
+
+        <section class="panel rainy-day-panel" aria-labelledby="rainy-day-title">
+          <div class="form-panel-heading">
+            <h2 class="panel-title" id="rainy-day-title">雨天備案</h2>
+            <button class="secondary-button form-toggle" id="rainy-day-toggle" type="button" aria-expanded="true" aria-controls="rainy-day-content">收合</button>
+          </div>
+          <div id="rainy-day-content">
+            <p class="panel-description">預先準備室內與替代景點，遇雨也能彈性應對。</p>
+            <div id="rainy-day-list-content"></div>
+            <form class="rainy-day-form" id="rainy-day-form">
+              <div class="field">
+                <label for="rainy-day-area">區域 <small style="color:var(--muted);font-weight:normal;">（選填）</small></label>
+                <input class="expense-input" id="rainy-day-area" name="area" type="text" maxlength="60" placeholder="例如：京都站周邊、室內">
+              </div>
+              <div class="field">
+                <label for="rainy-day-location">地點 <small style="color:#cf222e;">*（必填）</small></label>
+                <input class="expense-input" id="rainy-day-location" name="location" type="text" maxlength="120" placeholder="例如：京都鐵道博物館" required>
+              </div>
+              <div class="field">
+                <label for="rainy-day-notes">備註 <small style="color:var(--muted);font-weight:normal;">（選填）</small></label>
+                <textarea class="expense-input" id="rainy-day-notes" name="notes" maxlength="500" placeholder="營業時間、門票、交通路線等備註"></textarea>
+              </div>
+              <div class="form-actions" style="margin-top:8px;">
+                <button class="primary-button" id="rainy-day-submit-button" type="submit">新增備案</button>
+                <button class="secondary-button" id="rainy-day-cancel-button" type="button" hidden>取消編輯</button>
+              </div>
+            </form>
+          </div>
+        </section>
       </div>
 
       <section class="panel itinerary-panel" aria-labelledby="itinerary-title">
@@ -1600,7 +1737,7 @@
       </section>
     </div>
 
-    <p class="footer-note">行程、每日 Checklist、行前檢查清單與費用會自動儲存在這個瀏覽器；授權資料夾後，也會同步寫入該目錄的 TravelingPlan.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
+    <p class="footer-note">行程、每日 Checklist、行前檢查清單、費用與雨天備案會自動儲存在這個瀏覽器；授權資料夾後，也會同步寫入該目錄的 TravelingPlan.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
   </main>
 
   <script>
@@ -1609,6 +1746,7 @@
     const STORAGE_KEY = "traveling-plan.itinerary.v1";
     const CHECKLIST_STORAGE_KEY = "traveling-plan.checklists.v1";
     const PRE_TRIP_CHECKLIST_STORAGE_KEY = "traveling-plan.pre-trip-checklist.v1";
+    const RAINY_DAY_STORAGE_KEY = "traveling-plan.rainy-days.v1";
     const EXPENSE_STORAGE_KEY = "traveling-plan.expenses.v1";
     const EXPENSE_CURRENCIES = [
       { code: "TWD", label: "新台幣" },
@@ -1780,6 +1918,13 @@
     const formContent = document.querySelector("#form-content");
     const preTripToggleButton = document.querySelector("#pre-trip-toggle");
     const preTripContent = document.querySelector("#pre-trip-content");
+    const rainyDayToggleButton = document.querySelector("#rainy-day-toggle");
+    const rainyDayContent = document.querySelector("#rainy-day-content");
+    const rainyDayListContent = document.querySelector("#rainy-day-list-content");
+    const rainyDayForm = document.querySelector("#rainy-day-form");
+    const rainyDayLocationInput = document.querySelector("#rainy-day-location");
+    const rainyDaySubmitButton = document.querySelector("#rainy-day-submit-button");
+    const rainyDayCancelButton = document.querySelector("#rainy-day-cancel-button");
     const submitButton = document.querySelector("#submit-button");
     const cancelButton = document.querySelector("#cancel-button");
     const itemCount = document.querySelector("#item-count");
@@ -1799,16 +1944,19 @@
     let items = [];
     let checklists = {};
     let preTripChecklist = [];
+    let rainyDays = [];
     let expenses = {};
     let editingId = null;
     let editingChecklistId = null;
     let editingExpenseId = null;
     let editingExpenseDate = null;
+    let editingRainyDayId = null;
     let currentDay = null;
     let draggedItemId = null;
     let storageReady = true;
     let checklistStorageReady = true;
     let preTripChecklistStorageReady = true;
+    let rainyDayStorageReady = true;
     let expenseStorageReady = true;
     let directoryHandle = null;
     let fileSaveQueue = Promise.resolve();
@@ -1869,6 +2017,34 @@
 
     function isValidPreTripChecklistData(data) {
       if (!Array.isArray(data) || !data.every(isChecklistItem)) {
+        return false;
+      }
+
+      const seenIds = new Set();
+      for (const item of data) {
+        if (seenIds.has(item.id)) {
+          return false;
+        }
+        seenIds.add(item.id);
+      }
+      return true;
+    }
+
+    function isRainyDayItem(item) {
+      return item !== null
+        && typeof item === "object"
+        && typeof item.id === "string"
+        && item.id.trim().length > 0
+        && item.id.length <= 128
+        && typeof item.location === "string"
+        && item.location.trim().length > 0
+        && item.location.length <= 120
+        && (item.area === undefined || (typeof item.area === "string" && item.area.length <= 100))
+        && (item.notes === undefined || (typeof item.notes === "string" && item.notes.length <= 500));
+    }
+
+    function isValidRainyDayData(data) {
+      if (!Array.isArray(data) || !data.every(isRainyDayItem)) {
         return false;
       }
 
@@ -1981,6 +2157,25 @@
       }
     }
 
+    function loadRainyDays() {
+      try {
+        const savedRainyDays = window.localStorage.getItem(RAINY_DAY_STORAGE_KEY);
+        if (savedRainyDays === null) {
+          return [];
+        }
+
+        const parsedRainyDays = JSON.parse(savedRainyDays);
+        if (!isValidRainyDayData(parsedRainyDays)) {
+          throw new Error("雨天備案資料格式不正確。");
+        }
+        return parsedRainyDays;
+      } catch {
+        rainyDayStorageReady = false;
+        showNotice("無法讀取本機雨天備案資料，為避免覆蓋原資料，暫時停用雨天備案編輯。", true);
+        return [];
+      }
+    }
+
     function loadExpenses() {
       try {
         const savedExpenses = window.localStorage.getItem(EXPENSE_STORAGE_KEY);
@@ -2037,6 +2232,21 @@
         return true;
       } catch {
         showNotice("行前檢查清單無法儲存到瀏覽器；重新整理後可能會遺失。請檢查瀏覽器儲存空間。", true);
+        return false;
+      }
+    }
+
+    function saveRainyDays() {
+      if (!storageReady || !rainyDayStorageReady) {
+        return false;
+      }
+
+      try {
+        window.localStorage.setItem(RAINY_DAY_STORAGE_KEY, JSON.stringify(rainyDays));
+        queueDirectorySave();
+        return true;
+      } catch {
+        showNotice("雨天備案無法儲存到瀏覽器；重新整理後可能會遺失。請檢查瀏覽器儲存空間。", true);
         return false;
       }
     }
@@ -2131,7 +2341,7 @@
     }
 
     async function writeItemsToDirectory() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !directoryHandle) {
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !directoryHandle) {
         return;
       }
 
@@ -2154,7 +2364,7 @@
     }
 
     function queueDirectorySave() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !directoryHandle) {
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !directoryHandle) {
         return;
       }
 
@@ -2163,7 +2373,7 @@
     }
 
     async function initializeDirectoryAutoSave() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady) {
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady) {
         return;
       }
       if (typeof window.showDirectoryPicker !== "function" || !window.indexedDB) {
@@ -2350,6 +2560,7 @@
       let importedChecklists = {};
       let importedPreTripChecklist = [];
       let importedExpenses = {};
+      let importedRainyDays = [];
       if (Array.isArray(payload)) {
         importedItems = payload;
       } else if (payload !== null
@@ -2371,6 +2582,13 @@
             return null;
           }
           importedPreTripChecklist = payload.preTripChecklist;
+        }
+        if (Object.prototype.hasOwnProperty.call(payload, "rainyDays")) {
+          if (!isValidRainyDayData(payload.rainyDays)) {
+            showNotice("檔案中的雨天備案格式錯誤，未匯入任何資料。", true);
+            return null;
+          }
+          importedRainyDays = payload.rainyDays;
         }
         if (Object.prototype.hasOwnProperty.call(payload, "expenses")) {
           if (!isValidExpenseData(payload.expenses)) {
@@ -2431,7 +2649,13 @@
               ...(expense.note && typeof expense.note === "string" ? { note: expense.note.trim().slice(0, 100) } : {})
             }))
           ])
-        )
+        ),
+        rainyDays: importedRainyDays.map((item) => ({
+          id: item.id,
+          location: item.location,
+          ...(item.area && typeof item.area === "string" ? { area: item.area.trim().slice(0, 100) } : {}),
+          ...(item.notes && typeof item.notes === "string" ? { notes: item.notes.trim().slice(0, 500) } : {})
+        }))
       };
     }
 
@@ -2506,7 +2730,22 @@
       }
 
       const seenDates = new Set();
-      const daySections = [...parsedDocument.querySelectorAll("article > section.day:not([data-pre-trip-checklist])")];
+      let importedRainyDays = [];
+      const rainySection = parsedDocument.querySelector("[data-rainy-day-section]");
+      if (rainySection) {
+        importedRainyDays = [...rainySection.querySelectorAll("[data-rainy-id]")].map((entry) => ({
+          id: entry.getAttribute("data-rainy-id") || "",
+          area: entry.getAttribute("data-rainy-area") || "",
+          location: entry.getAttribute("data-rainy-location") || "",
+          notes: entry.getAttribute("data-rainy-notes") || ""
+        }));
+        if (!isValidRainyDayData(importedRainyDays)) {
+          showNotice("HTML 檔案中的雨天備案格式錯誤，未匯入任何資料。", true);
+          return null;
+        }
+      }
+
+      const daySections = [...parsedDocument.querySelectorAll("article > section.day:not([data-pre-trip-checklist]):not([data-rainy-day-section])")];
       for (const section of daySections) {
         const dateMatch = /^day-(\d{4}-\d{2}-\d{2})$/.exec(section.id);
         if (!dateMatch || !isValidDateString(dateMatch[1]) || seenDates.has(dateMatch[1])
@@ -2578,13 +2817,14 @@
         items: importedItems,
         checklists: importedChecklists,
         preTripChecklist: importedPreTripChecklist,
-        expenses: importedExpenses
+        expenses: importedExpenses,
+        rainyDays: importedRainyDays
       };
     }
 
     function replaceImportedData(importedData) {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady) {
-        showNotice("目前無法安全讀取本機行程、Checklist 或費用，原有資料未變更。", true);
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady) {
+        showNotice("目前無法安全讀取本機行程、Checklist、費用或雨天備案，原有資料未變更。", true);
         return;
       }
 
@@ -2592,7 +2832,8 @@
       const previousChecklists = checklists;
       const previousPreTripChecklist = preTripChecklist;
       const previousExpenses = expenses;
-      if (!saveImportedState(importedData, previousItems, previousChecklists, previousPreTripChecklist, previousExpenses)) {
+      const previousRainyDays = rainyDays;
+      if (!saveImportedState(importedData, previousItems, previousChecklists, previousPreTripChecklist, previousExpenses, previousRainyDays)) {
         return;
       }
 
@@ -2600,8 +2841,10 @@
       checklists = importedData.checklists;
       preTripChecklist = importedData.preTripChecklist;
       expenses = importedData.expenses;
+      rainyDays = importedData.rainyDays || [];
       editingExpenseId = null;
       editingExpenseDate = null;
+      cancelEditingRainyDay();
       const dates = [...new Set([
         ...items.map((item) => item.date),
         ...Object.keys(checklists),
@@ -2612,7 +2855,7 @@
       render();
       const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
       const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
-      showNotice(`已匯入並取代本機資料：${items.length} 筆行程、${checklistCount} 個每日 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用。`);
+      showNotice(`已匯入並取代本機資料：${items.length} 筆行程、${checklistCount} 個每日 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用、${rainyDays.length} 處雨天備案。`);
     }
 
     function replaceImportedPreTripChecklist(importedChecklist) {
@@ -2634,12 +2877,13 @@
       showNotice(`已匯入 ${preTripChecklist.length} 個行前檢查項目（${completedCount} 項已完成）；其他行程資料未變更。`);
     }
 
-    function saveImportedState(importedData, previousItems, previousChecklists, previousPreTripChecklist, previousExpenses) {
+    function saveImportedState(importedData, previousItems, previousChecklists, previousPreTripChecklist, previousExpenses, previousRainyDays) {
       try {
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(importedData.items));
         window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(importedData.checklists));
         window.localStorage.setItem(PRE_TRIP_CHECKLIST_STORAGE_KEY, JSON.stringify(importedData.preTripChecklist));
         window.localStorage.setItem(EXPENSE_STORAGE_KEY, JSON.stringify(importedData.expenses));
+        window.localStorage.setItem(RAINY_DAY_STORAGE_KEY, JSON.stringify(importedData.rainyDays || []));
         return true;
       } catch {
         let rollbackFailed = false;
@@ -2648,6 +2892,7 @@
           window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(previousChecklists));
           window.localStorage.setItem(PRE_TRIP_CHECKLIST_STORAGE_KEY, JSON.stringify(previousPreTripChecklist));
           window.localStorage.setItem(EXPENSE_STORAGE_KEY, JSON.stringify(previousExpenses));
+          window.localStorage.setItem(RAINY_DAY_STORAGE_KEY, JSON.stringify(previousRainyDays || []));
         } catch {
           rollbackFailed = true;
         }
@@ -2655,6 +2900,7 @@
         checklists = previousChecklists;
         preTripChecklist = previousPreTripChecklist;
         expenses = previousExpenses;
+        rainyDays = previousRainyDays;
         showNotice(
           rollbackFailed
             ? "匯入儲存失敗且無法完整回復瀏覽器資料；請立即匯出目前可讀取的資料。"
@@ -2673,7 +2919,8 @@
         items,
         checklists,
         preTripChecklist,
-        expenses
+        expenses,
+        rainyDays
       };
     }
 
@@ -2779,6 +3026,18 @@
           return `<li><div class="checklist-item${item.checked ? " checked" : ""}"><input class="checklist-checkbox" id="${escapeHtml(checkboxId)}" type="checkbox" data-checklist-id="pretrip-${escapeHtml(item.id)}" data-pre-trip-checklist-id="${escapeHtml(item.id)}" data-checklist-text="${escapeHtml(item.text)}" aria-label="行前檢查項目：${escapeHtml(getChecklistDisplayText(item.text))}"${item.checked ? " checked" : ""}><span class="pre-trip-checklist-text">${linkifyHtmlText(item.text, checkboxId)}</span></div></li>`;
         }).join("")}</ul>`
         : `<p class="empty">尚未新增行前檢查事項。</p>`}</div></section>`;
+      const rainyDaySection = `<section class="day rainy-day-day" data-rainy-day-section><h3 class="day-heading">☔ 雨天備案</h3><div class="rainy-day-export-section"><h4>雨天備選景點 <small>${rainyDays.length} 處</small></h4>${rainyDays.length > 0
+        ? `<ul class="rainy-day-export-list">${rainyDays.map((item) => {
+          const mapsUrl = new URL("https://www.google.com/maps/search/");
+          mapsUrl.searchParams.set("api", "1");
+          mapsUrl.searchParams.set("query", item.location);
+          const areaTag = item.area ? `<span class="rainy-day-area-tag">${escapeHtml(item.area)}</span> ` : "";
+          const notesText = item.notes
+            ? `<p class="notes">${getChecklistTextParts(item.notes).map((part) => part.href ? `<a class="checklist-link" href="${escapeHtml(part.href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(part.text)}</a>` : escapeHtml(part.text)).join("")}</p>`
+            : "";
+          return `<li data-rainy-id="${escapeHtml(item.id)}" data-rainy-area="${escapeHtml(item.area || "")}" data-rainy-location="${escapeHtml(item.location)}" data-rainy-notes="${escapeHtml(item.notes || "")}"><div class="event-heading">${areaTag}<a href="${escapeHtml(mapsUrl.toString())}" target="_blank" rel="noopener noreferrer" style="color:#2da44e;text-decoration:underline;"><strong>${escapeHtml(item.location)}</strong> ↗</a></div>${notesText}</li>`;
+        }).join("")}</ul>`
+        : `<p class="empty">尚未安排雨天備案。</p>`}</div></section>`;
       const summaryRows = dates.map((date, index) => {
         const dayItems = sortDayItems(items.filter((item) => item.date === date));
         const dayChecklist = checklists[date] || [];
@@ -2888,6 +3147,11 @@
     .expense-entry { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .2em .8em; padding: .35em 0; border-bottom: 1px solid #e8e8ed; }
     .expense-name { font-weight: 700; }
     .expense-meta { color: #57606a; }
+    .rainy-day-export-section { padding: 0 22px 18px 45px; }
+    .rainy-day-export-section h4 { margin: 0 0 .35em; }
+    .rainy-day-export-list { padding-left: 0; list-style: none; }
+    .rainy-day-export-list li { margin: .6em 0; padding-bottom: .6em; border-bottom: 1px solid #e8e8ed; }
+    .rainy-day-area-tag { display: inline-block; padding: 2px 7px; border-radius: 6px; color: #234839; background: #e1eee8; font-size: .85em; font-weight: 700; margin-right: 4px; }
     .day-footer { display: flex; justify-content: flex-end; padding: 0 22px 18px 45px; }
     .back-to-overview { display: inline-block; padding: 7px 12px; border-radius: 7px; color: #fff; background: #0969da; font-size: .9em; font-weight: 650; text-decoration: none; }
     .back-to-overview:hover { background: #0757b4; }
@@ -2901,6 +3165,7 @@
       .itinerary-list::before { left: 17px; }
       .itinerary-list > li::before { left: -28px; }
       .checklist-section { padding-right: 14px; padding-left: 40px; }
+      .rainy-day-export-section { padding-right: 14px; padding-left: 40px; }
       .expense-section { padding-right: 14px; padding-left: 40px; }
       .day-footer { padding-right: 14px; padding-left: 40px; }
     }
@@ -2923,6 +3188,8 @@
     ${summary}
     <h2>🧳 行前檢查清單</h2>
     ${preTripChecklistSection}
+    <h2>☔ 雨天備案</h2>
+    ${rainyDaySection}
     <h2>📋 每日詳細行程</h2>
     ${daySections || `<p class="empty">尚無每日資料。</p>`}
     <p class="footer">此 HTML 為匯出當下的靜態行程檔；如需多人接力編修，請使用 JSON 匯出／匯入。</p>
@@ -2993,8 +3260,8 @@
     }
 
     function exportHtml() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady) {
-        showNotice("目前無法安全讀取行程、Checklist 或費用，已停用 HTML 匯出。", true);
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady) {
+        showNotice("目前無法安全讀取行程、Checklist、費用或雨天備案，已停用 HTML 匯出。", true);
         return;
       }
 
@@ -3015,15 +3282,15 @@
         link.remove();
         window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
         const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
-        showNotice(`已匯出 ${items.length} 筆行程、${preTripChecklist.length} 個行前檢查項目與 ${expenseCount} 筆費用的 HTML 檔。`);
+        showNotice(`已匯出 ${items.length} 筆行程、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用與 ${rainyDays.length} 處雨天備案的 HTML 檔。`);
       } catch {
         showNotice("無法匯出 HTML，請確認瀏覽器是否允許下載檔案。", true);
       }
     }
 
     function exportItems() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady) {
-        showNotice("目前無法安全讀取行程、Checklist 或費用，已停用 JSON 匯出。", true);
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady) {
+        showNotice("目前無法安全讀取行程、Checklist、費用或雨天備案，已停用 JSON 匯出。", true);
         return;
       }
 
@@ -3047,7 +3314,7 @@
         window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
         const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
         const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
-        showNotice(`已匯出 ${items.length} 筆行程、${checklistCount} 個每日 Checklist、${preTripChecklist.length} 個行前檢查項目與 ${expenseCount} 筆費用 JSON。`);
+        showNotice(`已匯出 ${items.length} 筆行程、${checklistCount} 個每日 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用與 ${rainyDays.length} 處雨天備案 JSON。`);
       } catch {
         showNotice("無法匯出 JSON，請確認瀏覽器是否允許下載檔案。", true);
       }
@@ -3091,12 +3358,12 @@
     }
 
     async function syncFromCloud() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady) {
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady) {
         showNotice("目前無法安全讀取本機儲存空間，暫停同步以避免覆蓋原資料。", true);
         return;
       }
 
-      if (!window.confirm("確定要從雲端同步行程嗎？\n這將會下載線上最新的 TravelingPlan.json，並覆蓋目前本機的行程、Checklist 與費用。")) {
+      if (!window.confirm("確定要從雲端同步行程嗎？\n這將會下載線上最新的 TravelingPlan.json，並覆蓋目前本機的行程、Checklist、費用與雨天備案。")) {
         return;
       }
 
@@ -3126,7 +3393,7 @@
     }
 
     async function uploadToCloud() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady) {
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady) {
         showNotice("目前無法安全讀取本機儲存空間，暫停上傳。", true);
         return;
       }
@@ -3169,6 +3436,7 @@
         const apiUrl = `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/${GITHUB_FILE_PATH}`;
 
         let sha = null;
+        let originalContent = null;
         try {
           const checkRes = await fetch(apiUrl, {
             headers: {
@@ -3180,6 +3448,7 @@
           if (checkRes.ok) {
             const data = await checkRes.json();
             sha = data.sha;
+            originalContent = data.content;
           } else if (checkRes.status === 401 || checkRes.status === 403) {
             window.localStorage.removeItem(GITHUB_TOKEN_STORAGE_KEY);
             throw new Error(`GitHub 認證失敗（HTTP ${checkRes.status}），已清除已存 Token，請重新點擊上傳並輸入有效 Token。`);
@@ -3187,6 +3456,42 @@
         } catch (err) {
           if (err.message.includes("GitHub 認證失敗")) {
             throw err;
+          }
+        }
+
+        let backupFileName = "";
+        if (originalContent) {
+          const now = new Date();
+          const pad = (n) => String(n).padStart(2, "0");
+          const timestamp = [
+            now.getFullYear(),
+            pad(now.getMonth() + 1),
+            pad(now.getDate())
+          ].join("") + "_" + [
+            pad(now.getHours()),
+            pad(now.getMinutes()),
+            pad(now.getSeconds())
+          ].join("");
+          backupFileName = `TravelingPlan_${timestamp}.json`;
+          showNotice(`正在備份雲端現有檔案為 ${backupFileName}...`);
+
+          const backupApiUrl = `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/${backupFileName}`;
+          const backupRes = await fetch(backupApiUrl, {
+            method: "PUT",
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Accept": "application/vnd.github+json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              message: `自動備份雲端行程資料 (${backupFileName})`,
+              content: originalContent.replace(/\s+/g, "")
+            })
+          });
+
+          if (!backupRes.ok) {
+            const backupErr = await backupRes.json().catch(() => ({}));
+            throw new Error(`備份雲端舊檔失敗（HTTP ${backupRes.status}）：${backupErr.message || "未知錯誤"}，為防覆蓋遺失已中斷儲存。`);
           }
         }
 
@@ -3225,7 +3530,8 @@
 
         const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
         const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
-        showNotice(`已成功上傳至 GitHub 雲端！共 ${items.length} 筆行程、${checklistCount} 個 Checklist、${preTripChecklist.length} 個行前檢查項目與 ${expenseCount} 筆費用。`);
+        const backupNote = backupFileName ? `（已自動備份舊檔為 ${backupFileName}）` : "";
+        showNotice(`已成功儲存至 GitHub 雲端！${backupNote} 共 ${items.length} 筆行程、${checklistCount} 個 Checklist、${preTripChecklist.length} 個行前檢查項目與 ${expenseCount} 筆費用。`);
       } catch (error) {
         showNotice(`雲端上傳失敗：${error.message}`, true);
       } finally {
@@ -3251,8 +3557,8 @@
         showNotice(`所選檔案不是 ${format === "html" ? "HTML" : "JSON"} 格式。`, true);
         return;
       }
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady) {
-        showNotice("目前無法安全讀取行程、Checklist 或費用，已停用匯入以避免覆蓋原資料。", true);
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady) {
+        showNotice("目前無法安全讀取行程、Checklist、費用或雨天備案，已停用匯入以避免覆蓋原資料。", true);
         return;
       }
       if (file.size > MAX_IMPORT_BYTES) {
@@ -3667,6 +3973,107 @@
       return panel;
     }
 
+    function renderRainyDays() {
+      const container = makeElement("div", "rainy-day-container");
+      if (rainyDays.length === 0) {
+        container.append(makeElement("p", "checklist-empty", "尚未新增雨天備案，可預留室內或備選景點。"));
+        return container;
+      }
+
+      const list = makeElement("ul", "rainy-day-list");
+      rainyDays.forEach((item) => {
+        const row = makeElement("li", "rainy-day-row");
+        const header = makeElement("div", "rainy-day-header");
+        const titleWrap = makeElement("div", "rainy-day-title-wrap");
+
+        if (item.area && item.area.trim()) {
+          const areaTag = makeElement("span", "rainy-day-area-tag", item.area.trim());
+          titleWrap.append(areaTag);
+        }
+
+        const mapsUrl = new URL("https://www.google.com/maps/search/");
+        mapsUrl.searchParams.set("api", "1");
+        mapsUrl.searchParams.set("query", item.location);
+        const mapLink = makeElement("a", "rainy-day-link", item.location);
+        mapLink.href = mapsUrl.toString();
+        mapLink.target = "_blank";
+        mapLink.rel = "noopener noreferrer";
+        mapLink.title = `在 Google Maps 開啟「${item.location}」`;
+        titleWrap.append(mapLink);
+        header.append(titleWrap);
+        row.append(header);
+
+        if (item.notes && item.notes.trim()) {
+          const notes = makeElement("p", "rainy-day-notes");
+          appendLinkifiedText(notes, item.notes.trim());
+          row.append(notes);
+        }
+
+        const actions = makeElement("div", "rainy-day-actions");
+        const editButton = makeElement("button", "text-button", "編輯");
+        editButton.type = "button";
+        editButton.disabled = !storageReady || !rainyDayStorageReady;
+        editButton.setAttribute("aria-label", `編輯雨天備案：${item.location}`);
+        editButton.addEventListener("click", () => {
+          startEditingRainyDay(item);
+        });
+        actions.append(editButton);
+
+        const deleteButton = makeElement("button", "text-button delete", "刪除");
+        deleteButton.type = "button";
+        deleteButton.disabled = !storageReady || !rainyDayStorageReady;
+        deleteButton.setAttribute("aria-label", `刪除雨天備案：${item.location}`);
+        deleteButton.addEventListener("click", () => {
+          if (!window.confirm(`確定要刪除雨天備案「${item.location}」嗎？`)) {
+            return;
+          }
+          const prevRainyDays = rainyDays;
+          rainyDays = rainyDays.filter((entry) => entry.id !== item.id);
+          if (editingRainyDayId === item.id) {
+            cancelEditingRainyDay();
+          }
+          if (saveRainyDays()) {
+            render();
+          } else {
+            rainyDays = prevRainyDays;
+            render();
+          }
+        });
+        actions.append(deleteButton);
+        row.append(actions);
+
+        list.append(row);
+      });
+
+      container.append(list);
+      return container;
+    }
+
+    function setRainyDayExpanded(expanded) {
+      rainyDayContent.hidden = !expanded;
+      rainyDayToggleButton.setAttribute("aria-expanded", String(expanded));
+      rainyDayToggleButton.textContent = expanded ? "收合" : "展開";
+    }
+
+    function startEditingRainyDay(item) {
+      setRainyDayExpanded(true);
+      editingRainyDayId = item.id;
+      rainyDayForm.elements.area.value = item.area || "";
+      rainyDayForm.elements.location.value = item.location || "";
+      rainyDayForm.elements.notes.value = item.notes || "";
+      rainyDaySubmitButton.textContent = "儲存備案變更";
+      rainyDayCancelButton.hidden = false;
+      document.querySelector("#rainy-day-title").scrollIntoView({ behavior: "smooth", block: "start" });
+      rainyDayLocationInput.focus({ preventScroll: true });
+    }
+
+    function cancelEditingRainyDay() {
+      editingRainyDayId = null;
+      rainyDayForm.reset();
+      rainyDaySubmitButton.textContent = "新增備案";
+      rainyDayCancelButton.hidden = true;
+    }
+
     function renderChecklist(date) {
       const panel = makeElement("section", "checklist-panel");
       const heading = makeElement("h3", "checklist-heading");
@@ -4027,10 +4434,16 @@
         control.disabled = controlsLocked;
       });
       submitButton.disabled = controlsLocked;
-      exportFormat.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady;
-      importFormat.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady;
-      cloudSyncButton.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady;
-      cloudUploadButton.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady;
+      exportFormat.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady;
+      importFormat.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady;
+      cloudSyncButton.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady;
+      cloudUploadButton.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady;
+      rainyDayForm.querySelectorAll("input, textarea").forEach((control) => {
+        control.disabled = controlsLocked || !rainyDayStorageReady;
+      });
+      rainyDaySubmitButton.disabled = controlsLocked || !rainyDayStorageReady;
+      rainyDayCancelButton.disabled = controlsLocked || !rainyDayStorageReady;
+      rainyDayListContent.replaceChildren(renderRainyDays());
       preTripChecklistContent.replaceChildren(renderPreTripChecklist());
 
       const dates = [...new Set([
@@ -4189,6 +4602,52 @@
       setPreTripExpanded(preTripContent.hidden);
     });
 
+    rainyDayToggleButton.addEventListener("click", () => {
+      setRainyDayExpanded(rainyDayContent.hidden);
+    });
+
+    rainyDayCancelButton.addEventListener("click", () => {
+      cancelEditingRainyDay();
+    });
+
+    rainyDayForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!storageReady || !rainyDayStorageReady) {
+        return;
+      }
+
+      const area = rainyDayForm.elements.area.value.trim().slice(0, 100);
+      const location = rainyDayForm.elements.location.value.trim().slice(0, 120);
+      const notes = rainyDayForm.elements.notes.value.trim().slice(0, 500);
+
+      if (!location) {
+        rainyDayLocationInput.focus();
+        return;
+      }
+
+      const prevRainyDays = rainyDays;
+      if (editingRainyDayId) {
+        rainyDays = rainyDays.map((entry) => entry.id === editingRainyDayId
+          ? { ...entry, area, location, notes }
+          : entry);
+      } else {
+        rainyDays = [...rainyDays, {
+          id: `rainy-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
+          area,
+          location,
+          notes
+        }];
+      }
+
+      if (saveRainyDays()) {
+        cancelEditingRainyDay();
+        render();
+      } else {
+        rainyDays = prevRainyDays;
+        render();
+      }
+    });
+
     function deleteItem(id) {
       const item = items.find((entry) => entry.id === id);
       if (!item || !window.confirm(`確定要刪除「${item.title}」嗎？`)) {
@@ -4284,6 +4743,7 @@
     items = loadItems();
     checklists = loadChecklists();
     preTripChecklist = loadPreTripChecklist();
+    rainyDays = loadRainyDays();
     expenses = loadExpenses();
     ensureDefaultItems();
     ensureV72Items();
