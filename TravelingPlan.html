@@ -606,6 +606,29 @@
       white-space: nowrap;
     }
 
+    .itinerary-background-color-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .itinerary-background-color-control input[type="color"] {
+      width: 44px;
+      height: 36px;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .itinerary-background-color-value {
+      min-width: 62px;
+      color: var(--muted);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+    }
+
     .settings-panel {
       padding: 18px 20px;
     }
@@ -1978,12 +2001,19 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.53</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.54</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.54</strong>
+                  <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                </div>
+                <p>參數設定新增「我的行程」區塊底色調整與還原預設功能。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.3.53</strong>
@@ -2533,7 +2563,7 @@
             <button class="secondary-button form-toggle" id="settings-toggle" type="button" aria-expanded="false" aria-controls="settings-content">展開</button>
           </div>
           <div id="settings-content" hidden>
-            <p class="panel-description">設定各區塊是否顯示，並調整行前檢查清單、雨天備案/必訪景點與美食饗宴的顯示字體大小。</p>
+            <p class="panel-description">設定各區塊是否顯示、我的行程底色，以及行前檢查清單、雨天備案/必訪景點與美食饗宴的顯示字體大小。</p>
             <fieldset class="setting-field section-visibility-settings">
               <legend class="exchange-rate-title">區塊顯示</legend>
               <div class="section-visibility-options">
@@ -2547,6 +2577,15 @@
                 <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="travel-expense" checked>旅遊費用</label>
               </div>
             </fieldset>
+            <div class="setting-field">
+              <label for="itinerary-background-color">我的行程區塊底色</label>
+              <div class="itinerary-background-color-control">
+                <input id="itinerary-background-color" type="color" value="#fffefa" aria-describedby="itinerary-background-color-help">
+                <output class="itinerary-background-color-value" id="itinerary-background-color-value" for="itinerary-background-color" aria-live="polite">#FFFEFA</output>
+                <button class="secondary-button" id="itinerary-background-color-reset" type="button">還原預設</button>
+              </div>
+              <p class="exchange-rate-description" id="itinerary-background-color-help">選擇底色會自動保存在此瀏覽器；建議選擇淺色以維持文字清晰。</p>
+            </div>
             <div class="setting-field">
               <label for="pre-trip-font-size">行前檢查清單字體</label>
               <div class="setting-slider-wrap">
@@ -2705,6 +2744,8 @@
     const PRE_TRIP_CHECKLIST_STORAGE_KEY = "traveling-plan.pre-trip-checklist.v1";
     const PRE_TRIP_FONT_SIZE_STORAGE_KEY = "traveling-plan.pre-trip-font-size.v1";
     const SECTION_VISIBILITY_STORAGE_KEY = "traveling-plan.section-visibility.v1";
+    const ITINERARY_BACKGROUND_COLOR_STORAGE_KEY = "traveling-plan.itinerary-background-color.v1";
+    const DEFAULT_ITINERARY_BACKGROUND_COLOR = "#fffefa";
     const RAINY_DAY_STORAGE_KEY = "traveling-plan.rainy-days.v1";
     const FOOD_EXPERIENCE_STORAGE_KEY = "traveling-plan.food-experiences.v1";
     const WEATHER_STORAGE_KEY = "traveling-plan.weather-locations.v1";
@@ -2965,7 +3006,11 @@
     const foodExperienceSubmitButton = document.querySelector("#food-experience-submit-button");
     const foodExperienceCancelButton = document.querySelector("#food-experience-cancel-button");
     const itineraryToggleButton = document.querySelector("#itinerary-toggle");
+    const itineraryPanel = document.querySelector(".itinerary-panel");
     const itineraryPanelContent = document.querySelector("#itinerary-panel-content");
+    const itineraryBackgroundColorInput = document.querySelector("#itinerary-background-color");
+    const itineraryBackgroundColorValue = document.querySelector("#itinerary-background-color-value");
+    const itineraryBackgroundColorResetButton = document.querySelector("#itinerary-background-color-reset");
     const rainyDayFontSizeSlider = document.querySelector("#rainy-day-font-size");
     const preTripFontSizeSlider = document.querySelector("#pre-trip-font-size");
     const foodExperienceFontSizeSlider = document.querySelector("#food-experience-font-size");
@@ -7217,6 +7262,62 @@
       });
     }
 
+    function isValidHexColor(value) {
+      return typeof value === "string" && /^#[0-9a-f]{6}$/i.test(value);
+    }
+
+    function initializeItineraryBackgroundColorControl() {
+      let savedColor = DEFAULT_ITINERARY_BACKGROUND_COLOR;
+      try {
+        const storedColor = window.localStorage.getItem(ITINERARY_BACKGROUND_COLOR_STORAGE_KEY);
+        if (storedColor !== null) {
+          if (!isValidHexColor(storedColor)) {
+            throw new TypeError("我的行程底色設定格式無效");
+          }
+          savedColor = storedColor.toLowerCase();
+        }
+      } catch {
+        showNotice("無法讀取我的行程底色設定，已使用預設底色。", true);
+      }
+
+      const applyColor = (color) => {
+        itineraryPanel.style.backgroundColor = color;
+        itineraryBackgroundColorInput.value = color;
+        itineraryBackgroundColorValue.textContent = color.toUpperCase();
+      };
+      const saveColor = (color) => {
+        if (!isValidHexColor(color)) {
+          applyColor(savedColor);
+          showNotice("我的行程底色設定無效，已還原為上次設定。", true);
+          return;
+        }
+
+        const normalizedColor = color.toLowerCase();
+        try {
+          window.localStorage.setItem(ITINERARY_BACKGROUND_COLOR_STORAGE_KEY, normalizedColor);
+          savedColor = normalizedColor;
+          applyColor(savedColor);
+          clearNotice();
+        } catch {
+          applyColor(savedColor);
+          showNotice("無法儲存我的行程底色設定，已還原為上次設定。請檢查瀏覽器儲存空間。", true);
+        }
+      };
+
+      applyColor(savedColor);
+      itineraryBackgroundColorInput.addEventListener("input", () => {
+        if (isValidHexColor(itineraryBackgroundColorInput.value)) {
+          applyColor(itineraryBackgroundColorInput.value.toLowerCase());
+        }
+      });
+      itineraryBackgroundColorInput.addEventListener("change", () => {
+        saveColor(itineraryBackgroundColorInput.value);
+      });
+      itineraryBackgroundColorResetButton.addEventListener("click", () => {
+        saveColor(DEFAULT_ITINERARY_BACKGROUND_COLOR);
+      });
+    }
+
     function applyFontSize(slider, target, cssVariable, size) {
       const sizeIndex = validFontSizes.indexOf(size);
       slider.value = String(sizeIndex);
@@ -7526,6 +7627,7 @@
     }
     initializeExpenseExchangeRateControls();
     initializeSectionVisibilityControls();
+    initializeItineraryBackgroundColorControl();
     renderWeatherLocations();
     renderCheckinRecords();
     initializeFontSizeControl(
