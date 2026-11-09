@@ -875,7 +875,7 @@
 
     .itinerary-list {
       display: grid;
-      gap: 12px;
+      gap: 10px;
       margin: 0;
       padding: 0;
       list-style: none;
@@ -883,7 +883,7 @@
 
     .itinerary-item {
       position: relative;
-      padding: 17px 18px 16px 21px;
+      padding: 15px 14px 13px 18px;
       border: 1px solid var(--line);
       border-radius: 15px;
       background: #fff;
@@ -979,36 +979,31 @@
     .item-notes {
       margin: 0;
       color: #64736a;
-      font-size: 12px;
+      font-size: 14px;
       line-height: 1.7;
       white-space: pre-wrap;
       overflow-wrap: anywhere;
     }
 
     .item-preview {
-      position: absolute;
-      top: calc(100% + 8px);
-      left: 12px;
-      z-index: 4;
-      width: min(460px, calc(100vw - 56px));
-      max-height: min(60vh, 360px);
-      padding: 15px 16px;
+      position: static;
+      width: auto;
+      max-height: none;
+      margin-top: 11px;
+      padding: 11px 12px;
       overflow: auto;
       border: 1px solid var(--line);
-      border-radius: 13px;
+      border-radius: 11px;
       background: var(--paper);
-      box-shadow: 0 16px 38px rgb(34 57 47 / 16%);
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-4px);
-      transition: opacity .15s, transform .15s, visibility .15s;
+      box-shadow: none;
     }
 
-    .itinerary-item:hover .item-preview,
-    .itinerary-item:focus-within .item-preview {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
+    .item-preview:not(.is-open) {
+      display: none;
+    }
+
+    .item-preview.is-open {
+      display: block;
     }
 
     body.is-reordering .item-preview {
@@ -1018,8 +1013,9 @@
     }
 
     .item-actions {
+      flex-wrap: wrap;
       justify-content: flex-end;
-      gap: 7px;
+      gap: 4px;
       margin-top: 11px;
     }
 
@@ -1284,14 +1280,22 @@
 
     .weather-search-results,
     .weather-location-list,
-    .nearby-place-list,
     .checkin-record-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 12px;
+      gap: 16px;
     }
 
-    .nearby-place-card,
+    .checkin-date-group,
+    .checkin-date-records {
+      display: grid;
+      gap: 8px;
+    }
+
+    .checkin-date-heading {
+      margin: 0;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
     .checkin-record-card {
       display: flex;
       align-items: center;
@@ -1304,16 +1308,24 @@
       background: #fff;
     }
 
-    .nearby-place-info,
     .checkin-record-info {
       display: grid;
       min-width: 0;
       gap: 4px;
     }
 
-    .nearby-place-info strong,
     .checkin-record-info strong {
       overflow-wrap: anywhere;
+    }
+
+    .checkin-map-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      margin-bottom: 14px;
+      padding: 0 16px;
+      text-decoration: none;
     }
 
     .weather-search-result {
@@ -1340,7 +1352,6 @@
     .weather-refresh-status,
     .weather-attribution,
     .checkin-status,
-    .nearby-place-details,
     .checkin-record-time,
     .checkin-attribution {
       color: var(--muted);
@@ -1728,7 +1739,9 @@
     }
 
     .preview-toggle {
-      display: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .empty-state {
@@ -1843,23 +1856,6 @@
         font-size: 13px;
       }
 
-      .itinerary-list {
-        gap: 10px;
-      }
-
-      .itinerary-item {
-        padding: 15px 14px 13px 18px;
-      }
-
-      .item-notes {
-        font-size: 14px;
-      }
-
-      .item-actions {
-        flex-wrap: wrap;
-        gap: 4px;
-      }
-
       .checklist-panel {
         padding: 11px;
       }
@@ -1915,7 +1911,6 @@
         padding: 16px;
       }
 
-      .nearby-place-card,
       .checkin-record-card {
         align-items: flex-start;
       }
@@ -1969,35 +1964,6 @@
       }
     }
 
-    @media (hover: none) {
-      .preview-toggle {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .item-preview {
-        position: static;
-        width: auto;
-        max-height: none;
-        margin-top: 11px;
-        padding: 11px 12px;
-        border: 1px solid var(--line);
-        border-radius: 11px;
-        box-shadow: none;
-        opacity: 1;
-        visibility: visible;
-        transform: none;
-      }
-
-      .item-preview:not(.is-open) {
-        display: none;
-      }
-
-      .item-preview.is-open {
-        display: block;
-      }
-    }
   </style>
 </head>
 <body>
@@ -2012,12 +1978,47 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.47</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.52</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.52</strong>
+                  <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                </div>
+                <p>行程備註中的 &lt;B&gt; 標籤改以粗體顯示。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.51</strong>
+                  <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                </div>
+                <p>行程備註中的 WEST QR 網址改為顯示可點擊的「WEST QR」連結。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.50</strong>
+                  <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                </div>
+                <p>統一桌面網頁與手機的行程卡片版面及備註展開方式。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.49</strong>
+                  <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                </div>
+                <p>到此一遊紀錄依日期分組，並依每日打卡時間由早到晚排序。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.48</strong>
+                  <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                </div>
+                <p>改為開啟 Google 地圖搜尋附近景點，再手動輸入名稱打卡；不再由本頁取得或傳送定位。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.3.47</strong>
@@ -2664,17 +2665,22 @@
           <button class="secondary-button form-toggle" id="checkin-toggle" type="button" aria-expanded="false" aria-controls="checkin-content">展開</button>
         </div>
         <div id="checkin-content" hidden>
-          <p class="panel-description">取得目前位置附近的景點，選擇景點即可記錄打卡時間。</p>
-          <button class="primary-button" id="nearby-places-search-button" type="button">尋找附近景點</button>
-          <p class="checkin-status" id="nearby-places-status" role="status" aria-live="polite"></p>
-          <div class="nearby-place-list" id="nearby-place-list"></div>
+          <p class="panel-description">開啟 Google 地圖搜尋附近景點；本頁不取得定位，Google 可能依你的授權設定使用位置。選擇景點後回到此處輸入名稱打卡。</p>
+          <a class="primary-button checkin-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=attractions%20near%20me" target="_blank" rel="noopener noreferrer">在 Google 地圖搜尋附近景點</a>
+          <form class="weather-search-form" id="checkin-form">
+            <div class="field">
+              <label for="checkin-place-name">景點名稱</label>
+              <input class="expense-input" id="checkin-place-name" name="placeName" type="text" maxlength="120" autocomplete="off" placeholder="例如：京都塔" required>
+            </div>
+            <button class="primary-button" id="checkin-submit-button" type="submit">打卡</button>
+          </form>
+          <p class="checkin-status" id="checkin-status" role="status" aria-live="polite"></p>
           <div class="weather-location-list-heading">
             <h3>打卡紀錄</h3>
           </div>
           <div class="checkin-record-list" id="checkin-record-list"></div>
           <p class="checkin-attribution">
-            僅在按下「尋找附近景點」時要求定位；座標會傳送至 <a href="https://overpass-api.de/" target="_blank" rel="noopener noreferrer">Overpass API</a> 查詢，不會由本頁保存。打卡紀錄只保存景點名稱與時間於此瀏覽器；座標資料的服務端處理依服務政策而定。
-            附近景點資料 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>，依 ODbL 1.0 授權；距離為直線估算。公開查詢服務可能限流。
+            本頁不接收或傳送定位；打卡紀錄只保存景點名稱與時間於此瀏覽器。Google 地圖的資料處理方式請參閱<a href="https://policies.google.com/privacy?hl=zh-TW" target="_blank" rel="noopener noreferrer">Google 隱私權政策</a>。
           </p>
         </div>
       </section>
@@ -2699,9 +2705,7 @@
     const WEATHER_FORECAST_API_URL = "https://api.open-meteo.com/v1/forecast";
     const WEATHER_REFRESH_INTERVAL_MS = 6 * 60 * 60 * 1000;
     const CHECKIN_STORAGE_KEY = "traveling-plan.checkins.v1";
-    const OVERPASS_API_URL = "https://overpass-api.de/api/interpreter";
-    const NEARBY_PLACES_RADIUS_METERS = 1500;
-    const NEARBY_PLACES_REQUEST_TIMEOUT_MS = 20000;
+    const MAX_CHECKIN_RECORDS = 1000;
     const RAINY_DAY_FONT_SIZE_STORAGE_KEY = "traveling-plan.rainy-day-font-size.v1";
     const FOOD_EXPERIENCE_FONT_SIZE_STORAGE_KEY = "traveling-plan.food-experience-font-size.v1";
     const EXPENSE_STORAGE_KEY = "traveling-plan.expenses.v1";
@@ -2925,9 +2929,10 @@
     const weatherLocationList = document.querySelector("#weather-location-list");
     const checkinToggleButton = document.querySelector("#checkin-toggle");
     const checkinContent = document.querySelector("#checkin-content");
-    const nearbyPlacesSearchButton = document.querySelector("#nearby-places-search-button");
-    const nearbyPlacesStatus = document.querySelector("#nearby-places-status");
-    const nearbyPlaceList = document.querySelector("#nearby-place-list");
+    const checkinForm = document.querySelector("#checkin-form");
+    const checkinPlaceNameInput = document.querySelector("#checkin-place-name");
+    const checkinSubmitButton = document.querySelector("#checkin-submit-button");
+    const checkinStatus = document.querySelector("#checkin-status");
     const checkinRecordList = document.querySelector("#checkin-record-list");
     const sectionVisibilityControls = [...document.querySelectorAll("[data-section-visibility-control]")];
     const sectionVisibilityPanels = new Map(
@@ -2980,7 +2985,6 @@
     let foodExperiences = [];
     let weatherLocations = [];
     let checkinRecords = [];
-    let nearbyPlaces = [];
     let expenses = {};
     let expenseExchangeRates = {};
     let editingId = null;
@@ -3005,7 +3009,6 @@
     const weatherRefreshInProgress = new Set();
     const weatherLocationErrors = new Map();
     let refreshingAllWeather = false;
-    let searchingNearbyPlaces = false;
     let directoryHandle = null;
     let fileSaveQueue = Promise.resolve();
 
@@ -3213,7 +3216,9 @@
     }
 
     function isValidCheckinData(data) {
-      if (!Array.isArray(data) || data.length > 1000 || !data.every(isCheckinRecord)) {
+      if (!Array.isArray(data)
+        || data.length > MAX_CHECKIN_RECORDS
+        || !data.every(isCheckinRecord)) {
         return false;
       }
 
@@ -3415,7 +3420,7 @@
         return parsedRecords;
       } catch {
         checkinStorageReady = false;
-        nearbyPlacesStatus.textContent = "無法讀取本機打卡資料，為避免覆蓋原資料，已停用打卡功能。";
+        checkinStatus.textContent = "無法讀取本機打卡資料，為避免覆蓋原資料，已停用打卡功能。";
         showNotice("無法讀取本機打卡資料，為避免覆蓋原資料，暫時停用打卡功能。", true);
         return [];
       }
@@ -5174,6 +5179,57 @@
       }
     }
 
+    function appendItineraryNotesSegment(container, text) {
+      const source = String(text);
+      let lastIndex = 0;
+
+      for (const link of findHttpUrls(source)) {
+        const hostname = new URL(link.href).hostname.toLowerCase();
+
+        if (hostname !== "west-qr.com" && !hostname.endsWith(".west-qr.com")) {
+          continue;
+        }
+
+        const precedingText = source.slice(lastIndex, link.index);
+        const westQrLabel = /WEST QR\s*\($/i.exec(precedingText);
+        const anchor = makeElement("a", "checklist-link", "WEST QR");
+        let href = link.href;
+        let linkEnd = link.index + link.text.length;
+
+        if (westQrLabel && link.text.endsWith(")")) {
+          href = getSafeExternalUrl(link.text.slice(0, -1)) || href;
+        }
+
+        container.append(document.createTextNode(
+          westQrLabel ? precedingText.slice(0, westQrLabel.index) : precedingText
+        ));
+        anchor.href = href;
+        anchor.target = "_blank";
+        anchor.rel = "noopener noreferrer";
+        anchor.setAttribute("aria-label", "開啟 WEST QR 網站");
+        container.append(anchor);
+        lastIndex = linkEnd;
+      }
+
+      container.append(document.createTextNode(source.slice(lastIndex)));
+    }
+
+    function appendItineraryNotesText(container, text) {
+      const source = String(text);
+      const boldTags = /<b>([\s\S]*?)<\/b>/gi;
+      let lastIndex = 0;
+
+      for (const match of source.matchAll(boldTags)) {
+        appendItineraryNotesSegment(container, source.slice(lastIndex, match.index));
+        const boldText = makeElement("strong");
+        appendItineraryNotesSegment(boldText, match[1]);
+        container.append(boldText);
+        lastIndex = match.index + match[0].length;
+      }
+
+      appendItineraryNotesSegment(container, source.slice(lastIndex));
+    }
+
     function formatDate(dateString) {
       const [year, month, day] = dateString.split("-").map(Number);
       const date = new Date(year, month - 1, day);
@@ -5249,7 +5305,9 @@
         preview.id = `item-preview-${currentDay}-${previewIndex}`;
         preview.setAttribute("role", "note");
         preview.setAttribute("aria-label", `行程備註：${item.title}`);
-        preview.append(makeElement("p", "item-notes", item.notes));
+        const notes = makeElement("p", "item-notes");
+        appendItineraryNotesText(notes, item.notes);
+        preview.append(notes);
         card.append(preview);
 
         previewToggle = makeElement("button", "text-button preview-toggle", "查看詳情");
@@ -6966,152 +7024,101 @@
       }
     }
 
-    function calculateDistanceMeters(latitude, longitude, targetLatitude, targetLongitude) {
-      const radians = (degrees) => degrees * Math.PI / 180;
-      const latitudeDifference = radians(targetLatitude - latitude);
-      const longitudeDifference = radians(targetLongitude - longitude);
-      const originLatitudeRadians = radians(latitude);
-      const targetLatitudeRadians = radians(targetLatitude);
-      const value = Math.sin(latitudeDifference / 2) ** 2
-        + Math.cos(originLatitudeRadians)
-        * Math.cos(targetLatitudeRadians)
-        * Math.sin(longitudeDifference / 2) ** 2;
-      const clampedValue = Math.min(1, Math.max(0, value));
-      return 6371000 * 2 * Math.atan2(
-        Math.sqrt(clampedValue),
-        Math.sqrt(1 - clampedValue)
-      );
-    }
-
-    function parseNearbyPlaces(data, latitude, longitude) {
-      if (data === null || typeof data !== "object"
-        || !Array.isArray(data.elements)
-        || data.elements.length > 1000
-        || (typeof data.remark === "string" && data.remark.trim().length > 0)) {
-        return null;
-      }
-
-      const places = [];
-      const seenIds = new Set();
-      for (const element of data.elements) {
-        if (element === null || typeof element !== "object"
-          || !["node", "way", "relation"].includes(element.type)
-          || !Number.isSafeInteger(element.id)
-          || element.id <= 0
-          || element.tags === null
-          || typeof element.tags !== "object"
-          || Array.isArray(element.tags)) {
-          continue;
+    function groupCheckinRecordsByDate(records) {
+      const groups = new Map();
+      records.forEach((record) => {
+        const checkedInAt = new Date(record.checkedInAt);
+        const dateKey = [
+          checkedInAt.getFullYear(),
+          String(checkedInAt.getMonth() + 1).padStart(2, "0"),
+          String(checkedInAt.getDate()).padStart(2, "0")
+        ].join("-");
+        if (!groups.has(dateKey)) {
+          groups.set(dateKey, []);
         }
-
-        const point = element.type === "node" ? element : element.center;
-        if (point === null || typeof point !== "object"
-          || typeof point.lat !== "number"
-          || !Number.isFinite(point.lat)
-          || point.lat < -90
-          || point.lat > 90
-          || typeof point.lon !== "number"
-          || !Number.isFinite(point.lon)
-          || point.lon < -180
-          || point.lon > 180) {
-          continue;
-        }
-
-        const name = [element.tags["name:zh"], element.tags.name, element.tags["name:en"]]
-          .find((value) => typeof value === "string" && value.trim().length > 0);
-        if (typeof name !== "string") {
-          continue;
-        }
-
-        const id = `${element.type}/${element.id}`;
-        if (seenIds.has(id)) {
-          continue;
-        }
-        seenIds.add(id);
-        const distanceMeters = calculateDistanceMeters(latitude, longitude, point.lat, point.lon);
-        if (distanceMeters > NEARBY_PLACES_RADIUS_METERS) {
-          continue;
-        }
-
-        places.push({
-          id,
-          name: name.trim().slice(0, 120),
-          distanceMeters
-        });
-      }
-
-      return places
-        .sort((left, right) => left.distanceMeters - right.distanceMeters)
-        .slice(0, 20);
-    }
-
-    function renderNearbyPlaces() {
-      nearbyPlaceList.replaceChildren();
-      nearbyPlaces.forEach((place) => {
-        const card = makeElement("article", "nearby-place-card");
-        const info = makeElement("div", "nearby-place-info");
-        const distance = place.distanceMeters < 1000
-          ? `約 ${Math.round(place.distanceMeters)} 公尺`
-          : `約 ${(place.distanceMeters / 1000).toFixed(1)} 公里`;
-        info.append(
-          makeElement("strong", "", place.name),
-          makeElement("span", "nearby-place-details", `距離目前位置 ${distance}`)
-        );
-        const button = makeElement(
-          "button",
-          "secondary-button",
-          checkinRecords.length >= 1000 ? "紀錄已滿" : "打卡"
-        );
-        button.type = "button";
-        button.disabled = !checkinStorageReady || checkinRecords.length >= 1000;
-        button.setAttribute("aria-label", `在「${place.name}」打卡`);
-        button.addEventListener("click", () => addCheckinRecord(place.name));
-        card.append(info, button);
-        nearbyPlaceList.append(card);
+        groups.get(dateKey).push({ record, checkedInAt });
       });
+
+      return [...groups.entries()]
+        .sort(([leftDate], [rightDate]) => rightDate.localeCompare(leftDate))
+        .map(([dateKey, entries]) => ({
+          dateKey,
+          dateLabel: entries[0].checkedInAt.toLocaleDateString("zh-TW", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            weekday: "long"
+          }),
+          records: entries
+            .sort((left, right) => left.checkedInAt.getTime() - right.checkedInAt.getTime())
+            .map((entry) => entry.record)
+        }));
     }
 
     function renderCheckinRecords() {
       checkinRecordList.replaceChildren();
-      if (checkinRecords.length === 0) {
+      const groupedRecords = groupCheckinRecordsByDate(checkinRecords);
+      if (groupedRecords.length === 0) {
         checkinRecordList.append(makeElement("p", "checklist-empty", "尚無打卡紀錄。"));
         return;
       }
 
-      checkinRecords.forEach((record) => {
-        const card = makeElement("article", "checkin-record-card");
-        const info = makeElement("div", "checkin-record-info");
-        const checkedInAt = new Date(record.checkedInAt).toLocaleString("zh-TW");
-        info.append(
-          makeElement("strong", "", record.placeName),
-          makeElement("span", "checkin-record-time", checkedInAt)
-        );
-        const deleteButton = makeElement("button", "text-button delete", "刪除");
-        deleteButton.type = "button";
-        deleteButton.disabled = !checkinStorageReady;
-        deleteButton.setAttribute("aria-label", `刪除打卡紀錄：${record.placeName}`);
-        deleteButton.addEventListener("click", () => {
-          if (!window.confirm(`確定刪除「${record.placeName}」的打卡紀錄嗎？`)) {
-            return;
-          }
-          const previousRecords = checkinRecords;
-          checkinRecords = checkinRecords.filter((entry) => entry.id !== record.id);
-          if (!saveCheckinRecords()) {
-            checkinRecords = previousRecords;
-          }
-          renderCheckinRecords();
-          renderNearbyPlaces();
+      groupedRecords.forEach((group) => {
+        const dateGroup = makeElement("div", "checkin-date-group");
+        const heading = makeElement("h4", "checkin-date-heading");
+        const dateLabel = makeElement("time", "", group.dateLabel);
+        dateLabel.setAttribute("datetime", group.dateKey);
+        heading.append(dateLabel);
+        const recordsContainer = makeElement("div", "checkin-date-records");
+        group.records.forEach((record) => {
+          const card = makeElement("article", "checkin-record-card");
+          const info = makeElement("div", "checkin-record-info");
+          const checkedInAt = new Date(record.checkedInAt).toLocaleTimeString("zh-TW", {
+            hour: "numeric",
+            minute: "2-digit",
+            second: "2-digit"
+          });
+          info.append(
+            makeElement("strong", "", record.placeName),
+            makeElement("span", "checkin-record-time", checkedInAt)
+          );
+          const deleteButton = makeElement("button", "text-button delete", "刪除");
+          deleteButton.type = "button";
+          deleteButton.disabled = !checkinStorageReady;
+          deleteButton.setAttribute("aria-label", `刪除打卡紀錄：${record.placeName}`);
+          deleteButton.addEventListener("click", () => {
+            if (!window.confirm(`確定刪除「${record.placeName}」的打卡紀錄嗎？`)) {
+              return;
+            }
+            const previousRecords = checkinRecords;
+            checkinRecords = checkinRecords.filter((entry) => entry.id !== record.id);
+            if (!saveCheckinRecords()) {
+              checkinRecords = previousRecords;
+            }
+            renderCheckinRecords();
+          });
+          card.append(info, deleteButton);
+          recordsContainer.append(card);
         });
-        card.append(info, deleteButton);
-        checkinRecordList.append(card);
+        dateGroup.append(heading, recordsContainer);
+        checkinRecordList.append(dateGroup);
       });
     }
 
-    function addCheckinRecord(placeName) {
-      if (!checkinStorageReady || checkinRecords.length >= 1000) {
-        nearbyPlacesStatus.textContent = checkinStorageReady
-          ? "打卡紀錄已達 1,000 筆上限，請先刪除舊紀錄。"
-          : "本機打卡資料無法安全讀取，已停用打卡功能。";
+    function addCheckinRecord() {
+      if (!checkinStorageReady) {
+        checkinStatus.textContent = "本機打卡資料無法安全讀取，已停用打卡功能。";
+        return;
+      }
+      if (checkinRecords.length >= MAX_CHECKIN_RECORDS) {
+        checkinStatus.textContent = `打卡紀錄已達 ${MAX_CHECKIN_RECORDS.toLocaleString("zh-TW")} 筆上限，請先刪除舊紀錄。`;
+        return;
+      }
+
+      const placeName = checkinPlaceNameInput.value.trim().slice(0, 120);
+      if (placeName.length === 0) {
+        checkinStatus.textContent = "請輸入景點名稱後再打卡。";
+        checkinPlaceNameInput.focus();
         return;
       }
 
@@ -7124,110 +7131,14 @@
       checkinRecords = [record, ...checkinRecords];
       if (!saveCheckinRecords()) {
         checkinRecords = previousRecords;
-        nearbyPlacesStatus.textContent = "打卡資料未能儲存，未新增紀錄。";
+        checkinStatus.textContent = "打卡資料未能儲存，未新增紀錄。";
         renderCheckinRecords();
-        renderNearbyPlaces();
         return;
       }
 
-      nearbyPlacesStatus.textContent = `已在「${record.placeName}」打卡。`;
+      checkinPlaceNameInput.value = "";
+      checkinStatus.textContent = `已在「${record.placeName}」打卡。`;
       renderCheckinRecords();
-      renderNearbyPlaces();
-    }
-
-    function getCurrentPosition() {
-      return new Promise((resolve, reject) => {
-        window.navigator.geolocation.getCurrentPosition(resolve, reject, {
-          enableHighAccuracy: false,
-          maximumAge: 30000,
-          timeout: 15000
-        });
-      });
-    }
-
-    async function searchNearbyPlaces() {
-      if (!checkinStorageReady || searchingNearbyPlaces) {
-        return;
-      }
-      if (window.isSecureContext === false || !window.navigator.geolocation) {
-        nearbyPlacesStatus.textContent = "此瀏覽器或連線環境不支援安全定位；請改用 HTTPS 網頁並允許定位。";
-        return;
-      }
-
-      searchingNearbyPlaces = true;
-      nearbyPlaces = [];
-      renderNearbyPlaces();
-      nearbyPlacesSearchButton.disabled = true;
-      nearbyPlacesSearchButton.textContent = "搜尋中...";
-      nearbyPlacesStatus.textContent = "正在取得目前位置，請在瀏覽器提示中允許定位...";
-      let timeoutId = null;
-      try {
-        const position = await getCurrentPosition();
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        if (!Number.isFinite(latitude) || latitude < -90 || latitude > 90
-          || !Number.isFinite(longitude) || longitude < -180 || longitude > 180) {
-          throw new Error("invalid-location");
-        }
-
-        nearbyPlacesStatus.textContent = "正在查詢附近景點...";
-        const query = `[out:json][timeout:15];
-(
-  nwr(around:${NEARBY_PLACES_RADIUS_METERS},${latitude.toFixed(6)},${longitude.toFixed(6)})["tourism"~"^(attraction|museum|viewpoint|zoo|theme_park|gallery|artwork|aquarium)$"]["name"];
-  nwr(around:${NEARBY_PLACES_RADIUS_METERS},${latitude.toFixed(6)},${longitude.toFixed(6)})["historic"~"^(castle|monument|memorial|archaeological_site|ruins)$"]["name"];
-  nwr(around:${NEARBY_PLACES_RADIUS_METERS},${latitude.toFixed(6)},${longitude.toFixed(6)})["leisure"="park"]["name"];
-);
-out center tags;`;
-        const controller = new AbortController();
-        timeoutId = window.setTimeout(
-          () => controller.abort(),
-          NEARBY_PLACES_REQUEST_TIMEOUT_MS
-        );
-        const response = await fetch(OVERPASS_API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-          body: new URLSearchParams({ data: query }),
-          cache: "no-store",
-          signal: controller.signal
-        });
-        if (!response.ok) {
-          throw new Error("overpass-request-failed");
-        }
-
-        const results = parseNearbyPlaces(await response.json(), latitude, longitude);
-        if (!results) {
-          throw new Error("overpass-data-invalid");
-        }
-        nearbyPlaces = results;
-        renderNearbyPlaces();
-        nearbyPlacesStatus.textContent = results.length > 0
-          ? `找到 ${results.length} 個附近景點，依直線距離排序；選擇景點後按「打卡」記錄。`
-          : "附近 1.5 公里內沒有找到可用的景點資料。";
-      } catch (error) {
-        const errorCode = error !== null && typeof error === "object" && "code" in error
-          ? error.code
-          : null;
-        if (errorCode === 1) {
-          nearbyPlacesStatus.textContent = "定位權限被拒絕；請在瀏覽器設定中允許定位後重試。";
-        } else if (errorCode === 2) {
-          nearbyPlacesStatus.textContent = "目前無法取得位置，請確認裝置定位服務已開啟後重試。";
-        } else if (errorCode === 3) {
-          nearbyPlacesStatus.textContent = "取得位置逾時，請稍後重試。";
-        } else if (error !== null && typeof error === "object" && error.message === "invalid-location") {
-          nearbyPlacesStatus.textContent = "瀏覽器回傳的位置資料無效，請稍後重試。";
-        } else if (error !== null && typeof error === "object" && error.message === "overpass-data-invalid") {
-          nearbyPlacesStatus.textContent = "附近景點服務回傳的資料無法使用，請稍後重試。";
-        } else {
-          nearbyPlacesStatus.textContent = "附近景點查詢失敗，服務可能忙碌或網路連線有問題，請稍後重試。";
-        }
-      } finally {
-        if (timeoutId !== null) {
-          window.clearTimeout(timeoutId);
-        }
-        searchingNearbyPlaces = false;
-        nearbyPlacesSearchButton.disabled = !checkinStorageReady;
-        nearbyPlacesSearchButton.textContent = "尋找附近景點";
-      }
     }
 
     function initializeSectionVisibilityControls() {
@@ -7362,12 +7273,13 @@ out center tags;`;
     checkinToggleButton.addEventListener("click", () => {
       setCheckinExpanded(checkinContent.hidden);
     });
+    checkinForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      addCheckinRecord();
+    });
     weatherSearchForm.addEventListener("submit", (event) => {
       event.preventDefault();
       void searchWeatherLocations();
-    });
-    nearbyPlacesSearchButton.addEventListener("click", () => {
-      void searchNearbyPlaces();
     });
     weatherRefreshAllButton.addEventListener("click", () => {
       void refreshAllWeatherLocations(true);
@@ -7581,7 +7493,8 @@ out center tags;`;
       weatherRefreshAllButton.disabled = true;
     }
     if (!checkinStorageReady) {
-      nearbyPlacesSearchButton.disabled = true;
+      checkinPlaceNameInput.disabled = true;
+      checkinSubmitButton.disabled = true;
     }
     initializeExpenseExchangeRateControls();
     initializeSectionVisibilityControls();
