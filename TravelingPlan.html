@@ -285,6 +285,13 @@
       gap: 22px;
     }
 
+    .dashboard-content {
+      display: grid;
+      align-content: start;
+      gap: 14px;
+      min-width: 0;
+    }
+
     .planning-sidebar {
       display: grid;
       gap: 16px;
@@ -600,8 +607,6 @@
     }
 
     .settings-panel {
-      grid-column: 2;
-      margin-top: 14px;
       padding: 18px 20px;
     }
 
@@ -618,6 +623,33 @@
       color: var(--ink);
       font-size: 13px;
       font-weight: 700;
+    }
+
+    .section-visibility-settings {
+      margin-bottom: 16px;
+      padding: 0 0 14px;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-visibility-options {
+      display: grid;
+      gap: 8px;
+    }
+
+    .section-visibility-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .section-visibility-option input {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      accent-color: var(--accent);
     }
 
     .exchange-rate-setting {
@@ -1223,8 +1255,147 @@
     }
 
     .travel-expense-panel {
-      grid-column: 2;
       padding: 20px;
+    }
+
+    .weather-panel {
+      padding: 20px;
+    }
+
+    .weather-panel .panel-description {
+      margin-bottom: 14px;
+    }
+
+    .weather-search-form {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 10px;
+    }
+
+    .weather-search-form .field {
+      margin: 0;
+    }
+
+    .weather-search-results,
+    .weather-location-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .weather-search-result {
+      display: grid;
+      gap: 3px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .weather-search-result:hover {
+      border-color: #b7c8bd;
+      background: #f7f8f3;
+    }
+
+    .weather-search-result span,
+    .weather-updated-at,
+    .weather-search-status,
+    .weather-refresh-status,
+    .weather-attribution {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .weather-location-list-heading,
+    .weather-location-heading,
+    .weather-location-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .weather-location-list-heading {
+      margin-top: 20px;
+    }
+
+    .weather-location-list-heading h3,
+    .weather-location-heading h3 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 15px;
+    }
+
+    .weather-location-card {
+      min-width: 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .weather-location-name {
+      display: grid;
+      min-width: 0;
+      gap: 2px;
+    }
+
+    .weather-location-name p,
+    .weather-location-error {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .weather-location-actions {
+      flex: 0 0 auto;
+    }
+
+    .weather-forecast-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(86px, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .weather-forecast-day {
+      display: grid;
+      align-content: start;
+      gap: 5px;
+      min-width: 0;
+      padding: 9px;
+      border-radius: 10px;
+      background: #f7f8f3;
+      color: var(--ink);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .weather-forecast-day strong {
+      font-size: 12px;
+    }
+
+    .weather-forecast-source {
+      display: inline-block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .weather-attribution {
+      margin: 14px 0 0;
+    }
+
+    .weather-attribution a,
+    .weather-forecast-source {
+      color: var(--green-dark);
     }
 
     .travel-expense-summary {
@@ -1234,15 +1405,15 @@
 
     .travel-expense-totals {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      grid-template-columns: minmax(0, 1fr);
       gap: 8px;
     }
 
     .travel-expense-total {
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
       min-width: 0;
       align-items: center;
-      justify-content: space-between;
       gap: 8px;
       padding: 10px 12px;
       border: 1px solid var(--line);
@@ -1274,8 +1445,9 @@
     .travel-expense-total-amount {
       color: var(--green-dark);
       font-size: 15px;
-      overflow-wrap: anywhere;
+      overflow-wrap: normal;
       text-align: right;
+      white-space: nowrap;
     }
 
     .travel-expense-converted-total {
@@ -1589,6 +1761,7 @@
       }
 
       .travel-expense-panel,
+      .weather-panel,
       .settings-panel {
         grid-column: 1;
       }
@@ -1693,10 +1866,19 @@
       .form-panel,
       .pre-trip-panel,
       .rainy-day-panel,
+      .weather-panel,
       .travel-expense-panel,
       .itinerary-panel,
       .settings-panel {
         padding: 16px;
+      }
+
+      .weather-search-form {
+        grid-template-columns: 1fr;
+      }
+
+      .weather-location-heading {
+        align-items: flex-start;
       }
 
       .hero {
@@ -1783,12 +1965,47 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.41</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.46</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.46</strong>
+                  <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                </div>
+                <p>將天氣預報區塊緊接在我的行程下方顯示。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.45</strong>
+                  <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                </div>
+                <p>將天氣預報與參數設定區塊位置對調。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.44</strong>
+                  <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                </div>
+                <p>將「雨天備案」更名為「雨天備案/必訪景點」。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.43</strong>
+                  <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                </div>
+                <p>新增可管理地點與未來七日預報的天氣區塊。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.42</strong>
+                  <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                </div>
+                <p>參數設定新增各區塊顯示開關，並記住個別顯示狀態。</p>
+              </li>
                 <li>
                   <div class="version-changelog-entry-header">
                     <strong class="version-changelog-version">v1.3.41</strong>
@@ -2125,7 +2342,7 @@
 
     <div class="dashboard">
       <div class="planning-sidebar">
-        <section class="panel pre-trip-panel" aria-labelledby="pre-trip-title">
+        <section class="panel pre-trip-panel" aria-labelledby="pre-trip-title" data-section-visibility-panel="pre-trip">
           <div class="form-panel-heading">
             <h2 class="panel-title" id="pre-trip-title">行前檢查清單</h2>
             <button class="secondary-button form-toggle" id="pre-trip-toggle" type="button" aria-expanded="false" aria-controls="pre-trip-content">展開</button>
@@ -2136,7 +2353,7 @@
           </div>
         </section>
 
-        <section class="panel form-panel" aria-labelledby="form-title">
+        <section class="panel form-panel" aria-labelledby="form-title" data-section-visibility-panel="add-stop">
           <div class="form-panel-heading">
             <h2 class="panel-title" id="form-title">新增一站</h2>
             <button class="secondary-button form-toggle" id="form-toggle" type="button" aria-expanded="false" aria-controls="form-content">展開</button>
@@ -2179,13 +2396,13 @@
           </div>
         </section>
 
-        <section class="panel rainy-day-panel" aria-labelledby="rainy-day-title">
+        <section class="panel rainy-day-panel" aria-labelledby="rainy-day-title" data-section-visibility-panel="rainy-day">
           <div class="form-panel-heading">
-            <h2 class="panel-title" id="rainy-day-title">雨天備案</h2>
+            <h2 class="panel-title" id="rainy-day-title">雨天備案/必訪景點</h2>
             <button class="secondary-button form-toggle" id="rainy-day-toggle" type="button" aria-expanded="false" aria-controls="rainy-day-content">展開</button>
           </div>
           <div id="rainy-day-content" hidden>
-            <p class="panel-description">預先準備室內與替代景點，遇雨也能彈性應對。</p>
+            <p class="panel-description">收藏雨天備案或旅途中必訪的景點，並記錄區域與備註。</p>
             <div id="rainy-day-list-content"></div>
             <form class="rainy-day-form" id="rainy-day-form">
               <div class="field">
@@ -2201,14 +2418,14 @@
                 <textarea class="expense-input" id="rainy-day-notes" name="notes" maxlength="500" placeholder="營業時間、門票、交通路線等備註"></textarea>
               </div>
               <div class="form-actions" style="margin-top:8px;">
-                <button class="primary-button" id="rainy-day-submit-button" type="submit">新增備案</button>
+                <button class="primary-button" id="rainy-day-submit-button" type="submit">新增景點</button>
                 <button class="secondary-button" id="rainy-day-cancel-button" type="button" hidden>取消編輯</button>
               </div>
             </form>
           </div>
         </section>
 
-        <section class="panel food-experience-panel" aria-labelledby="food-experience-title">
+        <section class="panel food-experience-panel" aria-labelledby="food-experience-title" data-section-visibility-panel="food-experience">
           <div class="form-panel-heading">
             <h2 class="panel-title" id="food-experience-title">美食饗宴</h2>
             <button class="secondary-button form-toggle" id="food-experience-toggle" type="button" aria-expanded="false" aria-controls="food-experience-content">展開</button>
@@ -2236,9 +2453,91 @@
             </form>
           </div>
         </section>
+
+        <section class="panel travel-expense-panel" aria-labelledby="travel-expense-title" data-section-visibility-panel="travel-expense">
+          <div class="form-panel-heading">
+            <h2 class="panel-title" id="travel-expense-title">旅遊費用</h2>
+            <button class="secondary-button form-toggle" id="travel-expense-toggle" type="button" aria-expanded="false" aria-controls="travel-expense-content">展開</button>
+          </div>
+          <div id="travel-expense-content" hidden>
+            <p class="panel-description">依幣別彙總總額並換算新台幣；點選幣別金額可開啟費用明細報表。</p>
+            <div id="travel-expense-summary"></div>
+          </div>
+        </section>
+
+        <section class="panel settings-panel" aria-labelledby="settings-title">
+          <div class="form-panel-heading">
+            <h2 class="panel-title" id="settings-title">參數設定</h2>
+            <button class="secondary-button form-toggle" id="settings-toggle" type="button" aria-expanded="false" aria-controls="settings-content">展開</button>
+          </div>
+          <div id="settings-content" hidden>
+            <p class="panel-description">設定各區塊是否顯示，並調整行前檢查清單、雨天備案/必訪景點與美食饗宴的顯示字體大小。</p>
+            <fieldset class="setting-field section-visibility-settings">
+              <legend class="exchange-rate-title">區塊顯示</legend>
+              <div class="section-visibility-options">
+                <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="pre-trip" checked>行前檢查清單</label>
+                <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="add-stop" checked>新增一站</label>
+                <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="rainy-day" checked>雨天備案/必訪景點</label>
+                <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="food-experience" checked>美食饗宴</label>
+                <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="itinerary" checked>我的行程</label>
+                <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="weather" checked>天氣預報</label>
+                <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="travel-expense" checked>旅遊費用</label>
+              </div>
+            </fieldset>
+            <div class="setting-field">
+              <label for="pre-trip-font-size">行前檢查清單字體</label>
+              <div class="setting-slider-wrap">
+                <input class="setting-slider" id="pre-trip-font-size" type="range" min="0" max="4" step="1" value="2" aria-label="行前檢查清單字體大小" aria-valuetext="100%">
+                <div class="setting-slider-labels" aria-hidden="true">
+                  <span>60%</span>
+                  <span>80%</span>
+                  <span>100%</span>
+                  <span>120%</span>
+                  <span>150%</span>
+                </div>
+              </div>
+            </div>
+            <div class="setting-field">
+              <label for="rainy-day-font-size">雨天備案/必訪景點字體</label>
+              <div class="setting-slider-wrap">
+                <input class="setting-slider" id="rainy-day-font-size" type="range" min="0" max="4" step="1" value="2" aria-label="雨天備案/必訪景點字體大小" aria-valuetext="100%">
+                <div class="setting-slider-labels" aria-hidden="true">
+                  <span>60%</span>
+                  <span>80%</span>
+                  <span>100%</span>
+                  <span>120%</span>
+                  <span>150%</span>
+                </div>
+              </div>
+            </div>
+            <div class="setting-field">
+              <label for="food-experience-font-size">美食饗宴字體</label>
+              <div class="setting-slider-wrap">
+                <input class="setting-slider" id="food-experience-font-size" type="range" min="0" max="4" step="1" value="2" aria-label="美食饗宴字體大小" aria-valuetext="100%">
+                <div class="setting-slider-labels" aria-hidden="true">
+                  <span>60%</span>
+                  <span>80%</span>
+                  <span>100%</span>
+                  <span>120%</span>
+                  <span>150%</span>
+                </div>
+              </div>
+            </div>
+            <div class="setting-field exchange-rate-setting">
+              <div class="exchange-rate-heading">
+                <p class="exchange-rate-title">外幣兌新台幣匯率</p>
+                <button class="secondary-button" id="expense-exchange-rate-update" type="button">更新匯率</button>
+              </div>
+              <p class="exchange-rate-description">輸入 1 單位外幣可兌換的新台幣金額；更新會以 Frankfurter 每日參考匯率覆寫，非即時交易報價。</p>
+              <p class="exchange-rate-status" id="expense-exchange-rate-status" role="status" aria-live="polite"></p>
+              <div class="exchange-rate-list" id="expense-exchange-rates"></div>
+            </div>
+          </div>
+        </section>
       </div>
 
-      <section class="panel itinerary-panel" aria-labelledby="itinerary-title">
+      <div class="dashboard-content">
+      <section class="panel itinerary-panel" aria-labelledby="itinerary-title" data-section-visibility-panel="itinerary">
         <div class="itinerary-heading">
           <div class="itinerary-title-wrap">
             <h2 class="panel-title" id="itinerary-title">我的行程</h2>
@@ -2275,77 +2574,39 @@
         </div>
       </section>
 
-      <section class="panel travel-expense-panel" aria-labelledby="travel-expense-title">
+      <section class="panel weather-panel" aria-labelledby="weather-title" data-section-visibility-panel="weather">
         <div class="form-panel-heading">
-          <h2 class="panel-title" id="travel-expense-title">旅遊費用</h2>
-          <button class="secondary-button form-toggle" id="travel-expense-toggle" type="button" aria-expanded="false" aria-controls="travel-expense-content">展開</button>
+          <h2 class="panel-title" id="weather-title">天氣預報</h2>
+          <button class="secondary-button form-toggle" id="weather-toggle" type="button" aria-expanded="false" aria-controls="weather-content">展開</button>
         </div>
-        <div id="travel-expense-content" hidden>
-          <p class="panel-description">依幣別彙總總額並換算新台幣；點選幣別金額可開啟費用明細報表。</p>
-          <div id="travel-expense-summary"></div>
+        <div id="weather-content" hidden>
+          <p class="panel-description">搜尋並新增旅程地點，查看該地未來七天的天氣狀態、最高／最低溫與降雨機率。</p>
+          <form class="weather-search-form" id="weather-search-form">
+            <div class="field">
+              <label for="weather-location-query">城市或地點</label>
+              <input class="expense-input" id="weather-location-query" name="location" type="text" maxlength="100" minlength="2" placeholder="例如：京都、日本" required>
+            </div>
+            <button class="primary-button" id="weather-search-button" type="submit">搜尋地點</button>
+          </form>
+          <p class="weather-search-status" id="weather-search-status" role="status" aria-live="polite"></p>
+          <div class="weather-search-results" id="weather-search-results"></div>
+          <div class="weather-location-list-heading">
+            <h3>已新增地點</h3>
+            <button class="secondary-button" id="weather-refresh-all-button" type="button">更新全部</button>
+          </div>
+          <p class="weather-refresh-status" id="weather-refresh-status" role="status" aria-live="polite"></p>
+          <div class="weather-location-list" id="weather-location-list"></div>
+          <p class="weather-attribution">
+            搜尋地點會將輸入文字送至 <a href="https://open-meteo.com/en/terms" target="_blank" rel="noopener noreferrer">Open-Meteo</a>，座標可能保留於服務端日誌最多 90 天；免費 API 限非商業用途。
+            地名資料 © <a href="https://www.geonames.org/" target="_blank" rel="noopener noreferrer">GeoNames</a>。
+            天氣資料依 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> 授權，已整理為逐日摘要並翻譯為繁體中文；預報僅供參考。
+          </p>
         </div>
       </section>
-
-      <section class="panel settings-panel" aria-labelledby="settings-title">
-        <div class="form-panel-heading">
-          <h2 class="panel-title" id="settings-title">參數設定</h2>
-          <button class="secondary-button form-toggle" id="settings-toggle" type="button" aria-expanded="false" aria-controls="settings-content">展開</button>
-        </div>
-        <div id="settings-content" hidden>
-          <p class="panel-description">調整行前檢查清單、雨天備案與美食饗宴的顯示字體大小。</p>
-          <div class="setting-field">
-            <label for="pre-trip-font-size">行前檢查清單字體</label>
-            <div class="setting-slider-wrap">
-              <input class="setting-slider" id="pre-trip-font-size" type="range" min="0" max="4" step="1" value="2" aria-label="行前檢查清單字體大小" aria-valuetext="100%">
-              <div class="setting-slider-labels" aria-hidden="true">
-                <span>60%</span>
-                <span>80%</span>
-                <span>100%</span>
-                <span>120%</span>
-                <span>150%</span>
-              </div>
-            </div>
-          </div>
-          <div class="setting-field">
-            <label for="rainy-day-font-size">雨天備案字體</label>
-            <div class="setting-slider-wrap">
-              <input class="setting-slider" id="rainy-day-font-size" type="range" min="0" max="4" step="1" value="2" aria-label="雨天備案字體大小" aria-valuetext="100%">
-              <div class="setting-slider-labels" aria-hidden="true">
-                <span>60%</span>
-                <span>80%</span>
-                <span>100%</span>
-                <span>120%</span>
-                <span>150%</span>
-              </div>
-            </div>
-          </div>
-          <div class="setting-field">
-            <label for="food-experience-font-size">美食饗宴字體</label>
-            <div class="setting-slider-wrap">
-              <input class="setting-slider" id="food-experience-font-size" type="range" min="0" max="4" step="1" value="2" aria-label="美食饗宴字體大小" aria-valuetext="100%">
-              <div class="setting-slider-labels" aria-hidden="true">
-                <span>60%</span>
-                <span>80%</span>
-                <span>100%</span>
-                <span>120%</span>
-                <span>150%</span>
-              </div>
-            </div>
-          </div>
-          <div class="setting-field exchange-rate-setting">
-            <div class="exchange-rate-heading">
-              <p class="exchange-rate-title">外幣兌新台幣匯率</p>
-              <button class="secondary-button" id="expense-exchange-rate-update" type="button">更新匯率</button>
-            </div>
-            <p class="exchange-rate-description">輸入 1 單位外幣可兌換的新台幣金額；更新會以 Frankfurter 每日參考匯率覆寫，非即時交易報價。</p>
-            <p class="exchange-rate-status" id="expense-exchange-rate-status" role="status" aria-live="polite"></p>
-            <div class="exchange-rate-list" id="expense-exchange-rates"></div>
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
 
-    <p class="footer-note">行程、每日 Checklist、行前檢查清單、費用、雨天備案與美食饗宴會自動儲存在這個瀏覽器；授權資料夾後，也會同步寫入該目錄的 TravelingPlan.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
+    <p class="footer-note">行程、每日 Checklist、行前檢查清單、費用、雨天備案/必訪景點、美食饗宴與天氣地點會自動儲存在這個瀏覽器；授權資料夾後，行程資料也會同步寫入該目錄的 TravelingPlan.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
   </main>
 
   <script>
@@ -2355,8 +2616,13 @@
     const CHECKLIST_STORAGE_KEY = "traveling-plan.checklists.v1";
     const PRE_TRIP_CHECKLIST_STORAGE_KEY = "traveling-plan.pre-trip-checklist.v1";
     const PRE_TRIP_FONT_SIZE_STORAGE_KEY = "traveling-plan.pre-trip-font-size.v1";
+    const SECTION_VISIBILITY_STORAGE_KEY = "traveling-plan.section-visibility.v1";
     const RAINY_DAY_STORAGE_KEY = "traveling-plan.rainy-days.v1";
     const FOOD_EXPERIENCE_STORAGE_KEY = "traveling-plan.food-experiences.v1";
+    const WEATHER_STORAGE_KEY = "traveling-plan.weather-locations.v1";
+    const WEATHER_GEOCODING_API_URL = "https://geocoding-api.open-meteo.com/v1/search";
+    const WEATHER_FORECAST_API_URL = "https://api.open-meteo.com/v1/forecast";
+    const WEATHER_REFRESH_INTERVAL_MS = 6 * 60 * 60 * 1000;
     const RAINY_DAY_FONT_SIZE_STORAGE_KEY = "traveling-plan.rainy-day-font-size.v1";
     const FOOD_EXPERIENCE_FONT_SIZE_STORAGE_KEY = "traveling-plan.food-experience-font-size.v1";
     const EXPENSE_STORAGE_KEY = "traveling-plan.expenses.v1";
@@ -2369,6 +2635,36 @@
       { code: "EUR", label: "歐元" },
       { code: "CNY", label: "人民幣" }
     ];
+    const WEATHER_CODE_LABELS = {
+      0: "晴朗",
+      1: "大致晴朗",
+      2: "局部多雲",
+      3: "陰天",
+      45: "有霧",
+      48: "凍霧",
+      51: "小毛毛雨",
+      53: "中度毛毛雨",
+      55: "強毛毛雨",
+      56: "小凍毛毛雨",
+      57: "強凍毛毛雨",
+      61: "小雨",
+      63: "中雨",
+      65: "大雨",
+      66: "小凍雨",
+      67: "強凍雨",
+      71: "小雪",
+      73: "中雪",
+      75: "大雪",
+      77: "雪粒",
+      80: "小陣雨",
+      81: "中陣雨",
+      82: "強陣雨",
+      85: "小陣雪",
+      86: "大陣雪",
+      95: "雷雨",
+      96: "雷雨伴隨冰雹",
+      99: "強雷雨伴隨冰雹"
+    };
     const EXPENSE_PAYMENT_METHODS = ["現金", "刷卡", "電子支付", "轉帳"];
     const EXPENSE_CATEGORIES = ["食", "衣", "住", "行", "育", "樂"];
     const EXPENSE_PAYER_OPTIONS = ["Michael", "Ealing"];
@@ -2538,6 +2834,21 @@
     const rainyDayContent = document.querySelector("#rainy-day-content");
     const settingsToggleButton = document.querySelector("#settings-toggle");
     const settingsContent = document.querySelector("#settings-content");
+    const weatherToggleButton = document.querySelector("#weather-toggle");
+    const weatherContent = document.querySelector("#weather-content");
+    const weatherSearchForm = document.querySelector("#weather-search-form");
+    const weatherLocationQueryInput = document.querySelector("#weather-location-query");
+    const weatherSearchButton = document.querySelector("#weather-search-button");
+    const weatherSearchStatus = document.querySelector("#weather-search-status");
+    const weatherSearchResults = document.querySelector("#weather-search-results");
+    const weatherRefreshAllButton = document.querySelector("#weather-refresh-all-button");
+    const weatherRefreshStatus = document.querySelector("#weather-refresh-status");
+    const weatherLocationList = document.querySelector("#weather-location-list");
+    const sectionVisibilityControls = [...document.querySelectorAll("[data-section-visibility-control]")];
+    const sectionVisibilityPanels = new Map(
+      [...document.querySelectorAll("[data-section-visibility-panel]")]
+        .map((panel) => [panel.dataset.sectionVisibilityPanel, panel])
+    );
     const expenseExchangeRateUpdateButton = document.querySelector("#expense-exchange-rate-update");
     const expenseExchangeRateStatus = document.querySelector("#expense-exchange-rate-status");
     const expenseExchangeRatesContainer = document.querySelector("#expense-exchange-rates");
@@ -2582,6 +2893,7 @@
     let preTripChecklist = [];
     let rainyDays = [];
     let foodExperiences = [];
+    let weatherLocations = [];
     let expenses = {};
     let expenseExchangeRates = {};
     let editingId = null;
@@ -2600,7 +2912,11 @@
     let preTripChecklistStorageReady = true;
     let rainyDayStorageReady = true;
     let foodExperienceStorageReady = true;
+    let weatherStorageReady = true;
     let expenseStorageReady = true;
+    const weatherRefreshInProgress = new Set();
+    const weatherLocationErrors = new Map();
+    let refreshingAllWeather = false;
     let directoryHandle = null;
     let fileSaveQueue = Promise.resolve();
 
@@ -2725,6 +3041,69 @@
           return false;
         }
         seenIds.add(item.id);
+      }
+      return true;
+    }
+
+    function isWeatherForecastDay(day) {
+      return day !== null
+        && typeof day === "object"
+        && isValidDateString(day.date)
+        && Number.isInteger(day.weatherCode)
+        && day.weatherCode >= 0
+        && day.weatherCode <= 99
+        && (day.maximumTemperature === null
+          || (typeof day.maximumTemperature === "number" && Number.isFinite(day.maximumTemperature)))
+        && (day.minimumTemperature === null
+          || (typeof day.minimumTemperature === "number" && Number.isFinite(day.minimumTemperature)))
+        && (day.precipitationProbability === null
+          || (typeof day.precipitationProbability === "number"
+            && Number.isFinite(day.precipitationProbability)
+            && day.precipitationProbability >= 0
+            && day.precipitationProbability <= 100));
+    }
+
+    function isWeatherLocation(item) {
+      return item !== null
+        && typeof item === "object"
+        && typeof item.id === "string"
+        && item.id.trim().length > 0
+        && item.id.length <= 128
+        && Number.isSafeInteger(item.geocodingId)
+        && item.geocodingId > 0
+        && typeof item.name === "string"
+        && item.name.trim().length > 0
+        && item.name.length <= 100
+        && (item.country === undefined || (typeof item.country === "string" && item.country.length <= 100))
+        && (item.admin1 === undefined || (typeof item.admin1 === "string" && item.admin1.length <= 100))
+        && typeof item.latitude === "number"
+        && Number.isFinite(item.latitude)
+        && item.latitude >= -90
+        && item.latitude <= 90
+        && typeof item.longitude === "number"
+        && Number.isFinite(item.longitude)
+        && item.longitude >= -180
+        && item.longitude <= 180
+        && Array.isArray(item.forecast)
+        && item.forecast.length <= 7
+        && item.forecast.every(isWeatherForecastDay)
+        && (item.updatedAt === null
+          || (typeof item.updatedAt === "string" && Number.isFinite(Date.parse(item.updatedAt))));
+    }
+
+    function isValidWeatherData(data) {
+      if (!Array.isArray(data) || !data.every(isWeatherLocation)) {
+        return false;
+      }
+
+      const seenIds = new Set();
+      const seenGeocodingIds = new Set();
+      for (const item of data) {
+        if (seenIds.has(item.id) || seenGeocodingIds.has(item.geocodingId)) {
+          return false;
+        }
+        seenIds.add(item.id);
+        seenGeocodingIds.add(item.geocodingId);
       }
       return true;
     }
@@ -2854,12 +3233,12 @@
 
         const parsedRainyDays = JSON.parse(savedRainyDays);
         if (!isValidRainyDayData(parsedRainyDays)) {
-          throw new Error("雨天備案資料格式不正確。");
+          throw new Error("雨天備案/必訪景點資料格式不正確。");
         }
         return parsedRainyDays;
       } catch {
         rainyDayStorageReady = false;
-        showNotice("無法讀取本機雨天備案資料，為避免覆蓋原資料，暫時停用雨天備案編輯。", true);
+        showNotice("無法讀取本機雨天備案/必訪景點資料，為避免覆蓋原資料，暫時停用編輯。", true);
         return [];
       }
     }
@@ -2879,6 +3258,26 @@
       } catch {
         foodExperienceStorageReady = false;
         showNotice("無法讀取本機美食饗宴資料，為避免覆蓋原資料，暫時停用美食饗宴編輯。", true);
+        return [];
+      }
+    }
+
+    function loadWeatherLocations() {
+      try {
+        const savedLocations = window.localStorage.getItem(WEATHER_STORAGE_KEY);
+        if (savedLocations === null) {
+          return [];
+        }
+
+        const parsedLocations = JSON.parse(savedLocations);
+        if (!isValidWeatherData(parsedLocations)) {
+          throw new Error("天氣地點資料格式不正確。");
+        }
+        return parsedLocations;
+      } catch {
+        weatherStorageReady = false;
+        weatherSearchStatus.textContent = "無法讀取天氣地點資料，為避免覆蓋原資料，已停用天氣地點編輯。";
+        showNotice("無法讀取本機天氣地點資料，為避免覆蓋原資料，暫時停用天氣地點編輯。", true);
         return [];
       }
     }
@@ -3118,7 +3517,7 @@
         queueDirectorySave();
         return true;
       } catch {
-        showNotice("雨天備案無法儲存到瀏覽器；重新整理後可能會遺失。請檢查瀏覽器儲存空間。", true);
+        showNotice("雨天備案/必訪景點無法儲存到瀏覽器；重新整理後可能會遺失。請檢查瀏覽器儲存空間。", true);
         return false;
       }
     }
@@ -3134,6 +3533,20 @@
         return true;
       } catch {
         showNotice("美食饗宴資料無法儲存到瀏覽器；重新整理後可能會遺失。請檢查瀏覽器儲存空間。", true);
+        return false;
+      }
+    }
+
+    function saveWeatherLocations() {
+      if (!weatherStorageReady) {
+        return false;
+      }
+
+      try {
+        window.localStorage.setItem(WEATHER_STORAGE_KEY, JSON.stringify(weatherLocations));
+        return true;
+      } catch {
+        showNotice("天氣地點無法儲存到瀏覽器；重新整理後可能會遺失。請檢查瀏覽器儲存空間。", true);
         return false;
       }
     }
@@ -3477,7 +3890,7 @@
         }
         if (Object.prototype.hasOwnProperty.call(payload, "rainyDays")) {
           if (!isValidRainyDayData(payload.rainyDays)) {
-            showNotice("檔案中的雨天備案格式錯誤，未匯入任何資料。", true);
+            showNotice("檔案中的雨天備案/必訪景點格式錯誤，未匯入任何資料。", true);
             return null;
           }
           importedRainyDays = payload.rainyDays;
@@ -3648,7 +4061,7 @@
           notes: entry.getAttribute("data-rainy-notes") || ""
         }));
         if (!isValidRainyDayData(importedRainyDays)) {
-          showNotice("HTML 檔案中的雨天備案格式錯誤，未匯入任何資料。", true);
+          showNotice("HTML 檔案中的雨天備案/必訪景點格式錯誤，未匯入任何資料。", true);
           return null;
         }
       }
@@ -3749,7 +4162,7 @@
 
     function replaceImportedData(importedData) {
       if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady) {
-        showNotice("目前無法安全讀取本機行程、Checklist、費用、雨天備案或美食饗宴，原有資料未變更。", true);
+        showNotice("目前無法安全讀取本機行程、Checklist、費用、雨天備案/必訪景點或美食饗宴，原有資料未變更。", true);
         return;
       }
 
@@ -3785,7 +4198,7 @@
       render();
       const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
       const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
-      showNotice(`已匯入並取代本機資料：${items.length} 筆行程、${checklistCount} 個每日 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用、${rainyDays.length} 處雨天備案、${foodExperiences.length} 筆美食饗宴。`);
+      showNotice(`已匯入並取代本機資料：${items.length} 筆行程、${checklistCount} 個每日 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用、${rainyDays.length} 處雨天備案/必訪景點、${foodExperiences.length} 筆美食饗宴。`);
     }
 
     function replaceImportedPreTripChecklist(importedChecklist) {
@@ -3960,7 +4373,7 @@
           return `<li><div class="checklist-item${item.checked ? " checked" : ""}"><input class="checklist-checkbox" id="${escapeHtml(checkboxId)}" type="checkbox" data-checklist-id="pretrip-${escapeHtml(item.id)}" data-pre-trip-checklist-id="${escapeHtml(item.id)}" data-checklist-text="${escapeHtml(item.text)}" aria-label="行前檢查項目：${escapeHtml(getChecklistDisplayText(item.text))}"${item.checked ? " checked" : ""}><span class="pre-trip-checklist-text">${linkifyHtmlText(item.text, checkboxId)}</span></div></li>`;
         }).join("")}</ul>`
         : `<p class="empty">尚未新增行前檢查事項。</p>`}</div></section>`;
-      const rainyDaySection = `<section class="day rainy-day-day" data-rainy-day-section><h3 class="day-heading">☔ 雨天備案</h3><div class="rainy-day-export-section"><h4>雨天備選景點 <small>${rainyDays.length} 處</small></h4>${rainyDays.length > 0
+      const rainyDaySection = `<section class="day rainy-day-day" data-rainy-day-section><h3 class="day-heading">☔ 雨天備案/必訪景點</h3><div class="rainy-day-export-section"><h4>景點清單 <small>${rainyDays.length} 處</small></h4>${rainyDays.length > 0
         ? `<ul class="rainy-day-export-list">${sortRainyDays(rainyDays).map((item) => {
           const mapsUrl = new URL("https://www.google.com/maps/search/");
           mapsUrl.searchParams.set("api", "1");
@@ -3971,7 +4384,7 @@
             : "";
           return `<li data-rainy-id="${escapeHtml(item.id)}" data-rainy-area="${escapeHtml(item.area || "")}" data-rainy-location="${escapeHtml(item.location)}" data-rainy-notes="${escapeHtml(item.notes || "")}"><div class="event-heading">${areaTag}<a href="${escapeHtml(mapsUrl.toString())}" target="_blank" rel="noopener noreferrer" style="color:#2da44e;text-decoration:underline;"><strong>${escapeHtml(item.location)}</strong> ↗</a></div>${notesText}</li>`;
         }).join("")}</ul>`
-        : `<p class="empty">尚未安排雨天備案。</p>`}</div></section>`;
+        : `<p class="empty">尚未新增景點。</p>`}</div></section>`;
       const foodExperienceSection = `<section class="day" data-food-experience-section><h3 class="day-heading">🍜 美食饗宴</h3><div class="rainy-day-export-section"><h4>想品嚐的美食 <small>${foodExperiences.length} 筆</small></h4>${foodExperiences.length > 0
         ? `<ul class="rainy-day-export-list">${sortRainyDays(foodExperiences).map((item) => {
           const mapsUrl = new URL("https://www.google.com/maps/search/");
@@ -4136,7 +4549,7 @@
     ${summary}
     <h2>🧳 行前檢查清單</h2>
     ${preTripChecklistSection}
-    <h2>☔ 雨天備案</h2>
+    <h2>☔ 雨天備案/必訪景點</h2>
     ${rainyDaySection}
     <h2>🍜 美食饗宴</h2>
     ${foodExperienceSection}
@@ -4211,7 +4624,7 @@
 
     function exportHtml() {
       if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady) {
-        showNotice("目前無法安全讀取行程、Checklist、費用、雨天備案或美食饗宴，已停用 HTML 匯出。", true);
+        showNotice("目前無法安全讀取行程、Checklist、費用、雨天備案/必訪景點或美食饗宴，已停用 HTML 匯出。", true);
         return;
       }
 
@@ -4232,7 +4645,7 @@
         link.remove();
         window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
         const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
-        showNotice(`已匯出 ${items.length} 筆行程、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用、${rainyDays.length} 處雨天備案與 ${foodExperiences.length} 筆美食饗宴的 HTML 檔。`);
+        showNotice(`已匯出 ${items.length} 筆行程、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用、${rainyDays.length} 處雨天備案/必訪景點與 ${foodExperiences.length} 筆美食饗宴的 HTML 檔。`);
       } catch {
         showNotice("無法匯出 HTML，請確認瀏覽器是否允許下載檔案。", true);
       }
@@ -4240,7 +4653,7 @@
 
     function exportItems() {
       if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady) {
-        showNotice("目前無法安全讀取行程、Checklist、費用、雨天備案或美食饗宴，已停用 JSON 匯出。", true);
+        showNotice("目前無法安全讀取行程、Checklist、費用、雨天備案/必訪景點或美食饗宴，已停用 JSON 匯出。", true);
         return;
       }
 
@@ -4264,7 +4677,7 @@
         window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
         const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
         const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
-        showNotice(`已匯出 ${items.length} 筆行程、${checklistCount} 個每日 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用、${rainyDays.length} 處雨天備案與 ${foodExperiences.length} 筆美食饗宴 JSON。`);
+        showNotice(`已匯出 ${items.length} 筆行程、${checklistCount} 個每日 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用、${rainyDays.length} 處雨天備案/必訪景點與 ${foodExperiences.length} 筆美食饗宴 JSON。`);
       } catch {
         showNotice("無法匯出 JSON，請確認瀏覽器是否允許下載檔案。", true);
       }
@@ -4313,7 +4726,7 @@
         return;
       }
 
-      if (!window.confirm("確定要從雲端同步行程嗎？\n這將會下載線上最新的 TravelingPlan.json，並覆蓋目前本機的行程、Checklist、費用、雨天備案與美食饗宴。")) {
+      if (!window.confirm("確定要從雲端同步行程嗎？\n這將會下載線上最新的 TravelingPlan.json，並覆蓋目前本機的行程、Checklist、費用、雨天備案/必訪景點與美食饗宴。")) {
         return;
       }
 
@@ -4508,7 +4921,7 @@
         return;
       }
       if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady) {
-        showNotice("目前無法安全讀取行程、Checklist、費用、雨天備案或美食饗宴，已停用匯入以避免覆蓋原資料。", true);
+        showNotice("目前無法安全讀取行程、Checklist、費用、雨天備案/必訪景點或美食饗宴，已停用匯入以避免覆蓋原資料。", true);
         return;
       }
       if (file.size > MAX_IMPORT_BYTES) {
@@ -4573,7 +4986,7 @@
           ...Object.keys(importedData.expenses)
         ]).size;
         const confirmed = window.confirm(
-          `匯入 ${format.toUpperCase()} 資料比對：\n目前：${items.length} 筆行程、${currentChecklistCount} 個每日 Checklist、${currentPreTripChecklistCount} 個行前檢查項目、${currentExpenseCount} 筆費用、${currentRainyDayCount} 處雨天備案、${currentFoodExperienceCount} 筆美食、${currentDateCount} 天\n檔案：${importedData.items.length} 筆行程、${checklistCount} 個每日 Checklist、${importedPreTripChecklistCount} 個行前檢查項目、${expenseCount} 筆費用、${importedRainyDayCount} 處雨天備案、${importedFoodExperienceCount} 筆美食、${importedDateCount} 天\n確認後會清除並取代全部本機資料。建議先匯出備份。確定繼續嗎？`
+          `匯入 ${format.toUpperCase()} 資料比對：\n目前：${items.length} 筆行程、${currentChecklistCount} 個每日 Checklist、${currentPreTripChecklistCount} 個行前檢查項目、${currentExpenseCount} 筆費用、${currentRainyDayCount} 處雨天備案/必訪景點、${currentFoodExperienceCount} 筆美食、${currentDateCount} 天\n檔案：${importedData.items.length} 筆行程、${checklistCount} 個每日 Checklist、${importedPreTripChecklistCount} 個行前檢查項目、${expenseCount} 筆費用、${importedRainyDayCount} 處雨天備案/必訪景點、${importedFoodExperienceCount} 筆美食、${importedDateCount} 天\n確認後會清除並取代全部本機資料。建議先匯出備份。確定繼續嗎？`
         );
         if (!confirmed) {
           showNotice("已取消匯入；本機資料未變更。");
@@ -4938,7 +5351,7 @@
     function renderRainyDays() {
       const container = makeElement("div", "rainy-day-container");
       if (rainyDays.length === 0) {
-        container.append(makeElement("p", "checklist-empty", "尚未新增雨天備案，可預留室內或備選景點。"));
+        container.append(makeElement("p", "checklist-empty", "尚未新增景點，可收藏雨天備案或必訪景點。"));
         return container;
       }
 
@@ -5011,7 +5424,7 @@
         const editButton = makeElement("button", "text-button", "編輯");
         editButton.type = "button";
         editButton.disabled = !storageReady || !rainyDayStorageReady;
-        editButton.setAttribute("aria-label", `編輯雨天備案：${item.location}`);
+        editButton.setAttribute("aria-label", `編輯雨天備案/必訪景點：${item.location}`);
         editButton.addEventListener("click", () => {
           startEditingRainyDay(item);
         });
@@ -5020,9 +5433,9 @@
         const deleteButton = makeElement("button", "text-button delete", "刪除");
         deleteButton.type = "button";
         deleteButton.disabled = !storageReady || !rainyDayStorageReady;
-        deleteButton.setAttribute("aria-label", `刪除雨天備案：${item.location}`);
+        deleteButton.setAttribute("aria-label", `刪除雨天備案/必訪景點：${item.location}`);
         deleteButton.addEventListener("click", () => {
-          if (!window.confirm(`確定要刪除雨天備案「${item.location}」嗎？`)) {
+          if (!window.confirm(`確定要刪除雨天備案/必訪景點「${item.location}」嗎？`)) {
             return;
           }
           const prevRainyDays = rainyDays;
@@ -5672,7 +6085,7 @@
           makeElement(
             "strong",
             "travel-expense-total-amount",
-            new Intl.NumberFormat("zh-TW", { maximumFractionDigits: 2 }).format(total)
+            `${new Intl.NumberFormat("zh-TW", { maximumFractionDigits: 2 }).format(total)}元`
           )
         );
         totals.append(totalCard);
@@ -5983,6 +6396,465 @@
       itineraryToggleButton.textContent = expanded ? "收合" : "展開";
     }
 
+    function setWeatherExpanded(expanded) {
+      weatherContent.hidden = !expanded;
+      weatherToggleButton.setAttribute("aria-expanded", String(expanded));
+      weatherToggleButton.textContent = expanded ? "收合" : "展開";
+    }
+
+    function parseWeatherSearchResults(data) {
+      if (data === null || typeof data !== "object" || data.error === true) {
+        return null;
+      }
+      if (data.results === undefined || data.results === null) {
+        return [];
+      }
+      if (!Array.isArray(data.results)) {
+        return null;
+      }
+
+      return data.results
+        .filter((result) => result !== null
+          && typeof result === "object"
+          && Number.isSafeInteger(result.id)
+          && result.id > 0
+          && typeof result.name === "string"
+          && result.name.trim().length > 0
+          && typeof result.latitude === "number"
+          && Number.isFinite(result.latitude)
+          && result.latitude >= -90
+          && result.latitude <= 90
+          && typeof result.longitude === "number"
+          && Number.isFinite(result.longitude)
+          && result.longitude >= -180
+          && result.longitude <= 180)
+        .slice(0, 5)
+        .map((result) => ({
+          geocodingId: result.id,
+          name: result.name.trim().slice(0, 100),
+          country: typeof result.country === "string" ? result.country.slice(0, 100) : "",
+          admin1: typeof result.admin1 === "string" ? result.admin1.slice(0, 100) : "",
+          latitude: result.latitude,
+          longitude: result.longitude
+        }));
+    }
+
+    function renderWeatherSearchResults(results) {
+      weatherSearchResults.replaceChildren();
+      results.forEach((result) => {
+        const button = makeElement("button", "weather-search-result");
+        button.type = "button";
+        button.disabled = !weatherStorageReady;
+        const name = makeElement("strong", "", result.name);
+        const locationDetails = [result.admin1, result.country].filter(Boolean).join("、");
+        const details = makeElement(
+          "span",
+          "",
+          locationDetails || `座標：${result.latitude.toFixed(3)}, ${result.longitude.toFixed(3)}`
+        );
+        button.append(name, details);
+        button.addEventListener("click", () => addWeatherLocation(result));
+        weatherSearchResults.append(button);
+      });
+    }
+
+    async function searchWeatherLocations() {
+      if (!weatherStorageReady || weatherSearchButton.disabled) {
+        return;
+      }
+
+      const query = weatherLocationQueryInput.value.trim().slice(0, 100);
+      if (query.length < 2) {
+        weatherSearchStatus.textContent = "請輸入至少 2 個字元的地點名稱。";
+        weatherLocationQueryInput.focus();
+        return;
+      }
+
+      weatherSearchButton.disabled = true;
+      weatherSearchButton.textContent = "搜尋中...";
+      weatherSearchStatus.textContent = "正在搜尋地點...";
+      weatherSearchResults.replaceChildren();
+      const controller = new AbortController();
+      const timeoutId = window.setTimeout(() => controller.abort(), 15000);
+      try {
+        const url = new URL(WEATHER_GEOCODING_API_URL);
+        url.searchParams.set("name", query);
+        url.searchParams.set("count", "5");
+        url.searchParams.set("language", "zh");
+        url.searchParams.set("format", "json");
+        const response = await fetch(url.toString(), {
+          cache: "no-store",
+          signal: controller.signal
+        });
+        if (!response.ok) {
+          throw new Error("地點搜尋服務回應失敗。");
+        }
+
+        const results = parseWeatherSearchResults(await response.json());
+        if (!results) {
+          throw new Error("地點搜尋資料格式無效。");
+        }
+        if (results.length === 0) {
+          weatherSearchStatus.textContent = "找不到符合的地點，請調整名稱或加上國家名稱。";
+          return;
+        }
+
+        renderWeatherSearchResults(results);
+        weatherSearchStatus.textContent = "請選擇正確的城市或地區以加入天氣清單。";
+      } catch {
+        weatherSearchStatus.textContent = "地點搜尋失敗，請確認網路連線後重試。";
+      } finally {
+        window.clearTimeout(timeoutId);
+        weatherSearchButton.disabled = !weatherStorageReady;
+        weatherSearchButton.textContent = "搜尋地點";
+      }
+    }
+
+    function addWeatherLocation(result) {
+      if (!weatherStorageReady) {
+        return;
+      }
+      if (weatherLocations.some((location) => location.geocodingId === result.geocodingId)) {
+        weatherSearchStatus.textContent = `「${result.name}」已在天氣清單中。`;
+        return;
+      }
+
+      const location = {
+        id: `weather-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
+        geocodingId: result.geocodingId,
+        name: result.name,
+        country: result.country,
+        admin1: result.admin1,
+        latitude: result.latitude,
+        longitude: result.longitude,
+        forecast: [],
+        updatedAt: null
+      };
+      const previousLocations = weatherLocations;
+      weatherLocations = [...weatherLocations, location];
+      if (!saveWeatherLocations()) {
+        weatherLocations = previousLocations;
+        renderWeatherLocations();
+        return;
+      }
+
+      weatherLocationQueryInput.value = "";
+      weatherSearchResults.replaceChildren();
+      weatherSearchStatus.textContent = `已新增「${location.name}」，正在取得七日預報。`;
+      renderWeatherLocations();
+      void refreshWeatherLocation(location.id);
+    }
+
+    function parseWeatherForecast(data) {
+      if (data === null || typeof data !== "object" || data.error === true
+        || data.daily === null || typeof data.daily !== "object") {
+        return null;
+      }
+
+      const { time, weather_code, temperature_2m_max, temperature_2m_min, precipitation_probability_max } = data.daily;
+      const dailyArrays = [time, weather_code, temperature_2m_max, temperature_2m_min, precipitation_probability_max];
+      if (!dailyArrays.every((values) => Array.isArray(values) && values.length === 7)) {
+        return null;
+      }
+
+      const forecast = [];
+      for (let index = 0; index < 7; index += 1) {
+        const date = time[index];
+        const weatherCode = weather_code[index];
+        const maximumTemperature = temperature_2m_max[index];
+        const minimumTemperature = temperature_2m_min[index];
+        const precipitationProbability = precipitation_probability_max[index];
+        const isOptionalNumber = (value) => value === null
+          || (typeof value === "number" && Number.isFinite(value));
+        if (!isValidDateString(date)
+          || !Number.isInteger(weatherCode)
+          || weatherCode < 0
+          || weatherCode > 99
+          || !isOptionalNumber(maximumTemperature)
+          || !isOptionalNumber(minimumTemperature)
+          || !(precipitationProbability === null
+            || (typeof precipitationProbability === "number"
+              && Number.isFinite(precipitationProbability)
+              && precipitationProbability >= 0
+              && precipitationProbability <= 100))) {
+          return null;
+        }
+        forecast.push({
+          date,
+          weatherCode,
+          maximumTemperature,
+          minimumTemperature,
+          precipitationProbability
+        });
+      }
+      return forecast;
+    }
+
+    function renderWeatherLocations() {
+      weatherLocationList.replaceChildren();
+      weatherRefreshAllButton.disabled = !weatherStorageReady
+        || weatherLocations.length === 0
+        || refreshingAllWeather;
+      if (weatherLocations.length === 0) {
+        weatherLocationList.append(makeElement("p", "checklist-empty", "尚未新增天氣地點。"));
+        return;
+      }
+
+      weatherLocations.forEach((location) => {
+        const card = makeElement("article", "weather-location-card");
+        const heading = makeElement("div", "weather-location-heading");
+        const nameWrap = makeElement("div", "weather-location-name");
+        const title = makeElement("h3", "", location.name);
+        const locationDetails = [location.admin1, location.country].filter(Boolean).join("、");
+        nameWrap.append(title);
+        if (locationDetails) {
+          nameWrap.append(makeElement("p", "", locationDetails));
+        }
+
+        const actions = makeElement("div", "weather-location-actions");
+        const refreshButton = makeElement(
+          "button",
+          "text-button",
+          weatherRefreshInProgress.has(location.id) ? "更新中..." : "更新"
+        );
+        refreshButton.type = "button";
+        refreshButton.disabled = !weatherStorageReady || weatherRefreshInProgress.has(location.id);
+        refreshButton.setAttribute("aria-label", `更新「${location.name}」天氣預報`);
+        refreshButton.addEventListener("click", () => {
+          void refreshWeatherLocation(location.id);
+        });
+        const deleteButton = makeElement("button", "text-button delete", "刪除");
+        deleteButton.type = "button";
+        deleteButton.disabled = !weatherStorageReady;
+        deleteButton.setAttribute("aria-label", `移除天氣地點：${location.name}`);
+        deleteButton.addEventListener("click", () => {
+          if (!window.confirm(`確定要移除天氣地點「${location.name}」嗎？`)) {
+            return;
+          }
+          const previousLocations = weatherLocations;
+          weatherLocations = weatherLocations.filter((entry) => entry.id !== location.id);
+          weatherLocationErrors.delete(location.id);
+          if (!saveWeatherLocations()) {
+            weatherLocations = previousLocations;
+          }
+          renderWeatherLocations();
+        });
+        actions.append(refreshButton, deleteButton);
+        heading.append(nameWrap, actions);
+        card.append(heading);
+
+        if (location.updatedAt) {
+          card.append(makeElement(
+            "p",
+            "weather-updated-at",
+            `更新時間：${new Date(location.updatedAt).toLocaleString("zh-TW")}`
+          ));
+        }
+        const errorMessage = weatherLocationErrors.get(location.id);
+        if (errorMessage) {
+          card.append(makeElement("p", "weather-location-error", errorMessage));
+        }
+
+        if (location.forecast.length === 0) {
+          card.append(makeElement("p", "weather-updated-at", "尚無預報資料，請更新天氣。"));
+        } else {
+          const forecastGrid = makeElement("div", "weather-forecast-grid");
+          location.forecast.forEach((day) => {
+            const dayCard = makeElement("div", "weather-forecast-day");
+            const date = new Date(`${day.date}T00:00:00Z`).toLocaleDateString("zh-TW", {
+              month: "numeric",
+              day: "numeric",
+              weekday: "short",
+              timeZone: "UTC"
+            });
+            dayCard.append(
+              makeElement("strong", "", date),
+              makeElement("span", "", WEATHER_CODE_LABELS[day.weatherCode] || "其他天氣狀況"),
+              makeElement(
+                "span",
+                "",
+                `高 ${day.maximumTemperature === null ? "—" : `${Math.round(day.maximumTemperature)}°C`}`
+              ),
+              makeElement(
+                "span",
+                "",
+                `低 ${day.minimumTemperature === null ? "—" : `${Math.round(day.minimumTemperature)}°C`}`
+              ),
+              makeElement(
+                "span",
+                "",
+                `降雨 ${day.precipitationProbability === null ? "—" : `${Math.round(day.precipitationProbability)}%`}`
+              )
+            );
+            forecastGrid.append(dayCard);
+          });
+          card.append(forecastGrid);
+        }
+
+        const sourceLink = makeElement("a", "weather-forecast-source", "Weather data by Open-Meteo.com");
+        sourceLink.href = "https://open-meteo.com/";
+        sourceLink.target = "_blank";
+        sourceLink.rel = "noopener noreferrer";
+        card.append(sourceLink);
+        weatherLocationList.append(card);
+      });
+    }
+
+    async function refreshWeatherLocation(locationId) {
+      if (!weatherStorageReady || weatherRefreshInProgress.has(locationId)) {
+        return false;
+      }
+      const location = weatherLocations.find((entry) => entry.id === locationId);
+      if (!location) {
+        return false;
+      }
+
+      weatherRefreshInProgress.add(locationId);
+      weatherLocationErrors.delete(locationId);
+      weatherRefreshStatus.textContent = `正在更新「${location.name}」的七日預報...`;
+      renderWeatherLocations();
+      const controller = new AbortController();
+      const timeoutId = window.setTimeout(() => controller.abort(), 15000);
+      try {
+        const url = new URL(WEATHER_FORECAST_API_URL);
+        url.searchParams.set("latitude", String(location.latitude));
+        url.searchParams.set("longitude", String(location.longitude));
+        url.searchParams.set(
+          "daily",
+          "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max"
+        );
+        url.searchParams.set("forecast_days", "7");
+        url.searchParams.set("timezone", "auto");
+        const response = await fetch(url.toString(), {
+          cache: "no-store",
+          signal: controller.signal
+        });
+        if (!response.ok) {
+          throw new Error("天氣服務回應失敗。");
+        }
+
+        const forecast = parseWeatherForecast(await response.json());
+        if (!forecast) {
+          throw new Error("天氣預報資料格式無效。");
+        }
+        if (!weatherLocations.some((entry) => entry.id === locationId)) {
+          return false;
+        }
+
+        const previousLocations = weatherLocations;
+        weatherLocations = weatherLocations.map((entry) => entry.id === locationId
+          ? { ...entry, forecast, updatedAt: new Date().toISOString() }
+          : entry);
+        if (!saveWeatherLocations()) {
+          weatherLocations = previousLocations;
+          weatherLocationErrors.set(locationId, "預報已取得，但無法儲存；已保留先前資料。");
+          return false;
+        }
+
+        weatherLocationErrors.delete(locationId);
+        return true;
+      } catch {
+        if (weatherLocations.some((entry) => entry.id === locationId)) {
+          weatherLocationErrors.set(locationId, "預報更新失敗，已保留先前資料；請確認網路後重試。");
+        }
+        return false;
+      } finally {
+        window.clearTimeout(timeoutId);
+        weatherRefreshInProgress.delete(locationId);
+        renderWeatherLocations();
+      }
+    }
+
+    async function refreshAllWeatherLocations(forceRefresh) {
+      if (!weatherStorageReady || refreshingAllWeather) {
+        return;
+      }
+
+      const now = Date.now();
+      const locationsToRefresh = weatherLocations.filter((location) =>
+        !weatherRefreshInProgress.has(location.id)
+        && (forceRefresh
+          || !location.updatedAt
+          || now - Date.parse(location.updatedAt) >= WEATHER_REFRESH_INTERVAL_MS)
+      );
+      if (locationsToRefresh.length === 0) {
+        weatherRefreshStatus.textContent = weatherLocations.length > 0
+          ? "所有地點的預報仍在更新時效內。"
+          : "";
+        return;
+      }
+
+      refreshingAllWeather = true;
+      renderWeatherLocations();
+      weatherRefreshStatus.textContent = "正在更新所有地點的天氣預報...";
+      let updatedCount = 0;
+      let failedCount = 0;
+      try {
+        for (const location of locationsToRefresh) {
+          if (!weatherLocations.some((entry) => entry.id === location.id)) {
+            continue;
+          }
+          if (await refreshWeatherLocation(location.id)) {
+            updatedCount += 1;
+          } else {
+            failedCount += 1;
+          }
+        }
+      } finally {
+        refreshingAllWeather = false;
+        renderWeatherLocations();
+        weatherRefreshStatus.textContent = `更新完成：成功 ${updatedCount} 個，失敗 ${failedCount} 個。`;
+      }
+    }
+
+    function initializeSectionVisibilityControls() {
+      let savedSettings = {};
+      try {
+        const savedSettingsText = window.localStorage.getItem(SECTION_VISIBILITY_STORAGE_KEY);
+        if (savedSettingsText !== null) {
+          const parsedSettings = JSON.parse(savedSettingsText);
+          if (!parsedSettings || typeof parsedSettings !== "object" || Array.isArray(parsedSettings)) {
+            throw new TypeError("區塊顯示設定格式無效");
+          }
+          savedSettings = parsedSettings;
+        }
+      } catch {
+        showNotice("無法讀取區塊顯示設定，已使用全部顯示的預設值。", true);
+      }
+
+      sectionVisibilityControls.forEach((control) => {
+        const sectionKey = control.dataset.sectionVisibilityControl;
+        const panel = sectionVisibilityPanels.get(sectionKey);
+        if (!sectionKey || !panel) {
+          showNotice("區塊顯示設定不完整，請重新載入頁面。", true);
+          return;
+        }
+
+        const savedVisibility = savedSettings[sectionKey];
+        control.checked = typeof savedVisibility === "boolean" ? savedVisibility : true;
+        panel.hidden = !control.checked;
+        control.addEventListener("change", () => {
+          const nextSettings = Object.fromEntries(
+            sectionVisibilityControls.map((sectionControl) => [
+              sectionControl.dataset.sectionVisibilityControl,
+              sectionControl.checked
+            ])
+          );
+          try {
+            window.localStorage.setItem(SECTION_VISIBILITY_STORAGE_KEY, JSON.stringify(nextSettings));
+            panel.hidden = !control.checked;
+            if (sectionKey === "weather" && control.checked) {
+              void refreshAllWeatherLocations(false);
+            }
+            clearNotice();
+          } catch {
+            control.checked = !panel.hidden;
+            showNotice("無法儲存區塊顯示設定，請檢查瀏覽器儲存空間。", true);
+          }
+        });
+      });
+    }
+
     function applyFontSize(slider, target, cssVariable, size) {
       const sizeIndex = validFontSizes.indexOf(size);
       slider.value = String(sizeIndex);
@@ -6059,6 +6931,17 @@
 
     settingsToggleButton.addEventListener("click", () => {
       setSettingsExpanded(settingsContent.hidden);
+    });
+
+    weatherToggleButton.addEventListener("click", () => {
+      setWeatherExpanded(weatherContent.hidden);
+    });
+    weatherSearchForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      void searchWeatherLocations();
+    });
+    weatherRefreshAllButton.addEventListener("click", () => {
+      void refreshAllWeatherLocations(true);
     });
 
     expenseExchangeRateUpdateButton.addEventListener("click", updateExpenseExchangeRates);
@@ -6259,15 +7142,23 @@
     preTripChecklist = loadPreTripChecklist();
     rainyDays = loadRainyDays();
     foodExperiences = loadFoodExperiences();
+    weatherLocations = loadWeatherLocations();
     expenses = loadExpenses();
     expenseExchangeRates = loadExpenseExchangeRates();
+    if (!weatherStorageReady) {
+      weatherLocationQueryInput.disabled = true;
+      weatherSearchButton.disabled = true;
+      weatherRefreshAllButton.disabled = true;
+    }
     initializeExpenseExchangeRateControls();
+    initializeSectionVisibilityControls();
+    renderWeatherLocations();
     initializeFontSizeControl(
       rainyDayFontSizeSlider,
       rainyDayListContent,
       RAINY_DAY_FONT_SIZE_STORAGE_KEY,
       "--rainy-day-font-scale",
-      "雨天備案"
+      "雨天備案/必訪景點"
     );
     initializeFontSizeControl(
       preTripFontSizeSlider,
@@ -6286,6 +7177,9 @@
     ensureDefaultItems();
     ensureV72Items();
     render();
+    if (weatherStorageReady && !sectionVisibilityPanels.get("weather")?.hidden) {
+      void refreshAllWeatherLocations(false);
+    }
     initializeDirectoryAutoSave();
   </script>
 </body>
