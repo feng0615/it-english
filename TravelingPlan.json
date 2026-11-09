@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-09T01:20:00.727Z",
+  "exportedAt": "2026-11-09T01:21:01.222Z",
   "items": [
     {
       "id": "klook-north-kyoto-2026-11-15-taxi",
@@ -394,6 +394,11 @@
     {
       "id": "pretrip-1794187158644-13br0n1f",
       "text": "預辦登機網路報到 https://booking.evaair.com/flyeva/eva/b2c/manage-your-trip/online-checked-in-login.aspx?lang=zh-tw",
+      "checked": false
+    },
+    {
+      "id": "pretrip-1794187228060-x9aegfai",
+      "text": "VJW填寫",
       "checked": false
     }
   ],
