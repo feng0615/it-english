@@ -1978,12 +1978,19 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.52</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.53</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.53</strong>
+                  <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                </div>
+                <p>打卡紀錄納入 TravelingPlan.json 雲端同步與資料夾自動存檔。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.3.52</strong>
@@ -2622,8 +2629,8 @@
           <button class="secondary-button" id="cloud-upload-button" type="button">儲存行程到雲端</button>
           <input id="import-file" type="file" accept=".json,application/json" hidden>
         </div>
-        <p class="file-sync-status">多人接力共編：匯出 JSON 傳給協作者；對方匯入、編輯後再匯出回傳。匯入會在確認後完整取代本機行程、每日 Checklist、行前檢查清單與費用；資料檔可能含私人資訊，請只透過可信管道分享。</p>
-        <p class="file-sync-status" id="file-sync-status" role="status" aria-live="polite">雲端同步：「同步雲端行程」可從 GitHub 下載最新 TravelingPlan.json；「儲存行程到雲端」可將本地儲存結果直接上傳回 GitHub 雲端檔案。</p>
+        <p class="file-sync-status">多人接力共編：匯出 JSON 傳給協作者；對方匯入、編輯後再匯出回傳。匯入會在確認後取代本機資料；資料檔可能含私人資訊，請只透過可信管道分享。</p>
+        <p class="file-sync-status" id="file-sync-status" role="status" aria-live="polite">雲端同步：「同步雲端行程」可從 GitHub 下載最新 TravelingPlan.json；「儲存行程到雲端」會將本機行程與打卡紀錄一併上傳。</p>
         <p class="notice" id="notice" role="status" aria-live="polite" hidden></p>
         <div class="day-tabs" id="day-tabs" role="tablist" aria-label="依日期切換行程"></div>
         <div id="itinerary-content" role="tabpanel"></div>
@@ -2680,14 +2687,14 @@
           </div>
           <div class="checkin-record-list" id="checkin-record-list"></div>
           <p class="checkin-attribution">
-            本頁不接收或傳送定位；打卡紀錄只保存景點名稱與時間於此瀏覽器。Google 地圖的資料處理方式請參閱<a href="https://policies.google.com/privacy?hl=zh-TW" target="_blank" rel="noopener noreferrer">Google 隱私權政策</a>。
+            本頁不接收或傳送定位；打卡紀錄保存於此瀏覽器。選擇「儲存行程到雲端」時，紀錄會一併寫入 GitHub 的 TravelingPlan.json；選擇「同步雲端行程」可在其他裝置取得。Google 地圖的資料處理方式請參閱<a href="https://policies.google.com/privacy?hl=zh-TW" target="_blank" rel="noopener noreferrer">Google 隱私權政策</a>。
           </p>
         </div>
       </section>
       </div>
     </div>
 
-    <p class="footer-note">行程、每日 Checklist、行前檢查清單、費用、雨天備案/必訪景點、美食饗宴、天氣地點與到此一遊打卡紀錄會自動儲存在這個瀏覽器；授權資料夾後，行程資料也會同步寫入該目錄的 TravelingPlan.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
+    <p class="footer-note">行程、每日 Checklist、行前檢查清單、費用、雨天備案/必訪景點、美食饗宴、天氣地點與到此一遊打卡紀錄會自動儲存在這個瀏覽器；授權資料夾後，打卡紀錄也會同步寫入該目錄的 TravelingPlan.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
   </main>
 
   <script>
@@ -3702,6 +3709,7 @@
 
       try {
         window.localStorage.setItem(CHECKIN_STORAGE_KEY, JSON.stringify(checkinRecords));
+        queueDirectorySave();
         return true;
       } catch {
         showNotice("打卡資料無法儲存到瀏覽器；重新整理後可能會遺失。請檢查瀏覽器儲存空間。", true);
@@ -3799,7 +3807,7 @@
     }
 
     async function writeItemsToDirectory() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !directoryHandle) {
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !checkinStorageReady || !directoryHandle) {
         return;
       }
 
@@ -3822,7 +3830,7 @@
     }
 
     function queueDirectorySave() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !directoryHandle) {
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !checkinStorageReady || !directoryHandle) {
         return;
       }
 
@@ -3831,7 +3839,7 @@
     }
 
     async function initializeDirectoryAutoSave() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady) {
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !checkinStorageReady) {
         return;
       }
       if (typeof window.showDirectoryPicker !== "function" || !window.indexedDB) {
@@ -4024,6 +4032,7 @@
       let importedExpenses = {};
       let importedRainyDays = [];
       let importedFoodExperiences = [];
+      let importedCheckinRecords;
       if (Array.isArray(payload)) {
         importedItems = payload;
       } else if (payload !== null
@@ -4032,6 +4041,13 @@
         && payload.version === EXPORT_VERSION
         && Array.isArray(payload.items)) {
         importedItems = payload.items;
+        if (Object.prototype.hasOwnProperty.call(payload, "checkinRecords")) {
+          if (!isValidCheckinData(payload.checkinRecords)) {
+            showNotice("檔案中的打卡紀錄格式錯誤，未匯入任何資料。", true);
+            return null;
+          }
+          importedCheckinRecords = payload.checkinRecords;
+        }
         if (Object.prototype.hasOwnProperty.call(payload, "checklists")) {
           if (!isValidChecklistData(payload.checklists)) {
             showNotice("檔案中的 Checklist 格式錯誤，未匯入任何資料。", true);
@@ -4122,6 +4138,7 @@
             }))
           ])
         ),
+        checkinRecords: importedCheckinRecords,
         rainyDays: importedRainyDays.map((item) => ({
           id: item.id,
           location: item.location,
@@ -4319,8 +4336,8 @@
     }
 
     function replaceImportedData(importedData) {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady) {
-        showNotice("目前無法安全讀取本機行程、Checklist、費用、雨天備案/必訪景點或美食饗宴，原有資料未變更。", true);
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !checkinStorageReady) {
+        showNotice("目前無法安全讀取本機行程、Checklist、費用、雨天備案/必訪景點、美食饗宴或打卡紀錄，原有資料未變更。", true);
         return;
       }
 
@@ -4330,7 +4347,9 @@
       const previousExpenses = expenses;
       const previousRainyDays = rainyDays;
       const previousFoodExperiences = foodExperiences;
-      if (!saveImportedState(importedData, previousItems, previousChecklists, previousPreTripChecklist, previousExpenses, previousRainyDays, previousFoodExperiences)) {
+      const previousCheckinRecords = checkinRecords;
+      const nextCheckinRecords = importedData.checkinRecords ?? previousCheckinRecords;
+      if (!saveImportedState(importedData, previousItems, previousChecklists, previousPreTripChecklist, previousExpenses, previousRainyDays, previousFoodExperiences, previousCheckinRecords, nextCheckinRecords)) {
         return;
       }
 
@@ -4338,6 +4357,7 @@
       checklists = importedData.checklists;
       preTripChecklist = importedData.preTripChecklist;
       expenses = importedData.expenses;
+      checkinRecords = nextCheckinRecords;
       rainyDays = importedData.rainyDays || [];
       foodExperiences = importedData.foodExperiences || [];
       expandedRainyDayIds.clear();
@@ -4356,7 +4376,7 @@
       render();
       const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
       const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
-      showNotice(`已匯入並取代本機資料：${items.length} 筆行程、${checklistCount} 個每日 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用、${rainyDays.length} 處雨天備案/必訪景點、${foodExperiences.length} 筆美食饗宴。`);
+      showNotice(`已匯入並更新本機資料：${items.length} 筆行程、${checklistCount} 個每日 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用、${rainyDays.length} 處雨天備案/必訪景點、${foodExperiences.length} 筆美食饗宴與 ${checkinRecords.length} 筆打卡紀錄。`);
     }
 
     function replaceImportedPreTripChecklist(importedChecklist) {
@@ -4378,12 +4398,13 @@
       showNotice(`已匯入 ${preTripChecklist.length} 個行前檢查項目（${completedCount} 項已完成）；其他行程資料未變更。`);
     }
 
-    function saveImportedState(importedData, previousItems, previousChecklists, previousPreTripChecklist, previousExpenses, previousRainyDays, previousFoodExperiences) {
+    function saveImportedState(importedData, previousItems, previousChecklists, previousPreTripChecklist, previousExpenses, previousRainyDays, previousFoodExperiences, previousCheckinRecords, nextCheckinRecords) {
       try {
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(importedData.items));
         window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(importedData.checklists));
         window.localStorage.setItem(PRE_TRIP_CHECKLIST_STORAGE_KEY, JSON.stringify(importedData.preTripChecklist));
         window.localStorage.setItem(EXPENSE_STORAGE_KEY, JSON.stringify(importedData.expenses));
+        window.localStorage.setItem(CHECKIN_STORAGE_KEY, JSON.stringify(nextCheckinRecords));
         window.localStorage.setItem(RAINY_DAY_STORAGE_KEY, JSON.stringify(importedData.rainyDays || []));
         window.localStorage.setItem(FOOD_EXPERIENCE_STORAGE_KEY, JSON.stringify(importedData.foodExperiences || []));
         return true;
@@ -4394,6 +4415,7 @@
           window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(previousChecklists));
           window.localStorage.setItem(PRE_TRIP_CHECKLIST_STORAGE_KEY, JSON.stringify(previousPreTripChecklist));
           window.localStorage.setItem(EXPENSE_STORAGE_KEY, JSON.stringify(previousExpenses));
+          window.localStorage.setItem(CHECKIN_STORAGE_KEY, JSON.stringify(previousCheckinRecords));
           window.localStorage.setItem(RAINY_DAY_STORAGE_KEY, JSON.stringify(previousRainyDays || []));
           window.localStorage.setItem(FOOD_EXPERIENCE_STORAGE_KEY, JSON.stringify(previousFoodExperiences || []));
         } catch {
@@ -4403,6 +4425,7 @@
         checklists = previousChecklists;
         preTripChecklist = previousPreTripChecklist;
         expenses = previousExpenses;
+        checkinRecords = previousCheckinRecords;
         rainyDays = previousRainyDays;
         foodExperiences = previousFoodExperiences;
         showNotice(
@@ -4424,6 +4447,7 @@
         checklists,
         preTripChecklist,
         expenses,
+        checkinRecords,
         rainyDays,
         foodExperiences
       };
@@ -4810,8 +4834,8 @@
     }
 
     function exportItems() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady) {
-        showNotice("目前無法安全讀取行程、Checklist、費用、雨天備案/必訪景點或美食饗宴，已停用 JSON 匯出。", true);
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !checkinStorageReady) {
+        showNotice("目前無法安全讀取行程、Checklist、費用、雨天備案/必訪景點、美食饗宴或打卡紀錄，已停用 JSON 匯出。", true);
         return;
       }
 
@@ -4835,7 +4859,7 @@
         window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
         const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
         const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
-        showNotice(`已匯出 ${items.length} 筆行程、${checklistCount} 個每日 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用、${rainyDays.length} 處雨天備案/必訪景點與 ${foodExperiences.length} 筆美食饗宴 JSON。`);
+        showNotice(`已匯出 ${items.length} 筆行程、${checklistCount} 個每日 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用、${rainyDays.length} 處雨天備案/必訪景點、${foodExperiences.length} 筆美食饗宴與 ${checkinRecords.length} 筆打卡紀錄 JSON。`);
       } catch {
         showNotice("無法匯出 JSON，請確認瀏覽器是否允許下載檔案。", true);
       }
@@ -4879,12 +4903,12 @@
     }
 
     async function syncFromCloud() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady) {
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !checkinStorageReady) {
         showNotice("目前無法安全讀取本機儲存空間，暫停同步以避免覆蓋原資料。", true);
         return;
       }
 
-      if (!window.confirm("確定要從雲端同步行程嗎？\n這將會下載線上最新的 TravelingPlan.json，並覆蓋目前本機的行程、Checklist、費用、雨天備案/必訪景點與美食饗宴。")) {
+      if (!window.confirm("確定要從雲端同步行程嗎？\n這將會下載線上最新的 TravelingPlan.json，並更新本機行程、Checklist、費用、雨天備案/必訪景點、美食饗宴與打卡紀錄。舊版雲端檔若沒有打卡欄位，會保留本機打卡紀錄。")) {
         return;
       }
 
@@ -4914,7 +4938,7 @@
     }
 
     async function uploadToCloud() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady) {
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !checkinStorageReady) {
         showNotice("目前無法安全讀取本機儲存空間，暫停上傳。", true);
         return;
       }
@@ -4940,9 +4964,9 @@
       }
 
       const confirmed = window.confirm(
-        "確定要將本機目前的行程、Checklist 與費用上傳至 GitHub 雲端嗎？\n\n" +
+        "確定要將本機目前的行程、Checklist、費用與打卡紀錄上傳至 GitHub 雲端嗎？\n\n" +
         `目標：${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/${GITHUB_FILE_PATH}\n` +
-        "這將會更新線上現有的 TravelingPlan.json。"
+        "這將會更新線上現有的 TravelingPlan.json。\n注意：打卡紀錄包含景點名稱與時間，GitHub Pages 上的檔案可透過網址讀取，請勿存入敏感資訊。"
       );
       if (!confirmed) {
         showNotice("已取消上傳；雲端資料未變更。");
@@ -5052,7 +5076,7 @@
         const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
         const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
         const backupNote = backupFileName ? `（已自動備份舊檔為 ${backupFileName}）` : "";
-        showNotice(`已成功儲存至 GitHub 雲端！${backupNote} 共 ${items.length} 筆行程、${checklistCount} 個 Checklist、${preTripChecklist.length} 個行前檢查項目與 ${expenseCount} 筆費用。`);
+        showNotice(`已成功儲存至 GitHub 雲端！${backupNote} 共 ${items.length} 筆行程、${checklistCount} 個 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用與 ${checkinRecords.length} 筆打卡紀錄。`);
       } catch (error) {
         showNotice(`雲端上傳失敗：${error.message}`, true);
       } finally {
@@ -5078,8 +5102,8 @@
         showNotice(`所選檔案不是 ${format === "html" ? "HTML" : "JSON"} 格式。`, true);
         return;
       }
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady) {
-        showNotice("目前無法安全讀取行程、Checklist、費用、雨天備案/必訪景點或美食饗宴，已停用匯入以避免覆蓋原資料。", true);
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !checkinStorageReady) {
+        showNotice("目前無法安全讀取行程、Checklist、費用、雨天備案/必訪景點、美食饗宴或打卡紀錄，已停用匯入以避免覆蓋原資料。", true);
         return;
       }
       if (file.size > MAX_IMPORT_BYTES) {
@@ -5133,6 +5157,10 @@
         const currentFoodExperienceCount = foodExperiences.length;
         const importedRainyDayCount = importedData.rainyDays.length;
         const importedFoodExperienceCount = importedData.foodExperiences.length;
+        const importedCheckinCount = importedData.checkinRecords?.length;
+        const importedCheckinSummary = importedCheckinCount === undefined
+          ? `未提供（保留本機 ${checkinRecords.length} 筆）`
+          : `${importedCheckinCount} 筆`;
         const currentDateCount = new Set([
           ...items.map((item) => item.date),
           ...Object.keys(checklists),
@@ -5144,7 +5172,7 @@
           ...Object.keys(importedData.expenses)
         ]).size;
         const confirmed = window.confirm(
-          `匯入 ${format.toUpperCase()} 資料比對：\n目前：${items.length} 筆行程、${currentChecklistCount} 個每日 Checklist、${currentPreTripChecklistCount} 個行前檢查項目、${currentExpenseCount} 筆費用、${currentRainyDayCount} 處雨天備案/必訪景點、${currentFoodExperienceCount} 筆美食、${currentDateCount} 天\n檔案：${importedData.items.length} 筆行程、${checklistCount} 個每日 Checklist、${importedPreTripChecklistCount} 個行前檢查項目、${expenseCount} 筆費用、${importedRainyDayCount} 處雨天備案/必訪景點、${importedFoodExperienceCount} 筆美食、${importedDateCount} 天\n確認後會清除並取代全部本機資料。建議先匯出備份。確定繼續嗎？`
+          `匯入 ${format.toUpperCase()} 資料比對：\n目前：${items.length} 筆行程、${currentChecklistCount} 個每日 Checklist、${currentPreTripChecklistCount} 個行前檢查項目、${currentExpenseCount} 筆費用、${currentRainyDayCount} 處雨天備案/必訪景點、${currentFoodExperienceCount} 筆美食、${checkinRecords.length} 筆打卡、${currentDateCount} 天\n檔案：${importedData.items.length} 筆行程、${checklistCount} 個每日 Checklist、${importedPreTripChecklistCount} 個行前檢查項目、${expenseCount} 筆費用、${importedRainyDayCount} 處雨天備案/必訪景點、${importedFoodExperienceCount} 筆美食、${importedCheckinSummary} 打卡、${importedDateCount} 天\n確認後會更新本機資料；若檔案未提供打卡欄位，則保留目前打卡紀錄。建議先匯出備份。確定繼續嗎？`
         );
         if (!confirmed) {
           showNotice("已取消匯入；本機資料未變更。");
@@ -6439,10 +6467,10 @@
         control.disabled = controlsLocked;
       });
       submitButton.disabled = controlsLocked;
-      exportFormat.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady;
-      importFormat.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady;
-      cloudSyncButton.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady;
-      cloudUploadButton.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady;
+      exportFormat.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !checkinStorageReady;
+      importFormat.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !checkinStorageReady;
+      cloudSyncButton.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !checkinStorageReady;
+      cloudUploadButton.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !checkinStorageReady;
       rainyDayForm.querySelectorAll("input, textarea").forEach((control) => {
         control.disabled = controlsLocked || !rainyDayStorageReady;
       });
