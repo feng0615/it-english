@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-09T01:08:53.755Z",
+  "exportedAt": "2026-11-09T01:20:00.727Z",
   "items": [
     {
       "id": "klook-north-kyoto-2026-11-15-taxi",
@@ -365,9 +365,65 @@
     }
   ],
   "checklists": {},
-  "preTripChecklist": [],
+  "preTripChecklist": [
+    {
+      "id": "pretrip-1794187125200-mmokyar3",
+      "text": "旅平險購買",
+      "checked": true
+    },
+    {
+      "id": "pretrip-1794187130170-rkgb4vlp",
+      "text": "小寶寵物旅館預訂",
+      "checked": true
+    },
+    {
+      "id": "pretrip-1794187134749-kf8ce2a1",
+      "text": "公司請假11/16-11/20",
+      "checked": true
+    },
+    {
+      "id": "pretrip-1794187141017-zb9x93h5",
+      "text": "出發往機場的計程車預訂",
+      "checked": false
+    },
+    {
+      "id": "pretrip-1794187145783-2r868j5w",
+      "text": "日幣領現",
+      "checked": false
+    },
+    {
+      "id": "pretrip-1794187158644-13br0n1f",
+      "text": "預辦登機網路報到 https://booking.evaair.com/flyeva/eva/b2c/manage-your-trip/online-checked-in-login.aspx?lang=zh-tw",
+      "checked": false
+    }
+  ],
   "expenses": {},
-  "rainyDays": [],
+  "rainyDays": [
+    {
+      "id": "rainy-1794186895772-fkx7bur5",
+      "area": "京都府京都市下京區",
+      "location": "teamLab Biovortex",
+      "notes": "線上購票 https://kyoto.tickets.teamlab.art/?_gl=1*ojn9gf*_gcl_au*MTE4OTM0OTg3LjE3OTM5NDg1NTc.*_ga*MTEyNzEwNzY3My4xNzkzOTQ4NTU3*_ga_NEMNNNFGH1*czE3OTM5NDg1OTMkbzEkZzAkdDE3OTM5NDg1OTMkajYwJGwwJGgxODM0NjI5MTU0#/"
+    },
+    {
+      "id": "rainy-1794186943069-1z5koezp",
+      "area": "京都府京都市中京區",
+      "location": "京都國際漫畫博物館",
+      "notes": "官網連結 https://kyotomm.jp/en/ ，距離Hyatt Place Kyoto走路5分鐘\\n・營業時間：10:00～17:00（最後入館時間16:30）\\n・公休日：週三（如遇國定假日則順延）、年末年初及維護休館日"
+    },
+    {
+      "id": "rainy-1794186964374-ojb1oofv",
+      "area": "京都府宇治市",
+      "location": "宇治市源氏物語博物館",
+      "notes": "官網連結\\nhttps://www.city.uji.kyoto.jp/soshiki/33/ ，地址：京都府宇治市宇治東内45-26，距離平等院走路15~20分鐘\\n交通方式(電車)\\n1．京阪宇治線「宇治站」下車，走路8分鐘\\n2．JR奈良線「宇治站」下車，走路15分鐘\\n營業時間：9:00～17:00（最後入場16:30）\\n週一（遇國定假日則隔日休假）、年末年初公休\\n門票：大人 600 日圓、兒童 300 日圓"
+    },
+    {
+      "id": "rainy-1794187095647-19eshsa3",
+      "area": "京都府京都市中京區",
+      "location": "UNIQLO 京都",
+      "notes": "• 地址：京都府京都市中京區河原町通三條下ル大黑町58（ミーナ京都 B1F～3F）\\n• 營業時間：11:00～21:00（開幕首三日 11/6–11/8 為 10:00～21:00）"
+    }
+  ],
   "foodExperiences": [
     {
       "id": "food-1794186286827-y7bau3jj",
