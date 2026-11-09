@@ -405,6 +405,26 @@
       resize: vertical;
     }
 
+    .food-experience-panel {
+      padding: 20px;
+    }
+
+    .food-experience-list-content {
+      --food-font-scale: 1;
+    }
+
+    .food-experience-list-content .rainy-day-area-tag {
+      font-size: calc(11px * var(--food-font-scale));
+    }
+
+    .food-experience-list-content .rainy-day-link {
+      font-size: calc(14px * var(--food-font-scale));
+    }
+
+    .food-experience-list-content .rainy-day-notes {
+      font-size: calc(12px * var(--food-font-scale));
+    }
+
     .form-panel-heading {
       display: flex;
       align-items: center;
@@ -580,6 +600,7 @@
     }
 
     .settings-panel {
+      grid-column: 2;
       margin-top: 14px;
       padding: 18px 20px;
     }
@@ -597,6 +618,66 @@
       color: var(--ink);
       font-size: 13px;
       font-weight: 700;
+    }
+
+    .exchange-rate-setting {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .exchange-rate-title {
+      margin: 0;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .exchange-rate-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .exchange-rate-heading .secondary-button {
+      flex: 0 0 auto;
+      min-height: 34px;
+      padding: 0 12px;
+    }
+
+    .exchange-rate-description {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .exchange-rate-status {
+      min-height: 1.2em;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .exchange-rate-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .exchange-rate-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(100px, 150px) auto;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .exchange-rate-row label,
+    .exchange-rate-unit {
+      color: var(--ink);
+      font-size: 12px;
+    }
+
+    .exchange-rate-row .expense-input {
+      min-width: 0;
     }
 
     .setting-slider-wrap {
@@ -624,14 +705,6 @@
       color: var(--muted);
       font-size: 11px;
       font-variant-numeric: tabular-nums;
-    }
-
-    .setting-slider-value {
-      min-height: 1.4em;
-      color: var(--green-dark);
-      font-size: 13px;
-      font-weight: 750;
-      text-align: right;
     }
 
     #rainy-day-list-content {
@@ -1149,6 +1222,93 @@
       background: #fff;
     }
 
+    .travel-expense-panel {
+      grid-column: 2;
+      padding: 20px;
+    }
+
+    .travel-expense-summary {
+      display: grid;
+      gap: 14px;
+    }
+
+    .travel-expense-totals {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 8px;
+    }
+
+    .travel-expense-total {
+      display: flex;
+      min-width: 0;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #f7f8f3;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .travel-expense-total:hover {
+      border-color: #b7c8bd;
+      background: #eef4ef;
+    }
+
+    .travel-expense-total:focus-visible {
+      outline: 3px solid #9a5700;
+      outline-offset: 2px;
+    }
+
+    .travel-expense-total-label,
+    .travel-expense-detail-meta,
+    .travel-expense-detail-note {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .travel-expense-total-amount {
+      color: var(--green-dark);
+      font-size: 15px;
+      overflow-wrap: anywhere;
+      text-align: right;
+    }
+
+    .travel-expense-converted-total {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid #dce5dd;
+      border-radius: 10px;
+      background: #f3f7f3;
+    }
+
+    .travel-expense-converted-total-label {
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .travel-expense-converted-total-value {
+      color: var(--green-dark);
+      font-size: 16px;
+      font-weight: 750;
+      text-align: right;
+    }
+
+    .travel-expense-converted-total-note {
+      flex-basis: 100%;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
     .expense-heading {
       display: flex;
       align-items: center;
@@ -1158,11 +1318,74 @@
       font-size: 15px;
     }
 
+    .expense-form-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .expense-form-heading-title {
+      margin: 0;
+      font-size: 13px;
+    }
+
+    .expense-form-toggle {
+      flex: 0 0 auto;
+      min-height: 34px;
+      padding: 0 12px;
+    }
+
     .expense-fields {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 8px;
       margin-top: 10px;
+    }
+
+    .expense-category-field {
+      display: grid;
+      grid-column: 1 / -1;
+      gap: 4px;
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .expense-category-field legend {
+      margin-bottom: 4px;
+      color: #485b52;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .expense-category-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+    }
+
+    .expense-category-option {
+      display: inline-flex;
+      min-height: 34px;
+      align-items: center;
+      gap: 5px;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .expense-category-option input {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      accent-color: var(--green);
+    }
+
+    .expense-category-option input:focus-visible {
+      outline: 2px solid #9a5700;
+      outline-offset: 3px;
     }
 
     .expense-field {
@@ -1365,6 +1588,11 @@
         gap: 14px;
       }
 
+      .travel-expense-panel,
+      .settings-panel {
+        grid-column: 1;
+      }
+
       .itinerary-panel {
         min-height: 0;
       }
@@ -1465,6 +1693,7 @@
       .form-panel,
       .pre-trip-panel,
       .rainy-day-panel,
+      .travel-expense-panel,
       .itinerary-panel,
       .settings-panel {
         padding: 16px;
@@ -1554,12 +1783,103 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.28</span>
+        <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.41</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.41</strong>
+                    <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                  </div>
+                  <p>新增預設收合的行程費用表單子區塊。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.40</strong>
+                    <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                  </div>
+                  <p>移除參數設定中滑桿下方重複顯示的字體百分比。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.39</strong>
+                    <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                  </div>
+                  <p>新增一鍵更新外幣匯率功能。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.38</strong>
+                    <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                  </div>
+                  <p>新增依手動設定匯率計算的新台幣費用總額。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.37</strong>
+                    <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                  </div>
+                  <p>調整費用明細報表的總計與金額單位格式。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.36</strong>
+                    <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                  </div>
+                  <p>「旅遊花費」更名為「旅遊費用」，並新增預設收合的展開／收合功能。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.35</strong>
+                    <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                  </div>
+                  <p>旅遊花費區塊改為僅顯示各幣別總額，點選後另開費用明細報表。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.34</strong>
+                    <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                  </div>
+                  <p>新增旅遊花費總覽，自動彙整費用明細並依幣別計算總額。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.33</strong>
+                    <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                  </div>
+                  <p>費用新增食衣住行育樂單選類別，以及付款人選擇與其他付款人自訂名稱。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.32</strong>
+                    <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                  </div>
+                  <p>雨天備案與美食饗宴的詳細內容支援將文字「\n」轉為換行顯示。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.31</strong>
+                    <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                  </div>
+                  <p>參數設定新增美食饗宴字體大小調整，提供 60% 至 150% 五段設定。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.30</strong>
+                    <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                  </div>
+                  <p>於雨天備案下方新增「美食饗宴」，支援區域、必填地點與備註的新增、編輯、刪除，並納入本機儲存及 JSON／HTML 匯入匯出。</p>
+                </li>
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.29</strong>
+                    <time class="version-changelog-date" datetime="2026-11-09">2026-11-09</time>
+                  </div>
+                  <p>將 Setting 區塊名稱改為「參數設定」，並將雨天備案字體滑桿移至行前檢查清單字體滑桿下方。</p>
+                </li>
                 <li>
                   <div class="version-changelog-entry-header">
                     <strong class="version-changelog-version">v1.3.28</strong>
@@ -1887,6 +2207,35 @@
             </form>
           </div>
         </section>
+
+        <section class="panel food-experience-panel" aria-labelledby="food-experience-title">
+          <div class="form-panel-heading">
+            <h2 class="panel-title" id="food-experience-title">美食饗宴</h2>
+            <button class="secondary-button form-toggle" id="food-experience-toggle" type="button" aria-expanded="false" aria-controls="food-experience-content">展開</button>
+          </div>
+          <div id="food-experience-content" hidden>
+            <p class="panel-description">收藏旅途中想品嚐的餐廳與在地美食。</p>
+            <div class="food-experience-list-content" id="food-experience-list-content"></div>
+            <form class="rainy-day-form" id="food-experience-form">
+              <div class="field">
+                <label for="food-experience-area">區域 <small style="color:var(--muted);font-weight:normal;">（選填）</small></label>
+                <input class="expense-input" id="food-experience-area" name="area" type="text" maxlength="100" placeholder="例如：京都車站周邊">
+              </div>
+              <div class="field">
+                <label for="food-experience-location">地點 <small style="color:#cf222e;">*（必填）</small></label>
+                <input class="expense-input" id="food-experience-location" name="location" type="text" maxlength="120" placeholder="例如：想品嚐的餐廳或美食" required>
+              </div>
+              <div class="field">
+                <label for="food-experience-notes">備註說明 <small style="color:var(--muted);font-weight:normal;">（選填）</small></label>
+                <textarea class="expense-input" id="food-experience-notes" name="notes" maxlength="500" placeholder="推薦菜色、營業時間、預約資訊等"></textarea>
+              </div>
+              <div class="form-actions" style="margin-top:8px;">
+                <button class="primary-button" id="food-experience-submit-button" type="submit">新增美食</button>
+                <button class="secondary-button" id="food-experience-cancel-button" type="button" hidden>取消編輯</button>
+              </div>
+            </form>
+          </div>
+        </section>
       </div>
 
       <section class="panel itinerary-panel" aria-labelledby="itinerary-title">
@@ -1926,27 +2275,24 @@
         </div>
       </section>
 
+      <section class="panel travel-expense-panel" aria-labelledby="travel-expense-title">
+        <div class="form-panel-heading">
+          <h2 class="panel-title" id="travel-expense-title">旅遊費用</h2>
+          <button class="secondary-button form-toggle" id="travel-expense-toggle" type="button" aria-expanded="false" aria-controls="travel-expense-content">展開</button>
+        </div>
+        <div id="travel-expense-content" hidden>
+          <p class="panel-description">依幣別彙總總額並換算新台幣；點選幣別金額可開啟費用明細報表。</p>
+          <div id="travel-expense-summary"></div>
+        </div>
+      </section>
+
       <section class="panel settings-panel" aria-labelledby="settings-title">
         <div class="form-panel-heading">
-          <h2 class="panel-title" id="settings-title">Setting</h2>
+          <h2 class="panel-title" id="settings-title">參數設定</h2>
           <button class="secondary-button form-toggle" id="settings-toggle" type="button" aria-expanded="false" aria-controls="settings-content">展開</button>
         </div>
         <div id="settings-content" hidden>
-          <p class="panel-description">調整雨天備案與行前檢查清單的顯示字體大小。</p>
-          <div class="setting-field">
-            <label for="rainy-day-font-size">雨天備案字體</label>
-            <div class="setting-slider-wrap">
-              <input class="setting-slider" id="rainy-day-font-size" type="range" min="0" max="4" step="1" value="2" aria-label="雨天備案字體大小" aria-valuetext="100%">
-              <div class="setting-slider-labels" aria-hidden="true">
-                <span>60%</span>
-                <span>80%</span>
-                <span>100%</span>
-                <span>120%</span>
-                <span>150%</span>
-              </div>
-              <output class="setting-slider-value" id="rainy-day-font-size-value" for="rainy-day-font-size">100%</output>
-            </div>
-          </div>
+          <p class="panel-description">調整行前檢查清單、雨天備案與美食饗宴的顯示字體大小。</p>
           <div class="setting-field">
             <label for="pre-trip-font-size">行前檢查清單字體</label>
             <div class="setting-slider-wrap">
@@ -1958,14 +2304,48 @@
                 <span>120%</span>
                 <span>150%</span>
               </div>
-              <output class="setting-slider-value" id="pre-trip-font-size-value" for="pre-trip-font-size">100%</output>
             </div>
+          </div>
+          <div class="setting-field">
+            <label for="rainy-day-font-size">雨天備案字體</label>
+            <div class="setting-slider-wrap">
+              <input class="setting-slider" id="rainy-day-font-size" type="range" min="0" max="4" step="1" value="2" aria-label="雨天備案字體大小" aria-valuetext="100%">
+              <div class="setting-slider-labels" aria-hidden="true">
+                <span>60%</span>
+                <span>80%</span>
+                <span>100%</span>
+                <span>120%</span>
+                <span>150%</span>
+              </div>
+            </div>
+          </div>
+          <div class="setting-field">
+            <label for="food-experience-font-size">美食饗宴字體</label>
+            <div class="setting-slider-wrap">
+              <input class="setting-slider" id="food-experience-font-size" type="range" min="0" max="4" step="1" value="2" aria-label="美食饗宴字體大小" aria-valuetext="100%">
+              <div class="setting-slider-labels" aria-hidden="true">
+                <span>60%</span>
+                <span>80%</span>
+                <span>100%</span>
+                <span>120%</span>
+                <span>150%</span>
+              </div>
+            </div>
+          </div>
+          <div class="setting-field exchange-rate-setting">
+            <div class="exchange-rate-heading">
+              <p class="exchange-rate-title">外幣兌新台幣匯率</p>
+              <button class="secondary-button" id="expense-exchange-rate-update" type="button">更新匯率</button>
+            </div>
+            <p class="exchange-rate-description">輸入 1 單位外幣可兌換的新台幣金額；更新會以 Frankfurter 每日參考匯率覆寫，非即時交易報價。</p>
+            <p class="exchange-rate-status" id="expense-exchange-rate-status" role="status" aria-live="polite"></p>
+            <div class="exchange-rate-list" id="expense-exchange-rates"></div>
           </div>
         </div>
       </section>
     </div>
 
-    <p class="footer-note">行程、每日 Checklist、行前檢查清單、費用與雨天備案會自動儲存在這個瀏覽器；授權資料夾後，也會同步寫入該目錄的 TravelingPlan.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
+    <p class="footer-note">行程、每日 Checklist、行前檢查清單、費用、雨天備案與美食饗宴會自動儲存在這個瀏覽器；授權資料夾後，也會同步寫入該目錄的 TravelingPlan.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
   </main>
 
   <script>
@@ -1976,8 +2356,12 @@
     const PRE_TRIP_CHECKLIST_STORAGE_KEY = "traveling-plan.pre-trip-checklist.v1";
     const PRE_TRIP_FONT_SIZE_STORAGE_KEY = "traveling-plan.pre-trip-font-size.v1";
     const RAINY_DAY_STORAGE_KEY = "traveling-plan.rainy-days.v1";
+    const FOOD_EXPERIENCE_STORAGE_KEY = "traveling-plan.food-experiences.v1";
     const RAINY_DAY_FONT_SIZE_STORAGE_KEY = "traveling-plan.rainy-day-font-size.v1";
+    const FOOD_EXPERIENCE_FONT_SIZE_STORAGE_KEY = "traveling-plan.food-experience-font-size.v1";
     const EXPENSE_STORAGE_KEY = "traveling-plan.expenses.v1";
+    const EXPENSE_EXCHANGE_RATES_STORAGE_KEY = "traveling-plan.expense-exchange-rates.v1";
+    const EXPENSE_EXCHANGE_RATES_API_URL = "https://api.frankfurter.dev/v2/rates?base=TWD&quotes=JPY,USD,EUR,CNY";
     const EXPENSE_CURRENCIES = [
       { code: "TWD", label: "新台幣" },
       { code: "JPY", label: "日幣" },
@@ -1986,6 +2370,8 @@
       { code: "CNY", label: "人民幣" }
     ];
     const EXPENSE_PAYMENT_METHODS = ["現金", "刷卡", "電子支付", "轉帳"];
+    const EXPENSE_CATEGORIES = ["食", "衣", "住", "行", "育", "樂"];
+    const EXPENSE_PAYER_OPTIONS = ["Michael", "Ealing"];
     const EXPORT_FORMAT = "traveling-plan";
     const EXPORT_VERSION = 1;
     const PRE_TRIP_CHECKLIST_EXPORT_FORMAT = "traveling-plan-pre-trip-checklist";
@@ -2152,17 +2538,29 @@
     const rainyDayContent = document.querySelector("#rainy-day-content");
     const settingsToggleButton = document.querySelector("#settings-toggle");
     const settingsContent = document.querySelector("#settings-content");
+    const expenseExchangeRateUpdateButton = document.querySelector("#expense-exchange-rate-update");
+    const expenseExchangeRateStatus = document.querySelector("#expense-exchange-rate-status");
+    const expenseExchangeRatesContainer = document.querySelector("#expense-exchange-rates");
+    const travelExpenseToggleButton = document.querySelector("#travel-expense-toggle");
+    const travelExpenseContent = document.querySelector("#travel-expense-content");
+    const travelExpenseSummary = document.querySelector("#travel-expense-summary");
     const rainyDayListContent = document.querySelector("#rainy-day-list-content");
     const rainyDayForm = document.querySelector("#rainy-day-form");
     const rainyDayLocationInput = document.querySelector("#rainy-day-location");
     const rainyDaySubmitButton = document.querySelector("#rainy-day-submit-button");
     const rainyDayCancelButton = document.querySelector("#rainy-day-cancel-button");
+    const foodExperienceToggleButton = document.querySelector("#food-experience-toggle");
+    const foodExperienceContent = document.querySelector("#food-experience-content");
+    const foodExperienceListContent = document.querySelector("#food-experience-list-content");
+    const foodExperienceForm = document.querySelector("#food-experience-form");
+    const foodExperienceLocationInput = document.querySelector("#food-experience-location");
+    const foodExperienceSubmitButton = document.querySelector("#food-experience-submit-button");
+    const foodExperienceCancelButton = document.querySelector("#food-experience-cancel-button");
     const itineraryToggleButton = document.querySelector("#itinerary-toggle");
     const itineraryPanelContent = document.querySelector("#itinerary-panel-content");
     const rainyDayFontSizeSlider = document.querySelector("#rainy-day-font-size");
-    const rainyDayFontSizeValue = document.querySelector("#rainy-day-font-size-value");
     const preTripFontSizeSlider = document.querySelector("#pre-trip-font-size");
-    const preTripFontSizeValue = document.querySelector("#pre-trip-font-size-value");
+    const foodExperienceFontSizeSlider = document.querySelector("#food-experience-font-size");
     const submitButton = document.querySelector("#submit-button");
     const cancelButton = document.querySelector("#cancel-button");
     const itemCount = document.querySelector("#item-count");
@@ -2183,13 +2581,17 @@
     let checklists = {};
     let preTripChecklist = [];
     let rainyDays = [];
+    let foodExperiences = [];
     let expenses = {};
+    let expenseExchangeRates = {};
     let editingId = null;
     let editingChecklistId = null;
     let editingExpenseId = null;
     let editingExpenseDate = null;
     let editingRainyDayId = null;
+    let editingFoodExperienceId = null;
     const expandedRainyDayIds = new Set();
+    const expandedFoodExperienceIds = new Set();
     const validFontSizes = ["0.6", "0.8", "1", "1.2", "1.5"];
     let currentDay = null;
     let draggedItemId = null;
@@ -2197,6 +2599,7 @@
     let checklistStorageReady = true;
     let preTripChecklistStorageReady = true;
     let rainyDayStorageReady = true;
+    let foodExperienceStorageReady = true;
     let expenseStorageReady = true;
     let directoryHandle = null;
     let fileSaveQueue = Promise.resolve();
@@ -2298,6 +2701,34 @@
       return true;
     }
 
+    function isFoodExperienceItem(item) {
+      return item !== null
+        && typeof item === "object"
+        && typeof item.id === "string"
+        && item.id.trim().length > 0
+        && item.id.length <= 128
+        && typeof item.location === "string"
+        && item.location.trim().length > 0
+        && item.location.length <= 120
+        && (item.area === undefined || (typeof item.area === "string" && item.area.length <= 100))
+        && (item.notes === undefined || (typeof item.notes === "string" && item.notes.length <= 500));
+    }
+
+    function isValidFoodExperienceData(data) {
+      if (!Array.isArray(data) || !data.every(isFoodExperienceItem)) {
+        return false;
+      }
+
+      const seenIds = new Set();
+      for (const item of data) {
+        if (seenIds.has(item.id)) {
+          return false;
+        }
+        seenIds.add(item.id);
+      }
+      return true;
+    }
+
     function isExpenseItem(item) {
       return item !== null
         && typeof item === "object"
@@ -2312,6 +2743,9 @@
         && Number.isFinite(item.amount)
         && item.amount >= 0
         && EXPENSE_PAYMENT_METHODS.includes(item.paymentMethod)
+        && (item.category === undefined || EXPENSE_CATEGORIES.includes(item.category))
+        && (item.payer === undefined
+          || (typeof item.payer === "string" && item.payer.trim().length > 0 && item.payer.length <= 60))
         && (item.note === undefined || (typeof item.note === "string" && item.note.length <= 100));
     }
 
@@ -2333,6 +2767,20 @@
         }
       }
       return true;
+    }
+
+    function isValidExpenseExchangeRateData(data) {
+      if (data === null || typeof data !== "object" || Array.isArray(data)) {
+        return false;
+      }
+
+      return Object.entries(data).every(([currencyCode, rate]) =>
+        currencyCode !== "TWD"
+        && EXPENSE_CURRENCIES.some((currency) => currency.code === currencyCode)
+        && typeof rate === "number"
+        && Number.isFinite(rate)
+        && rate > 0
+      );
     }
 
     function loadItems() {
@@ -2416,6 +2864,25 @@
       }
     }
 
+    function loadFoodExperiences() {
+      try {
+        const savedFoodExperiences = window.localStorage.getItem(FOOD_EXPERIENCE_STORAGE_KEY);
+        if (savedFoodExperiences === null) {
+          return [];
+        }
+
+        const parsedFoodExperiences = JSON.parse(savedFoodExperiences);
+        if (!isValidFoodExperienceData(parsedFoodExperiences)) {
+          throw new Error("美食饗宴資料格式不正確。");
+        }
+        return parsedFoodExperiences;
+      } catch {
+        foodExperienceStorageReady = false;
+        showNotice("無法讀取本機美食饗宴資料，為避免覆蓋原資料，暫時停用美食饗宴編輯。", true);
+        return [];
+      }
+    }
+
     function loadExpenses() {
       try {
         const savedExpenses = window.localStorage.getItem(EXPENSE_STORAGE_KEY);
@@ -2432,6 +2899,171 @@
         expenseStorageReady = false;
         showNotice("無法讀取本機費用資料，為避免覆蓋原資料，暫時停用費用編輯。", true);
         return {};
+      }
+    }
+
+    function loadExpenseExchangeRates() {
+      try {
+        const savedRates = window.localStorage.getItem(EXPENSE_EXCHANGE_RATES_STORAGE_KEY);
+        if (savedRates === null) {
+          return {};
+        }
+
+        const parsedRates = JSON.parse(savedRates);
+        if (!isValidExpenseExchangeRateData(parsedRates)) {
+          throw new Error("匯率資料格式不正確。");
+        }
+        return parsedRates;
+      } catch {
+        showNotice("無法讀取本機匯率設定，將不使用未確認的匯率計算。", true);
+        return {};
+      }
+    }
+
+    function persistExpenseExchangeRates(rates) {
+      try {
+        window.localStorage.setItem(EXPENSE_EXCHANGE_RATES_STORAGE_KEY, JSON.stringify(rates));
+        return true;
+      } catch {
+        showNotice("匯率設定無法儲存到瀏覽器；請檢查瀏覽器儲存空間。", true);
+        return false;
+      }
+    }
+
+    function parseFetchedExpenseExchangeRates(data) {
+      if (!Array.isArray(data)) {
+        return null;
+      }
+
+      const rates = {};
+      const dates = new Set();
+      for (const currency of EXPENSE_CURRENCIES.filter((item) => item.code !== "TWD")) {
+        const matches = data.filter((item) =>
+          item !== null
+          && typeof item === "object"
+          && item.base === "TWD"
+          && item.quote === currency.code
+        );
+        if (matches.length !== 1) {
+          return null;
+        }
+
+        const { date, rate } = matches[0];
+        if (!isValidDateString(date) || typeof rate !== "number" || !Number.isFinite(rate) || rate <= 0) {
+          return null;
+        }
+
+        const convertedRate = Number((1 / rate).toPrecision(8));
+        if (!Number.isFinite(convertedRate) || convertedRate <= 0) {
+          return null;
+        }
+        rates[currency.code] = convertedRate;
+        dates.add(date);
+      }
+
+      return { rates, date: [...dates].sort().join("、") };
+    }
+
+    function initializeExpenseExchangeRateControls() {
+      expenseExchangeRatesContainer.replaceChildren();
+      EXPENSE_CURRENCIES.filter((currency) => currency.code !== "TWD").forEach((currency) => {
+        const inputId = `expense-exchange-rate-${currency.code.toLowerCase()}`;
+        const row = makeElement("div", "exchange-rate-row");
+        const label = makeElement("label", "", `1 ${currency.label}（${currency.code}）兌換新台幣`);
+        const input = makeElement("input", "expense-input");
+        input.id = inputId;
+        input.type = "number";
+        input.min = "0.000001";
+        input.step = "any";
+        input.inputMode = "decimal";
+        input.value = expenseExchangeRates[currency.code] === undefined
+          ? ""
+          : String(expenseExchangeRates[currency.code]);
+        label.htmlFor = inputId;
+        input.addEventListener("change", () => {
+          const value = input.value.trim();
+          const nextRates = { ...expenseExchangeRates };
+          if (value === "") {
+            delete nextRates[currency.code];
+          } else {
+            const rate = Number(value);
+            if (!Number.isFinite(rate) || rate <= 0) {
+              input.value = expenseExchangeRates[currency.code] === undefined
+                ? ""
+                : String(expenseExchangeRates[currency.code]);
+              showNotice("匯率必須是大於 0 的有效數字。", true);
+              return;
+            }
+            nextRates[currency.code] = rate;
+          }
+
+          if (!persistExpenseExchangeRates(nextRates)) {
+            input.value = expenseExchangeRates[currency.code] === undefined
+              ? ""
+              : String(expenseExchangeRates[currency.code]);
+            return;
+          }
+          expenseExchangeRates = nextRates;
+          clearNotice();
+          expenseExchangeRateStatus.textContent = "已儲存手動匯率設定。";
+          travelExpenseSummary.replaceChildren(renderTravelExpenseSummary());
+        });
+        row.append(label, input, makeElement("span", "exchange-rate-unit", "元"));
+        expenseExchangeRatesContainer.append(row);
+      });
+    }
+
+    async function updateExpenseExchangeRates() {
+      if (expenseExchangeRateUpdateButton.disabled) {
+        return;
+      }
+
+      const rateInputs = [...expenseExchangeRatesContainer.querySelectorAll("input")];
+      expenseExchangeRateUpdateButton.disabled = true;
+      expenseExchangeRateUpdateButton.textContent = "更新中...";
+      expenseExchangeRateStatus.textContent = "正在取得最新每日匯率...";
+      rateInputs.forEach((input) => {
+        input.disabled = true;
+      });
+
+      const controller = new AbortController();
+      const timeoutId = window.setTimeout(() => controller.abort(), 15000);
+      try {
+        const response = await fetch(EXPENSE_EXCHANGE_RATES_API_URL, {
+          cache: "no-store",
+          signal: controller.signal
+        });
+        if (!response.ok) {
+          throw new Error("匯率服務回應失敗。");
+        }
+
+        const fetchedRates = parseFetchedExpenseExchangeRates(await response.json());
+        if (!fetchedRates) {
+          throw new Error("匯率資料格式無效或缺少幣別。");
+        }
+        if (!persistExpenseExchangeRates(fetchedRates.rates)) {
+          expenseExchangeRateStatus.textContent = "儲存失敗，原匯率未變更。";
+          return;
+        }
+
+        expenseExchangeRates = fetchedRates.rates;
+        EXPENSE_CURRENCIES.filter((currency) => currency.code !== "TWD").forEach((currency) => {
+          const input = document.querySelector(`#expense-exchange-rate-${currency.code.toLowerCase()}`);
+          input.value = String(expenseExchangeRates[currency.code]);
+        });
+        travelExpenseSummary.replaceChildren(renderTravelExpenseSummary());
+        clearNotice();
+        expenseExchangeRateStatus.textContent = `更新完成，資料日期：${fetchedRates.date}`;
+      } catch {
+        expenseExchangeRateStatus.textContent = "更新失敗，原匯率未變更；請確認網路連線後重試。";
+        showNotice("無法取得有效匯率資料，原有匯率未變更。", true);
+      } finally {
+        window.clearTimeout(timeoutId);
+        rateInputs.forEach((input) => {
+          input.disabled = false;
+        });
+        expenseExchangeRateUpdateButton.disabled = false;
+        expenseExchangeRateUpdateButton.textContent = "更新匯率";
       }
     }
 
@@ -2487,6 +3119,21 @@
         return true;
       } catch {
         showNotice("雨天備案無法儲存到瀏覽器；重新整理後可能會遺失。請檢查瀏覽器儲存空間。", true);
+        return false;
+      }
+    }
+
+    function saveFoodExperiences() {
+      if (!storageReady || !foodExperienceStorageReady) {
+        return false;
+      }
+
+      try {
+        window.localStorage.setItem(FOOD_EXPERIENCE_STORAGE_KEY, JSON.stringify(foodExperiences));
+        queueDirectorySave();
+        return true;
+      } catch {
+        showNotice("美食饗宴資料無法儲存到瀏覽器；重新整理後可能會遺失。請檢查瀏覽器儲存空間。", true);
         return false;
       }
     }
@@ -2581,7 +3228,7 @@
     }
 
     async function writeItemsToDirectory() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !directoryHandle) {
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !directoryHandle) {
         return;
       }
 
@@ -2604,7 +3251,7 @@
     }
 
     function queueDirectorySave() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !directoryHandle) {
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !directoryHandle) {
         return;
       }
 
@@ -2613,7 +3260,7 @@
     }
 
     async function initializeDirectoryAutoSave() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady) {
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady) {
         return;
       }
       if (typeof window.showDirectoryPicker !== "function" || !window.indexedDB) {
@@ -2693,6 +3340,10 @@
           showNotice("設定自動存檔失敗；請確認瀏覽器允許資料夾存取，並重新嘗試。", true);
         }
       }
+    }
+
+    function getDetailTextLines(text) {
+      return String(text).replace(/(?:\\r)?\\n/g, "\n").split("\n");
     }
 
     function ensureDefaultItems() {
@@ -2801,6 +3452,7 @@
       let importedPreTripChecklist = [];
       let importedExpenses = {};
       let importedRainyDays = [];
+      let importedFoodExperiences = [];
       if (Array.isArray(payload)) {
         importedItems = payload;
       } else if (payload !== null
@@ -2829,6 +3481,13 @@
             return null;
           }
           importedRainyDays = payload.rainyDays;
+        }
+        if (Object.prototype.hasOwnProperty.call(payload, "foodExperiences")) {
+          if (!isValidFoodExperienceData(payload.foodExperiences)) {
+            showNotice("檔案中的美食饗宴格式錯誤，未匯入任何資料。", true);
+            return null;
+          }
+          importedFoodExperiences = payload.foodExperiences;
         }
         if (Object.prototype.hasOwnProperty.call(payload, "expenses")) {
           if (!isValidExpenseData(payload.expenses)) {
@@ -2886,11 +3545,19 @@
               currency: expense.currency,
               amount: expense.amount,
               paymentMethod: expense.paymentMethod,
+              ...(expense.category ? { category: expense.category } : {}),
+              ...(expense.payer ? { payer: expense.payer.trim().slice(0, 60) } : {}),
               ...(expense.note && typeof expense.note === "string" ? { note: expense.note.trim().slice(0, 100) } : {})
             }))
           ])
         ),
         rainyDays: importedRainyDays.map((item) => ({
+          id: item.id,
+          location: item.location,
+          ...(item.area && typeof item.area === "string" ? { area: item.area.trim().slice(0, 100) } : {}),
+          ...(item.notes && typeof item.notes === "string" ? { notes: item.notes.trim().slice(0, 500) } : {})
+        })),
+        foodExperiences: importedFoodExperiences.map((item) => ({
           id: item.id,
           location: item.location,
           ...(item.area && typeof item.area === "string" ? { area: item.area.trim().slice(0, 100) } : {}),
@@ -2971,6 +3638,7 @@
 
       const seenDates = new Set();
       let importedRainyDays = [];
+      let importedFoodExperiences = [];
       const rainySection = parsedDocument.querySelector("[data-rainy-day-section]");
       if (rainySection) {
         importedRainyDays = [...rainySection.querySelectorAll("[data-rainy-id]")].map((entry) => ({
@@ -2985,7 +3653,21 @@
         }
       }
 
-      const daySections = [...parsedDocument.querySelectorAll("article > section.day:not([data-pre-trip-checklist]):not([data-rainy-day-section])")];
+      const foodSection = parsedDocument.querySelector("[data-food-experience-section]");
+      if (foodSection) {
+        importedFoodExperiences = [...foodSection.querySelectorAll("[data-food-id]")].map((entry) => ({
+          id: entry.getAttribute("data-food-id") || "",
+          area: entry.getAttribute("data-food-area") || "",
+          location: entry.getAttribute("data-food-location") || "",
+          notes: entry.getAttribute("data-food-notes") || ""
+        }));
+        if (!isValidFoodExperienceData(importedFoodExperiences)) {
+          showNotice("HTML 檔案中的美食饗宴格式錯誤，未匯入任何資料。", true);
+          return null;
+        }
+      }
+
+      const daySections = [...parsedDocument.querySelectorAll("article > section.day:not([data-pre-trip-checklist]):not([data-rainy-day-section]):not([data-food-experience-section])")];
       for (const section of daySections) {
         const dateMatch = /^day-(\d{4}-\d{2}-\d{2})$/.exec(section.id);
         if (!dateMatch || !isValidDateString(dateMatch[1]) || seenDates.has(dateMatch[1])
@@ -3037,6 +3719,8 @@
               currency: entry.getAttribute("data-expense-currency") || "",
               amount: amount === null ? Number.NaN : Number(amount),
               paymentMethod: entry.getAttribute("data-expense-payment") || "",
+              ...(entry.getAttribute("data-expense-category") ? { category: entry.getAttribute("data-expense-category") } : {}),
+              ...(entry.getAttribute("data-expense-payer") ? { payer: entry.getAttribute("data-expense-payer").slice(0, 60) } : {}),
               ...(note ? { note: note.slice(0, 100) } : {})
             };
           });
@@ -3058,13 +3742,14 @@
         checklists: importedChecklists,
         preTripChecklist: importedPreTripChecklist,
         expenses: importedExpenses,
-        rainyDays: importedRainyDays
+        rainyDays: importedRainyDays,
+        foodExperiences: importedFoodExperiences
       };
     }
 
     function replaceImportedData(importedData) {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady) {
-        showNotice("目前無法安全讀取本機行程、Checklist、費用或雨天備案，原有資料未變更。", true);
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady) {
+        showNotice("目前無法安全讀取本機行程、Checklist、費用、雨天備案或美食饗宴，原有資料未變更。", true);
         return;
       }
 
@@ -3073,7 +3758,8 @@
       const previousPreTripChecklist = preTripChecklist;
       const previousExpenses = expenses;
       const previousRainyDays = rainyDays;
-      if (!saveImportedState(importedData, previousItems, previousChecklists, previousPreTripChecklist, previousExpenses, previousRainyDays)) {
+      const previousFoodExperiences = foodExperiences;
+      if (!saveImportedState(importedData, previousItems, previousChecklists, previousPreTripChecklist, previousExpenses, previousRainyDays, previousFoodExperiences)) {
         return;
       }
 
@@ -3082,10 +3768,13 @@
       preTripChecklist = importedData.preTripChecklist;
       expenses = importedData.expenses;
       rainyDays = importedData.rainyDays || [];
+      foodExperiences = importedData.foodExperiences || [];
       expandedRainyDayIds.clear();
+      expandedFoodExperienceIds.clear();
       editingExpenseId = null;
       editingExpenseDate = null;
       cancelEditingRainyDay();
+      cancelEditingFoodExperience();
       const dates = [...new Set([
         ...items.map((item) => item.date),
         ...Object.keys(checklists),
@@ -3096,7 +3785,7 @@
       render();
       const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
       const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
-      showNotice(`已匯入並取代本機資料：${items.length} 筆行程、${checklistCount} 個每日 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用、${rainyDays.length} 處雨天備案。`);
+      showNotice(`已匯入並取代本機資料：${items.length} 筆行程、${checklistCount} 個每日 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用、${rainyDays.length} 處雨天備案、${foodExperiences.length} 筆美食饗宴。`);
     }
 
     function replaceImportedPreTripChecklist(importedChecklist) {
@@ -3118,13 +3807,14 @@
       showNotice(`已匯入 ${preTripChecklist.length} 個行前檢查項目（${completedCount} 項已完成）；其他行程資料未變更。`);
     }
 
-    function saveImportedState(importedData, previousItems, previousChecklists, previousPreTripChecklist, previousExpenses, previousRainyDays) {
+    function saveImportedState(importedData, previousItems, previousChecklists, previousPreTripChecklist, previousExpenses, previousRainyDays, previousFoodExperiences) {
       try {
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(importedData.items));
         window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(importedData.checklists));
         window.localStorage.setItem(PRE_TRIP_CHECKLIST_STORAGE_KEY, JSON.stringify(importedData.preTripChecklist));
         window.localStorage.setItem(EXPENSE_STORAGE_KEY, JSON.stringify(importedData.expenses));
         window.localStorage.setItem(RAINY_DAY_STORAGE_KEY, JSON.stringify(importedData.rainyDays || []));
+        window.localStorage.setItem(FOOD_EXPERIENCE_STORAGE_KEY, JSON.stringify(importedData.foodExperiences || []));
         return true;
       } catch {
         let rollbackFailed = false;
@@ -3134,6 +3824,7 @@
           window.localStorage.setItem(PRE_TRIP_CHECKLIST_STORAGE_KEY, JSON.stringify(previousPreTripChecklist));
           window.localStorage.setItem(EXPENSE_STORAGE_KEY, JSON.stringify(previousExpenses));
           window.localStorage.setItem(RAINY_DAY_STORAGE_KEY, JSON.stringify(previousRainyDays || []));
+          window.localStorage.setItem(FOOD_EXPERIENCE_STORAGE_KEY, JSON.stringify(previousFoodExperiences || []));
         } catch {
           rollbackFailed = true;
         }
@@ -3142,6 +3833,7 @@
         preTripChecklist = previousPreTripChecklist;
         expenses = previousExpenses;
         rainyDays = previousRainyDays;
+        foodExperiences = previousFoodExperiences;
         showNotice(
           rollbackFailed
             ? "匯入儲存失敗且無法完整回復瀏覽器資料；請立即匯出目前可讀取的資料。"
@@ -3161,7 +3853,8 @@
         checklists,
         preTripChecklist,
         expenses,
-        rainyDays
+        rainyDays,
+        foodExperiences
       };
     }
 
@@ -3274,11 +3967,23 @@
           mapsUrl.searchParams.set("query", item.location);
           const areaTag = item.area ? `<span class="rainy-day-area-tag">${escapeHtml(item.area)}</span> ` : "";
           const notesText = item.notes
-            ? `<p class="notes">${getChecklistTextParts(item.notes).map((part) => part.href ? `<a class="checklist-link" href="${escapeHtml(part.href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(part.text)}</a>` : escapeHtml(part.text)).join("")}</p>`
+            ? `<p class="notes">${getDetailTextLines(item.notes).map((line) => getChecklistTextParts(line).map((part) => part.href ? `<a class="checklist-link" href="${escapeHtml(part.href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(part.text)}</a>` : escapeHtml(part.text)).join("")).join("<br>")}</p>`
             : "";
           return `<li data-rainy-id="${escapeHtml(item.id)}" data-rainy-area="${escapeHtml(item.area || "")}" data-rainy-location="${escapeHtml(item.location)}" data-rainy-notes="${escapeHtml(item.notes || "")}"><div class="event-heading">${areaTag}<a href="${escapeHtml(mapsUrl.toString())}" target="_blank" rel="noopener noreferrer" style="color:#2da44e;text-decoration:underline;"><strong>${escapeHtml(item.location)}</strong> ↗</a></div>${notesText}</li>`;
         }).join("")}</ul>`
         : `<p class="empty">尚未安排雨天備案。</p>`}</div></section>`;
+      const foodExperienceSection = `<section class="day" data-food-experience-section><h3 class="day-heading">🍜 美食饗宴</h3><div class="rainy-day-export-section"><h4>想品嚐的美食 <small>${foodExperiences.length} 筆</small></h4>${foodExperiences.length > 0
+        ? `<ul class="rainy-day-export-list">${sortRainyDays(foodExperiences).map((item) => {
+          const mapsUrl = new URL("https://www.google.com/maps/search/");
+          mapsUrl.searchParams.set("api", "1");
+          mapsUrl.searchParams.set("query", item.location);
+          const areaTag = item.area ? `<span class="rainy-day-area-tag">${escapeHtml(item.area)}</span> ` : "";
+          const notesText = item.notes
+            ? `<p class="notes">${getDetailTextLines(item.notes).map((line) => getChecklistTextParts(line).map((part) => part.href ? `<a class="checklist-link" href="${escapeHtml(part.href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(part.text)}</a>` : escapeHtml(part.text)).join("")).join("<br>")}</p>`
+            : "";
+          return `<li data-food-id="${escapeHtml(item.id)}" data-food-area="${escapeHtml(item.area || "")}" data-food-location="${escapeHtml(item.location)}" data-food-notes="${escapeHtml(item.notes || "")}"><div class="event-heading">${areaTag}<a href="${escapeHtml(mapsUrl.toString())}" target="_blank" rel="noopener noreferrer" style="color:#2da44e;text-decoration:underline;"><strong>${escapeHtml(item.location)}</strong> ↗</a></div>${notesText}</li>`;
+        }).join("")}</ul>`
+        : `<p class="empty">尚未新增想品嚐的美食。</p>`}</div></section>`;
       const summaryRows = dates.map((date, index) => {
         const dayItems = sortDayItems(items.filter((item) => item.date === date));
         const dayChecklist = checklists[date] || [];
@@ -3323,8 +4028,10 @@
           ? `<ul class="expense-list">${dayExpenses.map((expense) => {
             const currencyLabel = EXPENSE_CURRENCIES.find((currency) => currency.code === expense.currency).label;
             const amountText = new Intl.NumberFormat("zh-TW", { maximumFractionDigits: 2 }).format(expense.amount);
+            const categoryLabel = expense.category || "未分類";
+            const payerLabel = expense.payer || "未指定";
             const paymentNoteText = expense.paymentMethod !== "現金" && expense.note ? `（${escapeHtml(expense.note)}）` : "";
-            return `<li class="expense-entry" data-expense-id="${escapeHtml(expense.id)}" data-expense-name="${escapeHtml(expense.name)}" data-expense-currency="${escapeHtml(expense.currency)}" data-expense-amount="${escapeHtml(expense.amount)}" data-expense-payment="${escapeHtml(expense.paymentMethod)}" data-expense-note="${escapeHtml(expense.note || "")}"><span class="expense-name">${escapeHtml(expense.name)}</span><span class="expense-meta">${currencyLabel}・${amountText} 元・${escapeHtml(expense.paymentMethod)}${paymentNoteText}</span></li>`;
+            return `<li class="expense-entry" data-expense-id="${escapeHtml(expense.id)}" data-expense-name="${escapeHtml(expense.name)}" data-expense-category="${escapeHtml(expense.category || "")}" data-expense-payer="${escapeHtml(expense.payer || "")}" data-expense-currency="${escapeHtml(expense.currency)}" data-expense-amount="${escapeHtml(expense.amount)}" data-expense-payment="${escapeHtml(expense.paymentMethod)}" data-expense-note="${escapeHtml(expense.note || "")}"><span class="expense-name">${escapeHtml(expense.name)}</span><span class="expense-meta">${escapeHtml(categoryLabel)}・${escapeHtml(payerLabel)}・${currencyLabel}・${amountText} 元・${escapeHtml(expense.paymentMethod)}${paymentNoteText}</span></li>`;
           }).join("")}</ul>`
           : `<p class="empty">當天沒有費用紀錄。</p>`;
         const expenseSection = `<div class="expense-section" data-expense-section><h4>費用列表 <small>${dayExpenses.length} 筆</small></h4>${expenseList}</div>`;
@@ -3431,6 +4138,8 @@
     ${preTripChecklistSection}
     <h2>☔ 雨天備案</h2>
     ${rainyDaySection}
+    <h2>🍜 美食饗宴</h2>
+    ${foodExperienceSection}
     <h2>📋 每日詳細行程</h2>
     ${daySections || `<p class="empty">尚無每日資料。</p>`}
     <p class="footer">此 HTML 為匯出當下的靜態行程檔；如需多人接力編修，請使用 JSON 匯出／匯入。</p>
@@ -3501,8 +4210,8 @@
     }
 
     function exportHtml() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady) {
-        showNotice("目前無法安全讀取行程、Checklist、費用或雨天備案，已停用 HTML 匯出。", true);
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady) {
+        showNotice("目前無法安全讀取行程、Checklist、費用、雨天備案或美食饗宴，已停用 HTML 匯出。", true);
         return;
       }
 
@@ -3523,15 +4232,15 @@
         link.remove();
         window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
         const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
-        showNotice(`已匯出 ${items.length} 筆行程、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用與 ${rainyDays.length} 處雨天備案的 HTML 檔。`);
+        showNotice(`已匯出 ${items.length} 筆行程、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用、${rainyDays.length} 處雨天備案與 ${foodExperiences.length} 筆美食饗宴的 HTML 檔。`);
       } catch {
         showNotice("無法匯出 HTML，請確認瀏覽器是否允許下載檔案。", true);
       }
     }
 
     function exportItems() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady) {
-        showNotice("目前無法安全讀取行程、Checklist、費用或雨天備案，已停用 JSON 匯出。", true);
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady) {
+        showNotice("目前無法安全讀取行程、Checklist、費用、雨天備案或美食饗宴，已停用 JSON 匯出。", true);
         return;
       }
 
@@ -3555,7 +4264,7 @@
         window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
         const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
         const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
-        showNotice(`已匯出 ${items.length} 筆行程、${checklistCount} 個每日 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用與 ${rainyDays.length} 處雨天備案 JSON。`);
+        showNotice(`已匯出 ${items.length} 筆行程、${checklistCount} 個每日 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用、${rainyDays.length} 處雨天備案與 ${foodExperiences.length} 筆美食饗宴 JSON。`);
       } catch {
         showNotice("無法匯出 JSON，請確認瀏覽器是否允許下載檔案。", true);
       }
@@ -3599,12 +4308,12 @@
     }
 
     async function syncFromCloud() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady) {
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady) {
         showNotice("目前無法安全讀取本機儲存空間，暫停同步以避免覆蓋原資料。", true);
         return;
       }
 
-      if (!window.confirm("確定要從雲端同步行程嗎？\n這將會下載線上最新的 TravelingPlan.json，並覆蓋目前本機的行程、Checklist、費用與雨天備案。")) {
+      if (!window.confirm("確定要從雲端同步行程嗎？\n這將會下載線上最新的 TravelingPlan.json，並覆蓋目前本機的行程、Checklist、費用、雨天備案與美食饗宴。")) {
         return;
       }
 
@@ -3634,7 +4343,7 @@
     }
 
     async function uploadToCloud() {
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady) {
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady) {
         showNotice("目前無法安全讀取本機儲存空間，暫停上傳。", true);
         return;
       }
@@ -3798,8 +4507,8 @@
         showNotice(`所選檔案不是 ${format === "html" ? "HTML" : "JSON"} 格式。`, true);
         return;
       }
-      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady) {
-        showNotice("目前無法安全讀取行程、Checklist、費用或雨天備案，已停用匯入以避免覆蓋原資料。", true);
+      if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady) {
+        showNotice("目前無法安全讀取行程、Checklist、費用、雨天備案或美食饗宴，已停用匯入以避免覆蓋原資料。", true);
         return;
       }
       if (file.size > MAX_IMPORT_BYTES) {
@@ -3849,6 +4558,10 @@
           .reduce((count, dayExpenses) => count + dayExpenses.length, 0);
         const currentExpenseCount = Object.values(expenses)
           .reduce((count, dayExpenses) => count + dayExpenses.length, 0);
+        const currentRainyDayCount = rainyDays.length;
+        const currentFoodExperienceCount = foodExperiences.length;
+        const importedRainyDayCount = importedData.rainyDays.length;
+        const importedFoodExperienceCount = importedData.foodExperiences.length;
         const currentDateCount = new Set([
           ...items.map((item) => item.date),
           ...Object.keys(checklists),
@@ -3860,7 +4573,7 @@
           ...Object.keys(importedData.expenses)
         ]).size;
         const confirmed = window.confirm(
-          `匯入 ${format.toUpperCase()} 資料比對：\n目前：${items.length} 筆行程、${currentChecklistCount} 個每日 Checklist、${currentPreTripChecklistCount} 個行前檢查項目、${currentExpenseCount} 筆費用、${currentDateCount} 天\n檔案：${importedData.items.length} 筆行程、${checklistCount} 個每日 Checklist、${importedPreTripChecklistCount} 個行前檢查項目、${expenseCount} 筆費用、${importedDateCount} 天\n確認後會清除並取代全部本機資料。建議先匯出備份。確定繼續嗎？`
+          `匯入 ${format.toUpperCase()} 資料比對：\n目前：${items.length} 筆行程、${currentChecklistCount} 個每日 Checklist、${currentPreTripChecklistCount} 個行前檢查項目、${currentExpenseCount} 筆費用、${currentRainyDayCount} 處雨天備案、${currentFoodExperienceCount} 筆美食、${currentDateCount} 天\n檔案：${importedData.items.length} 筆行程、${checklistCount} 個每日 Checklist、${importedPreTripChecklistCount} 個行前檢查項目、${expenseCount} 筆費用、${importedRainyDayCount} 處雨天備案、${importedFoodExperienceCount} 筆美食、${importedDateCount} 天\n確認後會清除並取代全部本機資料。建議先匯出備份。確定繼續嗎？`
         );
         if (!confirmed) {
           showNotice("已取消匯入；本機資料未變更。");
@@ -4256,7 +4969,12 @@
         let notes = null;
         if (hasNotes) {
           notes = makeElement("p", "rainy-day-notes");
-          appendLinkifiedText(notes, item.notes.trim());
+          getDetailTextLines(item.notes.trim()).forEach((line, index) => {
+            if (index > 0) {
+              notes.append(document.createElement("br"));
+            }
+            appendLinkifiedText(notes, line);
+          });
           const isExpanded = expandedRainyDayIds.has(item.id);
           notes.hidden = !isExpanded;
           row.append(notes);
@@ -4331,10 +5049,122 @@
       return container;
     }
 
+    function renderFoodExperiences() {
+      const container = makeElement("div", "rainy-day-container");
+      if (foodExperiences.length === 0) {
+        container.append(makeElement("p", "checklist-empty", "尚未新增想品嚐的美食。"));
+        return container;
+      }
+
+      const list = makeElement("ul", "rainy-day-list");
+      sortRainyDays(foodExperiences).forEach((item) => {
+        const row = makeElement("li", "rainy-day-row");
+        const header = makeElement("div", "rainy-day-header");
+        const titleWrap = makeElement("div", "rainy-day-title-wrap");
+
+        if (item.area && item.area.trim()) {
+          titleWrap.append(makeElement("span", "rainy-day-area-tag", item.area.trim()));
+        }
+
+        const mapsUrl = new URL("https://www.google.com/maps/search/");
+        mapsUrl.searchParams.set("api", "1");
+        mapsUrl.searchParams.set("query", item.location);
+        const mapLink = makeElement("a", "rainy-day-link", item.location);
+        mapLink.href = mapsUrl.toString();
+        mapLink.target = "_blank";
+        mapLink.rel = "noopener noreferrer";
+        mapLink.title = `在 Google Maps 開啟「${item.location}」`;
+        titleWrap.append(mapLink);
+        header.append(titleWrap);
+        row.append(header);
+
+        const hasNotes = Boolean(item.notes && item.notes.trim());
+        let notes = null;
+        if (hasNotes) {
+          notes = makeElement("p", "rainy-day-notes");
+          getDetailTextLines(item.notes.trim()).forEach((line, index) => {
+            if (index > 0) {
+              notes.append(document.createElement("br"));
+            }
+            appendLinkifiedText(notes, line);
+          });
+          const isExpanded = expandedFoodExperienceIds.has(item.id);
+          notes.hidden = !isExpanded;
+          row.append(notes);
+        }
+
+        const actions = makeElement("div", "rainy-day-actions");
+        if (hasNotes) {
+          const isExpanded = expandedFoodExperienceIds.has(item.id);
+          const toggleDetailsButton = makeElement("button", "text-button", isExpanded ? "收合詳細" : "查看詳細");
+          toggleDetailsButton.type = "button";
+          toggleDetailsButton.setAttribute("aria-expanded", String(isExpanded));
+          toggleDetailsButton.setAttribute("aria-label", `${isExpanded ? "收合" : "查看"}「${item.location}」的詳細備註`);
+          toggleDetailsButton.addEventListener("click", () => {
+            const nextExpanded = !expandedFoodExperienceIds.has(item.id);
+            if (nextExpanded) {
+              expandedFoodExperienceIds.add(item.id);
+            } else {
+              expandedFoodExperienceIds.delete(item.id);
+            }
+            if (notes) {
+              notes.hidden = !nextExpanded;
+            }
+            toggleDetailsButton.textContent = nextExpanded ? "收合詳細" : "查看詳細";
+            toggleDetailsButton.setAttribute("aria-expanded", String(nextExpanded));
+          });
+          actions.append(toggleDetailsButton);
+        }
+
+        const rightGroup = makeElement("div", "rainy-day-btn-group");
+        const editButton = makeElement("button", "text-button", "編輯");
+        editButton.type = "button";
+        editButton.disabled = !storageReady || !foodExperienceStorageReady;
+        editButton.setAttribute("aria-label", `編輯美食：${item.location}`);
+        editButton.addEventListener("click", () => startEditingFoodExperience(item));
+        rightGroup.append(editButton);
+
+        const deleteButton = makeElement("button", "text-button delete", "刪除");
+        deleteButton.type = "button";
+        deleteButton.disabled = !storageReady || !foodExperienceStorageReady;
+        deleteButton.setAttribute("aria-label", `刪除美食：${item.location}`);
+        deleteButton.addEventListener("click", () => {
+          if (!window.confirm(`確定要刪除美食「${item.location}」嗎？`)) {
+            return;
+          }
+          const previousFoodExperiences = foodExperiences;
+          foodExperiences = foodExperiences.filter((entry) => entry.id !== item.id);
+          expandedFoodExperienceIds.delete(item.id);
+          if (editingFoodExperienceId === item.id) {
+            cancelEditingFoodExperience();
+          }
+          if (saveFoodExperiences()) {
+            render();
+          } else {
+            foodExperiences = previousFoodExperiences;
+            render();
+          }
+        });
+        rightGroup.append(deleteButton);
+        actions.append(rightGroup);
+        row.append(actions);
+        list.append(row);
+      });
+
+      container.append(list);
+      return container;
+    }
+
     function setRainyDayExpanded(expanded) {
       rainyDayContent.hidden = !expanded;
       rainyDayToggleButton.setAttribute("aria-expanded", String(expanded));
       rainyDayToggleButton.textContent = expanded ? "收合" : "展開";
+    }
+
+    function setFoodExperienceExpanded(expanded) {
+      foodExperienceContent.hidden = !expanded;
+      foodExperienceToggleButton.setAttribute("aria-expanded", String(expanded));
+      foodExperienceToggleButton.textContent = expanded ? "收合" : "展開";
     }
 
     function startEditingRainyDay(item) {
@@ -4354,6 +5184,25 @@
       rainyDayForm.reset();
       rainyDaySubmitButton.textContent = "新增備案";
       rainyDayCancelButton.hidden = true;
+    }
+
+    function startEditingFoodExperience(item) {
+      setFoodExperienceExpanded(true);
+      editingFoodExperienceId = item.id;
+      foodExperienceForm.elements.area.value = item.area || "";
+      foodExperienceForm.elements.location.value = item.location || "";
+      foodExperienceForm.elements.notes.value = item.notes || "";
+      foodExperienceSubmitButton.textContent = "儲存美食變更";
+      foodExperienceCancelButton.hidden = false;
+      document.querySelector("#food-experience-title").scrollIntoView({ behavior: "smooth", block: "start" });
+      foodExperienceLocationInput.focus({ preventScroll: true });
+    }
+
+    function cancelEditingFoodExperience() {
+      editingFoodExperienceId = null;
+      foodExperienceForm.reset();
+      foodExperienceSubmitButton.textContent = "新增美食";
+      foodExperienceCancelButton.hidden = true;
     }
 
     function renderChecklist(date) {
@@ -4547,10 +5396,12 @@
           const details = makeElement("div", "expense-details");
           const currencyLabel = EXPENSE_CURRENCIES.find((currency) => currency.code === expense.currency).label;
           const amountText = new Intl.NumberFormat("zh-TW", { maximumFractionDigits: 2 }).format(expense.amount);
+          const categoryLabel = expense.category || "未分類";
+          const payerLabel = expense.payer || "未指定";
           const paymentNoteText = expense.paymentMethod !== "現金" && expense.note ? `（${expense.note}）` : "";
           details.append(
             makeElement("span", "expense-name", expense.name),
-            makeElement("span", "expense-meta", `${currencyLabel}・${amountText} 元・${expense.paymentMethod}${paymentNoteText}`)
+            makeElement("span", "expense-meta", `${categoryLabel}・${payerLabel}・${currencyLabel}・${amountText} 元・${expense.paymentMethod}${paymentNoteText}`)
           );
           row.append(details);
 
@@ -4587,7 +5438,43 @@
         panel.append(list);
       }
 
+      const formHeading = makeElement("div", "expense-form-heading");
+      const formHeadingTitle = makeElement("h4", "expense-form-heading-title", editingExpense ? "編輯費用" : "新增費用");
+      formHeadingTitle.id = `expense-form-title-${date}`;
+      const formContent = makeElement("div", "expense-form-content");
+      formContent.id = `expense-form-content-${date}`;
+      formContent.hidden = !editingExpense;
+      const formToggleButton = makeElement("button", "secondary-button expense-form-toggle", editingExpense ? "收合" : "展開");
+      formToggleButton.type = "button";
+      formToggleButton.setAttribute("aria-expanded", String(Boolean(editingExpense)));
+      formToggleButton.setAttribute("aria-controls", formContent.id);
+      formToggleButton.addEventListener("click", () => {
+        formContent.hidden = !formContent.hidden;
+        const expanded = !formContent.hidden;
+        formToggleButton.setAttribute("aria-expanded", String(expanded));
+        formToggleButton.textContent = expanded ? "收合" : "展開";
+      });
+      formHeading.append(formHeadingTitle, formToggleButton);
+
       const form = makeElement("form", "expense-fields");
+      form.setAttribute("aria-labelledby", formHeadingTitle.id);
+      const categoryField = makeElement("fieldset", "expense-category-field");
+      categoryField.append(makeElement("legend", "", "費用大類"));
+      const categoryOptions = makeElement("div", "expense-category-options");
+      EXPENSE_CATEGORIES.forEach((category) => {
+        const categoryLabel = makeElement("label", "expense-category-option");
+        const categoryInput = makeElement("input");
+        categoryInput.type = "radio";
+        categoryInput.name = "expense-category";
+        categoryInput.value = category;
+        categoryInput.required = true;
+        categoryInput.checked = editingExpense?.category === category;
+        categoryInput.disabled = !storageReady || !expenseStorageReady;
+        categoryLabel.append(categoryInput, makeElement("span", "", category));
+        categoryOptions.append(categoryLabel);
+      });
+      categoryField.append(categoryOptions);
+
       const nameInput = makeElement("input", "expense-input");
       nameInput.type = "text";
       nameInput.maxLength = 120;
@@ -4633,6 +5520,45 @@
       const paymentField = makeElement("label", "expense-field");
       paymentField.append(makeElement("span", "", "支付方式"), paymentSelect);
 
+      const payerSelect = makeElement("select", "expense-input");
+      payerSelect.setAttribute("aria-label", "付款人");
+      payerSelect.required = true;
+      payerSelect.disabled = !storageReady || !expenseStorageReady;
+      const payerPlaceholder = makeElement("option", "", "請選擇付款人");
+      payerPlaceholder.value = "";
+      payerPlaceholder.disabled = true;
+      payerSelect.append(payerPlaceholder);
+      EXPENSE_PAYER_OPTIONS.forEach((payer) => {
+        const option = makeElement("option", "", payer);
+        option.value = payer;
+        payerSelect.append(option);
+      });
+      const otherPayerOption = makeElement("option", "", "其他");
+      otherPayerOption.value = "other";
+      payerSelect.append(otherPayerOption);
+      const existingPayer = editingExpense?.payer || "";
+      const isKnownPayer = EXPENSE_PAYER_OPTIONS.includes(existingPayer);
+      payerSelect.value = isKnownPayer ? existingPayer : existingPayer ? "other" : "";
+      const payerField = makeElement("label", "expense-field");
+      payerField.append(makeElement("span", "", "付款人"), payerSelect);
+
+      const payerOtherInput = makeElement("input", "expense-input");
+      payerOtherInput.type = "text";
+      payerOtherInput.maxLength = 60;
+      payerOtherInput.placeholder = "請輸入付款人姓名";
+      payerOtherInput.value = existingPayer && !isKnownPayer ? existingPayer : "";
+      payerOtherInput.setAttribute("aria-label", "其他付款人");
+      const payerOtherField = makeElement("label", "expense-field");
+      payerOtherField.append(makeElement("span", "", "其他付款人"), payerOtherInput);
+      const updatePayerOtherVisibility = () => {
+        const isOther = payerSelect.value === "other";
+        payerOtherField.hidden = !isOther;
+        payerOtherInput.required = isOther;
+        payerOtherInput.disabled = !isOther || !storageReady || !expenseStorageReady;
+      };
+      payerSelect.addEventListener("change", updatePayerOtherVisibility);
+      updatePayerOtherVisibility();
+
       const paymentNoteInput = makeElement("input", "expense-input");
       paymentNoteInput.type = "text";
       paymentNoteInput.maxLength = 100;
@@ -4671,23 +5597,27 @@
         formActions.append(cancelButton);
       }
 
-      form.append(nameField, currencyField, amountField, paymentField, paymentNoteField, formActions);
+      form.append(categoryField, nameField, currencyField, amountField, paymentField, payerField, payerOtherField, paymentNoteField, formActions);
       form.addEventListener("submit", (event) => {
         event.preventDefault();
         const name = nameInput.value.trim();
         const amount = Number(amountInput.value);
+        const category = categoryField.querySelector("input[name=\"expense-category\"]:checked")?.value || "";
+        const payer = payerSelect.value === "other" ? payerOtherInput.value.trim() : payerSelect.value;
         const isNonCash = paymentSelect.value !== "現金";
         const note = isNonCash ? paymentNoteInput.value.trim() : "";
         const nextExpense = {
           id: editingExpense?.id || `expense-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
           name,
+          category,
+          payer,
           currency: currencySelect.value,
           amount,
           paymentMethod: paymentSelect.value,
           ...(note ? { note } : {})
         };
         if (amountInput.value === "" || !isExpenseItem(nextExpense)) {
-          showNotice("請輸入費用名稱、有效金額，並選擇有效的幣別與支付方式。", true);
+          showNotice("請選擇費用大類與付款人，並輸入有效的費用名稱與金額。", true);
           return;
         }
 
@@ -4701,11 +5631,180 @@
           render();
         }
       });
-      panel.append(form);
+      formContent.append(form);
+      panel.append(formHeading, formContent);
       if (editingExpense) {
         window.requestAnimationFrame(() => nameInput.focus());
       }
       return panel;
+    }
+
+    function renderTravelExpenseSummary() {
+      const container = makeElement("div", "travel-expense-summary");
+      const entries = Object.keys(expenses)
+        .sort()
+        .flatMap((date) => (expenses[date] || []).map((expense) => ({ date, expense })));
+      if (entries.length === 0) {
+        container.append(makeElement("p", "expense-empty", "尚無旅遊費用，新增行程費用後會自動彙整總額。"));
+        return container;
+      }
+
+      const totalsByCurrency = new Map();
+      entries.forEach(({ expense }) => {
+        totalsByCurrency.set(
+          expense.currency,
+          (totalsByCurrency.get(expense.currency) || 0) + expense.amount
+        );
+      });
+
+      const totals = makeElement("div", "travel-expense-totals");
+      EXPENSE_CURRENCIES.forEach((currency) => {
+        if (!totalsByCurrency.has(currency.code)) {
+          return;
+        }
+        const total = totalsByCurrency.get(currency.code);
+        const totalCard = makeElement("button", "travel-expense-total");
+        totalCard.type = "button";
+        totalCard.setAttribute("aria-label", `查看${currency.label}（${currency.code}）費用明細報表`);
+        totalCard.addEventListener("click", () => openTravelExpenseReport(currency.code));
+        totalCard.append(
+          makeElement("span", "travel-expense-total-label", `${currency.label}（${currency.code}）`),
+          makeElement(
+            "strong",
+            "travel-expense-total-amount",
+            new Intl.NumberFormat("zh-TW", { maximumFractionDigits: 2 }).format(total)
+          )
+        );
+        totals.append(totalCard);
+      });
+      container.append(totals);
+
+      const missingCurrencies = [...totalsByCurrency.keys()]
+        .filter((currencyCode) => currencyCode !== "TWD" && expenseExchangeRates[currencyCode] === undefined);
+      const convertedTotal = entries.reduce((sum, { expense }) => {
+        const rate = expense.currency === "TWD" ? 1 : expenseExchangeRates[expense.currency];
+        return sum + expense.amount * (rate || 0);
+      }, 0);
+      const convertedTotalIsValid = Number.isFinite(convertedTotal);
+      const convertedTotalPanel = makeElement("div", "travel-expense-converted-total");
+      convertedTotalPanel.setAttribute("aria-live", "polite");
+      convertedTotalPanel.append(
+        makeElement("span", "travel-expense-converted-total-label", "換算新台幣總額"),
+        makeElement(
+          "strong",
+          "travel-expense-converted-total-value",
+          missingCurrencies.length > 0
+            ? "尚缺匯率設定"
+            : convertedTotalIsValid
+              ? `新台幣${new Intl.NumberFormat("zh-TW", { maximumFractionDigits: 2 }).format(convertedTotal)}元`
+              : "無法計算"
+        )
+      );
+      if (missingCurrencies.length > 0) {
+        const missingLabels = missingCurrencies.map((currencyCode) => {
+          const currency = EXPENSE_CURRENCIES.find((item) => item.code === currencyCode);
+          return `${currency.label}（${currencyCode}）`;
+        });
+        convertedTotalPanel.append(
+          makeElement("span", "travel-expense-converted-total-note", `請至「參數設定」輸入匯率：${missingLabels.join("、")}`)
+        );
+      } else if (!convertedTotalIsValid) {
+        convertedTotalPanel.append(
+          makeElement("span", "travel-expense-converted-total-note", "計算結果超出可顯示範圍，請檢查費用金額與匯率設定。")
+        );
+      } else {
+        convertedTotalPanel.append(
+          makeElement("span", "travel-expense-converted-total-note", "依參數設定中的手動匯率換算。")
+        );
+      }
+      container.append(convertedTotalPanel);
+      return container;
+    }
+
+    function openTravelExpenseReport(currencyCode) {
+      const currency = EXPENSE_CURRENCIES.find((item) => item.code === currencyCode);
+      if (!currency) {
+        return;
+      }
+
+      const entries = Object.keys(expenses)
+        .sort()
+        .flatMap((date) => (expenses[date] || [])
+          .filter((expense) => expense.currency === currencyCode)
+          .map((expense) => ({ date, expense })));
+      const total = entries.reduce((sum, { expense }) => sum + expense.amount, 0);
+      const amountFormatter = new Intl.NumberFormat("zh-TW", { maximumFractionDigits: 2 });
+      const rows = entries.map(({ date, expense }) => {
+        const paymentNote = expense.note ? `<div class="note">${escapeHtml(expense.note)}</div>` : "";
+        return `<tr>
+          <td>${escapeHtml(formatDate(date))}</td>
+          <td>${escapeHtml(expense.category || "未分類")}</td>
+          <td>${escapeHtml(expense.name)}</td>
+          <td>${escapeHtml(expense.payer || "未指定")}</td>
+          <td class="amount">${amountFormatter.format(expense.amount)}元</td>
+          <td>${escapeHtml(expense.paymentMethod)}</td>
+          <td>${paymentNote}</td>
+        </tr>`;
+      }).join("");
+      const reportHtml = `<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>旅遊費用明細報表 - ${escapeHtml(currency.code)}</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 24px; color: #24292f; background: #f4f4f7; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif; }
+    main { max-width: 1100px; margin: 0 auto; padding: 24px; border: 1px solid #e8e8ed; border-radius: 16px; background: #fff; }
+    h1 { margin: 0; font-size: 22px; }
+    .subtitle { color: #57606a; }
+    .total { margin: 18px 0; padding: 14px 16px; border: 1px solid #dce5dd; border-radius: 10px; color: #194b38; background: #f3f7f3; font-size: 18px; font-weight: 750; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px; border-bottom: 1px solid #e8e8ed; text-align: left; vertical-align: top; }
+    th { color: #485b52; background: #f7f8f3; white-space: nowrap; }
+    .amount { text-align: right; white-space: nowrap; }
+    .note { min-width: 100px; white-space: pre-wrap; overflow-wrap: anywhere; }
+    @media (max-width: 600px) { body { padding: 10px; } main { padding: 16px 12px; } th, td { padding: 8px 6px; } }
+    @media print { body { padding: 0; background: #fff; } main { max-width: none; padding: 0; border: 0; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>旅遊費用明細報表</h1>
+    <p class="subtitle">${escapeHtml(currency.label)}（${escapeHtml(currency.code)}）・${entries.length} 筆費用</p>
+    <div class="total">總計：${escapeHtml(currency.label)}${amountFormatter.format(total)}元</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>日期</th><th>費用大類</th><th>費用名稱</th><th>付款人</th><th>金額</th><th>支付方式</th><th>備註</th></tr></thead>
+        <tbody>${rows || `<tr><td colspan="7">尚無費用明細。</td></tr>`}</tbody>
+      </table>
+    </div>
+  </main>
+</body>
+</html>`;
+
+      let reportUrl = "";
+      let reportWindow = null;
+      try {
+        reportWindow = window.open("", "_blank");
+        if (!reportWindow) {
+          const warning = makeElement("p", "expense-empty", "瀏覽器封鎖了報表分頁，請允許彈出視窗後再試。");
+          travelExpenseSummary.append(warning);
+          return;
+        }
+
+        reportWindow.opener = null;
+        reportUrl = URL.createObjectURL(new Blob([reportHtml], { type: "text/html;charset=utf-8" }));
+        reportWindow.location.href = reportUrl;
+        window.setTimeout(() => URL.revokeObjectURL(reportUrl), 60000);
+      } catch {
+        if (reportUrl) {
+          URL.revokeObjectURL(reportUrl);
+        }
+        reportWindow?.close();
+        travelExpenseSummary.append(makeElement("p", "expense-empty", "無法開啟費用明細報表，請檢查瀏覽器是否允許彈出視窗。"));
+      }
     }
 
     function render() {
@@ -4716,17 +5815,24 @@
         control.disabled = controlsLocked;
       });
       submitButton.disabled = controlsLocked;
-      exportFormat.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady;
-      importFormat.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady;
-      cloudSyncButton.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady;
-      cloudUploadButton.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady;
+      exportFormat.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady;
+      importFormat.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady;
+      cloudSyncButton.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady;
+      cloudUploadButton.disabled = controlsLocked || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady;
       rainyDayForm.querySelectorAll("input, textarea").forEach((control) => {
         control.disabled = controlsLocked || !rainyDayStorageReady;
       });
       rainyDaySubmitButton.disabled = controlsLocked || !rainyDayStorageReady;
       rainyDayCancelButton.disabled = controlsLocked || !rainyDayStorageReady;
+      foodExperienceForm.querySelectorAll("input, textarea").forEach((control) => {
+        control.disabled = controlsLocked || !foodExperienceStorageReady;
+      });
+      foodExperienceSubmitButton.disabled = controlsLocked || !foodExperienceStorageReady;
+      foodExperienceCancelButton.disabled = controlsLocked || !foodExperienceStorageReady;
       rainyDayListContent.replaceChildren(renderRainyDays());
+      foodExperienceListContent.replaceChildren(renderFoodExperiences());
       preTripChecklistContent.replaceChildren(renderPreTripChecklist());
+      travelExpenseSummary.replaceChildren(renderTravelExpenseSummary());
 
       const dates = [...new Set([
         ...items.map((item) => item.date),
@@ -4865,23 +5971,28 @@
       settingsToggleButton.textContent = expanded ? "收合" : "展開";
     }
 
+    function setTravelExpenseExpanded(expanded) {
+      travelExpenseContent.hidden = !expanded;
+      travelExpenseToggleButton.setAttribute("aria-expanded", String(expanded));
+      travelExpenseToggleButton.textContent = expanded ? "收合" : "展開";
+    }
+
     function setItineraryExpanded(expanded) {
       itineraryPanelContent.hidden = !expanded;
       itineraryToggleButton.setAttribute("aria-expanded", String(expanded));
       itineraryToggleButton.textContent = expanded ? "收合" : "展開";
     }
 
-    function applyFontSize(slider, output, target, cssVariable, size) {
+    function applyFontSize(slider, target, cssVariable, size) {
       const sizeIndex = validFontSizes.indexOf(size);
       slider.value = String(sizeIndex);
       const label = `${Math.round(Number(size) * 100)}%`;
-      output.value = label;
       slider.setAttribute("aria-valuetext", label);
       target.style.setProperty(cssVariable, size);
     }
 
-    function initializeFontSizeControl(slider, output, target, storageKey, cssVariable, settingName) {
-      const applySize = (size) => applyFontSize(slider, output, target, cssVariable, size);
+    function initializeFontSizeControl(slider, target, storageKey, cssVariable, settingName) {
+      const applySize = (size) => applyFontSize(slider, target, cssVariable, size);
       try {
         const savedSize = window.localStorage.getItem(storageKey);
         applySize(validFontSizes.includes(savedSize) ? savedSize : "1");
@@ -4950,6 +6061,12 @@
       setSettingsExpanded(settingsContent.hidden);
     });
 
+    expenseExchangeRateUpdateButton.addEventListener("click", updateExpenseExchangeRates);
+
+    travelExpenseToggleButton.addEventListener("click", () => {
+      setTravelExpenseExpanded(travelExpenseContent.hidden);
+    });
+
     itineraryToggleButton.addEventListener("click", () => {
       setItineraryExpanded(itineraryPanelContent.hidden);
     });
@@ -4958,8 +6075,16 @@
       setRainyDayExpanded(rainyDayContent.hidden);
     });
 
+    foodExperienceToggleButton.addEventListener("click", () => {
+      setFoodExperienceExpanded(foodExperienceContent.hidden);
+    });
+
     rainyDayCancelButton.addEventListener("click", () => {
       cancelEditingRainyDay();
+    });
+
+    foodExperienceCancelButton.addEventListener("click", () => {
+      cancelEditingFoodExperience();
     });
 
     rainyDayForm.addEventListener("submit", (event) => {
@@ -4996,6 +6121,43 @@
         render();
       } else {
         rainyDays = prevRainyDays;
+        render();
+      }
+    });
+
+    foodExperienceForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!storageReady || !foodExperienceStorageReady) {
+        return;
+      }
+
+      const area = foodExperienceForm.elements.area.value.trim().slice(0, 100);
+      const location = foodExperienceForm.elements.location.value.trim().slice(0, 120);
+      const notes = foodExperienceForm.elements.notes.value.trim().slice(0, 500);
+      if (!location) {
+        foodExperienceLocationInput.focus();
+        return;
+      }
+
+      const previousFoodExperiences = foodExperiences;
+      if (editingFoodExperienceId) {
+        foodExperiences = foodExperiences.map((entry) => entry.id === editingFoodExperienceId
+          ? { ...entry, area, location, notes }
+          : entry);
+      } else {
+        foodExperiences = [...foodExperiences, {
+          id: `food-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
+          area,
+          location,
+          notes
+        }];
+      }
+
+      if (saveFoodExperiences()) {
+        cancelEditingFoodExperience();
+        render();
+      } else {
+        foodExperiences = previousFoodExperiences;
         render();
       }
     });
@@ -5096,10 +6258,12 @@
     checklists = loadChecklists();
     preTripChecklist = loadPreTripChecklist();
     rainyDays = loadRainyDays();
+    foodExperiences = loadFoodExperiences();
     expenses = loadExpenses();
+    expenseExchangeRates = loadExpenseExchangeRates();
+    initializeExpenseExchangeRateControls();
     initializeFontSizeControl(
       rainyDayFontSizeSlider,
-      rainyDayFontSizeValue,
       rainyDayListContent,
       RAINY_DAY_FONT_SIZE_STORAGE_KEY,
       "--rainy-day-font-scale",
@@ -5107,11 +6271,17 @@
     );
     initializeFontSizeControl(
       preTripFontSizeSlider,
-      preTripFontSizeValue,
       preTripChecklistContent,
       PRE_TRIP_FONT_SIZE_STORAGE_KEY,
       "--pre-trip-font-scale",
       "行前檢查清單"
+    );
+    initializeFontSizeControl(
+      foodExperienceFontSizeSlider,
+      foodExperienceListContent,
+      FOOD_EXPERIENCE_FONT_SIZE_STORAGE_KEY,
+      "--food-font-scale",
+      "美食饗宴"
     );
     ensureDefaultItems();
     ensureV72Items();
