@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-09T08:03:54.748Z",
+  "exportedAt": "2026-11-09T08:16:33.635Z",
   "items": [
     {
       "id": "klook-north-kyoto-2026-11-15-taxi",
@@ -462,6 +462,18 @@
       }
     ]
   },
+  "checkinRecords": [
+    {
+      "id": "checkin-1794207981663-ew0hx067",
+      "placeName": "松山機場",
+      "checkedInAt": "2026-11-09T07:06:21.664Z"
+    },
+    {
+      "id": "checkin-1794207957085-jgwdht0x",
+      "placeName": "台北101",
+      "checkedInAt": "2026-11-09T07:05:57.085Z"
+    }
+  ],
   "rainyDays": [
     {
       "id": "rainy-1794186895772-fkx7bur5",
