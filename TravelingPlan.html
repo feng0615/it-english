@@ -2167,12 +2167,19 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.79</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.80</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.80</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>儲存行程到雲端時，將舊檔備份至 TravelPlanBackup 目錄。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.3.79</strong>
@@ -3145,6 +3152,7 @@
     const GITHUB_REPO_OWNER = "feng0615";
     const GITHUB_REPO_NAME = "it-english";
     const GITHUB_FILE_PATH = "TravelingPlan.json";
+    const GITHUB_BACKUP_DIRECTORY = "TravelPlanBackup";
     const GITHUB_TOKEN_STORAGE_KEY = "traveling-plan.github-token.v1";
     const LEGACY_DEFAULT_ITEM_KEY = "traveling-plan.default-klook-2026-11-15.v1";
     const DEFAULT_ITEMS_KEY = "traveling-plan.default-klook-2026-11-15.v2";
@@ -5424,10 +5432,10 @@
             pad(now.getMinutes()),
             pad(now.getSeconds())
           ].join("");
-          backupFileName = `TravelingPlan_${timestamp}.json`;
+          backupFileName = `${GITHUB_BACKUP_DIRECTORY}/TravelingPlan_${timestamp}.json`;
           showNotice(`正在備份雲端現有檔案為 ${backupFileName}...`);
 
-          const backupApiUrl = `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/${backupFileName}`;
+          const backupApiUrl = `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/${GITHUB_BACKUP_DIRECTORY}/TravelingPlan_${timestamp}.json`;
           const backupRes = await fetch(backupApiUrl, {
             method: "PUT",
             headers: {
