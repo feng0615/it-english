@@ -280,9 +280,10 @@
 
     .dashboard {
       display: grid;
-      grid-template-columns: minmax(290px, 350px) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 7fr) minmax(0, 13fr);
       align-items: start;
-      gap: 22px;
+      column-gap: 22px;
+      row-gap: 16px;
     }
 
     .dashboard-content {
@@ -296,6 +297,23 @@
       display: grid;
       gap: 16px;
     }
+
+    .planning-sidebar,
+    .dashboard-content {
+      display: contents;
+    }
+
+    [data-section-visibility-panel="pre-trip"] { order: 1; }
+    [data-section-visibility-panel="add-stop"] { order: 2; }
+    [data-section-visibility-panel="travel-expense"] { order: 3; }
+    [data-section-visibility-panel="itinerary"] {
+      grid-column: 2;
+      order: 4;
+    }
+    [data-section-visibility-panel="rainy-day"] { order: 5; }
+    [data-section-visibility-panel="food-experience"] { order: 6; }
+    [data-section-visibility-panel="weather"] { order: 7; }
+    .settings-panel { order: 8; }
 
     .panel {
       border: 1px solid rgb(231 232 223 / 85%);
@@ -321,14 +339,82 @@
       list-style: none;
     }
 
+    .rainy-day-area-group {
+      margin-top: 12px;
+    }
+
+    .rainy-day-area-toggle {
+      display: flex;
+      width: 100%;
+      min-height: 40px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--green-dark);
+      background: #f3f7f3;
+      font-size: 13px;
+      font-weight: 750;
+      text-align: left;
+    }
+
+    .rainy-day-area-toggle:hover {
+      background: #eaf2ec;
+    }
+
+    .rainy-day-area-toggle:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 2px;
+    }
+
+    .rainy-day-area-count {
+      margin-left: auto;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .rainy-day-area-items[hidden] {
+      display: none;
+    }
+
+    .rainy-day-area-items {
+      gap: 0;
+      margin: 10px 0 16px;
+      padding-left: 8px;
+    }
+
     .rainy-day-row {
+      position: relative;
       display: flex;
       flex-direction: column;
       gap: 6px;
-      padding: 11px 13px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #fafbfa;
+      padding: 8px 0 16px 14px;
+      border: 0;
+      border-left: 2px solid #f2bb62;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .rainy-day-row::before {
+      position: absolute;
+      top: 13px;
+      left: -6px;
+      width: 10px;
+      height: 10px;
+      border: 2px solid var(--paper);
+      border-radius: 50%;
+      background: #ff8a00;
+      box-shadow: 0 0 0 1px #ff8a00;
+      content: "";
+    }
+
+    .rainy-day-row:last-child {
+      padding-bottom: 4px;
+      border-left-color: transparent;
     }
 
     .rainy-day-header {
@@ -358,39 +444,32 @@
     }
 
     .rainy-day-link {
-      color: var(--green);
-      font-size: 14px;
-      font-weight: 750;
-      text-decoration: underline;
-      text-underline-offset: 2px;
+      color: #0969da;
+      font-size: 15px;
+      font-weight: 800;
+      text-decoration: none;
       word-break: break-word;
     }
 
     .rainy-day-link:hover {
-      color: var(--green-dark);
+      color: #0550ae;
+      text-decoration: underline;
+      text-underline-offset: 2px;
     }
 
     .rainy-day-notes {
-      margin: 4px 0 0;
-      padding-top: 6px;
-      border-top: 1px dashed #e4e7e4;
-      color: #4b5852;
-      font-size: 12px;
-      line-height: 1.55;
+      margin: 2px 0 0;
+      padding: 0;
+      border-top: 0;
+      color: #263b51;
+      font-size: 13px;
+      line-height: 1.7;
       white-space: pre-wrap;
       word-break: break-word;
     }
 
     .rainy-day-notes[hidden] {
       display: none;
-    }
-
-    .rainy-day-actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-top: 6px;
     }
 
     .rainy-day-btn-group {
@@ -420,16 +499,71 @@
       --food-font-scale: 1;
     }
 
+    .food-experience-list-content .rainy-day-area-items,
+    #rainy-day-list-content .rainy-day-area-items {
+      gap: 12px;
+      margin: 12px 0 16px;
+      padding-left: 0;
+    }
+
+    .food-experience-list-content .rainy-day-row,
+    #rainy-day-list-content .rainy-day-row {
+      gap: 10px;
+      padding: 14px;
+      border: 1px solid #e7e1d4;
+      border-left: 4px solid #d59a50;
+      border-radius: 12px;
+      background: #fffdf8;
+      box-shadow: 0 2px 8px rgb(46 57 47 / 5%);
+    }
+
+    .food-experience-list-content .rainy-day-row::before,
+    #rainy-day-list-content .rainy-day-row::before {
+      display: none;
+    }
+
+    .food-experience-list-content .rainy-day-row:last-child,
+    #rainy-day-list-content .rainy-day-row:last-child {
+      padding-bottom: 14px;
+      border-left-color: #d59a50;
+    }
+
+    .food-experience-list-content .rainy-day-header,
+    #rainy-day-list-content .rainy-day-header {
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .food-experience-list-content .rainy-day-title-wrap,
+    #rainy-day-list-content .rainy-day-title-wrap {
+      flex: 1 1 auto;
+    }
+
+    .food-experience-list-content .rainy-day-btn-group,
+    #rainy-day-list-content .rainy-day-btn-group {
+      flex: 0 0 auto;
+    }
+
     .food-experience-list-content .rainy-day-area-tag {
       font-size: calc(11px * var(--food-font-scale));
     }
 
-    .food-experience-list-content .rainy-day-link {
-      font-size: calc(14px * var(--food-font-scale));
+    .food-experience-list-content .rainy-day-notes,
+    #rainy-day-list-content .rainy-day-notes {
+      margin-top: 2px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: #39453d;
+      background: #f5f6f1;
+      line-height: 1.8;
     }
 
     .food-experience-list-content .rainy-day-notes {
-      font-size: calc(12px * var(--food-font-scale));
+      font-size: calc(13px * var(--food-font-scale));
+    }
+
+    .food-experience-list-content .rainy-day-link {
+      font-size: calc(15px * var(--food-font-scale));
     }
 
     .form-panel-heading {
@@ -648,6 +782,29 @@
       font-weight: 700;
     }
 
+    .page-title-setting-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .page-title-setting-control input {
+      width: 100%;
+      min-width: 0;
+      min-height: 40px;
+      padding: 0 11px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .page-title-setting-control input:focus {
+      border-color: #7da591;
+      outline: none;
+      box-shadow: 0 0 0 3px rgb(47 105 87 / 10%);
+    }
+
     .section-visibility-settings {
       margin-bottom: 16px;
       padding: 0 0 14px;
@@ -830,6 +987,46 @@
       color: var(--ink);
       background: var(--paper);
       text-align: left;
+    }
+
+    .day-swap-description {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .day-swap-controls {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .day-swap-controls select {
+      width: 100%;
+      min-width: 0;
+      min-height: 42px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: var(--ink);
+      background: var(--paper);
+    }
+
+    .day-swap-controls select:focus-visible {
+      outline: 3px solid rgb(47 105 87 / 24%);
+      outline-offset: 2px;
+    }
+
+    .day-swap-controls .secondary-button {
+      min-height: 42px;
+      white-space: nowrap;
+    }
+
+    .day-swap-arrow {
+      color: var(--muted);
     }
 
     .file-sync-status {
@@ -1281,12 +1478,7 @@
       padding: 20px;
     }
 
-    .checkin-panel {
-      padding: 20px;
-    }
-
-    .weather-panel .panel-description,
-    .checkin-panel .panel-description {
+    .weather-panel .panel-description {
       margin-bottom: 14px;
     }
 
@@ -1302,81 +1494,15 @@
     }
 
     .weather-search-results,
-    .weather-location-list,
-    .checkin-record-list {
+    .weather-location-list {
       gap: 16px;
-    }
-
-    .checkin-date-group,
-    .checkin-date-records {
-      display: grid;
-      gap: 8px;
-    }
-
-    .checkin-date-heading {
-      margin: 0;
-      color: var(--ink);
-      font-size: 14px;
-    }
-
-    .checkin-record-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      min-width: 0;
-      padding: 12px 14px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: #fff;
-    }
-
-    .checkin-record-info {
-      display: grid;
-      min-width: 0;
-      gap: 4px;
-    }
-
-    .checkin-record-info strong {
-      overflow-wrap: anywhere;
-    }
-
-    .checkin-map-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex: 0 0 auto;
-      margin-bottom: 14px;
-      padding: 0 16px;
-      text-decoration: none;
-    }
-
-    .weather-search-result {
-      display: grid;
-      gap: 3px;
-      padding: 10px 12px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: #fff;
-      color: var(--ink);
-      font: inherit;
-      text-align: left;
-      cursor: pointer;
-    }
-
-    .weather-search-result:hover {
-      border-color: #b7c8bd;
-      background: #f7f8f3;
     }
 
     .weather-search-result span,
     .weather-updated-at,
     .weather-search-status,
     .weather-refresh-status,
-    .weather-attribution,
-    .checkin-status,
-    .checkin-record-time,
-    .checkin-attribution {
+    .weather-attribution {
       color: var(--muted);
       font-size: 12px;
       line-height: 1.6;
@@ -1463,12 +1589,7 @@
       margin: 14px 0 0;
     }
 
-    .checkin-attribution {
-      margin: 14px 0 0;
-    }
-
     .weather-attribution a,
-    .checkin-attribution a,
     .weather-forecast-source {
       color: var(--green-dark);
     }
@@ -1801,6 +1922,8 @@
     }
 
     .footer-note {
+      grid-column: 1 / -1;
+      order: 0;
       margin: 20px 4px 0;
       color: #879189;
       font-size: 11px;
@@ -1837,10 +1960,18 @@
         gap: 14px;
       }
 
-      .travel-expense-panel,
-      .weather-panel,
-      .settings-panel {
+      .dashboard > .planning-sidebar > .panel,
+      .dashboard > .dashboard-content > .panel {
+        width: 100%;
+      }
+
+      [data-section-visibility-panel="itinerary"] {
         grid-column: 1;
+        order: 3;
+      }
+
+      [data-section-visibility-panel="travel-expense"] {
+        order: 4;
       }
 
       .itinerary-panel {
@@ -1877,6 +2008,14 @@
         min-height: 44px;
         padding: 0 6px;
         font-size: 13px;
+      }
+
+      .day-swap-controls {
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      }
+
+      .day-swap-controls .secondary-button {
+        grid-column: 1 / -1;
       }
 
       .checklist-panel {
@@ -1927,15 +2066,10 @@
       .pre-trip-panel,
       .rainy-day-panel,
       .weather-panel,
-      .checkin-panel,
       .travel-expense-panel,
       .itinerary-panel,
       .settings-panel {
         padding: 16px;
-      }
-
-      .checkin-record-card {
-        align-items: flex-start;
       }
 
       .weather-search-form {
@@ -2001,12 +2135,152 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.54</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.74</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.74</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>參數設定新增主標題即時編輯與還原預設功能；變更只在目前頁面生效。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.73</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>桌面版將「我的行程」固定於右欄，旅遊費用與其並排；手機版維持單欄排序。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.72</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>將行程說明資訊移至行前檢查清單上方，並讓說明列跨滿頁面寬度。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.71</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>調整桌面版儀表板欄寬為左欄 35%、右欄 65%。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.70</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>調整桌面版儀表板欄寬為左欄 30%、右欄 70%。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.69</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>調整桌面版儀表板欄寬為左欄 40%、右欄 60%。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.68</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>桌面版與手機版共用相同區塊順序；桌面採雙欄由左至右排列。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.67</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>調整手機版區塊卡片寬度，讓卡片撐滿頁面可用寬度。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.66</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>調整手機版區塊順序為行前檢查、新增一站、我的行程、旅遊費用、雨天備案、美食饗宴、天氣預報與參數設定。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.65</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>雨天備案改用與美食饗宴相同的卡片版面，並將查看詳細、編輯與刪除按鈕移至標題列。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.64</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>雨天備案的詳細內容預設收合，點選「查看詳細」後再展開。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.63</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>美食饗宴的詳細備註預設收合，點選「查看詳細」後再展開。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.62</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>修改旅遊費用區塊為「旅遊費用/打卡紀錄」，新增打卡紀錄報表按鈕，在新視窗以獨立 HTML 格式依日期分區展示打卡時間與地點。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.61</strong>
+                  <time class="version-changelog-date" datetime="2026-11-10">2026-11-10</time>
+                </div>
+                <p>移除獨立「到此一遊」區塊，將打卡功能整合進我的行程卡片（查看詳情後方），有地點以地點為主打卡，無地點開啟 Google 地圖搜尋附近景點後打卡。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.60</strong>
+                  <time class="version-changelog-date" datetime="2026-11-10">2026-11-10</time>
+                </div>
+                <p>將雨天備案/必訪景點與美食饗宴區塊移至「我的行程」下方。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.59</strong>
+                  <time class="version-changelog-date" datetime="2026-11-10">2026-11-10</time>
+                </div>
+                <p>雨天備案與美食饗宴的備註編輯欄位預設顯示 5 行。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.58</strong>
+                  <time class="version-changelog-date" datetime="2026-11-10">2026-11-10</time>
+                </div>
+                <p>優化雨天備案與美食饗宴的清單呈現，備註預設展開並改採橘色時間軸節點與醒目地點標題。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.57</strong>
+                  <time class="version-changelog-date" datetime="2026-11-10">2026-11-10</time>
+                </div>
+                <p>雨天備案與美食饗宴改依區域分組，每個區域可獨立收合或展開。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.56</strong>
+                  <time class="version-changelog-date" datetime="2026-11-10">2026-11-10</time>
+                </div>
+                <p>行程卡片新增「移至雨天備案」操作，保留行程細節並安全更新資料。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.55</strong>
+                  <time class="version-changelog-date" datetime="2026-11-10">2026-11-10</time>
+                </div>
+                <p>新增互換指定兩天行程、每日 Checklist 與旅遊費用的功能。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.3.54</strong>
@@ -2488,72 +2762,15 @@
           </div>
         </section>
 
-        <section class="panel rainy-day-panel" aria-labelledby="rainy-day-title" data-section-visibility-panel="rainy-day">
-          <div class="form-panel-heading">
-            <h2 class="panel-title" id="rainy-day-title">雨天備案/必訪景點</h2>
-            <button class="secondary-button form-toggle" id="rainy-day-toggle" type="button" aria-expanded="false" aria-controls="rainy-day-content">展開</button>
-          </div>
-          <div id="rainy-day-content" hidden>
-            <p class="panel-description">收藏雨天備案或旅途中必訪的景點，並記錄區域與備註。</p>
-            <div id="rainy-day-list-content"></div>
-            <form class="rainy-day-form" id="rainy-day-form">
-              <div class="field">
-                <label for="rainy-day-area">區域 <small style="color:var(--muted);font-weight:normal;">（選填）</small></label>
-                <input class="expense-input" id="rainy-day-area" name="area" type="text" maxlength="60" placeholder="例如：京都站周邊、室內">
-              </div>
-              <div class="field">
-                <label for="rainy-day-location">地點 <small style="color:#cf222e;">*（必填）</small></label>
-                <input class="expense-input" id="rainy-day-location" name="location" type="text" maxlength="120" placeholder="例如：京都鐵道博物館" required>
-              </div>
-              <div class="field">
-                <label for="rainy-day-notes">備註 <small style="color:var(--muted);font-weight:normal;">（選填）</small></label>
-                <textarea class="expense-input" id="rainy-day-notes" name="notes" maxlength="500" placeholder="營業時間、門票、交通路線等備註"></textarea>
-              </div>
-              <div class="form-actions" style="margin-top:8px;">
-                <button class="primary-button" id="rainy-day-submit-button" type="submit">新增景點</button>
-                <button class="secondary-button" id="rainy-day-cancel-button" type="button" hidden>取消編輯</button>
-              </div>
-            </form>
-          </div>
-        </section>
-
-        <section class="panel food-experience-panel" aria-labelledby="food-experience-title" data-section-visibility-panel="food-experience">
-          <div class="form-panel-heading">
-            <h2 class="panel-title" id="food-experience-title">美食饗宴</h2>
-            <button class="secondary-button form-toggle" id="food-experience-toggle" type="button" aria-expanded="false" aria-controls="food-experience-content">展開</button>
-          </div>
-          <div id="food-experience-content" hidden>
-            <p class="panel-description">收藏旅途中想品嚐的餐廳與在地美食。</p>
-            <div class="food-experience-list-content" id="food-experience-list-content"></div>
-            <form class="rainy-day-form" id="food-experience-form">
-              <div class="field">
-                <label for="food-experience-area">區域 <small style="color:var(--muted);font-weight:normal;">（選填）</small></label>
-                <input class="expense-input" id="food-experience-area" name="area" type="text" maxlength="100" placeholder="例如：京都車站周邊">
-              </div>
-              <div class="field">
-                <label for="food-experience-location">地點 <small style="color:#cf222e;">*（必填）</small></label>
-                <input class="expense-input" id="food-experience-location" name="location" type="text" maxlength="120" placeholder="例如：想品嚐的餐廳或美食" required>
-              </div>
-              <div class="field">
-                <label for="food-experience-notes">備註說明 <small style="color:var(--muted);font-weight:normal;">（選填）</small></label>
-                <textarea class="expense-input" id="food-experience-notes" name="notes" maxlength="500" placeholder="推薦菜色、營業時間、預約資訊等"></textarea>
-              </div>
-              <div class="form-actions" style="margin-top:8px;">
-                <button class="primary-button" id="food-experience-submit-button" type="submit">新增美食</button>
-                <button class="secondary-button" id="food-experience-cancel-button" type="button" hidden>取消編輯</button>
-              </div>
-            </form>
-          </div>
-        </section>
-
         <section class="panel travel-expense-panel" aria-labelledby="travel-expense-title" data-section-visibility-panel="travel-expense">
           <div class="form-panel-heading">
-            <h2 class="panel-title" id="travel-expense-title">旅遊費用</h2>
+            <h2 class="panel-title" id="travel-expense-title">旅遊費用/打卡紀錄</h2>
             <button class="secondary-button form-toggle" id="travel-expense-toggle" type="button" aria-expanded="false" aria-controls="travel-expense-content">展開</button>
           </div>
           <div id="travel-expense-content" hidden>
-            <p class="panel-description">依幣別彙總總額並換算新台幣；點選幣別金額可開啟費用明細報表。</p>
+            <p class="panel-description">依幣別彙總總額並換算新台幣；點選幣別金額可開啟費用明細報表，也可檢視依日期分區的打卡紀錄。</p>
             <div id="travel-expense-summary"></div>
+            <button class="secondary-button" id="checkin-report-button" type="button">打卡紀錄</button>
           </div>
         </section>
 
@@ -2563,7 +2780,15 @@
             <button class="secondary-button form-toggle" id="settings-toggle" type="button" aria-expanded="false" aria-controls="settings-content">展開</button>
           </div>
           <div id="settings-content" hidden>
-            <p class="panel-description">設定各區塊是否顯示、我的行程底色，以及行前檢查清單、雨天備案/必訪景點與美食饗宴的顯示字體大小。</p>
+            <p class="panel-description">設定主標題、各區塊是否顯示、我的行程底色，以及行前檢查清單、雨天備案/必訪景點與美食饗宴的顯示字體大小。</p>
+            <div class="setting-field">
+              <label for="page-title-input">頁面主標題</label>
+              <div class="page-title-setting-control">
+                <input id="page-title-input" type="text" maxlength="80" value="把期待，排進旅程裡。" aria-describedby="page-title-help">
+                <button class="secondary-button" id="page-title-reset" type="button">還原預設</button>
+              </div>
+              <p class="exchange-rate-description" id="page-title-help">輸入後立即更新上方標題；此設定只在目前頁面生效，重新載入後會還原。</p>
+            </div>
             <fieldset class="setting-field section-visibility-settings">
               <legend class="exchange-rate-title">區塊顯示</legend>
               <div class="section-visibility-options">
@@ -2573,8 +2798,7 @@
                 <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="food-experience" checked>美食饗宴</label>
                 <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="itinerary" checked>我的行程</label>
                 <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="weather" checked>天氣預報</label>
-                <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="check-in" checked>到此一遊</label>
-                <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="travel-expense" checked>旅遊費用</label>
+                <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="travel-expense" checked>旅遊費用/打卡紀錄</label>
               </div>
             </fieldset>
             <div class="setting-field">
@@ -2670,9 +2894,78 @@
         </div>
         <p class="file-sync-status">多人接力共編：匯出 JSON 傳給協作者；對方匯入、編輯後再匯出回傳。匯入會在確認後取代本機資料；資料檔可能含私人資訊，請只透過可信管道分享。</p>
         <p class="file-sync-status" id="file-sync-status" role="status" aria-live="polite">雲端同步：「同步雲端行程」可從 GitHub 下載最新 TravelingPlan.json；「儲存行程到雲端」會將本機行程與打卡紀錄一併上傳。</p>
+        <p class="day-swap-description">選擇兩個日期，可互換行程項目、每日 Checklist 與旅遊費用；其他資料不變。</p>
+        <div class="day-swap-controls" role="group" aria-label="互換兩天資料">
+          <select id="day-swap-first-date" aria-label="選擇第一個互換日期">
+            <option value="">選擇第一天</option>
+          </select>
+          <span class="day-swap-arrow" aria-hidden="true">↔</span>
+          <select id="day-swap-second-date" aria-label="選擇第二個互換日期">
+            <option value="">選擇第二天</option>
+          </select>
+          <button class="secondary-button" id="day-swap-button" type="button" disabled>互換兩天資料</button>
+        </div>
         <p class="notice" id="notice" role="status" aria-live="polite" hidden></p>
         <div class="day-tabs" id="day-tabs" role="tablist" aria-label="依日期切換行程"></div>
         <div id="itinerary-content" role="tabpanel"></div>
+        </div>
+      </section>
+
+      <section class="panel rainy-day-panel" aria-labelledby="rainy-day-title" data-section-visibility-panel="rainy-day">
+        <div class="form-panel-heading">
+          <h2 class="panel-title" id="rainy-day-title">雨天備案/必訪景點</h2>
+          <button class="secondary-button form-toggle" id="rainy-day-toggle" type="button" aria-expanded="false" aria-controls="rainy-day-content">展開</button>
+        </div>
+        <div id="rainy-day-content" hidden>
+          <p class="panel-description">收藏雨天備案或旅途中必訪的景點，並記錄區域與備註。</p>
+          <div id="rainy-day-list-content"></div>
+          <form class="rainy-day-form" id="rainy-day-form">
+            <div class="field">
+              <label for="rainy-day-area">區域 <small style="color:var(--muted);font-weight:normal;">（選填）</small></label>
+              <input class="expense-input" id="rainy-day-area" name="area" type="text" maxlength="60" placeholder="例如：京都站周邊、室內">
+            </div>
+            <div class="field">
+              <label for="rainy-day-location">地點 <small style="color:#cf222e;">*（必填）</small></label>
+              <input class="expense-input" id="rainy-day-location" name="location" type="text" maxlength="120" placeholder="例如：京都鐵道博物館" required>
+            </div>
+            <div class="field">
+              <label for="rainy-day-notes">備註 <small style="color:var(--muted);font-weight:normal;">（選填）</small></label>
+              <textarea class="expense-input" id="rainy-day-notes" name="notes" rows="5" maxlength="500" placeholder="營業時間、門票、交通路線等備註"></textarea>
+            </div>
+            <div class="form-actions" style="margin-top:8px;">
+              <button class="primary-button" id="rainy-day-submit-button" type="submit">新增景點</button>
+              <button class="secondary-button" id="rainy-day-cancel-button" type="button" hidden>取消編輯</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="panel food-experience-panel" aria-labelledby="food-experience-title" data-section-visibility-panel="food-experience">
+        <div class="form-panel-heading">
+          <h2 class="panel-title" id="food-experience-title">美食饗宴</h2>
+          <button class="secondary-button form-toggle" id="food-experience-toggle" type="button" aria-expanded="false" aria-controls="food-experience-content">展開</button>
+        </div>
+        <div id="food-experience-content" hidden>
+          <p class="panel-description">收藏旅途中想品嚐的餐廳與在地美食。</p>
+          <div class="food-experience-list-content" id="food-experience-list-content"></div>
+          <form class="rainy-day-form" id="food-experience-form">
+            <div class="field">
+              <label for="food-experience-area">區域 <small style="color:var(--muted);font-weight:normal;">（選填）</small></label>
+              <input class="expense-input" id="food-experience-area" name="area" type="text" maxlength="100" placeholder="例如：京都車站周邊">
+            </div>
+            <div class="field">
+              <label for="food-experience-location">地點 <small style="color:#cf222e;">*（必填）</small></label>
+              <input class="expense-input" id="food-experience-location" name="location" type="text" maxlength="120" placeholder="例如：想品嚐的餐廳或美食" required>
+            </div>
+            <div class="field">
+              <label for="food-experience-notes">備註說明 <small style="color:var(--muted);font-weight:normal;">（選填）</small></label>
+              <textarea class="expense-input" id="food-experience-notes" name="notes" rows="5" maxlength="500" placeholder="推薦菜色、營業時間、預約資訊等"></textarea>
+            </div>
+            <div class="form-actions" style="margin-top:8px;">
+              <button class="primary-button" id="food-experience-submit-button" type="submit">新增美食</button>
+              <button class="secondary-button" id="food-experience-cancel-button" type="button" hidden>取消編輯</button>
+            </div>
+          </form>
         </div>
       </section>
 
@@ -2705,40 +2998,13 @@
           </p>
         </div>
       </section>
-      <section class="panel checkin-panel" aria-labelledby="checkin-title" data-section-visibility-panel="check-in">
-        <div class="form-panel-heading">
-          <h2 class="panel-title" id="checkin-title">到此一遊</h2>
-          <button class="secondary-button form-toggle" id="checkin-toggle" type="button" aria-expanded="false" aria-controls="checkin-content">展開</button>
-        </div>
-        <div id="checkin-content" hidden>
-          <p class="panel-description">開啟 Google 地圖搜尋附近景點；本頁不取得定位，Google 可能依你的授權設定使用位置。選擇景點後回到此處輸入名稱打卡。</p>
-          <a class="primary-button checkin-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=attractions%20near%20me" target="_blank" rel="noopener noreferrer">在 Google 地圖搜尋附近景點</a>
-          <form class="weather-search-form" id="checkin-form">
-            <div class="field">
-              <label for="checkin-place-name">景點名稱</label>
-              <input class="expense-input" id="checkin-place-name" name="placeName" type="text" maxlength="120" autocomplete="off" placeholder="例如：京都塔" required>
-            </div>
-            <button class="primary-button" id="checkin-submit-button" type="submit">打卡</button>
-          </form>
-          <p class="checkin-status" id="checkin-status" role="status" aria-live="polite"></p>
-          <div class="weather-location-list-heading">
-            <h3>打卡紀錄</h3>
-          </div>
-          <div class="checkin-record-list" id="checkin-record-list"></div>
-          <p class="checkin-attribution">
-            本頁不接收或傳送定位；打卡紀錄保存於此瀏覽器。選擇「儲存行程到雲端」時，紀錄會一併寫入 GitHub 的 TravelingPlan.json；選擇「同步雲端行程」可在其他裝置取得。Google 地圖的資料處理方式請參閱<a href="https://policies.google.com/privacy?hl=zh-TW" target="_blank" rel="noopener noreferrer">Google 隱私權政策</a>。
-          </p>
-        </div>
-      </section>
-      </div>
-    </div>
-
-    <p class="footer-note">行程、每日 Checklist、行前檢查清單、費用、雨天備案/必訪景點、美食饗宴、天氣地點與到此一遊打卡紀錄會自動儲存在這個瀏覽器；授權資料夾後，打卡紀錄也會同步寫入該目錄的 TravelingPlan.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
+    <p class="footer-note">行程、每日 Checklist、行前檢查清單、費用、雨天備案/必訪景點、美食饗宴、天氣地點與打卡紀錄會自動儲存在這個瀏覽器；授權資料夾後，打卡紀錄也會同步寫入該目錄的 TravelingPlan.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
   </main>
 
   <script>
     "use strict";
 
+    const DEFAULT_PAGE_TITLE = "把期待，排進旅程裡。";
     const STORAGE_KEY = "traveling-plan.itinerary.v1";
     const CHECKLIST_STORAGE_KEY = "traveling-plan.checklists.v1";
     const PRE_TRIP_CHECKLIST_STORAGE_KEY = "traveling-plan.pre-trip-checklist.v1";
@@ -2975,13 +3241,6 @@
     const weatherRefreshAllButton = document.querySelector("#weather-refresh-all-button");
     const weatherRefreshStatus = document.querySelector("#weather-refresh-status");
     const weatherLocationList = document.querySelector("#weather-location-list");
-    const checkinToggleButton = document.querySelector("#checkin-toggle");
-    const checkinContent = document.querySelector("#checkin-content");
-    const checkinForm = document.querySelector("#checkin-form");
-    const checkinPlaceNameInput = document.querySelector("#checkin-place-name");
-    const checkinSubmitButton = document.querySelector("#checkin-submit-button");
-    const checkinStatus = document.querySelector("#checkin-status");
-    const checkinRecordList = document.querySelector("#checkin-record-list");
     const sectionVisibilityControls = [...document.querySelectorAll("[data-section-visibility-control]")];
     const sectionVisibilityPanels = new Map(
       [...document.querySelectorAll("[data-section-visibility-panel]")]
@@ -2993,6 +3252,7 @@
     const travelExpenseToggleButton = document.querySelector("#travel-expense-toggle");
     const travelExpenseContent = document.querySelector("#travel-expense-content");
     const travelExpenseSummary = document.querySelector("#travel-expense-summary");
+    const checkinReportButton = document.querySelector("#checkin-report-button");
     const rainyDayListContent = document.querySelector("#rainy-day-list-content");
     const rainyDayForm = document.querySelector("#rainy-day-form");
     const rainyDayLocationInput = document.querySelector("#rainy-day-location");
@@ -3008,6 +3268,9 @@
     const itineraryToggleButton = document.querySelector("#itinerary-toggle");
     const itineraryPanel = document.querySelector(".itinerary-panel");
     const itineraryPanelContent = document.querySelector("#itinerary-panel-content");
+    const pageTitle = document.querySelector("#page-title");
+    const pageTitleInput = document.querySelector("#page-title-input");
+    const pageTitleResetButton = document.querySelector("#page-title-reset");
     const itineraryBackgroundColorInput = document.querySelector("#itinerary-background-color");
     const itineraryBackgroundColorValue = document.querySelector("#itinerary-background-color-value");
     const itineraryBackgroundColorResetButton = document.querySelector("#itinerary-background-color-reset");
@@ -3029,6 +3292,9 @@
     const fileSyncStatus = document.querySelector("#file-sync-status");
     const dayTabs = document.querySelector("#day-tabs");
     const itineraryContent = document.querySelector("#itinerary-content");
+    const daySwapFirstDateSelect = document.querySelector("#day-swap-first-date");
+    const daySwapSecondDateSelect = document.querySelector("#day-swap-second-date");
+    const daySwapButton = document.querySelector("#day-swap-button");
     const preTripChecklistContent = document.querySelector("#pre-trip-checklist-content");
     let items = [];
     let checklists = {};
@@ -3047,6 +3313,8 @@
     let editingFoodExperienceId = null;
     const expandedRainyDayIds = new Set();
     const expandedFoodExperienceIds = new Set();
+    const collapsedRainyDayAreas = new Set();
+    const collapsedFoodExperienceAreas = new Set();
     const validFontSizes = ["0.6", "0.8", "1", "1.2", "1.5"];
     let currentDay = null;
     let draggedItemId = null;
@@ -3472,7 +3740,6 @@
         return parsedRecords;
       } catch {
         checkinStorageReady = false;
-        checkinStatus.textContent = "無法讀取本機打卡資料，為避免覆蓋原資料，已停用打卡功能。";
         showNotice("無法讀取本機打卡資料，為避免覆蓋原資料，暫時停用打卡功能。", true);
         return [];
       }
@@ -5324,6 +5591,136 @@
       }).format(date);
     }
 
+    function getItineraryDates() {
+      return [...new Set([
+        ...items.map((item) => item.date),
+        ...Object.keys(checklists),
+        ...Object.keys(expenses)
+      ])].sort();
+    }
+
+    function updateDaySwapButtonState() {
+      const canSwap = storageReady
+        && checklistStorageReady
+        && expenseStorageReady
+        && daySwapFirstDateSelect.value !== ""
+        && daySwapSecondDateSelect.value !== ""
+        && daySwapFirstDateSelect.value !== daySwapSecondDateSelect.value;
+      daySwapButton.disabled = !canSwap;
+    }
+
+    function renderDaySwapDateOptions(dates) {
+      const storageReadyForSwap = storageReady && checklistStorageReady && expenseStorageReady;
+      [
+        [daySwapFirstDateSelect, "選擇第一天"],
+        [daySwapSecondDateSelect, "選擇第二天"]
+      ].forEach(([select, placeholderText]) => {
+        const previousValue = select.value;
+        const placeholder = makeElement("option", "", placeholderText);
+        placeholder.value = "";
+        select.replaceChildren(placeholder);
+        dates.forEach((date) => {
+          const option = makeElement("option", "", formatDate(date));
+          option.value = date;
+          select.append(option);
+        });
+        select.value = dates.includes(previousValue) ? previousValue : "";
+        select.disabled = !storageReadyForSwap || dates.length < 2;
+      });
+      updateDaySwapButtonState();
+    }
+
+    function swapDateBuckets(data, firstDate, secondDate) {
+      const nextData = { ...data };
+      const hasFirstDate = Object.prototype.hasOwnProperty.call(data, firstDate);
+      const hasSecondDate = Object.prototype.hasOwnProperty.call(data, secondDate);
+
+      if (hasFirstDate) {
+        nextData[secondDate] = data[firstDate];
+      } else {
+        delete nextData[secondDate];
+      }
+      if (hasSecondDate) {
+        nextData[firstDate] = data[secondDate];
+      } else {
+        delete nextData[firstDate];
+      }
+      return nextData;
+    }
+
+    function swapSelectedDays() {
+      if (!storageReady || !checklistStorageReady || !expenseStorageReady) {
+        showNotice("目前無法安全讀取行程、每日 Checklist 或旅遊費用，已取消互換。", true);
+        return;
+      }
+
+      const firstDate = daySwapFirstDateSelect.value;
+      const secondDate = daySwapSecondDateSelect.value;
+      const availableDates = getItineraryDates();
+      if (firstDate === secondDate
+        || !isValidDateString(firstDate)
+        || !isValidDateString(secondDate)
+        || !availableDates.includes(firstDate)
+        || !availableDates.includes(secondDate)) {
+        showNotice("請選擇兩個不同且有效的行程日期。", true);
+        renderDaySwapDateOptions(availableDates);
+        return;
+      }
+
+      if (!window.confirm(`確定互換「${formatDate(firstDate)}」與「${formatDate(secondDate)}」的行程、每日 Checklist 與旅遊費用嗎？\n其他資料不會變更。`)) {
+        return;
+      }
+
+      const nextItems = items.map((item) => {
+        if (item.date === firstDate) {
+          return { ...item, date: secondDate };
+        }
+        if (item.date === secondDate) {
+          return { ...item, date: firstDate };
+        }
+        return item;
+      });
+      const nextChecklists = swapDateBuckets(checklists, firstDate, secondDate);
+      const nextExpenses = swapDateBuckets(expenses, firstDate, secondDate);
+      const previousData = [
+        [STORAGE_KEY, JSON.stringify(items)],
+        [CHECKLIST_STORAGE_KEY, JSON.stringify(checklists)],
+        [EXPENSE_STORAGE_KEY, JSON.stringify(expenses)]
+      ];
+
+      try {
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextItems));
+        window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(nextChecklists));
+        window.localStorage.setItem(EXPENSE_STORAGE_KEY, JSON.stringify(nextExpenses));
+      } catch {
+        let rollbackFailed = false;
+        previousData.forEach(([key, value]) => {
+          try {
+            window.localStorage.setItem(key, value);
+          } catch {
+            rollbackFailed = true;
+          }
+        });
+        showNotice(
+          rollbackFailed
+            ? "互換儲存失敗且無法完整回復瀏覽器資料；請重新載入前先匯出仍可讀取的資料。"
+            : "互換資料無法儲存到瀏覽器，原有資料未變更。",
+          true
+        );
+        return;
+      }
+
+      items = nextItems;
+      checklists = nextChecklists;
+      expenses = nextExpenses;
+      currentDay = firstDate;
+      editingExpenseId = null;
+      editingExpenseDate = null;
+      queueDirectorySave();
+      render();
+      showNotice(`已互換「${formatDate(firstDate)}」與「${formatDate(secondDate)}」的行程、每日 Checklist 與旅遊費用。`);
+    }
+
     function sortDayItems(dayItems) {
       const hasManualOrder = dayItems.some((item) => Number.isSafeInteger(item.order));
       return [...dayItems].sort((first, second) => {
@@ -5481,13 +5878,97 @@
       deleteButton.setAttribute("aria-label", `刪除：${item.title}`);
       deleteButton.addEventListener("click", () => deleteItem(item.id));
 
+      const moveToRainyDayButton = makeElement("button", "text-button", "移至雨天備案");
+      moveToRainyDayButton.type = "button";
+      moveToRainyDayButton.disabled = !storageReady || !rainyDayStorageReady;
+      moveToRainyDayButton.setAttribute("aria-label", `將「${item.title}」移至雨天備案，並從行程移除`);
+      moveToRainyDayButton.addEventListener("click", () => moveItineraryItemToRainyDay(item.id));
+
+      const checkinButton = makeElement("button", "text-button", "打卡");
+      checkinButton.type = "button";
+      checkinButton.disabled = !checkinStorageReady;
+      checkinButton.setAttribute("aria-label", `在此行程打卡：${item.title}`);
+      checkinButton.addEventListener("click", () => checkinItineraryItem(item));
+
       actions.append(dragHandle);
       if (previewToggle) {
         actions.append(previewToggle);
       }
-      actions.append(editButton, deleteButton);
+      actions.append(checkinButton, moveToRainyDayButton, editButton, deleteButton);
       card.append(actions);
       return card;
+    }
+
+    function moveItineraryItemToRainyDay(itemId) {
+      if (!storageReady || !rainyDayStorageReady) {
+        showNotice("目前無法安全讀取行程或雨天備案資料，未執行搬移。", true);
+        return;
+      }
+
+      const item = items.find((entry) => entry.id === itemId);
+      if (!item) {
+        showNotice("找不到要搬移的行程，請重新整理後再試。", true);
+        return;
+      }
+
+      const rainyNotes = [
+        item.time ? `原行程時間：${item.time}` : "",
+        item.location.length > 100 ? `原行程地點：${item.location}` : "",
+        item.notes
+      ].filter(Boolean).join("\n");
+      const rainyDayItem = {
+        id: `rainy-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
+        location: item.title,
+        ...(item.location && item.location.length <= 100 ? { area: item.location } : {}),
+        ...(rainyNotes ? { notes: rainyNotes } : {})
+      };
+
+      if (!isRainyDayItem(rainyDayItem)) {
+        showNotice("這筆行程的時間、地點與備註合併後超過雨天備案可保存的 500 字上限，請先縮短備註後再搬移。", true);
+        return;
+      }
+
+      if (!window.confirm(`確定將「${item.title}」從「${formatDate(item.date)}」行程移至雨天備案嗎？\n行程名稱會作為備案地點，原行程地點、時間與備註會保留；此項目將從原行程移除。`)) {
+        return;
+      }
+
+      const previousItems = items;
+      const previousRainyDays = rainyDays;
+      const nextItems = items.filter((entry) => entry.id !== itemId);
+      const nextRainyDays = [...rainyDays, rainyDayItem];
+      try {
+        window.localStorage.setItem(RAINY_DAY_STORAGE_KEY, JSON.stringify(nextRainyDays));
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextItems));
+      } catch {
+        let rollbackFailed = false;
+        [
+          [RAINY_DAY_STORAGE_KEY, previousRainyDays],
+          [STORAGE_KEY, previousItems]
+        ].forEach(([key, value]) => {
+          try {
+            window.localStorage.setItem(key, JSON.stringify(value));
+          } catch {
+            rollbackFailed = true;
+          }
+        });
+        showNotice(
+          rollbackFailed
+            ? "搬移儲存失敗且無法完整回復瀏覽器資料；請重新載入前先匯出仍可讀取的資料。"
+            : "搬移資料無法儲存到瀏覽器，原有資料未變更。",
+          true
+        );
+        return;
+      }
+
+      rainyDays = nextRainyDays;
+      items = nextItems;
+      expandedRainyDayIds.delete(item.id);
+      if (editingId === item.id) {
+        resetForm();
+      }
+      queueDirectorySave();
+      render();
+      showNotice(`已將「${item.title}」移至雨天備案，原行程已移除。`);
     }
 
     function clearDropIndicators() {
@@ -5632,6 +6113,53 @@
       return panel;
     }
 
+    function groupItemsByArea(groupItems) {
+      const groups = new Map();
+      groupItems.forEach((item) => {
+        const area = typeof item.area === "string" ? item.area.trim() : "";
+        const key = area ? `area:${area}` : "area:";
+        if (!groups.has(key)) {
+          groups.set(key, { key, label: area || "未分類", items: [] });
+        }
+        groups.get(key).items.push(item);
+      });
+
+      const collator = new Intl.Collator("zh-TW", { numeric: true, sensitivity: "base" });
+      return [...groups.values()]
+        .sort((first, second) => collator.compare(first.label, second.label))
+        .map((group) => ({ ...group, items: sortRainyDays(group.items) }));
+    }
+
+    function createAreaGroup(areaGroup, index, idPrefix, countUnit, collapsedAreas) {
+      const group = makeElement("section", "rainy-day-area-group");
+      const isExpanded = !collapsedAreas.has(areaGroup.key);
+      const list = makeElement("ul", "rainy-day-list rainy-day-area-items");
+      list.id = `${idPrefix}-area-list-${index}`;
+      list.hidden = !isExpanded;
+
+      const toggle = makeElement("button", "rainy-day-area-toggle");
+      toggle.type = "button";
+      toggle.setAttribute("aria-expanded", String(isExpanded));
+      toggle.setAttribute("aria-controls", list.id);
+      toggle.append(makeElement("span", "", areaGroup.label));
+      toggle.append(makeElement("span", "rainy-day-area-count", `${areaGroup.items.length} ${countUnit}`));
+      toggle.append(makeElement("span", "", isExpanded ? "收合 ▴" : "展開 ▾"));
+      toggle.addEventListener("click", () => {
+        const nextExpanded = list.hidden;
+        list.hidden = !nextExpanded;
+        toggle.setAttribute("aria-expanded", String(nextExpanded));
+        toggle.lastElementChild.textContent = nextExpanded ? "收合 ▴" : "展開 ▾";
+        if (nextExpanded) {
+          collapsedAreas.delete(areaGroup.key);
+        } else {
+          collapsedAreas.add(areaGroup.key);
+        }
+      });
+
+      group.append(toggle, list);
+      return { group, list };
+    }
+
     function renderRainyDays() {
       const container = makeElement("div", "rainy-day-container");
       if (rainyDays.length === 0) {
@@ -5639,16 +6167,22 @@
         return container;
       }
 
-      const list = makeElement("ul", "rainy-day-list");
-      sortRainyDays(rainyDays).forEach((item) => {
+      const groupedItems = groupItemsByArea(rainyDays).flatMap((areaGroup, groupIndex) =>
+        areaGroup.items.map((item) => ({ areaGroup, groupIndex, item }))
+      );
+      let activeAreaKey = null;
+      let activeList = null;
+      groupedItems.forEach(({ areaGroup, groupIndex, item }) => {
+        if (activeAreaKey !== areaGroup.key) {
+          const areaSection = createAreaGroup(areaGroup, groupIndex, "rainy-day", "處", collapsedRainyDayAreas);
+          activeAreaKey = areaGroup.key;
+          activeList = areaSection.list;
+          container.append(areaSection.group);
+        }
         const row = makeElement("li", "rainy-day-row");
         const header = makeElement("div", "rainy-day-header");
         const titleWrap = makeElement("div", "rainy-day-title-wrap");
-
-        if (item.area && item.area.trim()) {
-          const areaTag = makeElement("span", "rainy-day-area-tag", item.area.trim());
-          titleWrap.append(areaTag);
-        }
+        const actions = makeElement("div", "rainy-day-btn-group");
 
         const mapsUrl = new URL("https://www.google.com/maps/search/");
         mapsUrl.searchParams.set("api", "1");
@@ -5659,7 +6193,7 @@
         mapLink.rel = "noopener noreferrer";
         mapLink.title = `在 Google Maps 開啟「${item.location}」`;
         titleWrap.append(mapLink);
-        header.append(titleWrap);
+        header.append(titleWrap, actions);
         row.append(header);
 
         const hasNotes = Boolean(item.notes && item.notes.trim());
@@ -5677,7 +6211,6 @@
           row.append(notes);
         }
 
-        const actions = makeElement("div", "rainy-day-actions");
         if (hasNotes) {
           const isExpanded = expandedRainyDayIds.has(item.id);
           const toggleDetailsButton = makeElement(
@@ -5689,7 +6222,7 @@
           toggleDetailsButton.setAttribute("aria-expanded", String(isExpanded));
           toggleDetailsButton.setAttribute("aria-label", `${isExpanded ? "收合" : "查看"}「${item.location}」的詳細備註`);
           toggleDetailsButton.addEventListener("click", () => {
-            const nextExpanded = !expandedRainyDayIds.has(item.id);
+            const nextExpanded = notes.hidden;
             if (nextExpanded) {
               expandedRainyDayIds.add(item.id);
             } else {
@@ -5704,7 +6237,6 @@
           actions.append(toggleDetailsButton);
         }
 
-        const rightGroup = makeElement("div", "rainy-day-btn-group");
         const editButton = makeElement("button", "text-button", "編輯");
         editButton.type = "button";
         editButton.disabled = !storageReady || !rainyDayStorageReady;
@@ -5712,7 +6244,7 @@
         editButton.addEventListener("click", () => {
           startEditingRainyDay(item);
         });
-        rightGroup.append(editButton);
+        actions.append(editButton);
 
         const deleteButton = makeElement("button", "text-button delete", "刪除");
         deleteButton.type = "button";
@@ -5735,14 +6267,11 @@
             render();
           }
         });
-        rightGroup.append(deleteButton);
-        actions.append(rightGroup);
-        row.append(actions);
+        actions.append(deleteButton);
 
-        list.append(row);
+        activeList.append(row);
       });
 
-      container.append(list);
       return container;
     }
 
@@ -5753,15 +6282,22 @@
         return container;
       }
 
-      const list = makeElement("ul", "rainy-day-list");
-      sortRainyDays(foodExperiences).forEach((item) => {
+      const groupedItems = groupItemsByArea(foodExperiences).flatMap((areaGroup, groupIndex) =>
+        areaGroup.items.map((item) => ({ areaGroup, groupIndex, item }))
+      );
+      let activeAreaKey = null;
+      let activeList = null;
+      groupedItems.forEach(({ areaGroup, groupIndex, item }) => {
+        if (activeAreaKey !== areaGroup.key) {
+          const areaSection = createAreaGroup(areaGroup, groupIndex, "food-experience", "筆", collapsedFoodExperienceAreas);
+          activeAreaKey = areaGroup.key;
+          activeList = areaSection.list;
+          container.append(areaSection.group);
+        }
         const row = makeElement("li", "rainy-day-row");
         const header = makeElement("div", "rainy-day-header");
         const titleWrap = makeElement("div", "rainy-day-title-wrap");
-
-        if (item.area && item.area.trim()) {
-          titleWrap.append(makeElement("span", "rainy-day-area-tag", item.area.trim()));
-        }
+        const actions = makeElement("div", "rainy-day-btn-group");
 
         const mapsUrl = new URL("https://www.google.com/maps/search/");
         mapsUrl.searchParams.set("api", "1");
@@ -5772,7 +6308,7 @@
         mapLink.rel = "noopener noreferrer";
         mapLink.title = `在 Google Maps 開啟「${item.location}」`;
         titleWrap.append(mapLink);
-        header.append(titleWrap);
+        header.append(titleWrap, actions);
         row.append(header);
 
         const hasNotes = Boolean(item.notes && item.notes.trim());
@@ -5790,7 +6326,6 @@
           row.append(notes);
         }
 
-        const actions = makeElement("div", "rainy-day-actions");
         if (hasNotes) {
           const isExpanded = expandedFoodExperienceIds.has(item.id);
           const toggleDetailsButton = makeElement("button", "text-button", isExpanded ? "收合詳細" : "查看詳細");
@@ -5798,7 +6333,7 @@
           toggleDetailsButton.setAttribute("aria-expanded", String(isExpanded));
           toggleDetailsButton.setAttribute("aria-label", `${isExpanded ? "收合" : "查看"}「${item.location}」的詳細備註`);
           toggleDetailsButton.addEventListener("click", () => {
-            const nextExpanded = !expandedFoodExperienceIds.has(item.id);
+            const nextExpanded = notes.hidden;
             if (nextExpanded) {
               expandedFoodExperienceIds.add(item.id);
             } else {
@@ -5813,13 +6348,12 @@
           actions.append(toggleDetailsButton);
         }
 
-        const rightGroup = makeElement("div", "rainy-day-btn-group");
         const editButton = makeElement("button", "text-button", "編輯");
         editButton.type = "button";
         editButton.disabled = !storageReady || !foodExperienceStorageReady;
         editButton.setAttribute("aria-label", `編輯美食：${item.location}`);
         editButton.addEventListener("click", () => startEditingFoodExperience(item));
-        rightGroup.append(editButton);
+        actions.append(editButton);
 
         const deleteButton = makeElement("button", "text-button delete", "刪除");
         deleteButton.type = "button";
@@ -5842,13 +6376,10 @@
             render();
           }
         });
-        rightGroup.append(deleteButton);
-        actions.append(rightGroup);
-        row.append(actions);
-        list.append(row);
+        actions.append(deleteButton);
+        activeList.append(row);
       });
 
-      container.append(list);
       return container;
     }
 
@@ -6504,6 +7035,107 @@
       }
     }
 
+    function openCheckinRecordsReport() {
+      if (!checkinStorageReady) {
+        showNotice("本機打卡資料無法安全讀取，無法產生打卡紀錄報表。", true);
+        return;
+      }
+
+      const dateGroups = new Map();
+      checkinRecords.forEach((record) => {
+        const checkedInAt = new Date(record.checkedInAt);
+        const year = checkedInAt.getFullYear();
+        const month = String(checkedInAt.getMonth() + 1).padStart(2, "0");
+        const day = String(checkedInAt.getDate()).padStart(2, "0");
+        const date = `${year}-${month}-${day}`;
+        if (!dateGroups.has(date)) {
+          dateGroups.set(date, []);
+        }
+        dateGroups.get(date).push({ record, checkedInAt });
+      });
+
+      const dateSections = [...dateGroups.entries()]
+        .sort(([firstDate], [secondDate]) => secondDate.localeCompare(firstDate))
+        .map(([date, records]) => {
+          const rows = records
+            .sort((first, second) => first.checkedInAt - second.checkedInAt)
+            .map(({ record, checkedInAt }) => {
+              const time = new Intl.DateTimeFormat("zh-TW", {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false
+              }).format(checkedInAt);
+              return `<tr><td>${escapeHtml(time)}</td><td>${escapeHtml(record.placeName)}</td></tr>`;
+            })
+            .join("");
+          return `<section class="date-section">
+    <h2>${escapeHtml(formatDate(date))}</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>時間</th><th>地點</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  </section>`;
+        })
+        .join("");
+      const reportHtml = `<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>打卡紀錄報表</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 24px; color: #24292f; background: #f4f4f7; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif; }
+    main { max-width: 860px; margin: 0 auto; padding: 24px; border: 1px solid #e8e8ed; border-radius: 16px; background: #fff; }
+    h1 { margin: 0; font-size: 22px; }
+    .subtitle { margin: 8px 0 20px; color: #57606a; }
+    .date-section { margin-top: 20px; padding-top: 16px; border-top: 1px solid #e8e8ed; }
+    .date-section h2 { margin: 0 0 10px; color: #194b38; font-size: 17px; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px; border-bottom: 1px solid #e8e8ed; text-align: left; vertical-align: top; }
+    .date-section tbody tr:last-child td { border-bottom: 0; }
+    th { color: #485b52; background: #f7f8f3; white-space: nowrap; }
+    td:first-child { width: 140px; white-space: nowrap; }
+    .empty { padding: 16px; border-radius: 10px; color: #57606a; background: #f7f8f3; }
+    @media (max-width: 600px) { body { padding: 10px; } main { padding: 16px 12px; } th, td { padding: 8px 6px; } }
+    @media print { body { padding: 0; background: #fff; } main { max-width: none; padding: 0; border: 0; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>打卡紀錄</h1>
+    <p class="subtitle">共 ${checkinRecords.length} 筆紀錄</p>
+    ${dateSections || `<p class="empty">尚無打卡紀錄。</p>`}
+  </main>
+</body>
+</html>`;
+
+      let reportUrl = "";
+      let reportWindow = null;
+      try {
+        reportWindow = window.open("", "_blank");
+        if (!reportWindow) {
+          showNotice("瀏覽器封鎖了打卡紀錄報表分頁，請允許彈出視窗後再試。", true);
+          return;
+        }
+
+        reportWindow.opener = null;
+        reportUrl = URL.createObjectURL(new Blob([reportHtml], { type: "text/html;charset=utf-8" }));
+        reportWindow.location.href = reportUrl;
+        window.setTimeout(() => URL.revokeObjectURL(reportUrl), 60000);
+      } catch {
+        if (reportUrl) {
+          URL.revokeObjectURL(reportUrl);
+        }
+        reportWindow?.close();
+        showNotice("無法開啟打卡紀錄報表，請檢查瀏覽器是否允許彈出視窗。", true);
+      }
+    }
+
     function render() {
       itemCount.textContent = String(items.length);
       itemCount.setAttribute("aria-label", `共 ${items.length} 個行程`);
@@ -6531,11 +7163,8 @@
       preTripChecklistContent.replaceChildren(renderPreTripChecklist());
       travelExpenseSummary.replaceChildren(renderTravelExpenseSummary());
 
-      const dates = [...new Set([
-        ...items.map((item) => item.date),
-        ...Object.keys(checklists),
-        ...Object.keys(expenses)
-      ])].sort();
+      const dates = getItineraryDates();
+      renderDaySwapDateOptions(dates);
       if (dates.length === 0) {
         currentDay = null;
         editingExpenseId = null;
@@ -6684,12 +7313,6 @@
       weatherContent.hidden = !expanded;
       weatherToggleButton.setAttribute("aria-expanded", String(expanded));
       weatherToggleButton.textContent = expanded ? "收合" : "展開";
-    }
-
-    function setCheckinExpanded(expanded) {
-      checkinContent.hidden = !expanded;
-      checkinToggleButton.setAttribute("aria-expanded", String(expanded));
-      checkinToggleButton.textContent = expanded ? "收合" : "展開";
     }
 
     function parseWeatherSearchResults(data) {
@@ -7097,121 +7720,52 @@
       }
     }
 
-    function groupCheckinRecordsByDate(records) {
-      const groups = new Map();
-      records.forEach((record) => {
-        const checkedInAt = new Date(record.checkedInAt);
-        const dateKey = [
-          checkedInAt.getFullYear(),
-          String(checkedInAt.getMonth() + 1).padStart(2, "0"),
-          String(checkedInAt.getDate()).padStart(2, "0")
-        ].join("-");
-        if (!groups.has(dateKey)) {
-          groups.set(dateKey, []);
-        }
-        groups.get(dateKey).push({ record, checkedInAt });
-      });
-
-      return [...groups.entries()]
-        .sort(([leftDate], [rightDate]) => rightDate.localeCompare(leftDate))
-        .map(([dateKey, entries]) => ({
-          dateKey,
-          dateLabel: entries[0].checkedInAt.toLocaleDateString("zh-TW", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-            weekday: "long"
-          }),
-          records: entries
-            .sort((left, right) => left.checkedInAt.getTime() - right.checkedInAt.getTime())
-            .map((entry) => entry.record)
-        }));
-    }
-
-    function renderCheckinRecords() {
-      checkinRecordList.replaceChildren();
-      const groupedRecords = groupCheckinRecordsByDate(checkinRecords);
-      if (groupedRecords.length === 0) {
-        checkinRecordList.append(makeElement("p", "checklist-empty", "尚無打卡紀錄。"));
-        return;
-      }
-
-      groupedRecords.forEach((group) => {
-        const dateGroup = makeElement("div", "checkin-date-group");
-        const heading = makeElement("h4", "checkin-date-heading");
-        const dateLabel = makeElement("time", "", group.dateLabel);
-        dateLabel.setAttribute("datetime", group.dateKey);
-        heading.append(dateLabel);
-        const recordsContainer = makeElement("div", "checkin-date-records");
-        group.records.forEach((record) => {
-          const card = makeElement("article", "checkin-record-card");
-          const info = makeElement("div", "checkin-record-info");
-          const checkedInAt = new Date(record.checkedInAt).toLocaleTimeString("zh-TW", {
-            hour: "numeric",
-            minute: "2-digit",
-            second: "2-digit"
-          });
-          info.append(
-            makeElement("strong", "", record.placeName),
-            makeElement("span", "checkin-record-time", checkedInAt)
-          );
-          const deleteButton = makeElement("button", "text-button delete", "刪除");
-          deleteButton.type = "button";
-          deleteButton.disabled = !checkinStorageReady;
-          deleteButton.setAttribute("aria-label", `刪除打卡紀錄：${record.placeName}`);
-          deleteButton.addEventListener("click", () => {
-            if (!window.confirm(`確定刪除「${record.placeName}」的打卡紀錄嗎？`)) {
-              return;
-            }
-            const previousRecords = checkinRecords;
-            checkinRecords = checkinRecords.filter((entry) => entry.id !== record.id);
-            if (!saveCheckinRecords()) {
-              checkinRecords = previousRecords;
-            }
-            renderCheckinRecords();
-          });
-          card.append(info, deleteButton);
-          recordsContainer.append(card);
-        });
-        dateGroup.append(heading, recordsContainer);
-        checkinRecordList.append(dateGroup);
-      });
-    }
-
-    function addCheckinRecord() {
+    function checkinItineraryItem(item) {
       if (!checkinStorageReady) {
-        checkinStatus.textContent = "本機打卡資料無法安全讀取，已停用打卡功能。";
+        showNotice("本機打卡資料無法安全讀取，已停用打卡功能。", true);
         return;
       }
       if (checkinRecords.length >= MAX_CHECKIN_RECORDS) {
-        checkinStatus.textContent = `打卡紀錄已達 ${MAX_CHECKIN_RECORDS.toLocaleString("zh-TW")} 筆上限，請先刪除舊紀錄。`;
+        showNotice(`打卡紀錄已達 ${MAX_CHECKIN_RECORDS.toLocaleString("zh-TW")} 筆上限，請先清理紀錄後再打卡。`, true);
         return;
       }
 
-      const placeName = checkinPlaceNameInput.value.trim().slice(0, 120);
-      if (placeName.length === 0) {
-        checkinStatus.textContent = "請輸入景點名稱後再打卡。";
-        checkinPlaceNameInput.focus();
-        return;
+      const defaultPlaceName = (item.location || item.title || "").trim();
+      let targetPlace = "";
+
+      if (item.location && item.location.trim().length > 0) {
+        const confirmCheckin = window.confirm(`確定要在「${item.location.trim()}」打卡嗎？\n（行程：${item.title}）`);
+        if (!confirmCheckin) {
+          return;
+        }
+        targetPlace = item.location.trim().slice(0, 120);
+      } else {
+        window.open("https://www.google.com/maps/search/?api=1&query=attractions%20near%20me", "_blank", "noopener,noreferrer");
+        const prompted = window.prompt("此行程未設定地點，已為您在 Google 地圖開啟附近景點搜尋。\n請輸入打卡景點名稱：", defaultPlaceName);
+        if (prompted === null) {
+          return;
+        }
+        targetPlace = prompted.trim().slice(0, 120);
+        if (targetPlace.length === 0) {
+          showNotice("未輸入景點名稱，已取消打卡。");
+          return;
+        }
       }
 
       const record = {
         id: `checkin-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
-        placeName,
+        placeName: targetPlace,
         checkedInAt: new Date().toISOString()
       };
       const previousRecords = checkinRecords;
       checkinRecords = [record, ...checkinRecords];
       if (!saveCheckinRecords()) {
         checkinRecords = previousRecords;
-        checkinStatus.textContent = "打卡資料未能儲存，未新增紀錄。";
-        renderCheckinRecords();
+        showNotice("打卡資料未能儲存，未新增紀錄。", true);
         return;
       }
 
-      checkinPlaceNameInput.value = "";
-      checkinStatus.textContent = `已在「${record.placeName}」打卡。`;
-      renderCheckinRecords();
+      showNotice(`已在「${record.placeName}」成功打卡！紀錄已儲存。`);
     }
 
     function initializeSectionVisibilityControls() {
@@ -7259,6 +7813,19 @@
             showNotice("無法儲存區塊顯示設定，請檢查瀏覽器儲存空間。", true);
           }
         });
+      });
+    }
+
+    function initializePageTitleControl() {
+      const updatePageTitle = () => {
+        pageTitle.textContent = pageTitleInput.value.trim() || DEFAULT_PAGE_TITLE;
+      };
+
+      pageTitleInput.addEventListener("input", updatePageTitle);
+      pageTitleResetButton.addEventListener("click", () => {
+        pageTitleInput.value = DEFAULT_PAGE_TITLE;
+        updatePageTitle();
+        pageTitleInput.focus();
       });
     }
 
@@ -7398,13 +7965,6 @@
 
     weatherToggleButton.addEventListener("click", () => {
       setWeatherExpanded(weatherContent.hidden);
-    });
-    checkinToggleButton.addEventListener("click", () => {
-      setCheckinExpanded(checkinContent.hidden);
-    });
-    checkinForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      addCheckinRecord();
     });
     weatherSearchForm.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -7603,6 +8163,9 @@
     });
     cloudSyncButton.addEventListener("click", syncFromCloud);
     cloudUploadButton.addEventListener("click", uploadToCloud);
+    daySwapFirstDateSelect.addEventListener("change", updateDaySwapButtonState);
+    daySwapSecondDateSelect.addEventListener("change", updateDaySwapButtonState);
+    daySwapButton.addEventListener("click", swapSelectedDays);
     if (directoryButton) {
       directoryButton.addEventListener("click", configureDirectoryAutoSave);
     }
@@ -7614,6 +8177,8 @@
     foodExperiences = loadFoodExperiences();
     weatherLocations = loadWeatherLocations();
     checkinRecords = loadCheckinRecords();
+    checkinReportButton.disabled = !checkinStorageReady;
+    checkinReportButton.addEventListener("click", openCheckinRecordsReport);
     expenses = loadExpenses();
     expenseExchangeRates = loadExpenseExchangeRates();
     if (!weatherStorageReady) {
@@ -7621,15 +8186,11 @@
       weatherSearchButton.disabled = true;
       weatherRefreshAllButton.disabled = true;
     }
-    if (!checkinStorageReady) {
-      checkinPlaceNameInput.disabled = true;
-      checkinSubmitButton.disabled = true;
-    }
     initializeExpenseExchangeRateControls();
     initializeSectionVisibilityControls();
+    initializePageTitleControl();
     initializeItineraryBackgroundColorControl();
     renderWeatherLocations();
-    renderCheckinRecords();
     initializeFontSizeControl(
       rainyDayFontSizeSlider,
       rainyDayListContent,
