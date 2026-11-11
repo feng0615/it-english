@@ -585,6 +585,24 @@
       letter-spacing: -.025em;
     }
 
+    .checkin-report-link {
+      color: var(--green);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      white-space: nowrap;
+    }
+
+    .checkin-report-link:hover {
+      color: #194b38;
+    }
+
+    .checkin-report-link:focus-visible {
+      border-radius: 3px;
+      outline: 3px solid rgb(47 105 87 / 24%);
+      outline-offset: 2px;
+    }
+
     .panel-description {
       margin: 7px 0 23px;
       color: var(--muted);
@@ -782,6 +800,14 @@
       font-weight: 700;
     }
 
+    .page-title-setting {
+      margin-bottom: 16px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+
     .page-title-setting-control {
       display: flex;
       align-items: center;
@@ -789,7 +815,7 @@
     }
 
     .page-title-setting-control input {
-      width: 100%;
+      flex: 1 1 auto;
       min-width: 0;
       min-height: 40px;
       padding: 0 11px;
@@ -797,6 +823,12 @@
       border-radius: 9px;
       color: var(--ink);
       background: #fff;
+    }
+
+    .page-title-setting-control button {
+      flex: 0 0 auto;
+      min-width: 88px;
+      white-space: nowrap;
     }
 
     .page-title-setting-control input:focus {
@@ -2135,12 +2167,47 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.74</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.79</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.79</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>將「旅遊費用/打卡紀錄」標題中的打卡紀錄改為報表連結，並移除區塊底部按鈕。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.78</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>調整主標題設定版面，並將標題納入 TravelingPlan.json 匯入、匯出與存檔資料。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.77</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>修正打卡紀錄報表的刪除連線初始化，避免刪除按鈕無法使用。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.76</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>我的行程每日費用列表下方新增當日打卡紀錄區塊，可檢視並刪除單筆紀錄。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.75</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>打卡紀錄報表新增個別刪除功能，刪除前確認並同步更新本機紀錄。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.3.74</strong>
@@ -2764,13 +2831,12 @@
 
         <section class="panel travel-expense-panel" aria-labelledby="travel-expense-title" data-section-visibility-panel="travel-expense">
           <div class="form-panel-heading">
-            <h2 class="panel-title" id="travel-expense-title">旅遊費用/打卡紀錄</h2>
+            <h2 class="panel-title" id="travel-expense-title">旅遊費用/<a class="checkin-report-link" href="#checkin-report" id="checkin-report-link" aria-label="開啟打卡紀錄報表">打卡紀錄</a></h2>
             <button class="secondary-button form-toggle" id="travel-expense-toggle" type="button" aria-expanded="false" aria-controls="travel-expense-content">展開</button>
           </div>
           <div id="travel-expense-content" hidden>
             <p class="panel-description">依幣別彙總總額並換算新台幣；點選幣別金額可開啟費用明細報表，也可檢視依日期分區的打卡紀錄。</p>
             <div id="travel-expense-summary"></div>
-            <button class="secondary-button" id="checkin-report-button" type="button">打卡紀錄</button>
           </div>
         </section>
 
@@ -2781,13 +2847,13 @@
           </div>
           <div id="settings-content" hidden>
             <p class="panel-description">設定主標題、各區塊是否顯示、我的行程底色，以及行前檢查清單、雨天備案/必訪景點與美食饗宴的顯示字體大小。</p>
-            <div class="setting-field">
+            <div class="setting-field page-title-setting">
               <label for="page-title-input">頁面主標題</label>
               <div class="page-title-setting-control">
                 <input id="page-title-input" type="text" maxlength="80" value="把期待，排進旅程裡。" aria-describedby="page-title-help">
                 <button class="secondary-button" id="page-title-reset" type="button">還原預設</button>
               </div>
-              <p class="exchange-rate-description" id="page-title-help">輸入後立即更新上方標題；此設定只在目前頁面生效，重新載入後會還原。</p>
+              <p class="exchange-rate-description" id="page-title-help">修改後會保存於本機；授權資料夾自動存檔、匯出 JSON 或雲端同步時，也會寫入 TravelingPlan.json。</p>
             </div>
             <fieldset class="setting-field section-visibility-settings">
               <legend class="exchange-rate-title">區塊顯示</legend>
@@ -2893,7 +2959,7 @@
           <input id="import-file" type="file" accept=".json,application/json" hidden>
         </div>
         <p class="file-sync-status">多人接力共編：匯出 JSON 傳給協作者；對方匯入、編輯後再匯出回傳。匯入會在確認後取代本機資料；資料檔可能含私人資訊，請只透過可信管道分享。</p>
-        <p class="file-sync-status" id="file-sync-status" role="status" aria-live="polite">雲端同步：「同步雲端行程」可從 GitHub 下載最新 TravelingPlan.json；「儲存行程到雲端」會將本機行程與打卡紀錄一併上傳。</p>
+        <p class="file-sync-status" id="file-sync-status" role="status" aria-live="polite">雲端同步：「同步雲端行程」可從 GitHub 下載最新 TravelingPlan.json；「儲存行程到雲端」會將本機行程、打卡紀錄與頁面主標題一併上傳。</p>
         <p class="day-swap-description">選擇兩個日期，可互換行程項目、每日 Checklist 與旅遊費用；其他資料不變。</p>
         <div class="day-swap-controls" role="group" aria-label="互換兩天資料">
           <select id="day-swap-first-date" aria-label="選擇第一個互換日期">
@@ -2998,7 +3064,7 @@
           </p>
         </div>
       </section>
-    <p class="footer-note">行程、每日 Checklist、行前檢查清單、費用、雨天備案/必訪景點、美食饗宴、天氣地點與打卡紀錄會自動儲存在這個瀏覽器；授權資料夾後，打卡紀錄也會同步寫入該目錄的 TravelingPlan.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
+    <p class="footer-note">行程、每日 Checklist、行前檢查清單、費用、雨天備案/必訪景點、美食饗宴、天氣地點、打卡紀錄與頁面主標題會自動儲存在這個瀏覽器；授權資料夾後，頁面主標題也會同步寫入該目錄的 TravelingPlan.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
   </main>
 
   <script>
@@ -3010,6 +3076,7 @@
     const PRE_TRIP_CHECKLIST_STORAGE_KEY = "traveling-plan.pre-trip-checklist.v1";
     const PRE_TRIP_FONT_SIZE_STORAGE_KEY = "traveling-plan.pre-trip-font-size.v1";
     const SECTION_VISIBILITY_STORAGE_KEY = "traveling-plan.section-visibility.v1";
+    const PAGE_TITLE_STORAGE_KEY = "traveling-plan.page-title.v1";
     const ITINERARY_BACKGROUND_COLOR_STORAGE_KEY = "traveling-plan.itinerary-background-color.v1";
     const DEFAULT_ITINERARY_BACKGROUND_COLOR = "#fffefa";
     const RAINY_DAY_STORAGE_KEY = "traveling-plan.rainy-days.v1";
@@ -3252,7 +3319,7 @@
     const travelExpenseToggleButton = document.querySelector("#travel-expense-toggle");
     const travelExpenseContent = document.querySelector("#travel-expense-content");
     const travelExpenseSummary = document.querySelector("#travel-expense-summary");
-    const checkinReportButton = document.querySelector("#checkin-report-button");
+    const checkinReportLink = document.querySelector("#checkin-report-link");
     const rainyDayListContent = document.querySelector("#rainy-day-list-content");
     const rainyDayForm = document.querySelector("#rainy-day-form");
     const rainyDayLocationInput = document.querySelector("#rainy-day-location");
@@ -3305,6 +3372,7 @@
     let checkinRecords = [];
     let expenses = {};
     let expenseExchangeRates = {};
+    let pageTitleValue = DEFAULT_PAGE_TITLE;
     let editingId = null;
     let editingChecklistId = null;
     let editingExpenseId = null;
@@ -4345,6 +4413,7 @@
       let importedRainyDays = [];
       let importedFoodExperiences = [];
       let importedCheckinRecords;
+      let importedPageTitle;
       if (Array.isArray(payload)) {
         importedItems = payload;
       } else if (payload !== null
@@ -4359,6 +4428,13 @@
             return null;
           }
           importedCheckinRecords = payload.checkinRecords;
+        }
+        if (Object.prototype.hasOwnProperty.call(payload, "pageTitle")) {
+          importedPageTitle = normalizePageTitle(payload.pageTitle);
+          if (!importedPageTitle) {
+            showNotice("檔案中的頁面主標題格式錯誤，未匯入任何資料。", true);
+            return null;
+          }
         }
         if (Object.prototype.hasOwnProperty.call(payload, "checklists")) {
           if (!isValidChecklistData(payload.checklists)) {
@@ -4451,6 +4527,7 @@
           ])
         ),
         checkinRecords: importedCheckinRecords,
+        pageTitle: importedPageTitle,
         rainyDays: importedRainyDays.map((item) => ({
           id: item.id,
           location: item.location,
@@ -4660,8 +4737,22 @@
       const previousRainyDays = rainyDays;
       const previousFoodExperiences = foodExperiences;
       const previousCheckinRecords = checkinRecords;
+      const previousPageTitle = pageTitleValue;
       const nextCheckinRecords = importedData.checkinRecords ?? previousCheckinRecords;
-      if (!saveImportedState(importedData, previousItems, previousChecklists, previousPreTripChecklist, previousExpenses, previousRainyDays, previousFoodExperiences, previousCheckinRecords, nextCheckinRecords)) {
+      const nextPageTitle = importedData.pageTitle ?? previousPageTitle;
+      if (!saveImportedState(
+        importedData,
+        previousItems,
+        previousChecklists,
+        previousPreTripChecklist,
+        previousExpenses,
+        previousRainyDays,
+        previousFoodExperiences,
+        previousCheckinRecords,
+        nextCheckinRecords,
+        previousPageTitle,
+        nextPageTitle
+      )) {
         return;
       }
 
@@ -4672,6 +4763,7 @@
       checkinRecords = nextCheckinRecords;
       rainyDays = importedData.rainyDays || [];
       foodExperiences = importedData.foodExperiences || [];
+      applyPageTitle(nextPageTitle);
       expandedRainyDayIds.clear();
       expandedFoodExperienceIds.clear();
       editingExpenseId = null;
@@ -4710,7 +4802,7 @@
       showNotice(`已匯入 ${preTripChecklist.length} 個行前檢查項目（${completedCount} 項已完成）；其他行程資料未變更。`);
     }
 
-    function saveImportedState(importedData, previousItems, previousChecklists, previousPreTripChecklist, previousExpenses, previousRainyDays, previousFoodExperiences, previousCheckinRecords, nextCheckinRecords) {
+    function saveImportedState(importedData, previousItems, previousChecklists, previousPreTripChecklist, previousExpenses, previousRainyDays, previousFoodExperiences, previousCheckinRecords, nextCheckinRecords, previousPageTitle, nextPageTitle) {
       try {
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(importedData.items));
         window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(importedData.checklists));
@@ -4719,6 +4811,7 @@
         window.localStorage.setItem(CHECKIN_STORAGE_KEY, JSON.stringify(nextCheckinRecords));
         window.localStorage.setItem(RAINY_DAY_STORAGE_KEY, JSON.stringify(importedData.rainyDays || []));
         window.localStorage.setItem(FOOD_EXPERIENCE_STORAGE_KEY, JSON.stringify(importedData.foodExperiences || []));
+        window.localStorage.setItem(PAGE_TITLE_STORAGE_KEY, nextPageTitle);
         return true;
       } catch {
         let rollbackFailed = false;
@@ -4730,6 +4823,7 @@
           window.localStorage.setItem(CHECKIN_STORAGE_KEY, JSON.stringify(previousCheckinRecords));
           window.localStorage.setItem(RAINY_DAY_STORAGE_KEY, JSON.stringify(previousRainyDays || []));
           window.localStorage.setItem(FOOD_EXPERIENCE_STORAGE_KEY, JSON.stringify(previousFoodExperiences || []));
+          window.localStorage.setItem(PAGE_TITLE_STORAGE_KEY, previousPageTitle);
         } catch {
           rollbackFailed = true;
         }
@@ -4760,6 +4854,7 @@
         preTripChecklist,
         expenses,
         checkinRecords,
+        pageTitle: pageTitleValue,
         rainyDays,
         foodExperiences
       };
@@ -5220,7 +5315,7 @@
         return;
       }
 
-      if (!window.confirm("確定要從雲端同步行程嗎？\n這將會下載線上最新的 TravelingPlan.json，並更新本機行程、Checklist、費用、雨天備案/必訪景點、美食饗宴與打卡紀錄。舊版雲端檔若沒有打卡欄位，會保留本機打卡紀錄。")) {
+      if (!window.confirm("確定要從雲端同步行程嗎？\n這將會下載線上最新的 TravelingPlan.json，並更新本機行程、Checklist、費用、雨天備案/必訪景點、美食饗宴與打卡紀錄；檔案若包含頁面主標題也會一併更新。舊版雲端檔若沒有打卡欄位，會保留本機打卡紀錄。")) {
         return;
       }
 
@@ -5276,7 +5371,7 @@
       }
 
       const confirmed = window.confirm(
-        "確定要將本機目前的行程、Checklist、費用與打卡紀錄上傳至 GitHub 雲端嗎？\n\n" +
+        "確定要將本機目前的行程、Checklist、費用、打卡紀錄與頁面主標題上傳至 GitHub 雲端嗎？\n\n" +
         `目標：${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/${GITHUB_FILE_PATH}\n` +
         "這將會更新線上現有的 TravelingPlan.json。\n注意：打卡紀錄包含景點名稱與時間，GitHub Pages 上的檔案可透過網址讀取，請勿存入敏感資訊。"
       );
@@ -5484,7 +5579,7 @@
           ...Object.keys(importedData.expenses)
         ]).size;
         const confirmed = window.confirm(
-          `匯入 ${format.toUpperCase()} 資料比對：\n目前：${items.length} 筆行程、${currentChecklistCount} 個每日 Checklist、${currentPreTripChecklistCount} 個行前檢查項目、${currentExpenseCount} 筆費用、${currentRainyDayCount} 處雨天備案/必訪景點、${currentFoodExperienceCount} 筆美食、${checkinRecords.length} 筆打卡、${currentDateCount} 天\n檔案：${importedData.items.length} 筆行程、${checklistCount} 個每日 Checklist、${importedPreTripChecklistCount} 個行前檢查項目、${expenseCount} 筆費用、${importedRainyDayCount} 處雨天備案/必訪景點、${importedFoodExperienceCount} 筆美食、${importedCheckinSummary} 打卡、${importedDateCount} 天\n確認後會更新本機資料；若檔案未提供打卡欄位，則保留目前打卡紀錄。建議先匯出備份。確定繼續嗎？`
+          `匯入 ${format.toUpperCase()} 資料比對：\n目前：${items.length} 筆行程、${currentChecklistCount} 個每日 Checklist、${currentPreTripChecklistCount} 個行前檢查項目、${currentExpenseCount} 筆費用、${currentRainyDayCount} 處雨天備案/必訪景點、${currentFoodExperienceCount} 筆美食、${checkinRecords.length} 筆打卡、${currentDateCount} 天\n檔案：${importedData.items.length} 筆行程、${checklistCount} 個每日 Checklist、${importedPreTripChecklistCount} 個行前檢查項目、${expenseCount} 筆費用、${importedRainyDayCount} 處雨天備案/必訪景點、${importedFoodExperienceCount} 筆美食、${importedCheckinSummary} 打卡、${importedDateCount} 天\n若檔案包含頁面主標題，匯入後也會更新；未包含則保留目前主標題。確認後會更新本機資料；若檔案未提供打卡欄位，則保留目前打卡紀錄。建議先匯出備份。確定繼續嗎？`
         );
         if (!confirmed) {
           showNotice("已取消匯入；本機資料未變更。");
@@ -5579,6 +5674,13 @@
         day: "numeric",
         weekday: "short"
       }).format(date);
+    }
+
+    function getLocalDateString(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
     }
 
     function formatTabDate(dateString) {
@@ -6867,6 +6969,72 @@
       return panel;
     }
 
+    function renderCheckinRecords(date) {
+      const panel = makeElement("section", "expense-panel checkin-panel");
+      const heading = makeElement("h3", "expense-heading");
+      heading.id = `checkin-heading-${date}`;
+      const dayRecords = checkinRecords
+        .filter((record) => getLocalDateString(new Date(record.checkedInAt)) === date)
+        .sort((first, second) => Date.parse(first.checkedInAt) - Date.parse(second.checkedInAt));
+      heading.append(
+        makeElement("span", "", "打卡紀錄"),
+        makeElement("span", "checklist-count", `${dayRecords.length} 筆`)
+      );
+      panel.setAttribute("aria-labelledby", heading.id);
+      panel.append(heading);
+
+      if (!checkinStorageReady) {
+        panel.append(makeElement("p", "expense-empty", "目前無法安全讀取打卡紀錄。"));
+        return panel;
+      }
+      if (dayRecords.length === 0) {
+        panel.append(makeElement("p", "expense-empty", "當天尚無打卡紀錄。"));
+        return panel;
+      }
+
+      const list = makeElement("ul", "expense-list");
+      dayRecords.forEach((record) => {
+        const checkedInAt = new Date(record.checkedInAt);
+        const time = new Intl.DateTimeFormat("zh-TW", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false
+        }).format(checkedInAt);
+        const row = makeElement("li", "expense-row");
+        const details = makeElement("div", "expense-details");
+        details.append(
+          makeElement("span", "expense-name", record.placeName),
+          makeElement("span", "expense-meta", time)
+        );
+        const actions = makeElement("div", "checklist-item-actions expense-actions");
+        const deleteButton = makeElement("button", "text-button delete", "刪除");
+        deleteButton.type = "button";
+        deleteButton.disabled = !checkinStorageReady;
+        deleteButton.setAttribute("aria-label", `刪除 ${record.placeName} ${time} 的打卡紀錄`);
+        deleteButton.addEventListener("click", () => {
+          if (!window.confirm(`確定刪除「${record.placeName}」在 ${time} 的這筆打卡紀錄嗎？`)) {
+            return;
+          }
+
+          const previousRecords = checkinRecords;
+          checkinRecords = checkinRecords.filter((entry) => entry.id !== record.id);
+          if (!saveCheckinRecords()) {
+            checkinRecords = previousRecords;
+            return;
+          }
+
+          showNotice(`已刪除「${record.placeName}」的打卡紀錄。`);
+          render();
+        });
+        actions.append(deleteButton);
+        row.append(details, actions);
+        list.append(row);
+      });
+      panel.append(list);
+      return panel;
+    }
+
     function renderTravelExpenseSummary() {
       const container = makeElement("div", "travel-expense-summary");
       const entries = Object.keys(expenses)
@@ -7044,10 +7212,7 @@
       const dateGroups = new Map();
       checkinRecords.forEach((record) => {
         const checkedInAt = new Date(record.checkedInAt);
-        const year = checkedInAt.getFullYear();
-        const month = String(checkedInAt.getMonth() + 1).padStart(2, "0");
-        const day = String(checkedInAt.getDate()).padStart(2, "0");
-        const date = `${year}-${month}-${day}`;
+        const date = getLocalDateString(checkedInAt);
         if (!dateGroups.has(date)) {
           dateGroups.set(date, []);
         }
@@ -7066,14 +7231,14 @@
                 second: "2-digit",
                 hour12: false
               }).format(checkedInAt);
-              return `<tr><td>${escapeHtml(time)}</td><td>${escapeHtml(record.placeName)}</td></tr>`;
+              return `<tr><td>${escapeHtml(time)}</td><td>${escapeHtml(record.placeName)}</td><td><button class="delete-button" type="button" data-checkin-id="${escapeHtml(record.id)}" data-place-name="${escapeHtml(record.placeName)}" aria-label="刪除 ${escapeHtml(record.placeName)} 的這筆打卡紀錄" disabled>刪除</button></td></tr>`;
             })
             .join("");
           return `<section class="date-section">
     <h2>${escapeHtml(formatDate(date))}</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>時間</th><th>地點</th></tr></thead>
+        <thead><tr><th>時間</th><th>地點</th><th>操作</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>
     </div>
@@ -7100,7 +7265,12 @@
     .date-section tbody tr:last-child td { border-bottom: 0; }
     th { color: #485b52; background: #f7f8f3; white-space: nowrap; }
     td:first-child { width: 140px; white-space: nowrap; }
+    th:last-child, td:last-child { width: 88px; text-align: right; white-space: nowrap; }
     .empty { padding: 16px; border-radius: 10px; color: #57606a; background: #f7f8f3; }
+    .delete-button { min-height: 34px; padding: 0 10px; border: 1px solid #f0c8c8; border-radius: 8px; color: #b42318; background: #fff; cursor: pointer; }
+    .delete-button:hover:not(:disabled) { background: #fff1f0; }
+    .delete-button:disabled { cursor: not-allowed; opacity: .55; }
+    .report-status { min-height: 20px; margin: -12px 0 16px; color: #57606a; font-size: 13px; }
     @media (max-width: 600px) { body { padding: 10px; } main { padding: 16px 12px; } th, td { padding: 8px 6px; } }
     @media print { body { padding: 0; background: #fff; } main { max-width: none; padding: 0; border: 0; } }
   </style>
@@ -7108,9 +7278,102 @@
 <body>
   <main>
     <h1>打卡紀錄</h1>
-    <p class="subtitle">共 ${checkinRecords.length} 筆紀錄</p>
+    <p class="subtitle" id="record-count" data-count="${checkinRecords.length}" aria-live="polite">共 ${checkinRecords.length} 筆紀錄</p>
+    <p class="report-status" id="report-status" role="status" aria-live="polite"></p>
     ${dateSections || `<p class="empty">尚無打卡紀錄。</p>`}
   </main>
+  <script>
+    const recordCount = document.querySelector("#record-count");
+    const reportMain = document.querySelector("main");
+    const reportStatus = document.querySelector("#report-status");
+    const pendingDeleteButtons = new Map();
+    let deletePort = null;
+
+    window.addEventListener("message", (event) => {
+      if (event.source !== window.opener
+        || event.data?.type !== "traveling-plan-checkin-report-init"
+        || event.ports.length !== 1
+        || deletePort !== null) {
+        return;
+      }
+
+      window.opener = null;
+      deletePort = event.ports[0];
+      deletePort.addEventListener("message", handleDeleteResult);
+      deletePort.start();
+      reportMain.querySelectorAll(".delete-button").forEach((button) => {
+        button.disabled = false;
+      });
+      reportStatus.textContent = "可刪除個別打卡紀錄。";
+    });
+    if (window.opener) {
+      window.opener.postMessage({ type: "traveling-plan-checkin-report-ready" }, "*");
+    }
+
+    window.setTimeout(() => {
+      if (deletePort === null) {
+        reportStatus.textContent = "刪除功能未連線，請回到行程頁重新開啟報表。";
+      }
+    }, 5000);
+
+    document.addEventListener("click", (event) => {
+      const button = event.target.closest(".delete-button");
+      if (!button || button.disabled) {
+        return;
+      }
+      if (deletePort === null) {
+        reportStatus.textContent = "刪除功能未連線，請回到行程頁重新開啟報表。";
+        return;
+      }
+      if (!window.confirm(\`確定刪除「\${button.dataset.placeName}」這一筆打卡紀錄嗎？\`)) {
+        return;
+      }
+
+      button.disabled = true;
+      pendingDeleteButtons.set(button.dataset.checkinId, button);
+      deletePort.postMessage({
+        type: "delete-checkin-record",
+        id: button.dataset.checkinId
+      });
+      reportStatus.textContent = "正在刪除打卡紀錄...";
+    });
+
+    function handleDeleteResult(event) {
+      const result = event.data;
+      if (!result || result.type !== "delete-checkin-result" || typeof result.id !== "string") {
+        return;
+      }
+
+      const button = pendingDeleteButtons.get(result.id);
+      if (!button) {
+        return;
+      }
+      pendingDeleteButtons.delete(result.id);
+
+      if (result.success !== true) {
+        button.disabled = false;
+        reportStatus.textContent = result.message || "刪除失敗，請重新嘗試。";
+        return;
+      }
+
+      button.closest("tr")?.remove();
+      const count = Math.max(0, Number(recordCount.dataset.count) - 1);
+      recordCount.dataset.count = String(count);
+      recordCount.textContent = \`共 \${count} 筆紀錄\`;
+
+      const dateSection = button.closest(".date-section");
+      if (!dateSection.querySelector("tbody tr")) {
+        dateSection.remove();
+      }
+      if (count === 0) {
+        const emptyMessage = document.createElement("p");
+        emptyMessage.className = "empty";
+        emptyMessage.textContent = "尚無打卡紀錄。";
+        reportMain.append(emptyMessage);
+      }
+      reportStatus.textContent = "已刪除這筆打卡紀錄。";
+    }
+  <\/script>
 </body>
 </html>`;
 
@@ -7123,7 +7386,53 @@
           return;
         }
 
-        reportWindow.opener = null;
+        const reportChannel = new MessageChannel();
+        reportChannel.port1.addEventListener("message", (event) => {
+          const request = event.data;
+          if (!request || request.type !== "delete-checkin-record" || typeof request.id !== "string") {
+            return;
+          }
+
+          let result;
+          if (!checkinStorageReady) {
+            result = { success: false, message: "本機打卡資料無法安全讀取，未刪除紀錄。" };
+          } else {
+            const recordToDelete = checkinRecords.find((record) => record.id === request.id);
+            if (!recordToDelete) {
+              result = { success: false, message: "找不到這筆紀錄，請重新開啟報表。" };
+            } else {
+              const previousRecords = checkinRecords;
+              checkinRecords = checkinRecords.filter((record) => record.id !== request.id);
+              if (!saveCheckinRecords()) {
+                checkinRecords = previousRecords;
+                result = { success: false, message: "無法儲存刪除結果，紀錄已保留。" };
+              } else {
+                showNotice(`已刪除「${recordToDelete.placeName}」的打卡紀錄。`);
+                render();
+                result = { success: true };
+              }
+            }
+          }
+
+          reportChannel.port1.postMessage({
+            type: "delete-checkin-result",
+            id: request.id,
+            ...result
+          });
+        });
+        reportChannel.port1.start();
+        const sendReportChannel = (event) => {
+          if (event.source !== reportWindow || event.data?.type !== "traveling-plan-checkin-report-ready") {
+            return;
+          }
+          window.removeEventListener("message", sendReportChannel);
+          reportWindow.postMessage(
+            { type: "traveling-plan-checkin-report-init" },
+            "*",
+            [reportChannel.port2]
+          );
+        };
+        window.addEventListener("message", sendReportChannel);
         reportUrl = URL.createObjectURL(new Blob([reportHtml], { type: "text/html;charset=utf-8" }));
         reportWindow.location.href = reportUrl;
         window.setTimeout(() => URL.revokeObjectURL(reportUrl), 60000);
@@ -7163,8 +7472,12 @@
       preTripChecklistContent.replaceChildren(renderPreTripChecklist());
       travelExpenseSummary.replaceChildren(renderTravelExpenseSummary());
 
-      const dates = getItineraryDates();
-      renderDaySwapDateOptions(dates);
+      const itineraryDates = getItineraryDates();
+      renderDaySwapDateOptions(itineraryDates);
+      const dates = [...new Set([
+        ...itineraryDates,
+        ...checkinRecords.map((record) => getLocalDateString(new Date(record.checkedInAt)))
+      ])].sort();
       if (dates.length === 0) {
         currentDay = null;
         editingExpenseId = null;
@@ -7239,7 +7552,13 @@
       const list = makeElement("ol", "itinerary-list");
       selectedItems.forEach((item, index) => list.append(createItineraryCard(item, index)));
       itineraryContent.setAttribute("aria-labelledby", `day-tab-${currentDay}`);
-      itineraryContent.replaceChildren(dayHeading, list, renderChecklist(currentDay), renderExpenses(currentDay));
+      itineraryContent.replaceChildren(
+        dayHeading,
+        list,
+        renderChecklist(currentDay),
+        renderExpenses(currentDay),
+        renderCheckinRecords(currentDay)
+      );
     }
 
     function reorderWithinDay(sourceId, targetId, position) {
@@ -7766,6 +8085,7 @@
       }
 
       showNotice(`已在「${record.placeName}」成功打卡！紀錄已儲存。`);
+      render();
     }
 
     function initializeSectionVisibilityControls() {
@@ -7816,15 +8136,67 @@
       });
     }
 
+    function normalizePageTitle(value) {
+      if (typeof value !== "string") {
+        return null;
+      }
+
+      const normalizedTitle = value.trim();
+      return normalizedTitle.length > 0 && normalizedTitle.length <= 80 ? normalizedTitle : null;
+    }
+
+    function applyPageTitle(value) {
+      pageTitleValue = value;
+      pageTitleInput.value = value;
+      pageTitle.textContent = value;
+    }
+
     function initializePageTitleControl() {
-      const updatePageTitle = () => {
-        pageTitle.textContent = pageTitleInput.value.trim() || DEFAULT_PAGE_TITLE;
+      let savedTitle = DEFAULT_PAGE_TITLE;
+      try {
+        const storedTitle = window.localStorage.getItem(PAGE_TITLE_STORAGE_KEY);
+        if (storedTitle !== null) {
+          savedTitle = normalizePageTitle(storedTitle);
+          if (!savedTitle) {
+            throw new TypeError("頁面主標題設定格式無效");
+          }
+        }
+      } catch {
+        savedTitle = DEFAULT_PAGE_TITLE;
+        showNotice("無法讀取頁面主標題設定，已使用預設標題。", true);
+      }
+      applyPageTitle(savedTitle);
+
+      const saveTitle = (value) => {
+        const nextTitle = normalizePageTitle(value);
+        if (!nextTitle) {
+          applyPageTitle(savedTitle);
+          showNotice("頁面主標題不可空白或超過 80 個字，已還原為上次設定。", true);
+          return;
+        }
+
+        try {
+          window.localStorage.setItem(PAGE_TITLE_STORAGE_KEY, nextTitle);
+          savedTitle = nextTitle;
+          applyPageTitle(nextTitle);
+          queueDirectorySave();
+          clearNotice();
+        } catch {
+          applyPageTitle(savedTitle);
+          showNotice("無法儲存頁面主標題，已還原為上次設定。請檢查瀏覽器儲存空間。", true);
+        }
       };
 
-      pageTitleInput.addEventListener("input", updatePageTitle);
+      pageTitleInput.addEventListener("input", () => {
+        const previewTitle = normalizePageTitle(pageTitleInput.value);
+        pageTitle.textContent = previewTitle || DEFAULT_PAGE_TITLE;
+        if (previewTitle) {
+          pageTitleValue = previewTitle;
+        }
+      });
+      pageTitleInput.addEventListener("change", () => saveTitle(pageTitleInput.value));
       pageTitleResetButton.addEventListener("click", () => {
-        pageTitleInput.value = DEFAULT_PAGE_TITLE;
-        updatePageTitle();
+        saveTitle(DEFAULT_PAGE_TITLE);
         pageTitleInput.focus();
       });
     }
@@ -8177,8 +8549,10 @@
     foodExperiences = loadFoodExperiences();
     weatherLocations = loadWeatherLocations();
     checkinRecords = loadCheckinRecords();
-    checkinReportButton.disabled = !checkinStorageReady;
-    checkinReportButton.addEventListener("click", openCheckinRecordsReport);
+    checkinReportLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      openCheckinRecordsReport();
+    });
     expenses = loadExpenses();
     expenseExchangeRates = loadExpenseExchangeRates();
     if (!weatherStorageReady) {
