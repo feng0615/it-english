@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-11T02:42:18.225Z",
+  "exportedAt": "2026-11-11T03:07:03.507Z",
   "items": [
     {
       "id": "klook-north-kyoto-2026-11-15-taxi",
@@ -346,6 +346,14 @@
       "title": "四条河原町晚餐與逛街",
       "location": "四条河原町",
       "notes": "• 重點：移動至四条河原町商圈或錦市場 用餐、採買藥妝與伴手禮，為一天行程畫下句點。"
+    },
+    {
+      "id": "1794366381499-vddd8f",
+      "date": "2026-11-14",
+      "time": "04:00 - 06:00",
+      "title": "出發往桃園機場第二航廈",
+      "location": "桃園機場",
+      "notes": ""
     }
   ],
   "checklists": {
@@ -386,12 +394,12 @@
     {
       "id": "pretrip-1794209968000-o0hlk1to",
       "text": "公司請假11/13-11/20",
-      "checked": false
+      "checked": true
     },
     {
       "id": "pretrip-1794295554134-3amrdagu",
       "text": "Visit Japan Web填寫",
-      "checked": false
+      "checked": true
     }
   ],
   "expenses": {
