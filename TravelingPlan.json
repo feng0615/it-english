@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-11T03:07:03.507Z",
+  "exportedAt": "2026-11-11T03:21:49.818Z",
   "items": [
     {
       "id": "klook-north-kyoto-2026-11-15-taxi",
@@ -387,11 +387,6 @@
       "checked": true
     },
     {
-      "id": "pretrip-1794187158644-13br0n1f",
-      "text": "預辦登機網路報到 https://booking.evaair.com/flyeva/eva/b2c/manage-your-trip/online-checked-in-login.aspx?lang=zh-tw",
-      "checked": false
-    },
-    {
       "id": "pretrip-1794209968000-o0hlk1to",
       "text": "公司請假11/13-11/20",
       "checked": true
@@ -400,6 +395,11 @@
       "id": "pretrip-1794295554134-3amrdagu",
       "text": "Visit Japan Web填寫",
       "checked": true
+    },
+    {
+      "id": "pretrip-1794367278256-2utgma4o",
+      "text": "11/12 08:00後可預辦登機網路報到 https://booking.evaair.com/flyeva/eva/b2c/manage-your-trip/online-checked-in-login.aspx?lang=zh-tw",
+      "checked": false
     }
   ],
   "expenses": {
