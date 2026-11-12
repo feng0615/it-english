@@ -1072,36 +1072,140 @@
       line-height: 1.6;
     }
 
-    .day-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 0 0 17px;
-      padding: 2px 2px 9px;
+    .file-sync-status:empty {
+      display: none;
     }
 
-    .day-tab {
-      flex: 0 1 auto;
-      min-height: 38px;
-      padding: 0 13px;
-      border: 1px solid var(--line);
-      border-radius: 11px;
-      color: #52635a;
-      background: #fff;
-      font-size: 12px;
-      font-weight: 750;
-      white-space: normal;
+    .day-timeline {
+      display: grid;
+      gap: 6px;
+      margin-bottom: 17px;
     }
 
-    .day-tab[aria-selected="true"] {
-      border-color: var(--green);
-      color: #fff;
+    .day-timeline-current {
+      display: block;
+      min-height: 20px;
+      margin: 0;
+      color: var(--green-dark);
+      font-size: 14px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .day-timeline-control {
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr) max-content;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .day-timeline-boundary {
+      color: var(--muted);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .day-timeline-boundary:last-child {
+      text-align: right;
+    }
+
+    .day-timeline-range {
+      position: relative;
+      min-width: 0;
+    }
+
+    .day-timeline-marks {
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      right: 9px;
+      left: 9px;
+      height: 0;
+      pointer-events: none;
+    }
+
+    .day-timeline-mark {
+      position: absolute;
+      top: 0;
+      width: 2px;
+      height: 9px;
+      border-radius: 2px;
+      background: #71857a;
+      transform: translate(-50%, -50%);
+    }
+
+    .day-timeline-mark.is-current {
+      visibility: hidden;
+    }
+
+    .day-timeline-slider {
+      --timeline-progress: 0%;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 30px;
+      margin: 0;
+      padding: 0;
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+      accent-color: var(--green);
+      cursor: pointer;
+    }
+
+    .day-timeline-slider:focus-visible {
+      border-radius: 999px;
+      outline: 3px solid rgb(47 105 87 / 24%);
+      outline-offset: 2px;
+    }
+
+    .day-timeline-slider:disabled {
+      cursor: not-allowed;
+      opacity: .55;
+    }
+
+    .day-timeline-slider::-webkit-slider-runnable-track {
+      height: 5px;
+      border-radius: 999px;
+      background: linear-gradient(
+        to right,
+        var(--green) 0%,
+        var(--green) var(--timeline-progress),
+        #d9e3da var(--timeline-progress),
+        #d9e3da 100%
+      );
+    }
+
+    .day-timeline-slider::-webkit-slider-thumb {
+      width: 18px;
+      height: 18px;
+      margin-top: -6.5px;
+      appearance: none;
+      border: 3px solid #fff;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 1px var(--green);
+    }
+
+    .day-timeline-slider::-moz-range-track {
+      height: 5px;
+      border-radius: 999px;
+      background: #d9e3da;
+    }
+
+    .day-timeline-slider::-moz-range-progress {
+      height: 5px;
+      border-radius: 999px;
       background: var(--green);
     }
 
-    .day-tab:focus-visible {
-      outline: 3px solid rgb(47 105 87 / 24%);
-      outline-offset: 2px;
+    .day-timeline-slider::-moz-range-thumb {
+      width: 12px;
+      height: 12px;
+      border: 3px solid #fff;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 1px var(--green);
     }
 
     .day-heading {
@@ -2216,19 +2320,12 @@
         left: auto;
       }
 
-      .day-tabs {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+      .day-timeline-control {
         gap: 8px;
       }
 
-      .day-tab {
-        width: 100%;
-        min-width: 0;
-        min-height: 42px;
-        padding: 0 5px;
-        font-size: 11px;
-        line-height: 1.2;
+      .day-timeline-boundary {
+        font-size: 10px;
       }
 
       .data-actions {
@@ -2368,12 +2465,47 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.97</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.102</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.102</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>移除行程資料操作下方的說明文字。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.101</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>將「互換兩天資料」功能移至參數設定區塊。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.100</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>在日期滑桿軌道上標示各日期的分段位置。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.99</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>日期時間軸改用滑桿，支援點選軌道或拖曳切換日期。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.98</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>日期切換改為單列時間軸，增加左右按鈕切換日期。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.3.97</strong>
@@ -3173,7 +3305,7 @@
             <button class="secondary-button form-toggle" id="settings-toggle" type="button" aria-expanded="false" aria-controls="settings-content">展開</button>
           </div>
           <div id="settings-content" hidden>
-            <p class="panel-description">設定主標題、各區塊是否顯示、我的行程底色，以及行前檢查清單、雨天備案/必訪景點與美食饗宴的顯示字體大小。</p>
+            <p class="panel-description">設定主標題、各區塊是否顯示、我的行程底色、各區塊顯示字體大小，以及互換兩天資料。</p>
             <div class="setting-field page-title-setting">
               <label for="page-title-input">頁面主標題</label>
               <div class="page-title-setting-control">
@@ -3252,6 +3384,20 @@
               <p class="exchange-rate-status" id="expense-exchange-rate-status" role="status" aria-live="polite"></p>
               <div class="exchange-rate-list" id="expense-exchange-rates"></div>
             </div>
+            <div class="setting-field exchange-rate-setting">
+              <p class="exchange-rate-title">互換兩天資料</p>
+              <p class="day-swap-description">選擇兩個日期，可互換行程項目、每日 Checklist 與旅遊費用；其他資料不變。</p>
+              <div class="day-swap-controls" role="group" aria-label="互換兩天資料">
+                <select id="day-swap-first-date" aria-label="選擇第一個互換日期">
+                  <option value="">選擇第一天</option>
+                </select>
+                <span class="day-swap-arrow" aria-hidden="true">↔</span>
+                <select id="day-swap-second-date" aria-label="選擇第二個互換日期">
+                  <option value="">選擇第二天</option>
+                </select>
+                <button class="secondary-button" id="day-swap-button" type="button" disabled>互換兩天資料</button>
+              </div>
+            </div>
           </div>
         </section>
       </div>
@@ -3286,22 +3432,20 @@
           <button class="secondary-button" id="cloud-upload-button" type="button">儲存行程到雲端</button>
           <input id="import-file" type="file" accept=".json,application/json" hidden>
         </div>
-        <p class="file-sync-status">多人接力共編：匯出 JSON 傳給協作者；對方匯入、編輯後再匯出回傳。匯入會在確認後取代本機資料；資料檔可能含私人資訊，請只透過可信管道分享。</p>
-        <p class="file-sync-status" id="file-sync-status" role="status" aria-live="polite">雲端同步：「同步雲端行程」可從 GitHub 下載最新 TravelingPlan.json；「儲存行程到雲端」會將本機行程、打卡紀錄與頁面主標題一併上傳。</p>
-        <p class="day-swap-description">選擇兩個日期，可互換行程項目、每日 Checklist 與旅遊費用；其他資料不變。</p>
-        <div class="day-swap-controls" role="group" aria-label="互換兩天資料">
-          <select id="day-swap-first-date" aria-label="選擇第一個互換日期">
-            <option value="">選擇第一天</option>
-          </select>
-          <span class="day-swap-arrow" aria-hidden="true">↔</span>
-          <select id="day-swap-second-date" aria-label="選擇第二個互換日期">
-            <option value="">選擇第二天</option>
-          </select>
-          <button class="secondary-button" id="day-swap-button" type="button" disabled>互換兩天資料</button>
-        </div>
+        <p class="file-sync-status" id="file-sync-status" role="status" aria-live="polite"></p>
         <p class="notice" id="notice" role="status" aria-live="polite" hidden></p>
-        <div class="day-tabs" id="day-tabs" role="tablist" aria-label="依日期切換行程"></div>
-        <div id="itinerary-content" role="tabpanel"></div>
+        <div class="day-timeline">
+          <p class="day-timeline-current" id="day-timeline-current"></p>
+          <div class="day-timeline-control">
+            <span class="day-timeline-boundary" id="day-timeline-start" aria-hidden="true"></span>
+            <div class="day-timeline-range">
+              <div class="day-timeline-marks" id="day-timeline-marks" aria-hidden="true"></div>
+              <input class="day-timeline-slider" id="day-timeline-slider" type="range" min="0" max="0" value="0" step="1" aria-label="切換行程日期" aria-valuetext="" disabled>
+            </div>
+            <span class="day-timeline-boundary" id="day-timeline-end" aria-hidden="true"></span>
+          </div>
+        </div>
+        <div id="itinerary-content" role="region" aria-labelledby="day-timeline-current"></div>
         </div>
       </section>
 
@@ -3740,7 +3884,11 @@
     const cloudUploadButton = document.querySelector("#cloud-upload-button");
     const directoryButton = document.querySelector("#directory-button");
     const fileSyncStatus = document.querySelector("#file-sync-status");
-    const dayTabs = document.querySelector("#day-tabs");
+    const dayTimelineSlider = document.querySelector("#day-timeline-slider");
+    const dayTimelineCurrent = document.querySelector("#day-timeline-current");
+    const dayTimelineMarks = document.querySelector("#day-timeline-marks");
+    const dayTimelineStart = document.querySelector("#day-timeline-start");
+    const dayTimelineEnd = document.querySelector("#day-timeline-end");
     const itineraryContent = document.querySelector("#itinerary-content");
     const daySwapFirstDateSelect = document.querySelector("#day-swap-first-date");
     const daySwapSecondDateSelect = document.querySelector("#day-swap-second-date");
@@ -3768,6 +3916,7 @@
     const collapsedFoodExperienceAreas = new Set();
     const validFontSizes = ["0.6", "0.8", "1", "1.2", "1.5"];
     let currentDay = null;
+    let itineraryTimelineDates = [];
     let draggedItemId = null;
     let storageReady = true;
     let checklistStorageReady = true;
@@ -8305,6 +8454,18 @@
       return route;
     }
 
+    function selectItineraryDate(date) {
+      if (!date || date === currentDay || !itineraryTimelineDates.includes(date)) {
+        return false;
+      }
+
+      editingExpenseId = null;
+      editingExpenseDate = null;
+      currentDay = date;
+      render();
+      return true;
+    }
+
     function render() {
       itemCount.textContent = String(items.length);
       itemCount.setAttribute("aria-label", `共 ${items.length} 個行程`);
@@ -8338,17 +8499,26 @@
         ...itineraryDates,
         ...checkinRecords.map((record) => getLocalDateString(new Date(record.checkedInAt)))
       ])].sort();
+      itineraryTimelineDates = dates;
       if (dates.length === 0) {
         currentDay = null;
         editingExpenseId = null;
         editingExpenseDate = null;
         summary.textContent = "還沒有安排任何行程";
-        dayTabs.replaceChildren();
+        dayTimelineSlider.max = "0";
+        dayTimelineSlider.value = "0";
+        dayTimelineSlider.disabled = true;
+        dayTimelineSlider.style.setProperty("--timeline-progress", "0%");
+        dayTimelineCurrent.textContent = "尚無日期";
+        dayTimelineMarks.replaceChildren();
+        dayTimelineStart.textContent = "";
+        dayTimelineEnd.textContent = "";
+        dayTimelineSlider.setAttribute("aria-valuetext", "尚無日期");
         const emptyState = makeElement("div", "empty-state");
         emptyState.append(makeElement("span", "empty-icon", "✦"));
         emptyState.append(makeElement("h3", "", "旅程，從第一站開始"));
         emptyState.append(makeElement("p", "", "先把最期待的景點或活動記下來，之後隨時都能修改。"));
-        itineraryContent.setAttribute("aria-labelledby", "itinerary-title");
+        itineraryContent.setAttribute("aria-labelledby", "day-timeline-current");
         itineraryContent.replaceChildren(emptyState);
         return;
       }
@@ -8358,61 +8528,39 @@
       if (!dates.includes(currentDay)) {
         currentDay = dates[0];
       }
+      const selectedDateIndex = dates.indexOf(currentDay);
+      dayTimelineSlider.max = String(dates.length - 1);
+      dayTimelineSlider.value = String(selectedDateIndex);
+      dayTimelineSlider.disabled = dates.length <= 1;
+      dayTimelineSlider.style.setProperty(
+        "--timeline-progress",
+        `${dates.length > 1 ? selectedDateIndex / (dates.length - 1) * 100 : 0}%`
+      );
+      dayTimelineMarks.replaceChildren(...dates.map((date, index) => {
+        const isCurrent = index === selectedDateIndex;
+        const mark = makeElement(
+          "span",
+          `day-timeline-mark${isCurrent ? " is-current" : ""}`
+        );
+        mark.style.left = `${dates.length > 1 ? index / (dates.length - 1) * 100 : 50}%`;
+        mark.title = formatTabDate(date);
+        return mark;
+      }));
+      dayTimelineCurrent.textContent = formatTabDate(currentDay);
+      dayTimelineStart.textContent = dates[0].slice(5).replace("-", "/");
+      dayTimelineEnd.textContent = dates[dates.length - 1].slice(5).replace("-", "/");
+      dayTimelineSlider.setAttribute("aria-valuetext", formatTabDate(currentDay));
       if (editingExpenseDate && editingExpenseDate !== currentDay) {
         editingExpenseId = null;
         editingExpenseDate = null;
       }
-
-      dayTabs.replaceChildren();
-      dates.forEach((date, index) => {
-        const tab = makeElement("button", "day-tab", formatTabDate(date));
-        tab.type = "button";
-        tab.id = `day-tab-${date}`;
-        tab.dataset.date = date;
-        tab.setAttribute("role", "tab");
-        tab.setAttribute("aria-controls", "itinerary-content");
-        tab.setAttribute("aria-selected", String(date === currentDay));
-        tab.tabIndex = date === currentDay ? 0 : -1;
-        tab.addEventListener("click", () => {
-          if (currentDay !== date) {
-            editingExpenseId = null;
-            editingExpenseDate = null;
-          }
-          currentDay = date;
-          render();
-        });
-        tab.addEventListener("keydown", (event) => {
-          let nextIndex = index;
-          if (event.key === "ArrowRight") {
-            nextIndex = (index + 1) % dates.length;
-          } else if (event.key === "ArrowLeft") {
-            nextIndex = (index - 1 + dates.length) % dates.length;
-          } else if (event.key === "Home") {
-            nextIndex = 0;
-          } else if (event.key === "End") {
-            nextIndex = dates.length - 1;
-          } else {
-            return;
-          }
-
-          event.preventDefault();
-          if (currentDay !== dates[nextIndex]) {
-            editingExpenseId = null;
-            editingExpenseDate = null;
-          }
-          currentDay = dates[nextIndex];
-          render();
-          dayTabs.children[nextIndex].focus();
-        });
-        dayTabs.append(tab);
-      });
 
       const selectedItems = sortDayItems(items.filter((item) => item.date === currentDay));
       const dayHeading = makeElement("h3", "day-heading", formatDate(currentDay));
       const list = makeElement("ol", "itinerary-list");
       selectedItems.forEach((item, index) => list.append(createItineraryCard(item, index)));
       const itineraryRoute = renderItineraryRoute(selectedItems);
-      itineraryContent.setAttribute("aria-labelledby", `day-tab-${currentDay}`);
+      itineraryContent.setAttribute("aria-labelledby", "day-timeline-current");
       itineraryContent.replaceChildren(
         dayHeading,
         ...(itineraryRoute ? [itineraryRoute] : []),
@@ -9419,6 +9567,10 @@
     });
     cloudSyncButton.addEventListener("click", syncFromCloud);
     cloudUploadButton.addEventListener("click", uploadToCloud);
+    dayTimelineSlider.addEventListener("input", () => {
+      const selectedDate = itineraryTimelineDates[Number(dayTimelineSlider.value)];
+      selectItineraryDate(selectedDate);
+    });
     daySwapFirstDateSelect.addEventListener("change", updateDaySwapButtonState);
     daySwapSecondDateSelect.addEventListener("change", updateDaySwapButtonState);
     daySwapButton.addEventListener("click", swapSelectedDays);
