@@ -1137,6 +1137,107 @@
       list-style: none;
     }
 
+    .itinerary-route {
+      margin-bottom: 16px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fffefa;
+    }
+
+    .itinerary-route-heading {
+      display: flex;
+      margin-bottom: 12px;
+    }
+
+    .itinerary-route-heading h4 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .itinerary-route-list {
+      display: flex;
+      gap: 30px;
+      margin: 0;
+      padding: 4px 4px 12px;
+      overflow-x: auto;
+      list-style: none;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x proximity;
+      scrollbar-color: #b7c9bc transparent;
+      scrollbar-width: thin;
+    }
+
+    .itinerary-route-list::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .itinerary-route-list::-webkit-scrollbar-thumb {
+      border-radius: 999px;
+      background: #b7c9bc;
+    }
+
+    .itinerary-route-stop {
+      position: relative;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      flex: 0 0 160px;
+      gap: 5px;
+      min-height: 80px;
+      padding: 9px 10px;
+      border: 1px solid #dfe8df;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #fff 0%, #f5f8f2 100%);
+      scroll-snap-align: start;
+      text-align: center;
+      transition: border-color .15s, box-shadow .15s, transform .15s;
+    }
+
+    .itinerary-route-stop:hover {
+      border-color: #9fbba7;
+      box-shadow: 0 6px 16px rgb(34 57 47 / 10%);
+      transform: translateY(-2px);
+    }
+
+    .itinerary-route-stop:not(:last-child)::after {
+      position: absolute;
+      top: 50%;
+      right: -27px;
+      width: 8px;
+      height: 8px;
+      border-top: 2px solid var(--green);
+      border-right: 2px solid var(--green);
+      content: "";
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .itinerary-route-stop:not(:last-child)::before {
+      position: absolute;
+      top: 50%;
+      right: -30px;
+      left: 100%;
+      height: 2px;
+      background: #b7c9bc;
+      content: "";
+      transform: translateY(-50%);
+    }
+
+    .itinerary-route-marker {
+      width: 21px;
+      height: 21px;
+      color: var(--green);
+    }
+
+    .itinerary-route-location {
+      color: var(--green-dark);
+      font-size: 12px;
+      font-weight: 750;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
     .itinerary-item {
       position: relative;
       padding: 15px 14px 13px 18px;
@@ -2254,12 +2355,40 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.91</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.95</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.95</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>縮小地點動線中的地點卡片與圖釘。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.94</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>為地點動線加入定位圖釘，並改善連接線與橫向瀏覽樣式。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.93</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>地點動線示意改為只顯示地點，並按時間去除重複地點。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.92</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>在每日行程中新增依時間排序串接的地點動線示意圖。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.3.91</strong>
@@ -8093,6 +8222,52 @@
       }
     }
 
+    function renderItineraryRoute(dayItems) {
+      const seenLocations = new Set();
+      const locations = sortDayItemsByTime(dayItems)
+        .map((item) => item.location.trim())
+        .filter((location) => {
+          if (!location || seenLocations.has(location)) {
+            return false;
+          }
+          seenLocations.add(location);
+          return true;
+        });
+      if (locations.length === 0) {
+        return null;
+      }
+
+      const route = makeElement("section", "itinerary-route");
+      route.setAttribute("aria-label", "依時間順序排列的行程地點動線");
+      const heading = makeElement("div", "itinerary-route-heading");
+      heading.append(makeElement("h4", "", "地點動線示意"));
+      const routeList = makeElement("ol", "itinerary-route-list");
+      routeList.setAttribute("aria-label", "行程地點順序");
+
+      locations.forEach((location) => {
+        const stop = makeElement("li", "itinerary-route-stop");
+        const marker = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        marker.setAttribute("class", "itinerary-route-marker");
+        marker.setAttribute("viewBox", "0 0 24 24");
+        marker.setAttribute("aria-hidden", "true");
+        marker.setAttribute("focusable", "false");
+        const pinShape = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        pinShape.setAttribute("d", "M12 22s8-7.2 8-13a8 8 0 0 0-16 0c0 5.8 8 13 8 13z");
+        pinShape.setAttribute("fill", "currentColor");
+        const pinCenter = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        pinCenter.setAttribute("cx", "12");
+        pinCenter.setAttribute("cy", "9");
+        pinCenter.setAttribute("r", "3");
+        pinCenter.setAttribute("fill", "#fffefa");
+        marker.append(pinShape, pinCenter);
+        stop.append(marker, makeElement("strong", "itinerary-route-location", location));
+        routeList.append(stop);
+      });
+
+      route.append(heading, routeList);
+      return route;
+    }
+
     function render() {
       itemCount.textContent = String(items.length);
       itemCount.setAttribute("aria-label", `共 ${items.length} 個行程`);
@@ -8199,9 +8374,11 @@
       const dayHeading = makeElement("h3", "day-heading", formatDate(currentDay));
       const list = makeElement("ol", "itinerary-list");
       selectedItems.forEach((item, index) => list.append(createItineraryCard(item, index)));
+      const itineraryRoute = renderItineraryRoute(selectedItems);
       itineraryContent.setAttribute("aria-labelledby", `day-tab-${currentDay}`);
       itineraryContent.replaceChildren(
         dayHeading,
+        ...(itineraryRoute ? [itineraryRoute] : []),
         list,
         renderChecklist(currentDay),
         renderExpenses(currentDay),
