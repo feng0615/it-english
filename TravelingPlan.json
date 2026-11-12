@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-12T04:30:31.350Z",
+  "exportedAt": "2026-11-12T04:31:31.760Z",
   "items": [
     {
       "id": "klook-north-kyoto-2026-11-15-taxi",
@@ -508,6 +508,16 @@
         "category": "住",
         "payer": "Ealing",
         "note": "中信"
+      },
+      {
+        "id": "expense-1794457875852-25ulteyf",
+        "name": "旅平險",
+        "category": "樂",
+        "payer": "Michael",
+        "currency": "TWD",
+        "amount": 4773,
+        "paymentMethod": "刷卡",
+        "note": "元大"
       }
     ],
     "2026-11-17": [
