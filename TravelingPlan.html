@@ -2366,13 +2366,15 @@
       }
 
       .dashboard {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         gap: 14px;
       }
 
       .dashboard > .planning-sidebar > .panel,
       .dashboard > .dashboard-content > .panel {
         width: 100%;
+        min-width: 0;
+        max-width: 100%;
       }
 
       [data-section-visibility-panel="itinerary"] {
@@ -2391,6 +2393,14 @@
 
       .itinerary-panel {
         min-height: 0;
+        min-width: 0;
+        max-width: 100%;
+      }
+
+      #itinerary-panel-content,
+      #itinerary-content {
+        min-width: 0;
+        max-width: 100%;
       }
 
       .version-changelog-panel {
@@ -2543,12 +2553,19 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.110</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.111</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.111</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>調整手機版我的行程區塊寬度，避免內容撐開頁面。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.3.110</strong>
