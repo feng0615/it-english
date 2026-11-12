@@ -1112,12 +1112,13 @@
     .day-timeline-range {
       position: relative;
       min-width: 0;
+      height: 42px;
     }
 
     .day-timeline-marks {
       position: absolute;
       z-index: 2;
-      top: 50%;
+      top: 21px;
       right: 9px;
       left: 9px;
       height: 0;
@@ -1134,13 +1135,32 @@
       transform: translate(-50%, -50%);
     }
 
+    .day-timeline-mark-label {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 600;
+      line-height: 1;
+      white-space: nowrap;
+      transform: translateX(-50%);
+    }
+
     .day-timeline-mark.is-current {
-      visibility: hidden;
+      background: transparent;
+    }
+
+    .day-timeline-mark.is-current .day-timeline-mark-label {
+      color: var(--green-dark);
+      font-weight: 800;
     }
 
     .day-timeline-slider {
       --timeline-progress: 0%;
-      position: relative;
+      position: absolute;
+      top: 6px;
+      left: 0;
       z-index: 1;
       width: 100%;
       height: 30px;
@@ -1290,6 +1310,13 @@
     }
 
     .itinerary-route-link {
+      --route-card-background: #f7f8f5;
+      --route-card-hover-background: #f2f5f1;
+      --route-card-border: #e7ebe5;
+      --route-card-hover-border: #cbd8ce;
+      --route-card-text: #52635a;
+      --route-card-hover-text: #2f6957;
+      --route-card-marker: #668578;
       display: grid;
       width: max-content;
       min-width: 96px;
@@ -1299,23 +1326,73 @@
       justify-items: center;
       gap: 5px;
       padding: 9px 10px;
-      border: 1px solid #dfe8df;
+      border: 1px solid var(--route-card-border);
       border-radius: 12px;
-      background: linear-gradient(145deg, #fff 0%, #f5f8f2 100%);
+      background: var(--route-card-background);
       color: inherit;
       text-align: center;
       text-decoration: none;
-      transition: border-color .15s, box-shadow .15s;
+      transition: background-color .15s, border-color .15s, box-shadow .15s;
+    }
+
+    .itinerary-route-stop:nth-child(4n + 1) .itinerary-route-link {
+      --route-card-background: #f3f7f3;
+      --route-card-hover-background: #eaf1eb;
+      --route-card-border: #e1ebe2;
+      --route-card-hover-border: #c5d8c8;
+      --route-card-text: #4f675a;
+      --route-card-hover-text: #2f6957;
+      --route-card-marker: #668578;
+    }
+
+    .itinerary-route-stop:nth-child(4n + 2) .itinerary-route-link {
+      --route-card-background: #f2f6f8;
+      --route-card-hover-background: #e9f0f4;
+      --route-card-border: #e0e9ee;
+      --route-card-hover-border: #c4d5df;
+      --route-card-text: #4f6572;
+      --route-card-hover-text: #3d6c86;
+      --route-card-marker: #66839a;
+    }
+
+    .itinerary-route-stop:nth-child(4n + 3) .itinerary-route-link {
+      --route-card-background: #faf6ef;
+      --route-card-hover-background: #f3ecdf;
+      --route-card-border: #eee7d9;
+      --route-card-hover-border: #ddcfb6;
+      --route-card-text: #6e5d45;
+      --route-card-hover-text: #806132;
+      --route-card-marker: #9a8059;
+    }
+
+    .itinerary-route-stop:nth-child(4n + 4) .itinerary-route-link {
+      --route-card-background: #f6f4f8;
+      --route-card-hover-background: #eeeaf3;
+      --route-card-border: #e8e2ed;
+      --route-card-hover-border: #d3c8df;
+      --route-card-text: #62576f;
+      --route-card-hover-text: #6d5485;
+      --route-card-marker: #837397;
     }
 
     .itinerary-route-link:hover {
-      border-color: #9fbba7;
-      box-shadow: 0 6px 16px rgb(34 57 47 / 10%);
+      border-color: var(--route-card-hover-border);
+      background: var(--route-card-hover-background);
+      box-shadow: 0 4px 12px rgb(34 57 47 / 7%);
     }
 
     .itinerary-route-link:focus-visible {
       outline: 3px solid rgb(47 105 87 / 24%);
       outline-offset: 2px;
+    }
+
+    .itinerary-route-link:hover .itinerary-route-location,
+    .itinerary-route-link:focus-visible .itinerary-route-location {
+      color: var(--route-card-hover-text);
+      font-weight: 800;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
     }
 
     .itinerary-route-stop:not(:last-child)::after {
@@ -1344,15 +1421,16 @@
     .itinerary-route-marker {
       width: 21px;
       height: 21px;
-      color: var(--green);
+      color: var(--route-card-marker);
     }
 
     .itinerary-route-location {
-      color: var(--green-dark);
+      color: var(--route-card-text);
       font-size: 12px;
       font-weight: 750;
       line-height: 1.5;
       overflow-wrap: anywhere;
+      transition: color .15s;
     }
 
     .itinerary-item {
@@ -2465,12 +2543,68 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.102</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.110</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.110</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>調整地點動線重複判斷，只合併連續相同的地點。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.109</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>滑鼠移入或鍵盤聚焦地點動線卡片時，高亮地點文字。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.108</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>為地點動線卡片加入柔和的多色循環樣式。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.107</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>調整地點動線卡片的底色、邊框與圖示文字色彩，降低視覺對比。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.106</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>將 DayN 標示移至日期滑軌下方。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.105</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>將完整日期移至日期滑軌上方，移除行程內容中的重複日期標題。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.104</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>將 DayN 日期標示移至日期滑軌上方。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.103</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>在日期時間軸各分段點下方顯示 DayN 標示。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.3.102</strong>
@@ -8399,16 +8533,16 @@
     }
 
     function renderItineraryRoute(dayItems) {
-      const seenLocations = new Set();
-      const locations = sortDayItemsByTime(dayItems)
-        .map((item) => item.location.trim())
-        .filter((location) => {
-          if (!location || seenLocations.has(location)) {
-            return false;
-          }
-          seenLocations.add(location);
-          return true;
-        });
+      const locations = [];
+      let previousLocation = "";
+      for (const item of sortDayItemsByTime(dayItems)) {
+        const location = item.location.trim();
+        if (!location || location === previousLocation) {
+          continue;
+        }
+        locations.push(location);
+        previousLocation = location;
+      }
       if (locations.length === 0) {
         return null;
       }
@@ -8544,25 +8678,24 @@
         );
         mark.style.left = `${dates.length > 1 ? index / (dates.length - 1) * 100 : 50}%`;
         mark.title = formatTabDate(date);
+        mark.append(makeElement("span", "day-timeline-mark-label", `Day${index + 1}`));
         return mark;
       }));
-      dayTimelineCurrent.textContent = formatTabDate(currentDay);
+      dayTimelineCurrent.textContent = formatDate(currentDay);
       dayTimelineStart.textContent = dates[0].slice(5).replace("-", "/");
       dayTimelineEnd.textContent = dates[dates.length - 1].slice(5).replace("-", "/");
-      dayTimelineSlider.setAttribute("aria-valuetext", formatTabDate(currentDay));
+      dayTimelineSlider.setAttribute("aria-valuetext", formatDate(currentDay));
       if (editingExpenseDate && editingExpenseDate !== currentDay) {
         editingExpenseId = null;
         editingExpenseDate = null;
       }
 
       const selectedItems = sortDayItems(items.filter((item) => item.date === currentDay));
-      const dayHeading = makeElement("h3", "day-heading", formatDate(currentDay));
       const list = makeElement("ol", "itinerary-list");
       selectedItems.forEach((item, index) => list.append(createItineraryCard(item, index)));
       const itineraryRoute = renderItineraryRoute(selectedItems);
       itineraryContent.setAttribute("aria-labelledby", "day-timeline-current");
       itineraryContent.replaceChildren(
-        dayHeading,
         ...(itineraryRoute ? [itineraryRoute] : []),
         list,
         renderChecklist(currentDay),
