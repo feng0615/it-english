@@ -2331,16 +2331,6 @@
       line-height: 1.7;
     }
 
-    .footer-note {
-      grid-column: 1 / -1;
-      order: 0;
-      margin: 20px 4px 0;
-      color: #879189;
-      font-size: 11px;
-      line-height: 1.7;
-      text-align: center;
-    }
-
     @media (max-width: 760px) {
       .page {
         width: min(100% - 24px, 560px);
@@ -2392,13 +2382,27 @@
       }
 
       .itinerary-panel {
+        width: 100%;
         min-height: 0;
         min-width: 0;
         max-width: 100%;
       }
 
-      #itinerary-panel-content,
+      #itinerary-panel-content {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+      }
+
+      #itinerary-panel-content > *,
       #itinerary-content {
+        min-width: 0;
+        max-width: 100%;
+      }
+
+      .itinerary-route,
+      .itinerary-route-list {
+        width: 100%;
         min-width: 0;
         max-width: 100%;
       }
@@ -2553,12 +2557,26 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.111</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.113</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.113</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>展開行程時，讓內容與地點動線在手機版自動符合可用寬度。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.112</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>移除頁面底部的資料保存與匯出說明。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.3.111</strong>
@@ -3709,7 +3727,6 @@
             rel="noopener noreferrer">開啟並編輯我的地圖 ↗</a>
         </div>
       </section>
-    <p class="footer-note">行程、每日 Checklist、行前檢查清單、費用、雨天備案/必訪景點、美食饗宴、天氣地點、打卡紀錄與頁面主標題會自動儲存在這個瀏覽器；授權資料夾後，頁面主標題也會同步寫入該目錄的 TravelingPlan.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
   </main>
 
   <script>
