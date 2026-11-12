@@ -315,8 +315,8 @@
     [data-section-visibility-panel="weather"] { order: 7; }
     .settings-panel { order: 8; }
     [data-section-visibility-panel="my-map"] {
-      grid-column: 1 / -1;
-      order: 9;
+      grid-column: 2;
+      order: 5;
     }
 
     .panel {
@@ -1651,26 +1651,45 @@
 
     .weather-forecast-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(86px, 1fr));
+      grid-template-columns: repeat(7, minmax(84px, 1fr));
       gap: 8px;
       margin-top: 12px;
+      overflow-x: auto;
+      padding-bottom: 6px;
     }
 
     .weather-forecast-day {
       display: grid;
       align-content: start;
-      gap: 5px;
+      justify-items: center;
+      gap: 6px;
       min-width: 0;
-      padding: 9px;
+      padding: 10px 8px;
+      border: 1px solid #edf0e7;
       border-radius: 10px;
-      background: #f7f8f3;
+      background: linear-gradient(180deg, #f8faf5 0%, #f3f6ef 100%);
       color: var(--ink);
       font-size: 11px;
       line-height: 1.5;
+      text-align: center;
     }
 
     .weather-forecast-day strong {
       font-size: 12px;
+    }
+
+    .weather-forecast-icon {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      font-size: 27px;
+      line-height: 1;
+    }
+
+    .weather-forecast-condition {
+      min-height: 32px;
+      color: var(--muted);
     }
 
     .weather-forecast-source {
@@ -2069,6 +2088,11 @@
         order: 4;
       }
 
+      [data-section-visibility-panel="my-map"] {
+        grid-column: 1;
+        order: 3;
+      }
+
       .itinerary-panel {
         min-height: 0;
       }
@@ -2230,12 +2254,33 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.88</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.91</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.91</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>優化天氣預報版面，加入每日天氣圖示與單列橫向瀏覽。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.90</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>新增「我的地圖」區塊的收合與展開功能，預設收合。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.89</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>將「我的地圖」移至「我的行程」下方。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.3.88</strong>
@@ -3195,20 +3240,23 @@
       <section class="panel my-map-panel" aria-labelledby="my-map-title" data-section-visibility-panel="my-map">
         <div class="form-panel-heading">
           <h2 class="panel-title" id="my-map-title">我的地圖</h2>
+          <button class="secondary-button form-toggle" id="my-map-toggle" type="button" aria-expanded="false" aria-controls="my-map-content">展開</button>
         </div>
-        <p class="panel-description">Google 我的地圖預覽；實際顯示依該地圖的分享權限而定。</p>
-        <iframe
-          class="my-map-frame"
-          src="https://www.google.com/maps/d/embed?mid=1JeY1-URDFFHm7609MN7Y4pqopPlUHLA&amp;usp=sharing"
-          title="Google 我的地圖預覽"
-          loading="lazy"
-          referrerpolicy="no-referrer"
-          allowfullscreen></iframe>
-        <a
-          class="my-map-link"
-          href="https://www.google.com/maps/d/u/0/edit?mid=1JeY1-URDFFHm7609MN7Y4pqopPlUHLA&amp;usp=sharing"
-          target="_blank"
-          rel="noopener noreferrer">開啟並編輯我的地圖 ↗</a>
+        <div id="my-map-content" hidden>
+          <p class="panel-description">Google 我的地圖預覽；實際顯示依該地圖的分享權限而定。</p>
+          <iframe
+            class="my-map-frame"
+            src="https://www.google.com/maps/d/embed?mid=1JeY1-URDFFHm7609MN7Y4pqopPlUHLA&amp;usp=sharing"
+            title="Google 我的地圖預覽"
+            loading="lazy"
+            referrerpolicy="no-referrer"
+            allowfullscreen></iframe>
+          <a
+            class="my-map-link"
+            href="https://www.google.com/maps/d/u/0/edit?mid=1JeY1-URDFFHm7609MN7Y4pqopPlUHLA&amp;usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer">開啟並編輯我的地圖 ↗</a>
+        </div>
       </section>
     <p class="footer-note">行程、每日 Checklist、行前檢查清單、費用、雨天備案/必訪景點、美食饗宴、天氣地點、打卡紀錄與頁面主標題會自動儲存在這個瀏覽器；授權資料夾後，頁面主標題也會同步寫入該目錄的 TravelingPlan.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
   </main>
@@ -3274,6 +3322,36 @@
       95: "雷雨",
       96: "雷雨伴隨冰雹",
       99: "強雷雨伴隨冰雹"
+    };
+    const WEATHER_CODE_ICONS = {
+      0: "☀️",
+      1: "🌤️",
+      2: "⛅",
+      3: "☁️",
+      45: "🌫️",
+      48: "🌫️",
+      51: "🌦️",
+      53: "🌦️",
+      55: "🌧️",
+      56: "🌧️",
+      57: "🌧️",
+      61: "🌦️",
+      63: "🌧️",
+      65: "🌧️",
+      66: "🌧️",
+      67: "🌧️",
+      71: "🌨️",
+      73: "🌨️",
+      75: "❄️",
+      77: "❄️",
+      80: "🌦️",
+      81: "🌧️",
+      82: "🌧️",
+      85: "🌨️",
+      86: "🌨️",
+      95: "⛈️",
+      96: "⛈️",
+      99: "⛈️"
     };
     const EXPENSE_PAYMENT_METHODS = ["現金", "刷卡", "電子支付", "轉帳"];
     const EXPENSE_CATEGORIES = ["食", "衣", "住", "行", "育", "樂"];
@@ -3447,6 +3525,8 @@
     const settingsContent = document.querySelector("#settings-content");
     const weatherToggleButton = document.querySelector("#weather-toggle");
     const weatherContent = document.querySelector("#weather-content");
+    const myMapToggleButton = document.querySelector("#my-map-toggle");
+    const myMapContent = document.querySelector("#my-map-content");
     const weatherSearchForm = document.querySelector("#weather-search-form");
     const weatherLocationQueryInput = document.querySelector("#weather-location-query");
     const weatherSearchButton = document.querySelector("#weather-search-button");
@@ -8202,6 +8282,12 @@
       weatherToggleButton.textContent = expanded ? "收合" : "展開";
     }
 
+    function setMyMapExpanded(expanded) {
+      myMapContent.hidden = !expanded;
+      myMapToggleButton.setAttribute("aria-expanded", String(expanded));
+      myMapToggleButton.textContent = expanded ? "收合" : "展開";
+    }
+
     function parseWeatherSearchResults(data) {
       if (data === null || typeof data !== "object" || data.error === true) {
         return null;
@@ -8467,9 +8553,20 @@
               weekday: "short",
               timeZone: "UTC"
             });
+            const weatherIcon = makeElement(
+              "span",
+              "weather-forecast-icon",
+              WEATHER_CODE_ICONS[day.weatherCode] || "🌡️"
+            );
+            weatherIcon.setAttribute("aria-hidden", "true");
             dayCard.append(
               makeElement("strong", "", date),
-              makeElement("span", "", WEATHER_CODE_LABELS[day.weatherCode] || "其他天氣狀況"),
+              weatherIcon,
+              makeElement(
+                "span",
+                "weather-forecast-condition",
+                WEATHER_CODE_LABELS[day.weatherCode] || "其他天氣狀況"
+              ),
               makeElement(
                 "span",
                 "",
@@ -8905,6 +9002,9 @@
 
     weatherToggleButton.addEventListener("click", () => {
       setWeatherExpanded(weatherContent.hidden);
+    });
+    myMapToggleButton.addEventListener("click", () => {
+      setMyMapExpanded(myMapContent.hidden);
     });
     weatherSearchForm.addEventListener("submit", (event) => {
       event.preventDefault();
