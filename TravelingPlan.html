@@ -1180,25 +1180,38 @@
 
     .itinerary-route-stop {
       position: relative;
+      flex: 0 0 auto;
+      min-height: 80px;
+      scroll-snap-align: start;
+    }
+
+    .itinerary-route-link {
       display: grid;
+      width: max-content;
+      min-width: 96px;
+      max-width: min(280px, 70vw);
+      min-height: 80px;
       align-content: center;
       justify-items: center;
-      flex: 0 0 160px;
       gap: 5px;
-      min-height: 80px;
       padding: 9px 10px;
       border: 1px solid #dfe8df;
       border-radius: 12px;
       background: linear-gradient(145deg, #fff 0%, #f5f8f2 100%);
-      scroll-snap-align: start;
+      color: inherit;
       text-align: center;
-      transition: border-color .15s, box-shadow .15s, transform .15s;
+      text-decoration: none;
+      transition: border-color .15s, box-shadow .15s;
     }
 
-    .itinerary-route-stop:hover {
+    .itinerary-route-link:hover {
       border-color: #9fbba7;
       box-shadow: 0 6px 16px rgb(34 57 47 / 10%);
-      transform: translateY(-2px);
+    }
+
+    .itinerary-route-link:focus-visible {
+      outline: 3px solid rgb(47 105 87 / 24%);
+      outline-offset: 2px;
     }
 
     .itinerary-route-stop:not(:last-child)::after {
@@ -2355,12 +2368,26 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.95</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.97</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.97</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>地點動線卡片寬度改為依地點文字自動調整，並限制過長內容。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.96</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>點選地點動線卡片可在新分頁開啟對應的 Google 地圖搜尋。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.3.95</strong>
@@ -8260,7 +8287,17 @@
         pinCenter.setAttribute("r", "3");
         pinCenter.setAttribute("fill", "#fffefa");
         marker.append(pinShape, pinCenter);
-        stop.append(marker, makeElement("strong", "itinerary-route-location", location));
+        const mapLink = makeElement("a", "itinerary-route-link");
+        const mapsUrl = new URL("https://www.google.com/maps/search/");
+        mapsUrl.searchParams.set("api", "1");
+        mapsUrl.searchParams.set("query", location);
+        mapLink.href = mapsUrl.toString();
+        mapLink.target = "_blank";
+        mapLink.rel = "noopener noreferrer";
+        mapLink.title = `在 Google 地圖開啟「${location}」`;
+        mapLink.setAttribute("aria-label", `在 Google 地圖開啟「${location}」`);
+        mapLink.append(marker, makeElement("strong", "itinerary-route-location", location));
+        stop.append(mapLink);
         routeList.append(stop);
       });
 
