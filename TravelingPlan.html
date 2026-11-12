@@ -314,6 +314,10 @@
     [data-section-visibility-panel="food-experience"] { order: 6; }
     [data-section-visibility-panel="weather"] { order: 7; }
     .settings-panel { order: 8; }
+    [data-section-visibility-panel="my-map"] {
+      grid-column: 1 / -1;
+      order: 9;
+    }
 
     .panel {
       border: 1px solid rgb(231 232 223 / 85%);
@@ -1271,6 +1275,43 @@
       margin-top: 11px;
     }
 
+    .item-move-form {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    .item-move-form[hidden] {
+      display: none;
+    }
+
+    .item-move-form label {
+      display: grid;
+      gap: 4px;
+      color: #485b52;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .item-move-form input {
+      min-height: 36px;
+      padding: 0 9px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .item-move-form input:focus-visible {
+      outline: 3px solid rgb(47 105 87 / 24%);
+      outline-offset: 2px;
+    }
+
     .text-button {
       min-height: 30px;
       padding: 0 9px;
@@ -1512,6 +1553,28 @@
 
     .weather-panel .panel-description {
       margin-bottom: 14px;
+    }
+
+    .my-map-panel {
+      padding: 20px;
+    }
+
+    .my-map-frame {
+      display: block;
+      width: 100%;
+      height: clamp(360px, 60vh, 680px);
+      border: 0;
+      border-radius: 14px;
+      background: #f0f1eb;
+    }
+
+    .my-map-link {
+      display: inline-flex;
+      margin-top: 12px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 750;
+      text-underline-offset: 3px;
     }
 
     .weather-search-form {
@@ -2167,12 +2230,68 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.80</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.88</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.88</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>新增「我的地圖」區塊，可預覽 Google 我的地圖並開啟編輯頁面。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.87</strong>
+                  <time class="version-changelog-date" datetime="2026-11-12">2026-11-12</time>
+                </div>
+                <p>同步或上傳雲端行程前，先比對版本匯出時間與行程日期差異並要求確認。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.86</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>移至雨天備案時，行程名稱對應區域，行程地點對應備案地點。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.85</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>我的行程備註隱藏網址文字，改由網址前的標籤文字開啟連結。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.84</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>新增行程時，也會依時間區段起始時間由早到晚重新排序。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.83</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>編輯行程後，會依時間區段起始時間由早到晚重新排序。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.82</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>雨天備案新增指定日期搬移至我的行程功能。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.81</strong>
+                  <time class="version-changelog-date" datetime="2026-11-11">2026-11-11</time>
+                </div>
+                <p>我的行程卡片新增指定日期搬移功能。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.3.80</strong>
@@ -2872,6 +2991,7 @@
                 <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="itinerary" checked>我的行程</label>
                 <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="weather" checked>天氣預報</label>
                 <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="travel-expense" checked>旅遊費用/打卡紀錄</label>
+                <label class="section-visibility-option"><input type="checkbox" data-section-visibility-control="my-map" checked>我的地圖</label>
               </div>
             </fieldset>
             <div class="setting-field">
@@ -3071,6 +3191,25 @@
           </p>
         </div>
       </section>
+
+      <section class="panel my-map-panel" aria-labelledby="my-map-title" data-section-visibility-panel="my-map">
+        <div class="form-panel-heading">
+          <h2 class="panel-title" id="my-map-title">我的地圖</h2>
+        </div>
+        <p class="panel-description">Google 我的地圖預覽；實際顯示依該地圖的分享權限而定。</p>
+        <iframe
+          class="my-map-frame"
+          src="https://www.google.com/maps/d/embed?mid=1JeY1-URDFFHm7609MN7Y4pqopPlUHLA&amp;usp=sharing"
+          title="Google 我的地圖預覽"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          allowfullscreen></iframe>
+        <a
+          class="my-map-link"
+          href="https://www.google.com/maps/d/u/0/edit?mid=1JeY1-URDFFHm7609MN7Y4pqopPlUHLA&amp;usp=sharing"
+          target="_blank"
+          rel="noopener noreferrer">開啟並編輯我的地圖 ↗</a>
+      </section>
     <p class="footer-note">行程、每日 Checklist、行前檢查清單、費用、雨天備案/必訪景點、美食饗宴、天氣地點、打卡紀錄與頁面主標題會自動儲存在這個瀏覽器；授權資料夾後，頁面主標題也會同步寫入該目錄的 TravelingPlan.json。清除瀏覽資料或更換裝置前，請先匯出重要資訊。</p>
   </main>
 
@@ -3148,12 +3287,12 @@
     const FILE_HANDLE_STORE_NAME = "settings";
     const FILE_HANDLE_KEY = "directory-handle";
     const AUTO_SAVE_FILE_NAME = "TravelingPlan.json";
-    const REMOTE_SYNC_URL = "https://feng0615.github.io/it-english/TravelingPlan.json";
     const GITHUB_REPO_OWNER = "feng0615";
     const GITHUB_REPO_NAME = "it-english";
     const GITHUB_FILE_PATH = "TravelingPlan.json";
     const GITHUB_BACKUP_DIRECTORY = "TravelPlanBackup";
     const GITHUB_TOKEN_STORAGE_KEY = "traveling-plan.github-token.v1";
+    const LOCAL_VERSION_UPDATED_AT_STORAGE_KEY = "traveling-plan.local-version-updated-at.v1";
     const LEGACY_DEFAULT_ITEM_KEY = "traveling-plan.default-klook-2026-11-15.v1";
     const DEFAULT_ITEMS_KEY = "traveling-plan.default-klook-2026-11-15.v2";
     const LEGACY_DEFAULT_ITEM_ID = "klook-north-kyoto-autumn-2026-11-15";
@@ -4217,7 +4356,18 @@
       }
     }
 
-    function queueDirectorySave() {
+    function recordLocalVersionUpdatedAt(updatedAt = new Date().toISOString()) {
+      try {
+        window.localStorage.setItem(LOCAL_VERSION_UPDATED_AT_STORAGE_KEY, updatedAt);
+      } catch {
+        showNotice("本機資料已儲存，但無法記錄版本日期；下次雲端比對時會顯示未記錄。", true);
+      }
+    }
+
+    function queueDirectorySave({ updatedAt = new Date().toISOString(), recordVersion = true } = {}) {
+      if (recordVersion) {
+        recordLocalVersionUpdatedAt(updatedAt);
+      }
       if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !checkinStorageReady || !directoryHandle) {
         return;
       }
@@ -4257,7 +4407,7 @@
           directoryButton.textContent = "變更存檔目錄";
         }
         fileSyncStatus.textContent = `自動存檔已啟用：${AUTO_SAVE_FILE_NAME}`;
-        queueDirectorySave();
+        queueDirectorySave({ recordVersion: false });
       } catch {
         fileSyncStatus.textContent = "無法讀取已授權的資料夾；請重新設定自動存檔。";
       }
@@ -4301,7 +4451,7 @@
           directoryButton.textContent = "變更存檔目錄";
         }
         fileSyncStatus.textContent = `正在寫入：${AUTO_SAVE_FILE_NAME}`;
-        queueDirectorySave();
+        queueDirectorySave({ recordVersion: false });
       } catch (error) {
         if (error.name !== "AbortError") {
           showNotice("設定自動存檔失敗；請確認瀏覽器允許資料夾存取，並重新嘗試。", true);
@@ -4732,7 +4882,7 @@
       };
     }
 
-    function replaceImportedData(importedData) {
+    function replaceImportedData(importedData, versionUpdatedAt) {
       if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !checkinStorageReady) {
         showNotice("目前無法安全讀取本機行程、Checklist、費用、雨天備案/必訪景點、美食饗宴或打卡紀錄，原有資料未變更。", true);
         return;
@@ -4784,7 +4934,7 @@
         ...Object.keys(expenses)
       ])].sort();
       currentDay = dates.includes(currentDay) ? currentDay : dates[0] || null;
-      queueDirectorySave();
+      queueDirectorySave({ updatedAt: versionUpdatedAt || new Date().toISOString() });
       render();
       const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
       const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
@@ -5317,35 +5467,174 @@
       }
     }
 
+    function parseVersionTimestamp(value) {
+      if (typeof value !== "string" || value.trim() === "") {
+        return null;
+      }
+
+      const timestamp = new Date(value);
+      return Number.isNaN(timestamp.getTime()) ? null : timestamp;
+    }
+
+    function formatVersionTimestamp(timestamp) {
+      return timestamp
+        ? new Intl.DateTimeFormat("zh-TW", { dateStyle: "medium", timeStyle: "short" }).format(timestamp)
+        : "未記錄";
+    }
+
+    function getPayloadTripDates(payload) {
+      const dates = new Set();
+      if (Array.isArray(payload?.items)) {
+        payload.items.forEach((item) => {
+          if (isValidDateString(item?.date)) {
+            dates.add(item.date);
+          }
+        });
+      }
+      ["checklists", "expenses"].forEach((key) => {
+        const buckets = payload?.[key];
+        if (buckets && typeof buckets === "object" && !Array.isArray(buckets)) {
+          Object.keys(buckets).filter(isValidDateString).forEach((date) => dates.add(date));
+        }
+      });
+      if (Array.isArray(payload?.checkinRecords)) {
+        payload.checkinRecords.forEach((record) => {
+          const checkedInAt = parseVersionTimestamp(record?.checkedInAt);
+          if (checkedInAt) {
+            dates.add(getLocalDateString(checkedInAt));
+          }
+        });
+      }
+      return [...dates].sort();
+    }
+
+    function formatDateList(dates) {
+      if (dates.length === 0) {
+        return "無";
+      }
+      return dates.length <= 6
+        ? dates.join("、")
+        : `${dates[0]} 至 ${dates[dates.length - 1]}（共 ${dates.length} 天）`;
+    }
+
+    function buildCloudVersionComparison(cloudPayload, actionDescription) {
+      let localUpdatedAt = null;
+      try {
+        localUpdatedAt = parseVersionTimestamp(
+          window.localStorage.getItem(LOCAL_VERSION_UPDATED_AT_STORAGE_KEY)
+        );
+      } catch {
+        localUpdatedAt = null;
+      }
+
+      const cloudUpdatedAt = parseVersionTimestamp(cloudPayload?.exportedAt);
+      const localDates = getPayloadTripDates(createExportPayload());
+      const cloudDates = getPayloadTripDates(cloudPayload);
+      const localOnlyDates = localDates.filter((date) => !cloudDates.includes(date));
+      const cloudOnlyDates = cloudDates.filter((date) => !localDates.includes(date));
+      let versionAge = "雲端尚無版本，確認後將建立新檔。";
+      if (cloudPayload && !localUpdatedAt) {
+        versionAge = "無法比較：本機版本日期尚未記錄。";
+      } else if (cloudPayload && !cloudUpdatedAt) {
+        versionAge = "無法比較：雲端檔案未提供有效的匯出日期。";
+      }
+      if (localUpdatedAt && cloudUpdatedAt) {
+        const differenceMinutes = Math.round(Math.abs(localUpdatedAt - cloudUpdatedAt) / 60000);
+        const differenceText = differenceMinutes < 60
+          ? `${differenceMinutes} 分鐘`
+          : `${Math.floor(differenceMinutes / 60)} 小時 ${differenceMinutes % 60} 分鐘`;
+        versionAge = differenceMinutes === 0
+          ? "本機與雲端版本時間相同。"
+          : `${localUpdatedAt > cloudUpdatedAt ? "本機" : "雲端"}版本較新，約相差 ${differenceText}。`;
+      }
+
+      return [
+        `本機版本修改時間：${formatVersionTimestamp(localUpdatedAt)}${localUpdatedAt ? "" : "（舊資料沒有版本日期紀錄）"}`,
+        `雲端版本匯出時間：${cloudPayload ? formatVersionTimestamp(cloudUpdatedAt) : "尚無雲端檔案"}`,
+        versionAge,
+        `本機行程日期：${formatDateList(localDates)}`,
+        `雲端行程日期：${formatDateList(cloudDates)}`,
+        `日期差異：本機獨有 ${formatDateList(localOnlyDates)}；雲端獨有 ${formatDateList(cloudOnlyDates)}`,
+        "",
+        actionDescription
+      ].join("\n");
+    }
+
+    function decodeGitHubFileContent(content) {
+      const binary = window.atob(content.replace(/\s+/g, ""));
+      const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+      return new TextDecoder().decode(bytes);
+    }
+
+    function getGitHubFileApiUrl() {
+      return `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/${GITHUB_FILE_PATH}`;
+    }
+
+    async function fetchCloudVersion(token = "") {
+      const headers = { "Accept": "application/vnd.github+json" };
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
+      }
+      const response = await fetch(getGitHubFileApiUrl(), {
+        headers,
+        cache: "no-cache"
+      });
+      if (response.status === 404) {
+        return null;
+      }
+      if (!response.ok) {
+        throw new Error(`讀取 GitHub 雲端版本失敗（HTTP ${response.status}）。`);
+      }
+
+      const data = await response.json();
+      if (typeof data.sha !== "string" || typeof data.content !== "string" || !data.content.trim()) {
+        throw new Error("GitHub 回傳的行程檔案內容不完整，已停止雲端作業。");
+      }
+      const jsonText = decodeGitHubFileContent(data.content);
+      let payload;
+      try {
+        payload = JSON.parse(jsonText);
+      } catch {
+        throw new Error("GitHub 雲端行程 JSON 格式無效，已停止雲端作業。");
+      }
+      return { sha: data.sha, content: data.content, jsonText, payload };
+    }
+
     async function syncFromCloud() {
       if (!storageReady || !checklistStorageReady || !preTripChecklistStorageReady || !expenseStorageReady || !rainyDayStorageReady || !foodExperienceStorageReady || !checkinStorageReady) {
         showNotice("目前無法安全讀取本機儲存空間，暫停同步以避免覆蓋原資料。", true);
         return;
       }
 
-      if (!window.confirm("確定要從雲端同步行程嗎？\n這將會下載線上最新的 TravelingPlan.json，並更新本機行程、Checklist、費用、雨天備案/必訪景點、美食饗宴與打卡紀錄；檔案若包含頁面主標題也會一併更新。舊版雲端檔若沒有打卡欄位，會保留本機打卡紀錄。")) {
-        return;
-      }
-
       cloudSyncButton.disabled = true;
-      cloudSyncButton.textContent = "同步中...";
-      showNotice("正在連線至雲端下載最新行程資料...");
+      cloudSyncButton.textContent = "比對中...";
+      showNotice("正在讀取 GitHub 雲端版本，以比對資料日期...");
 
       try {
-        const response = await fetch(REMOTE_SYNC_URL, { cache: "no-cache" });
-        if (!response.ok) {
-          throw new Error(`HTTP 錯誤 ${response.status}`);
+        const cloudVersion = await fetchCloudVersion();
+        if (!cloudVersion) {
+          showNotice("GitHub 雲端尚無 TravelingPlan.json，未執行同步。", true);
+          return;
         }
 
-        const jsonText = await response.text();
-        const importedData = parseImportedData(jsonText);
+        const importedData = parseImportedData(cloudVersion.jsonText);
         if (!importedData) {
           return;
         }
 
-        replaceImportedData(importedData);
+        const confirmed = window.confirm(buildCloudVersionComparison(
+          cloudVersion.payload,
+          "同步會以雲端資料取代本機行程、Checklist、費用、雨天備案/必訪景點、美食饗宴及打卡紀錄；雲端沒有的舊版打卡欄位會保留本機資料。是否繼續？"
+        ));
+        if (!confirmed) {
+          showNotice("已取消同步；本機資料未變更。");
+          return;
+        }
+
+        const cloudUpdatedAt = parseVersionTimestamp(cloudVersion.payload?.exportedAt)?.toISOString();
+        replaceImportedData(importedData, cloudUpdatedAt);
       } catch (error) {
-        showNotice(`雲端同步失敗：無法取得線上資料（${error.message}），本機行程未變更。`, true);
+        showNotice(`雲端同步失敗：${error.message} 本機行程未變更。`, true);
       } finally {
         cloudSyncButton.disabled = false;
         cloudSyncButton.textContent = "同步雲端行程";
@@ -5358,67 +5647,73 @@
         return;
       }
 
-      let token = window.localStorage.getItem(GITHUB_TOKEN_STORAGE_KEY) || "";
-      if (!token) {
-        const inputToken = window.prompt(
-          "首次上傳至 GitHub 雲端檔案，請輸入 GitHub Personal Access Token (PAT)：\n\n" +
-          "• 權限需求：it-english 儲存庫的 Contents (Read and write)\n" +
-          "• 安全保證：Token 僅會儲存在您目前的本機瀏覽器中，不會外流\n\n" +
-          "（若要更換 Token，可隨時在瀏覽器 localStorage 清除後重試）"
-        );
-        if (!inputToken || !inputToken.trim()) {
-          showNotice("已取消上傳：未提供 GitHub Token。");
+      cloudUploadButton.disabled = true;
+      cloudUploadButton.textContent = "比對中...";
+      showNotice("正在讀取 GitHub 雲端版本，以比對資料日期...");
+
+      try {
+        const comparedCloudVersion = await fetchCloudVersion();
+        if (comparedCloudVersion && !parseImportedData(comparedCloudVersion.jsonText)) {
+          throw new Error("雲端行程資料格式無效，為避免覆蓋無法判讀的內容，已停止上傳。");
+        }
+
+        const confirmed = window.confirm(buildCloudVersionComparison(
+          comparedCloudVersion?.payload || null,
+          "上傳會以本機資料取代雲端 TravelingPlan.json，並先將雲端舊檔備份至 TravelPlanBackup。注意：打卡紀錄包含景點名稱與時間，GitHub Pages 上的檔案可透過網址讀取，請勿存入敏感資訊。是否繼續？"
+        ));
+        if (!confirmed) {
+          showNotice("已取消上傳；雲端資料未變更。");
           return;
         }
-        token = inputToken.trim();
+
+        let token = "";
+        try {
+          token = window.localStorage.getItem(GITHUB_TOKEN_STORAGE_KEY) || "";
+        } catch {
+          showNotice("無法讀取已儲存的 GitHub Token，請檢查瀏覽器儲存空間。", true);
+          return;
+        }
+        if (!token) {
+          const inputToken = window.prompt(
+            "首次上傳至 GitHub 雲端檔案，請輸入 GitHub Personal Access Token (PAT)：\n\n" +
+            "• 權限需求：it-english 儲存庫的 Contents (Read and write)\n" +
+            "• Token 僅會儲存在您目前的本機瀏覽器中\n\n" +
+            "（若要更換 Token，可隨時在瀏覽器 localStorage 清除後重試）"
+          );
+          if (!inputToken || !inputToken.trim()) {
+            showNotice("已取消上傳：未提供 GitHub Token。");
+            return;
+          }
+          token = inputToken.trim();
+        }
+
+        cloudUploadButton.textContent = "上傳中...";
+        showNotice("已確認版本差異，正在確認雲端檔案未被其他操作更新...");
+        let currentCloudVersion;
+        try {
+          currentCloudVersion = await fetchCloudVersion(token);
+        } catch (error) {
+          if (/HTTP (401|403)/.test(error.message)) {
+            window.localStorage.removeItem(GITHUB_TOKEN_STORAGE_KEY);
+            throw new Error(`GitHub 認證失敗：${error.message} 已清除已存 Token，請重新點擊上傳並輸入有效 Token。`);
+          }
+          throw error;
+        }
+        if ((comparedCloudVersion?.sha || null) !== (currentCloudVersion?.sha || null)) {
+          throw new Error("雲端檔案在比對後已變更，為避免覆蓋他人更新，本次未上傳。請重新執行以比對最新版本。");
+        }
+        if (currentCloudVersion && !parseImportedData(currentCloudVersion.jsonText)) {
+          throw new Error("雲端行程資料格式無效，已停止上傳。");
+        }
         try {
           window.localStorage.setItem(GITHUB_TOKEN_STORAGE_KEY, token);
         } catch {
-          // localStorage 限制不影響單次執行
-        }
-      }
-
-      const confirmed = window.confirm(
-        "確定要將本機目前的行程、Checklist、費用、打卡紀錄與頁面主標題上傳至 GitHub 雲端嗎？\n\n" +
-        `目標：${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/${GITHUB_FILE_PATH}\n` +
-        "這將會更新線上現有的 TravelingPlan.json。\n注意：打卡紀錄包含景點名稱與時間，GitHub Pages 上的檔案可透過網址讀取，請勿存入敏感資訊。"
-      );
-      if (!confirmed) {
-        showNotice("已取消上傳；雲端資料未變更。");
-        return;
-      }
-
-      cloudUploadButton.disabled = true;
-      cloudUploadButton.textContent = "上傳中...";
-      showNotice("正在連線至 GitHub 準備上傳...");
-
-      try {
-        const apiUrl = `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/${GITHUB_FILE_PATH}`;
-
-        let sha = null;
-        let originalContent = null;
-        try {
-          const checkRes = await fetch(apiUrl, {
-            headers: {
-              "Authorization": `Bearer ${token}`,
-              "Accept": "application/vnd.github+json"
-            },
-            cache: "no-cache"
-          });
-          if (checkRes.ok) {
-            const data = await checkRes.json();
-            sha = data.sha;
-            originalContent = data.content;
-          } else if (checkRes.status === 401 || checkRes.status === 403) {
-            window.localStorage.removeItem(GITHUB_TOKEN_STORAGE_KEY);
-            throw new Error(`GitHub 認證失敗（HTTP ${checkRes.status}），已清除已存 Token，請重新點擊上傳並輸入有效 Token。`);
-          }
-        } catch (err) {
-          if (err.message.includes("GitHub 認證失敗")) {
-            throw err;
-          }
+          showNotice("Token 無法儲存於瀏覽器；本次仍會嘗試上傳，之後需重新輸入 Token。", true);
         }
 
+        const apiUrl = getGitHubFileApiUrl();
+        const originalContent = currentCloudVersion?.content || null;
+        const sha = currentCloudVersion?.sha || null;
         let backupFileName = "";
         if (originalContent) {
           const now = new Date();
@@ -5491,6 +5786,7 @@
         const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
         const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
         const backupNote = backupFileName ? `（已自動備份舊檔為 ${backupFileName}）` : "";
+        recordLocalVersionUpdatedAt(payload.exportedAt);
         showNotice(`已成功儲存至 GitHub 雲端！${backupNote} 共 ${items.length} 筆行程、${checklistCount} 個 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用與 ${checkinRecords.length} 筆打卡紀錄。`);
       } catch (error) {
         showNotice(`雲端上傳失敗：${error.message}`, true);
@@ -5628,29 +5924,37 @@
 
       for (const link of findHttpUrls(source)) {
         const hostname = new URL(link.href).hostname.toLowerCase();
-
-        if (hostname !== "west-qr.com" && !hostname.endsWith(".west-qr.com")) {
-          continue;
-        }
-
         const precedingText = source.slice(lastIndex, link.index);
-        const westQrLabel = /WEST QR\s*\($/i.exec(precedingText);
-        const anchor = makeElement("a", "checklist-link", "WEST QR");
         let href = link.href;
         let linkEnd = link.index + link.text.length;
 
-        if (westQrLabel && link.text.endsWith(")")) {
-          href = getSafeExternalUrl(link.text.slice(0, -1)) || href;
+        if (hostname === "west-qr.com" || hostname.endsWith(".west-qr.com")) {
+          const westQrLabel = /WEST QR\s*\($/i.exec(precedingText);
+          const anchor = makeElement("a", "checklist-link", "WEST QR");
+          if (westQrLabel && link.text.endsWith(")")) {
+            href = getSafeExternalUrl(link.text.slice(0, -1)) || href;
+          }
+          container.append(document.createTextNode(
+            westQrLabel ? precedingText.slice(0, westQrLabel.index) : precedingText
+          ));
+          anchor.href = href;
+          anchor.target = "_blank";
+          anchor.rel = "noopener noreferrer";
+          anchor.setAttribute("aria-label", "開啟 WEST QR 網站");
+          container.append(anchor);
+        } else {
+          const labelMatch = /([^\s，。；：！？、]+)[：:]?\s*$/u.exec(precedingText);
+          const label = labelMatch?.[1] || "開啟連結";
+          const anchor = makeElement("a", "checklist-link", label);
+          container.append(document.createTextNode(
+            labelMatch ? precedingText.slice(0, labelMatch.index) : precedingText
+          ));
+          anchor.href = href;
+          anchor.target = "_blank";
+          anchor.rel = "noopener noreferrer";
+          container.append(anchor);
         }
 
-        container.append(document.createTextNode(
-          westQrLabel ? precedingText.slice(0, westQrLabel.index) : precedingText
-        ));
-        anchor.href = href;
-        anchor.target = "_blank";
-        anchor.rel = "noopener noreferrer";
-        anchor.setAttribute("aria-label", "開啟 WEST QR 網站");
-        container.append(anchor);
         lastIndex = linkEnd;
       }
 
@@ -5846,6 +6150,23 @@
       });
     }
 
+    function sortDayItemsByTime(dayItems) {
+      return [...dayItems].sort((first, second) =>
+        (first.time.slice(0, 5) || "99:99").localeCompare(second.time.slice(0, 5) || "99:99")
+      );
+    }
+
+    function orderItineraryItemsByTime(dayItems, dates) {
+      const orderById = new Map();
+      new Set(dates).forEach((date) => {
+        sortDayItemsByTime(dayItems.filter((item) => item.date === date))
+          .forEach((item, index) => orderById.set(item.id, index));
+      });
+      return dayItems.map((item) => orderById.has(item.id)
+        ? { ...item, order: orderById.get(item.id) }
+        : item);
+    }
+
     function sortRainyDays(dayItems) {
       const collator = new Intl.Collator("zh-TW", { numeric: true, sensitivity: "base" });
       return [...dayItems].sort((first, second) => {
@@ -5988,6 +6309,51 @@
       deleteButton.setAttribute("aria-label", `刪除：${item.title}`);
       deleteButton.addEventListener("click", () => deleteItem(item.id));
 
+      const moveButton = makeElement("button", "text-button item-move-button", "移至日期");
+      moveButton.type = "button";
+      moveButton.disabled = !storageReady;
+      moveButton.dataset.itemId = item.id;
+      moveButton.setAttribute("aria-expanded", "false");
+      moveButton.setAttribute("aria-label", `將「${item.title}」移至指定日期`);
+
+      const moveForm = document.createElement("form");
+      moveForm.className = "item-move-form";
+      moveForm.hidden = true;
+      moveForm.setAttribute("aria-label", `指定「${item.title}」的新日期`);
+      const moveFormId = `move-date-form-${currentDay}-${previewIndex}`;
+      moveForm.id = moveFormId;
+      const moveDateId = `${moveFormId}-input`;
+      const moveDateLabel = makeElement("label", "", "新日期");
+      moveDateLabel.htmlFor = moveDateId;
+      const moveDateInput = document.createElement("input");
+      moveDateInput.id = moveDateId;
+      moveDateInput.type = "date";
+      moveDateInput.required = true;
+      moveDateInput.value = item.date;
+      moveDateLabel.append(moveDateInput);
+      const moveSubmitButton = makeElement("button", "text-button", "確認搬移");
+      moveSubmitButton.type = "submit";
+      const moveCancelButton = makeElement("button", "text-button", "取消");
+      moveCancelButton.type = "button";
+      moveForm.append(moveDateLabel, moveSubmitButton, moveCancelButton);
+      moveButton.setAttribute("aria-controls", moveFormId);
+      moveButton.addEventListener("click", () => {
+        moveForm.hidden = !moveForm.hidden;
+        moveButton.setAttribute("aria-expanded", String(!moveForm.hidden));
+        if (!moveForm.hidden) {
+          moveDateInput.focus();
+        }
+      });
+      moveCancelButton.addEventListener("click", () => {
+        moveForm.hidden = true;
+        moveButton.setAttribute("aria-expanded", "false");
+        moveButton.focus();
+      });
+      moveForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        moveItineraryItemToDate(item.id, moveDateInput.value);
+      });
+
       const moveToRainyDayButton = makeElement("button", "text-button", "移至雨天備案");
       moveToRainyDayButton.type = "button";
       moveToRainyDayButton.disabled = !storageReady || !rainyDayStorageReady;
@@ -6004,9 +6370,65 @@
       if (previewToggle) {
         actions.append(previewToggle);
       }
-      actions.append(checkinButton, moveToRainyDayButton, editButton, deleteButton);
-      card.append(actions);
+      actions.append(checkinButton, moveButton, moveToRainyDayButton, editButton, deleteButton);
+      card.append(actions, moveForm);
       return card;
+    }
+
+    function moveItineraryItemToDate(itemId, targetDate) {
+      if (!storageReady) {
+        showNotice("目前無法安全讀取行程資料，未執行搬移。", true);
+        return;
+      }
+
+      const item = items.find((entry) => entry.id === itemId);
+      if (!item) {
+        showNotice("找不到要搬移的行程，請重新整理後再試。", true);
+        return;
+      }
+
+      if (!isValidDateString(targetDate)) {
+        showNotice("請選擇有效的搬移日期。", true);
+        return;
+      }
+      if (targetDate === item.date) {
+        showNotice("這筆行程已安排在所選日期。");
+        return;
+      }
+
+      const destinationItems = items.filter((entry) => entry.date === targetDate);
+      const orderedDestinationItems = sortDayItems(destinationItems);
+      const destinationOrderById = new Map(
+        orderedDestinationItems.map((entry, index) => [entry.id, index])
+      );
+      const nextItems = items.map((entry) => {
+        if (entry.id === itemId) {
+          return { ...item, date: targetDate, order: orderedDestinationItems.length };
+        }
+        if (entry.date === targetDate) {
+          return { ...entry, order: destinationOrderById.get(entry.id) };
+        }
+        return entry;
+      });
+
+      try {
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextItems));
+      } catch {
+        showNotice("搬移資料無法儲存到瀏覽器，原有資料未變更。", true);
+        return;
+      }
+
+      items = nextItems;
+      currentDay = targetDate;
+      if (editingId === itemId) {
+        resetForm();
+      }
+      queueDirectorySave();
+      render();
+      showNotice(`已將「${item.title}」移至「${formatDate(targetDate)}」。`);
+      [...itineraryContent.querySelectorAll(".item-move-button")]
+        .find((button) => button.dataset.itemId === itemId)
+        ?.focus();
     }
 
     function moveItineraryItemToRainyDay(itemId) {
@@ -6020,25 +6442,28 @@
         showNotice("找不到要搬移的行程，請重新整理後再試。", true);
         return;
       }
+      if (!item.location.trim()) {
+        showNotice("請先編輯並填寫行程地點，再移至雨天備案。", true);
+        return;
+      }
 
       const rainyNotes = [
         item.time ? `原行程時間：${item.time}` : "",
-        item.location.length > 100 ? `原行程地點：${item.location}` : "",
         item.notes
       ].filter(Boolean).join("\n");
       const rainyDayItem = {
         id: `rainy-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`,
-        location: item.title,
-        ...(item.location && item.location.length <= 100 ? { area: item.location } : {}),
+        area: item.title,
+        location: item.location,
         ...(rainyNotes ? { notes: rainyNotes } : {})
       };
 
       if (!isRainyDayItem(rainyDayItem)) {
-        showNotice("這筆行程的時間、地點與備註合併後超過雨天備案可保存的 500 字上限，請先縮短備註後再搬移。", true);
+        showNotice("這筆行程的時間與備註合併後超過雨天備案可保存的 500 字上限，請先縮短備註後再搬移。", true);
         return;
       }
 
-      if (!window.confirm(`確定將「${item.title}」從「${formatDate(item.date)}」行程移至雨天備案嗎？\n行程名稱會作為備案地點，原行程地點、時間與備註會保留；此項目將從原行程移除。`)) {
+      if (!window.confirm(`確定將「${item.title}」從「${formatDate(item.date)}」行程移至雨天備案嗎？\n行程名稱會作為區域，行程地點會作為備案地點，時間與備註會保留；此項目將從原行程移除。`)) {
         return;
       }
 
@@ -6079,6 +6504,97 @@
       queueDirectorySave();
       render();
       showNotice(`已將「${item.title}」移至雨天備案，原行程已移除。`);
+    }
+
+    function moveRainyDayItemToItinerary(itemId, targetDate) {
+      if (!storageReady || !rainyDayStorageReady) {
+        showNotice("目前無法安全讀取行程或雨天備案資料，未執行搬移。", true);
+        return;
+      }
+
+      const rainyItem = rainyDays.find((entry) => entry.id === itemId);
+      if (!rainyItem) {
+        showNotice("找不到要搬移的雨天備案，請重新整理後再試。", true);
+        return;
+      }
+      if (!isValidDateString(targetDate)) {
+        showNotice("請選擇有效的行程日期。", true);
+        return;
+      }
+      if (rainyItem.location.length > 80) {
+        showNotice("地點名稱超過行程名稱 80 字上限，請先編輯並縮短名稱後再搬移。", true);
+        return;
+      }
+
+      const itineraryItem = {
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        date: targetDate,
+        time: "",
+        title: rainyItem.location,
+        location: rainyItem.area || "",
+        notes: rainyItem.notes || ""
+      };
+      if (!isItineraryItem(itineraryItem)) {
+        showNotice("備案資料超出行程可保存範圍，請先編輯備案內容後再搬移。", true);
+        return;
+      }
+
+      if (!window.confirm(
+        `確定將「${rainyItem.location}」從雨天備案搬移至「${formatDate(targetDate)}」我的行程嗎？\n` +
+        "地點名稱會作為行程名稱，區域與備註會保留；搬移成功後會從雨天備案移除。"
+      )) {
+        return;
+      }
+
+      const destinationItems = sortDayItems(items.filter((entry) => entry.date === targetDate));
+      const destinationOrderById = new Map(
+        destinationItems.map((entry, index) => [entry.id, index])
+      );
+      itineraryItem.order = destinationItems.length;
+      const nextItems = items.map((entry) => entry.date === targetDate
+        ? { ...entry, order: destinationOrderById.get(entry.id) }
+        : entry);
+      nextItems.push(itineraryItem);
+      const nextRainyDays = rainyDays.filter((entry) => entry.id !== itemId);
+
+      try {
+        window.localStorage.setItem(RAINY_DAY_STORAGE_KEY, JSON.stringify(nextRainyDays));
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextItems));
+      } catch {
+        let rollbackFailed = false;
+        [
+          [RAINY_DAY_STORAGE_KEY, rainyDays],
+          [STORAGE_KEY, items]
+        ].forEach(([key, value]) => {
+          try {
+            window.localStorage.setItem(key, JSON.stringify(value));
+          } catch {
+            rollbackFailed = true;
+          }
+        });
+        showNotice(
+          rollbackFailed
+            ? "搬移儲存失敗且無法完整回復瀏覽器資料；請重新載入前先匯出仍可讀取的資料。"
+            : "搬移資料無法儲存到瀏覽器，原有資料未變更。",
+          true
+        );
+        return;
+      }
+
+      rainyDays = nextRainyDays;
+      items = nextItems;
+      currentDay = targetDate;
+      expandedRainyDayIds.delete(itemId);
+      if (editingRainyDayId === itemId) {
+        cancelEditingRainyDay();
+      }
+      setItineraryExpanded(true);
+      queueDirectorySave();
+      render();
+      showNotice(`已將「${rainyItem.location}」搬移至「${formatDate(targetDate)}」我的行程。`);
+      [...itineraryContent.querySelectorAll(".item-move-button")]
+        .find((button) => button.dataset.itemId === itineraryItem.id)
+        ?.focus();
     }
 
     function clearDropIndicators() {
@@ -6282,7 +6798,7 @@
       );
       let activeAreaKey = null;
       let activeList = null;
-      groupedItems.forEach(({ areaGroup, groupIndex, item }) => {
+      groupedItems.forEach(({ areaGroup, groupIndex, item }, itemIndex) => {
         if (activeAreaKey !== areaGroup.key) {
           const areaSection = createAreaGroup(areaGroup, groupIndex, "rainy-day", "處", collapsedRainyDayAreas);
           activeAreaKey = areaGroup.key;
@@ -6356,6 +6872,49 @@
         });
         actions.append(editButton);
 
+        const moveButton = makeElement("button", "text-button", "移至我的行程");
+        moveButton.type = "button";
+        moveButton.disabled = !storageReady || !rainyDayStorageReady;
+        moveButton.setAttribute("aria-label", `將「${item.location}」移至我的行程的指定日期`);
+        const moveForm = document.createElement("form");
+        moveForm.className = "item-move-form";
+        moveForm.hidden = true;
+        moveForm.setAttribute("aria-label", `指定「${item.location}」的行程日期`);
+        const moveFormId = `rainy-move-date-form-${itemIndex}`;
+        moveForm.id = moveFormId;
+        const moveDateId = `${moveFormId}-input`;
+        const moveDateLabel = makeElement("label", "", "行程日期");
+        moveDateLabel.htmlFor = moveDateId;
+        const moveDateInput = document.createElement("input");
+        moveDateInput.id = moveDateId;
+        moveDateInput.type = "date";
+        moveDateInput.required = true;
+        moveDateLabel.append(moveDateInput);
+        const moveSubmitButton = makeElement("button", "text-button", "確認搬移");
+        moveSubmitButton.type = "submit";
+        const moveCancelButton = makeElement("button", "text-button", "取消");
+        moveCancelButton.type = "button";
+        moveForm.append(moveDateLabel, moveSubmitButton, moveCancelButton);
+        moveButton.setAttribute("aria-controls", moveFormId);
+        moveButton.setAttribute("aria-expanded", "false");
+        moveButton.addEventListener("click", () => {
+          moveForm.hidden = !moveForm.hidden;
+          moveButton.setAttribute("aria-expanded", String(!moveForm.hidden));
+          if (!moveForm.hidden) {
+            moveDateInput.focus();
+          }
+        });
+        moveCancelButton.addEventListener("click", () => {
+          moveForm.hidden = true;
+          moveButton.setAttribute("aria-expanded", "false");
+          moveButton.focus();
+        });
+        moveForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+          moveRainyDayItemToItinerary(item.id, moveDateInput.value);
+        });
+        actions.append(moveButton);
+
         const deleteButton = makeElement("button", "text-button delete", "刪除");
         deleteButton.type = "button";
         deleteButton.disabled = !storageReady || !rainyDayStorageReady;
@@ -6379,6 +6938,7 @@
         });
         actions.append(deleteButton);
 
+        row.append(moveForm);
         activeList.append(row);
       });
 
@@ -8501,8 +9061,10 @@
 
       if (editingId) {
         items = items.map((item) => item.id === editingId ? itineraryItem : item);
+        items = orderItineraryItemsByTime(items, [existingItem?.date, itineraryItem.date].filter(Boolean));
       } else {
         items.push(itineraryItem);
+        items = orderItineraryItemsByTime(items, [itineraryItem.date]);
       }
 
       currentDay = itineraryItem.date;
