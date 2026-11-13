@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-12T15:00:14.061Z",
+  "exportedAt": "2026-11-13T01:01:46.907Z",
   "items": [
     {
       "id": "klook-north-kyoto-2026-11-15-taxi",
@@ -562,6 +562,16 @@
         "category": "樂",
         "payer": "Michael",
         "note": "元大"
+      },
+      {
+        "id": "expense-1794495735775-4unwl4np",
+        "name": "京瓷美術館門票",
+        "category": "樂",
+        "payer": "Michael",
+        "currency": "TWD",
+        "amount": 1176,
+        "paymentMethod": "電子支付",
+        "note": "Line Pay元大"
       }
     ],
     "2026-11-17": [
