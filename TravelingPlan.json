@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-14T05:45:59.284Z",
+  "exportedAt": "2026-11-14T12:13:10.470Z",
   "items": [
     {
       "id": "klook-north-kyoto-2026-11-15-taxi",
@@ -97,19 +97,19 @@
       "id": "v72-2026-11-14-05",
       "date": "2026-11-14",
       "time": "17:00-18:15",
-      "title": "晚餐",
-      "location": "",
-      "notes": "享用多汁的百年「東洋亭漢堡排」與招牌整顆番茄沙拉，全西式靠背椅，省體力不需排隊。",
-      "order": 8
+      "title": "伊勢丹超市購買晚餐",
+      "location": "伊勢單百貨超市",
+      "notes": "購買享用多汁的百年「東洋亭漢堡排」便當🍱。",
+      "order": 9
     },
     {
       "id": "v72-2026-11-14-06",
       "date": "2026-11-14",
       "time": "18:30",
-      "title": "計程車護航 Check-in",
+      "title": "飯店 Check-in",
       "location": "京都凱悅嘉軒酒店",
-      "notes": "至八條口排隊搭計程車，一車直達 Hyatt Place Kyoto 飯店大門（車程 12 分鐘）。服務人員協助接行李，長輩免提重物無痛進房休息。",
-      "order": 9
+      "notes": "烏丸線鐵路從11號站坐到7號站，走6號出口可直達Hyatt Place Kyoto 飯店大門",
+      "order": 10
     },
     {
       "id": "v72-2026-11-16-01",
@@ -471,8 +471,8 @@
       "time": "16:30-17:30",
       "title": "京都塔",
       "location": "京都塔",
-      "notes": "",
-      "order": 7
+      "notes": "門票🎟️每人日幣1000元",
+      "order": 8
     },
     {
       "id": "1794631018589-orzveq",
@@ -491,6 +491,15 @@
       "location": "スパゲッティー 先斗入ル",
       "notes": "這是來自日式義大利麵連鎖店京風スパゲッティー 先斗入ル（Pontoiru）",
       "order": 5
+    },
+    {
+      "id": "1794637406855-x1legt",
+      "date": "2026-11-14",
+      "time": "15:10-1520",
+      "title": "空中路徑",
+      "location": "空中路徑",
+      "notes": "",
+      "order": 7
     }
   ],
   "checklists": {
@@ -600,6 +609,87 @@
         "amount": 12810,
         "paymentMethod": "刷卡",
         "note": "JCB"
+      },
+      {
+        "id": "expense-1794657350892-a2908xxv",
+        "name": "ICOCA購買與儲值",
+        "category": "行",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 3000,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794657400349-8f91uwg9",
+        "name": "行李寄放B1",
+        "category": "行",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 3000,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794657448174-bbiskll7",
+        "name": "京都塔門票",
+        "category": "樂",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 3000,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794657648839-09ny9bbv",
+        "name": "午餐-スパゲッティー 先斗入ル",
+        "category": "食",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 3950,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794657932029-9ggu0eb9",
+        "name": "伊勢丹百貨-月待庵",
+        "category": "食",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 300,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794658040605-ljyjj6jw",
+        "name": "麵包-MAISON KAYSER",
+        "category": "食",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 1468,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794658141362-y7a5kw4x",
+        "name": "伊勢丹超市",
+        "category": "食",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 2588,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794658251347-0q45rt0k",
+        "name": "伊勢丹百貨 東洋亭便當",
+        "category": "食",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 1431,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794658322601-5vs1bfe4",
+        "name": "關西機場超商",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 381,
+        "paymentMethod": "現金"
       }
     ],
     "2026-11-17": [
@@ -616,6 +706,16 @@
     ]
   },
   "checkinRecords": [
+    {
+      "id": "checkin-1794649104428-ywbh21jz",
+      "placeName": "京都凱悅嘉軒酒店",
+      "checkedInAt": "2026-11-14T09:38:24.428Z"
+    },
+    {
+      "id": "checkin-1794637419037-w6sswrsl",
+      "placeName": "空中路徑",
+      "checkedInAt": "2026-11-14T06:23:39.037Z"
+    },
     {
       "id": "checkin-1794633396427-7cwjm8wd",
       "placeName": "スパゲッティー 先斗入ル",
