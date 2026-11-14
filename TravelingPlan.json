@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-13T01:01:46.907Z",
+  "exportedAt": "2026-11-14T04:42:05.939Z",
   "items": [
     {
       "id": "klook-north-kyoto-2026-11-15-taxi",
@@ -78,7 +78,7 @@
     {
       "id": "v72-2026-11-14-03",
       "date": "2026-11-14",
-      "time": "13:45-14:30",
+      "time": "13:00-13:20",
       "title": "辦理 JR 關西廣域周遊券取票與劃位",
       "location": "京都車站",
       "notes": "🚨到京都車站綠色自動售票機，依照「實體取票與原地劃位指引」，一次領取 3 人的周遊券，並當場劃好 <B>11/18 天橋立、11/19 城崎返程、11/21 HARUKA</B> 的指定席座位，免除後顧之憂。",
@@ -91,7 +91,7 @@
       "title": "京都車站空中徑路漫步",
       "location": "京都車站",
       "notes": "可搭乘大樓電梯直達「空中徑路」觀景長廊，平路遠眺震撼的京都塔秋季點燈夜景，拍照打卡第一站。",
-      "order": 4
+      "order": 5
     },
     {
       "id": "v72-2026-11-14-05",
@@ -100,7 +100,7 @@
       "title": "晚餐",
       "location": "",
       "notes": "享用多汁的百年「東洋亭漢堡排」與招牌整顆番茄沙拉，全西式靠背椅，省體力不需排隊。",
-      "order": 6
+      "order": 7
     },
     {
       "id": "v72-2026-11-14-06",
@@ -109,7 +109,7 @@
       "title": "計程車護航 Check-in",
       "location": "京都凱悅嘉軒酒店",
       "notes": "至八條口排隊搭計程車，一車直達 Hyatt Place Kyoto 飯店大門（車程 12 分鐘）。服務人員協助接行李，長輩免提重物無痛進房休息。",
-      "order": 7
+      "order": 8
     },
     {
       "id": "v72-2026-11-16-01",
@@ -472,7 +472,16 @@
       "title": "京都塔",
       "location": "京都塔",
       "notes": "",
-      "order": 5
+      "order": 6
+    },
+    {
+      "id": "1794631018589-orzveq",
+      "date": "2026-11-14",
+      "time": "13:30-15:00",
+      "title": "伊勢丹百貨",
+      "location": "伊勢丹百貨",
+      "notes": "",
+      "order": 4
     }
   ],
   "checklists": {
@@ -498,7 +507,7 @@
     {
       "id": "pretrip-1794187141017-zb9x93h5",
       "text": "出發往機場的計程車預訂",
-      "checked": false
+      "checked": true
     },
     {
       "id": "pretrip-1794187145783-2r868j5w",
@@ -518,7 +527,7 @@
     {
       "id": "pretrip-1794367278256-2utgma4o",
       "text": "11/12 08:00後可預辦登機網路報到 https://booking.evaair.com/flyeva/eva/b2c/manage-your-trip/online-checked-in-login.aspx?lang=zh-tw",
-      "checked": false
+      "checked": true
     }
   ],
   "expenses": {
@@ -572,6 +581,16 @@
         "amount": 1176,
         "paymentMethod": "電子支付",
         "note": "Line Pay元大"
+      },
+      {
+        "id": "expense-1794625398384-2k2rxit3",
+        "name": "旅平險",
+        "category": "行",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 12810,
+        "paymentMethod": "刷卡",
+        "note": "JCB"
       }
     ],
     "2026-11-17": [
@@ -587,7 +606,23 @@
       }
     ]
   },
-  "checkinRecords": [],
+  "checkinRecords": [
+    {
+      "id": "checkin-1794631042280-bbcha765",
+      "placeName": "伊勢丹百貨",
+      "checkedInAt": "2026-11-14T04:37:22.280Z"
+    },
+    {
+      "id": "checkin-1794620558877-48xa08gy",
+      "placeName": "關空特急",
+      "checkedInAt": "2026-11-14T01:42:38.877Z"
+    },
+    {
+      "id": "checkin-1794602197842-ntfj4l2g",
+      "placeName": "桃園機場",
+      "checkedInAt": "2026-11-13T20:36:37.842Z"
+    }
+  ],
   "pageTitle": "把期待，排進旅程裡～～～",
   "rainyDays": [
     {
