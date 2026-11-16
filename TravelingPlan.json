@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-16T12:38:18.934Z",
+  "exportedAt": "2026-11-16T12:58:26.915Z",
   "items": [
     {
       "id": "klook-north-kyoto-2026-11-15-taxi",
@@ -816,22 +816,88 @@
     ],
     "2026-11-16": [
       {
-        "id": "expense-1794809547158-hm78tgg1",
-        "name": "午餐-Hatena burger",
-        "currency": "JPY",
-        "amount": 5200,
-        "paymentMethod": "現金",
-        "category": "食",
-        "payer": "Michael"
-      },
-      {
         "id": "expense-1794809770974-aex3fjhl",
         "name": "禮品-NINTENDO MUSEUM",
-        "currency": "TWD",
-        "amount": 1832,
-        "paymentMethod": "刷卡",
         "category": "樂",
         "payer": "Michael",
+        "currency": "JPY",
+        "amount": 8910,
+        "paymentMethod": "刷卡",
+        "note": "JCB"
+      },
+      {
+        "id": "expense-1794832908242-0bfm7alu",
+        "name": "早餐-AMAM DACOTAN 京都",
+        "category": "食",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 5285,
+        "paymentMethod": "刷卡",
+        "note": "JCB"
+      },
+      {
+        "id": "expense-1794833006624-g2frs8dx",
+        "name": "藥局",
+        "category": "育",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 440,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794833084206-vuv8b5e8",
+        "name": "錦天滿宮朱印",
+        "category": "育",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 2100,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794833231799-rg9fxlwa",
+        "name": "任天堂博物館搭計程車🚕",
+        "category": "樂",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 7500,
+        "paymentMethod": "刷卡",
+        "note": "JCB"
+      },
+      {
+        "id": "expense-1794833380696-dx6fpt0a",
+        "name": "午餐-任天堂博物館餐廳🍔Haltens Burger",
+        "category": "食",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 5200,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794833504160-xi72qrfv",
+        "name": "晚餐-Royal Host",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 6259,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794833585708-npyv5wag",
+        "name": "藥妝店",
+        "category": "住",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 2440,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794833745304-wogfkh6w",
+        "name": "Mont-bell",
+        "category": "衣",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 80410,
+        "paymentMethod": "刷卡",
         "note": "JCB"
       }
     ]
