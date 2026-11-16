@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-16T12:27:35.910Z",
+  "exportedAt": "2026-11-16T12:38:18.934Z",
   "items": [
     {
       "id": "klook-north-kyoto-2026-11-15-taxi",
@@ -118,7 +118,7 @@
       "title": "近鐵京都線快速移動",
       "location": "小倉（京都）",
       "notes": "在京都車站轉乘「近鐵京都線（急行列車）」直達近鐵小倉站（車程約 21-25 分鐘）。\n由近鐵小倉站東出口搭乘無障礙電梯下樓，沿著平坦的純樸住宅區柏油路慢步 5 分鐘即達博物館。",
-      "order": 1
+      "order": 3
     },
     {
       "id": "v72-2026-11-16-05",
@@ -127,7 +127,7 @@
       "title": "任天堂博物館朝聖 ✅ 已付款 11:30 入場",
       "location": "Nintendo Museum",
       "notes": "【🚨核心安檢】入場將嚴格查驗全員「實體護照正本」以核對身分！\n館內全無障礙。一樓與二樓展區有大量沙發椅，互動遊戲與歷史展覽兼顧，逛累了隨時可到附設咖啡廳休息。",
-      "order": 2
+      "order": 4
     },
     {
       "id": "v72-2026-11-16-07",
@@ -136,7 +136,7 @@
       "title": "平等院鳳凰堂散策",
       "location": "平等院",
       "notes": "順著全平路石磚步道欣賞鳳凰堂與阿字池的極樂淨土紅楓倒影。搭無障礙電梯參觀全室內鳳翔館寶物庫。\n回程由 JR 宇治站搭乘みやこ路快速 20 分鐘直達京都車站，於伊勢丹百貨 11 樓享用京料理後，搭地鐵回飯店。",
-      "order": 4
+      "order": 6
     },
     {
       "id": "v72-2026-11-18-01",
@@ -486,20 +486,20 @@
     {
       "id": "1794791006993-dnpmu6",
       "date": "2026-11-16",
-      "time": "",
+      "time": "09:00-09:30",
       "title": "錦市場",
       "location": "錦市場",
       "notes": "",
-      "order": 12
+      "order": 1
     },
     {
       "id": "1794791033221-1wrc0g",
       "date": "2026-11-16",
-      "time": "",
+      "time": "09:30-10:00",
       "title": "錦天滿宮",
       "location": "錦天滿宮",
-      "notes": "原行程時間：09:00-09:30\n原行程時間：09:00-09:30\n▶這裡主祀日本知名的學問之神「菅原道真」，除了學生常來祈求學業進步、考試合格之外，官方御守與祈願項目也包含 智慧、商才、招福、厄除與工作運，因此做生意或上班族也很適合順路參拜。\n▶神社每天一般 8:00～20:00 開放，而且免費參拜",
-      "order": 13
+      "notes": "原行程時間：09:00-09:30\n▶這裡主祀日本知名的學問之神「菅原道真」，除了學生常來祈求學業進步、考試合格之外，官方御守與祈願項目也包含 智慧、商才、招福、厄除與工作運，因此做生意或上班族也很適合順路參拜。\n▶神社每天一般 8:00～20:00 開放，而且免費參拜",
+      "order": 2
     },
     {
       "id": "1794809398565-xwioow",
@@ -508,7 +508,7 @@
       "title": "Hatena burger",
       "location": "Hatena burger",
       "notes": "",
-      "order": 3
+      "order": 5
     },
     {
       "id": "1794812180664-3t41i6",
@@ -517,7 +517,7 @@
       "title": "JR小倉站",
       "location": "JR小倉站",
       "notes": "",
-      "order": 5
+      "order": 7
     },
     {
       "id": "1794817286353-lkxxbe",
@@ -526,7 +526,7 @@
       "title": "宇治（京阪） 到中書島",
       "location": "宇治（京阪）車站",
       "notes": "",
-      "order": 6
+      "order": 8
     },
     {
       "id": "1794817780129-2vbfpd",
@@ -535,16 +535,16 @@
       "title": "中書島 到 三條（京都）",
       "location": "三條（京都）車站",
       "notes": "",
-      "order": 7
+      "order": 9
     },
     {
       "id": "1794821490942-w49j21",
       "date": "2026-11-16",
       "time": "1830-19:30",
-      "title": "晚餐-樂雅樂Royal Host 京都髙島屋S.C.店 ロイヤルホスト京都髙島屋S.C.店",
-      "location": "樂雅樂Royal Host 京都髙島屋S.C.店 ロイヤルホスト京都髙島屋S.C.店",
+      "title": "晚餐-樂雅樂Royal Host 京都髙島屋S.C.店",
+      "location": "樂雅樂Royal Host 京都髙島屋S.C.店",
       "notes": "",
-      "order": 8
+      "order": 10
     },
     {
       "id": "1794823531530-0c0at9",
@@ -553,16 +553,16 @@
       "title": "mont-bell 京都店 モンベル 京都店",
       "location": "mont-bell 京都店 モンベル 京都店",
       "notes": "",
-      "order": 9
+      "order": 11
     },
     {
       "id": "1794828389146-g7esyb",
       "date": "2026-11-16",
       "time": "20:29-",
-      "title": "京都河原町",
+      "title": "京都河原町 往 飯店",
       "location": "京都河原町",
       "notes": "",
-      "order": 10
+      "order": 12
     }
   ],
   "checklists": {
@@ -656,103 +656,103 @@
       {
         "id": "expense-1794495735775-4unwl4np",
         "name": "京瓷美術館門票",
-        "category": "樂",
-        "payer": "Michael",
         "currency": "TWD",
         "amount": 1176,
         "paymentMethod": "電子支付",
+        "category": "樂",
+        "payer": "Michael",
         "note": "Line Pay元大"
       },
       {
         "id": "expense-1794625398384-2k2rxit3",
         "name": "旅平險",
-        "category": "行",
-        "payer": "Michael",
         "currency": "JPY",
         "amount": 12810,
         "paymentMethod": "刷卡",
+        "category": "行",
+        "payer": "Michael",
         "note": "JCB"
       },
       {
         "id": "expense-1794657350892-a2908xxv",
         "name": "ICOCA購買與儲值",
-        "category": "行",
-        "payer": "Michael",
         "currency": "JPY",
         "amount": 3000,
-        "paymentMethod": "現金"
+        "paymentMethod": "現金",
+        "category": "行",
+        "payer": "Michael"
       },
       {
         "id": "expense-1794657400349-8f91uwg9",
         "name": "行李寄放B1",
-        "category": "行",
-        "payer": "Ealing",
         "currency": "JPY",
         "amount": 3000,
-        "paymentMethod": "現金"
+        "paymentMethod": "現金",
+        "category": "行",
+        "payer": "Ealing"
       },
       {
         "id": "expense-1794657448174-bbiskll7",
         "name": "京都塔門票",
-        "category": "樂",
-        "payer": "Michael",
         "currency": "JPY",
         "amount": 3000,
-        "paymentMethod": "現金"
+        "paymentMethod": "現金",
+        "category": "樂",
+        "payer": "Michael"
       },
       {
         "id": "expense-1794657648839-09ny9bbv",
         "name": "午餐-スパゲッティー 先斗入ル",
-        "category": "食",
-        "payer": "Michael",
         "currency": "JPY",
         "amount": 3950,
-        "paymentMethod": "現金"
+        "paymentMethod": "現金",
+        "category": "食",
+        "payer": "Michael"
       },
       {
         "id": "expense-1794657932029-9ggu0eb9",
         "name": "伊勢丹百貨-月待庵",
-        "category": "食",
-        "payer": "Michael",
         "currency": "JPY",
         "amount": 300,
-        "paymentMethod": "現金"
+        "paymentMethod": "現金",
+        "category": "食",
+        "payer": "Michael"
       },
       {
         "id": "expense-1794658040605-ljyjj6jw",
         "name": "麵包-MAISON KAYSER",
-        "category": "食",
-        "payer": "Michael",
         "currency": "JPY",
         "amount": 1468,
-        "paymentMethod": "現金"
+        "paymentMethod": "現金",
+        "category": "食",
+        "payer": "Michael"
       },
       {
         "id": "expense-1794658141362-y7a5kw4x",
         "name": "伊勢丹超市",
-        "category": "食",
-        "payer": "Michael",
         "currency": "JPY",
         "amount": 2588,
-        "paymentMethod": "現金"
+        "paymentMethod": "現金",
+        "category": "食",
+        "payer": "Michael"
       },
       {
         "id": "expense-1794658251347-0q45rt0k",
         "name": "伊勢丹百貨 東洋亭便當",
-        "category": "食",
-        "payer": "Michael",
         "currency": "JPY",
         "amount": 1431,
-        "paymentMethod": "現金"
+        "paymentMethod": "現金",
+        "category": "食",
+        "payer": "Michael"
       },
       {
         "id": "expense-1794658322601-5vs1bfe4",
         "name": "關西機場超商",
-        "category": "食",
-        "payer": "Ealing",
         "currency": "JPY",
         "amount": 381,
-        "paymentMethod": "現金"
+        "paymentMethod": "現金",
+        "category": "食",
+        "payer": "Ealing"
       }
     ],
     "2026-11-17": [
@@ -771,67 +771,67 @@
       {
         "id": "expense-1794740557291-vhmy2klw",
         "name": "午餐-三味洪庵",
-        "category": "食",
-        "payer": "Michael",
         "currency": "JPY",
         "amount": 5900,
-        "paymentMethod": "現金"
+        "paymentMethod": "現金",
+        "category": "食",
+        "payer": "Michael"
       },
       {
         "id": "expense-1794740613466-6q9anx96",
         "name": "ICOCA儲值",
-        "category": "行",
-        "payer": "Michael",
         "currency": "JPY",
         "amount": 2100,
-        "paymentMethod": "現金"
+        "paymentMethod": "現金",
+        "category": "行",
+        "payer": "Michael"
       },
       {
         "id": "expense-1794740677990-b4m4vqyg",
         "name": "京都國際漫畫博物館門票",
-        "category": "育",
-        "payer": "Michael",
         "currency": "JPY",
         "amount": 3600,
-        "paymentMethod": "現金"
+        "paymentMethod": "現金",
+        "category": "育",
+        "payer": "Michael"
       },
       {
         "id": "expense-1794740733576-rllrt6i2",
         "name": "星巴克",
-        "category": "食",
-        "payer": "Ealing",
         "currency": "JPY",
         "amount": 722,
-        "paymentMethod": "現金"
+        "paymentMethod": "現金",
+        "category": "食",
+        "payer": "Ealing"
       },
       {
         "id": "expense-1794740809203-wgordpwc",
         "name": "晚餐",
-        "category": "食",
-        "payer": "Michael",
         "currency": "JPY",
         "amount": 2310,
-        "paymentMethod": "現金"
+        "paymentMethod": "現金",
+        "category": "食",
+        "payer": "Michael"
       }
     ],
     "2026-11-16": [
       {
         "id": "expense-1794809547158-hm78tgg1",
         "name": "午餐-Hatena burger",
-        "category": "食",
-        "payer": "Michael",
         "currency": "JPY",
         "amount": 5200,
-        "paymentMethod": "現金"
+        "paymentMethod": "現金",
+        "category": "食",
+        "payer": "Michael"
       },
       {
         "id": "expense-1794809770974-aex3fjhl",
         "name": "禮品-NINTENDO MUSEUM",
-        "category": "樂",
-        "payer": "Michael",
         "currency": "TWD",
         "amount": 1832,
         "paymentMethod": "刷卡",
+        "category": "樂",
+        "payer": "Michael",
         "note": "JCB"
       }
     ]
@@ -998,56 +998,56 @@
     },
     {
       "id": "rainy-1794723983135-4q19y4io",
-      "area": "計程車短接 ➔ 博物館前田咖啡午餐",
       "location": "前田咖啡 京博店",
+      "area": "計程車短接 ➔ 博物館前田咖啡午餐",
       "notes": "原行程時間：12:35-13:45\n計程車直達京都國立博物館大門。免去出館排隊，直接在館內「前田咖啡」享用精緻牛肉咖哩飯與熱咖啡（全西式沙發靠背椅）。"
     },
     {
       "id": "rainy-1794723989974-7w4mk1tk",
-      "area": "京都國立博物館・源氏物語秋季特展",
       "location": "京都國立博物館",
+      "area": "京都國立博物館・源氏物語秋季特展",
       "notes": "原行程時間：14:00-16:00\n進入現代化「平成知新館」，全館設有完美無障礙坡道、巨型電梯與中央恆溫空調。\n帶媽媽近距離觀賞平安時代國寶源氏物語繪卷與奢裝屏風，大廳設有大量沙發，可隨時向服務台免費借用愛心輪椅。\n傍晚搭計程車回飯店午睡，18:00 前往四條烏丸享用「肉のひろ重」壽喜燒。"
     },
     {
       "id": "rainy-1794723994882-2q1l17g4",
-      "area": "祇園歷史街區",
       "location": "祇園白川",
+      "area": "祇園歷史街區",
       "notes": "祇園（Gion）是日本京都市東山區最具代表性的傳統花街與文化街區，以保存完好的江戶時代木造町家建築、茶屋文化以及藝伎與舞伎的身影聞名。這裡不僅是感受京都古都風情的核心地帶，也是串聯八坂神社、清水寺與鴨川的重要觀光樞紐。"
     },
     {
       "id": "rainy-1794724000067-5pqcrewu",
-      "area": "東福寺",
       "location": "GO App 叫車直達東山",
+      "area": "東福寺",
       "notes": "原行程時間：09:00-09:15\n避開週日大擠的公車，直接從飯店大門口叫計程車直達東福寺外圍（車程 18 分鐘）。"
     },
     {
       "id": "rainy-1794727768749-k7sx52is",
-      "area": "飯店悠閒早餐",
       "location": "京都凱悅嘉軒酒店",
+      "area": "飯店悠閒早餐",
       "notes": "原行程時間：08:30-09:30\n在飯店一樓舒適餐廳用餐，充飽電、帶上全家實體護照準備出門。"
     },
     {
       "id": "rainy-1794727846240-z6bvqghv",
-      "area": "地鐵烏丸線地下直通",
       "location": "京都車站",
+      "area": "地鐵烏丸線地下直通",
       "notes": "原行程時間：09:45-09:55\n直接搭飯店電梯到地下丸太町站月台，坐地鐵烏丸線 4 站直達京都車站（車程 8 分鐘），全程免爬樓梯。"
     },
     {
       "id": "rainy-1794740194477-ypczj70y",
-      "area": "錦市場",
       "location": "錦市場",
+      "area": "錦市場",
       "notes": "原行程時間：08:00-09:00\n原行程時間：08:00-09:00\n▶位於日本京都市中京區、擁有超過 400 年歷史的傳統商店街，素有「京都的廚房」之稱。這條全長約 390 公尺的室內拱廊街道匯集了超過 130 間店鋪，販售新鮮海產、京野菜、傳統漬物、各式現做小吃及百年廚具，且全區設有彩色玻璃遮雨棚，即使下雨天也能輕鬆逛街。\n▶營業時間。多數店鋪的營業時間集中於 10:00 至 17:00 或 18:00 之間，各店營業時間不一。\n▶電車交通。搭乘京都市營地下鐵烏丸線至「四條站」，或搭乘阪急京都線至「烏丸站」、「京都河原町站」，出站後步行約 3 至 5 分鐘即可抵達。"
     },
     {
       "id": "rainy-1794821787439-7guob898",
-      "area": "宇治表參道",
       "location": "平等院表參道",
+      "area": "宇治表參道",
       "notes": "原行程時間：14:30-14:45\n館方嚴禁計程車在大門臨停。出館步行 2 分鐘至外圍馬路，用 GO App 叫計程車直達宇治川畔（車程 10 分鐘）。\n在「中村藤吉平等院店」享用清爽的抹茶蕎麥麵與甜點（靠背椅）。"
     },
     {
       "id": "rainy-1794828399232-kwsh906g",
-      "area": "UNIQLO 京都",
       "location": "京都首間全球旗艦店「UNIQLO 京都」",
+      "area": "UNIQLO 京都",
       "notes": "• 地址：京都府京都市中京區河原町通三條下ル大黑町58（ミーナ京都 B1F～3F）\\n• 營業時間：11:00～21:00（開幕首三日 11/6–11/8 為 10:00～21:00）"
     }
   ],
