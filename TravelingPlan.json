@@ -1,12 +1,12 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-16T13:14:20.495Z",
+  "exportedAt": "2026-11-17T12:34:37.854Z",
   "items": [
     {
       "id": "klook-north-kyoto-2026-11-15-taxi",
       "date": "2026-11-17",
-      "time": "08:25–08:45",
+      "time": "08:30-09:15",
       "title": "巴士一日遊",
       "location": "7-ELEVEN 京都八條通東店",
       "notes": "訂單編號：GYS526262\n🚨重要集合叮嚀：今天為巴士一日遊，必須準時抵達集合點！一早請在飯店大門使用 GO App 叫計程車直奔京都車站南側八條口（車程約 12 分鐘）。\n📍 集合地點：<B>7-Eleven 門口前紅色地毯等候區域</B>（地址：南區東九條西岩本町16-16）。請於 08:50 前抵達核對憑證，巴士 09:00 準時發車，建議提前十分鐘到達抵達集合點等候上車。\n洛北山區氣溫偏低（體感約 6–10 度），請務必穿上保暖外套、戴上帽子並準備好發熱暖暖包。",
@@ -33,9 +33,9 @@
     {
       "id": "klook-north-kyoto-2026-11-15-eizan-train",
       "date": "2026-11-17",
-      "time": "14:41–15:03",
+      "time": "14:09-14:30",
       "title": "叡山電車紅葉隧道",
-      "location": "比叡山",
+      "location": "寶池車站",
       "notes": "叡山電車紅葉隧道體驗 22 分鐘。配合導遊安排，全家從「寶池站」上車搭乘至「鞍馬站」。全程坐在平穩的景觀列車內，穿梭在最著名的「紅葉隧道」中，完全不需步行即可飽覽車窗外滿山飛舞的秋楓，下車後巴士已在站點等候全家。",
       "order": 3
     },
@@ -46,7 +46,7 @@
       "title": "貴船神社",
       "location": "貴船神社",
       "notes": "自由活動 1.5 小時。專車送達鞍馬山西麓的貴船，慢步參觀經典的兩側「紅獻燈石階梯」與極具特色的水占卜。\n【安全避坑】貴船神社正門的石階較陡且可能有些微濕滑。請攙扶慢行，或者可以選擇繞行旁邊相對平緩的柏油車道坡路斜切上去。",
-      "order": 4
+      "order": 5
     },
     {
       "id": "klook-north-kyoto-2026-11-15-return",
@@ -55,7 +55,7 @@
       "title": "返回京都車站與飯店",
       "location": "京都車站八條口",
       "notes": "17:30 巴士團行程結束啟程返回市區，約於 18:45 前返抵京都車站解散。解散後直接在車站八條口排隊搭乘計程車回 Hyatt Place Kyoto 飯店，晚餐可叫外送或在飯店周邊簡餐解決，讓媽媽早點洗澡泡個熱水澡、躺下休息，為接下來出發去天橋立徹底充飽電力。",
-      "order": 5
+      "order": 6
     },
     {
       "id": "v72-2026-11-14-01",
@@ -563,6 +563,24 @@
       "location": "京都府京都市中京區",
       "notes": "官網連結 https://kyotomm.jp/en/ ，距離Hyatt Place Kyoto走路5分鐘\\n・營業時間：10:00～17:00（最後入館時間16:30）\\n・公休日：週三（如遇國定假日則順延）、年末年初及維護休館日",
       "order": 1
+    },
+    {
+      "id": "1794893886564-lla47o",
+      "date": "2026-11-17",
+      "time": "14:35-",
+      "title": "鞍馬車站",
+      "location": "鞍馬車站",
+      "notes": "",
+      "order": 4
+    },
+    {
+      "id": "1794907070512-g1bi54",
+      "date": "2026-11-17",
+      "time": "18:00-19:30",
+      "title": "晚餐-麵屋優光",
+      "location": "麵屋優光",
+      "notes": "",
+      "order": 7
     }
   ],
   "checklists": {
@@ -765,6 +783,79 @@
         "category": "行",
         "payer": "Michael",
         "note": "LINE PAY元大"
+      },
+      {
+        "id": "expense-1794910550325-w3y1ufr9",
+        "name": "晚餐-麵屋優光",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 4080,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794910611207-cqoaq02n",
+        "name": "永觀堂門票",
+        "category": "育",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 4500,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794910675592-b69q6g22",
+        "name": "三千院門票",
+        "category": "育",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 2100,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794910760474-j3fhx5a8",
+        "name": "午餐-芹生糰子",
+        "category": "食",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 1540,
+        "paymentMethod": "刷卡",
+        "note": "JCB"
+      },
+      {
+        "id": "expense-1794910816550-bq19ogua",
+        "name": "零食-蕨餅",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 2400,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794917004332-hff5snlt",
+        "name": "ICOCA儲值",
+        "category": "行",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 3000,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794917396132-c1h9lwz4",
+        "name": "全家",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 450,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1794917417176-ppk2cdug",
+        "name": "7-11",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 300,
+        "paymentMethod": "現金"
       }
     ],
     "2026-11-15": [
@@ -906,12 +997,72 @@
         "category": "行",
         "payer": "Michael",
         "currency": "JPY",
-        "amount": 1000,
+        "amount": 2030,
         "paymentMethod": "現金"
       }
     ]
   },
   "checkinRecords": [
+    {
+      "id": "checkin-1794910520232-7x19xgct",
+      "placeName": "麵屋優光",
+      "checkedInAt": "2026-11-17T10:15:20.232Z"
+    },
+    {
+      "id": "checkin-1794907078193-eqtn3b5a",
+      "placeName": "麵屋優光",
+      "checkedInAt": "2026-11-17T09:17:58.193Z"
+    },
+    {
+      "id": "checkin-1794898255581-l3wsgtr6",
+      "placeName": "貴船神社",
+      "checkedInAt": "2026-11-17T06:50:55.581Z"
+    },
+    {
+      "id": "checkin-1794894598893-6d0xvy5z",
+      "placeName": "貴船神社",
+      "checkedInAt": "2026-11-17T05:49:58.893Z"
+    },
+    {
+      "id": "checkin-1794893902836-yai5rb9j",
+      "placeName": "鞍馬車站",
+      "checkedInAt": "2026-11-17T05:38:22.836Z"
+    },
+    {
+      "id": "checkin-1794891875202-dlsy81py",
+      "placeName": "寶池車站",
+      "checkedInAt": "2026-11-17T05:04:35.202Z"
+    },
+    {
+      "id": "checkin-1794891818296-qbba6o7z",
+      "placeName": "寶池車站",
+      "checkedInAt": "2026-11-17T05:03:38.297Z"
+    },
+    {
+      "id": "checkin-1794891287631-9esh8gws",
+      "placeName": "三千院",
+      "checkedInAt": "2026-11-17T04:54:47.631Z"
+    },
+    {
+      "id": "checkin-1794885714674-gkpvotsf",
+      "placeName": "三千院",
+      "checkedInAt": "2026-11-17T03:21:54.674Z"
+    },
+    {
+      "id": "checkin-1794882311650-jeb2vp6t",
+      "placeName": "南禪寺",
+      "checkedInAt": "2026-11-17T02:25:11.650Z"
+    },
+    {
+      "id": "checkin-1794874754877-kgd6zm0n",
+      "placeName": "7-ELEVEN 京都八條通東店",
+      "checkedInAt": "2026-11-17T00:19:14.877Z"
+    },
+    {
+      "id": "checkin-1794873132980-uiv7fi6r",
+      "placeName": "7-ELEVEN 京都八條通東店",
+      "checkedInAt": "2026-11-16T23:52:12.980Z"
+    },
     {
       "id": "checkin-1794828410251-yht5pfes",
       "placeName": "京都河原町",
