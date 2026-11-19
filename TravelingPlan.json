@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-19T10:24:17.815Z",
+  "exportedAt": "2026-11-19T12:06:22.629Z",
   "items": [
     {
       "id": "klook-north-kyoto-2026-11-15-taxi",
@@ -1183,6 +1183,15 @@
         "payer": "Ealing",
         "currency": "JPY",
         "amount": 500,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795089939305-rw89030j",
+        "name": "洗衣服",
+        "category": "衣",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 1200,
         "paymentMethod": "現金"
       }
     ]
