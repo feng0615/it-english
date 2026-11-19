@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-19T09:53:58.801Z",
+  "exportedAt": "2026-11-19T10:24:17.815Z",
   "items": [
     {
       "id": "klook-north-kyoto-2026-11-15-taxi",
@@ -883,6 +883,24 @@
         "currency": "JPY",
         "amount": 700,
         "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795082629305-cm8qraha",
+        "name": "7-11",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 162,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795082680818-nfp1jm2p",
+        "name": "7-11",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 947,
+        "paymentMethod": "現金"
       }
     ],
     "2026-11-15": [
@@ -1073,6 +1091,98 @@
         "payer": "Ealing",
         "currency": "JPY",
         "amount": 4900,
+        "paymentMethod": "現金"
+      }
+    ],
+    "2026-11-19": [
+      {
+        "id": "expense-1795082133386-07sck3f9",
+        "name": "Kyoto Coop超市",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 908,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795082186676-qo69knjo",
+        "name": "飲料販賣機",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 130,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795082821003-7xioorvv",
+        "name": "HOHO 培茶",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 2330,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795082860252-sx9tmc5n",
+        "name": "HOHO 培茶",
+        "category": "食",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 780,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795082928555-vswruqq4",
+        "name": "伊勢丹B1伴手禮",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 970,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795083024964-a55en1p3",
+        "name": "伊勢丹伴手禮",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 6696,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795083149673-yahi3yfo",
+        "name": "寄物櫃",
+        "category": "行",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 500,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795083207652-421wl3y9",
+        "name": "午餐-丸龜製麵",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 2790,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795083259145-rzhahrc6",
+        "name": "伊勢丹伴手禮",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 7523,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795083311478-6mabk3dn",
+        "name": "ICOCA儲值",
+        "category": "行",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 500,
         "paymentMethod": "現金"
       }
     ]
