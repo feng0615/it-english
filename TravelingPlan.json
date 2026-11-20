@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-20T10:55:27.578Z",
+  "exportedAt": "2026-11-20T11:11:03.709Z",
   "items": [
     {
       "id": "klook-north-kyoto-2026-11-15-taxi",
@@ -1218,6 +1218,89 @@
         "amount": 24959,
         "paymentMethod": "刷卡",
         "note": "元大信用卡"
+      }
+    ],
+    "2026-11-20": [
+      {
+        "id": "expense-1795172235468-bb4jskdk",
+        "name": "Starbucks 京都二寧坂茶屋店",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 530,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795172672212-mjao7c78",
+        "name": "Grand Marble",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 1976,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795172736806-h7oa8afp",
+        "name": "午餐-Kacto",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 7930,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795172795538-9c40dny6",
+        "name": "飯糰",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 518,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795172856434-2m7crf73",
+        "name": "Snoopy CHA-YA",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 350,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795172895739-71fbqu6l",
+        "name": "橘屋",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 1436,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795172959071-p3k0f88z",
+        "name": "超市-FRESCO Petlt",
+        "category": "食",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 752,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795172996035-cgv0v6hf",
+        "name": "扭蛋",
+        "category": "樂",
+        "payer": "Ealing",
+        "currency": "JPY",
+        "amount": 500,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795173020754-1imvppqc",
+        "name": "洗衣服",
+        "category": "衣",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 500,
+        "paymentMethod": "現金"
       }
     ]
   },
