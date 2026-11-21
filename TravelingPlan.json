@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-20T11:11:03.709Z",
+  "exportedAt": "2026-11-21T03:50:01.044Z",
   "items": [
     {
       "id": "klook-north-kyoto-2026-11-15-taxi",
@@ -963,6 +963,25 @@
         "paymentMethod": "現金",
         "category": "食",
         "payer": "Michael"
+      },
+      {
+        "id": "expense-1795173700134-yiznd0to",
+        "name": "平安神宮",
+        "category": "樂",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 591,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795173872626-pf48kbfs",
+        "name": "吉卜力展覽禮品",
+        "category": "育",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 14905,
+        "paymentMethod": "刷卡",
+        "note": "JCB"
       }
     ],
     "2026-11-16": [
@@ -1302,9 +1321,44 @@
         "amount": 500,
         "paymentMethod": "現金"
       }
+    ],
+    "2026-11-21": [
+      {
+        "id": "expense-1795224871117-159yc7pl",
+        "name": "早餐",
+        "category": "食",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 2450,
+        "paymentMethod": "現金"
+      },
+      {
+        "id": "expense-1795230005599-n604tyid",
+        "name": "香菸",
+        "category": "樂",
+        "payer": "Michael",
+        "currency": "JPY",
+        "amount": 4400,
+        "paymentMethod": "現金"
+      }
     ]
   },
   "checkinRecords": [
+    {
+      "id": "checkin-1795232988639-mw3s456w",
+      "placeName": "關西機場",
+      "checkedInAt": "2026-11-21T03:49:48.639Z"
+    },
+    {
+      "id": "checkin-1795224836011-ilcpft9a",
+      "placeName": "關西機場",
+      "checkedInAt": "2026-11-21T01:33:56.011Z"
+    },
+    {
+      "id": "checkin-1795211310190-uz37pdpt",
+      "placeName": "Hyatt Place Kyoto",
+      "checkedInAt": "2026-11-20T21:48:30.190Z"
+    },
     {
       "id": "checkin-1795149104470-lsvpn54b",
       "placeName": "Kacto",
