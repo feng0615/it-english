@@ -2058,6 +2058,7 @@
 
     .travel-expense-converted-total {
       display: flex;
+      width: 100%;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
@@ -2066,6 +2067,25 @@
       border: 1px solid #dce5dd;
       border-radius: 10px;
       background: #f3f7f3;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .travel-expense-converted-total:hover:not(:disabled) {
+      border-color: #b7c8bd;
+      background: #eef4ef;
+    }
+
+    .travel-expense-converted-total:focus-visible {
+      outline: 3px solid #9a5700;
+      outline-offset: 2px;
+    }
+
+    .travel-expense-converted-total:disabled {
+      cursor: not-allowed;
+      opacity: 0.72;
     }
 
     .travel-expense-converted-total-label {
@@ -2557,12 +2577,19 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.113</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.114</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.114</strong>
+                  <time class="version-changelog-date" datetime="2026-11-23">2026-11-23</time>
+                </div>
+                <p>費用明細報表改依日期分區不重複顯示日期，並新增各日期與總計的支付方式統計；點選換算台幣可檢視所有幣別彙總報表。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.3.113</strong>
@@ -8203,7 +8230,11 @@
         return sum + expense.amount * (rate || 0);
       }, 0);
       const convertedTotalIsValid = Number.isFinite(convertedTotal);
-      const convertedTotalPanel = makeElement("div", "travel-expense-converted-total");
+      const convertedTotalPanel = makeElement("button", "travel-expense-converted-total");
+      convertedTotalPanel.type = "button";
+      convertedTotalPanel.disabled = missingCurrencies.length > 0 || !convertedTotalIsValid;
+      convertedTotalPanel.setAttribute("aria-label", "查看所有幣別換算新台幣費用明細報表");
+      convertedTotalPanel.addEventListener("click", () => openTravelExpenseReport(null));
       convertedTotalPanel.setAttribute("aria-live", "polite");
       convertedTotalPanel.append(
         makeElement("span", "travel-expense-converted-total-label", "換算新台幣總額"),
@@ -8239,36 +8270,100 @@
     }
 
     function openTravelExpenseReport(currencyCode) {
-      const currency = EXPENSE_CURRENCIES.find((item) => item.code === currencyCode);
-      if (!currency) {
+      const isAllCurrencies = currencyCode === null;
+      const currency = isAllCurrencies
+        ? null
+        : EXPENSE_CURRENCIES.find((item) => item.code === currencyCode);
+      if (!isAllCurrencies && !currency) {
         return;
       }
 
       const entries = Object.keys(expenses)
         .sort()
         .flatMap((date) => (expenses[date] || [])
-          .filter((expense) => expense.currency === currencyCode)
-          .map((expense) => ({ date, expense })));
-      const total = entries.reduce((sum, { expense }) => sum + expense.amount, 0);
+          .filter((expense) => isAllCurrencies || expense.currency === currencyCode)
+          .map((expense) => ({
+            date,
+            expense,
+            currency: EXPENSE_CURRENCIES.find((item) => item.code === expense.currency)
+          })));
+      const hasMissingExchangeRates = entries.some(({ expense }) =>
+        expense.currency !== "TWD" && !Number.isFinite(expenseExchangeRates[expense.currency])
+      );
+      if (isAllCurrencies && hasMissingExchangeRates) {
+        showNotice("匯率設定不完整，無法產生換算新台幣費用報表。", true);
+        return;
+      }
+
+      const getReportAmount = (expense) => isAllCurrencies
+        ? expense.amount * (expense.currency === "TWD" ? 1 : expenseExchangeRates[expense.currency])
+        : expense.amount;
+      const total = entries.reduce((sum, { expense }) => sum + getReportAmount(expense), 0);
+      if (isAllCurrencies && !Number.isFinite(total)) {
+        showNotice("計算結果超出可顯示範圍，無法產生換算新台幣費用報表。", true);
+        return;
+      }
       const amountFormatter = new Intl.NumberFormat("zh-TW", { maximumFractionDigits: 2 });
-      const rows = entries.map(({ date, expense }) => {
-        const paymentNote = expense.note ? `<div class="note">${escapeHtml(expense.note)}</div>` : "";
-        return `<tr>
-          <td>${escapeHtml(formatDate(date))}</td>
+      const paymentMethodTotals = new Map();
+      const dateGroups = new Map();
+      entries.forEach(({ date, expense }) => {
+        if (!dateGroups.has(date)) {
+          dateGroups.set(date, { entries: [], paymentTotals: new Map() });
+        }
+
+        const dateGroup = dateGroups.get(date);
+        dateGroup.entries.push({ expense, currency: EXPENSE_CURRENCIES.find((item) => item.code === expense.currency) });
+        dateGroup.paymentTotals.set(
+          expense.paymentMethod,
+          (dateGroup.paymentTotals.get(expense.paymentMethod) || 0) + getReportAmount(expense)
+        );
+        paymentMethodTotals.set(
+          expense.paymentMethod,
+          (paymentMethodTotals.get(expense.paymentMethod) || 0) + getReportAmount(expense)
+        );
+      });
+      const reportCurrencyLabel = isAllCurrencies ? "新台幣" : currency.label;
+      const renderPaymentTotals = (totals) => EXPENSE_PAYMENT_METHODS
+        .filter((method) => totals.has(method))
+        .map((method) => `<span class="payment-total">${escapeHtml(method)}：${escapeHtml(reportCurrencyLabel)}${amountFormatter.format(totals.get(method))}元</span>`)
+        .join("");
+      const dateSections = [...dateGroups.entries()].map(([date, dateGroup]) => {
+        const dateTotal = dateGroup.entries.reduce((sum, { expense }) => sum + getReportAmount(expense), 0);
+        const rows = dateGroup.entries.map(({ expense, currency: expenseCurrency }) => {
+          const paymentNote = expense.note ? `<div class="note">${escapeHtml(expense.note)}</div>` : "";
+          const amountCells = isAllCurrencies
+            ? `<td class="amount">${amountFormatter.format(expense.amount)} ${escapeHtml(expenseCurrency.code)}</td><td class="amount">${amountFormatter.format(getReportAmount(expense))}元</td>`
+            : `<td class="amount">${amountFormatter.format(expense.amount)}元</td>`;
+          return `<tr>
           <td>${escapeHtml(expense.category || "未分類")}</td>
           <td>${escapeHtml(expense.name)}</td>
           <td>${escapeHtml(expense.payer || "未指定")}</td>
-          <td class="amount">${amountFormatter.format(expense.amount)}元</td>
+          ${amountCells}
           <td>${escapeHtml(expense.paymentMethod)}</td>
           <td>${paymentNote}</td>
         </tr>`;
+        }).join("");
+
+        return `<section class="date-section">
+          <h2>${escapeHtml(formatDate(date))}</h2>
+          <div class="date-total">
+            <strong>當日小計：${escapeHtml(reportCurrencyLabel)}${amountFormatter.format(dateTotal)}元</strong>
+            <div class="payment-breakdown" aria-label="當日支付方式小計（${escapeHtml(reportCurrencyLabel)}）">${renderPaymentTotals(dateGroup.paymentTotals)}</div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>費用大類</th><th>費用名稱</th><th>付款人</th>${isAllCurrencies ? "<th>原幣金額</th><th>折合新台幣</th>" : "<th>金額</th>"}<th>支付方式</th><th>備註</th></tr></thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </div>
+        </section>`;
       }).join("");
       const reportHtml = `<!doctype html>
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>旅遊費用明細報表 - ${escapeHtml(currency.code)}</title>
+  <title>旅遊費用明細報表 - ${isAllCurrencies ? "TWD" : escapeHtml(currency.code)}</title>
   <style>
     * { box-sizing: border-box; }
     body { margin: 0; padding: 24px; color: #24292f; background: #f4f4f7; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif; }
@@ -8276,6 +8371,10 @@
     h1 { margin: 0; font-size: 22px; }
     .subtitle { color: #57606a; }
     .total { margin: 18px 0; padding: 14px 16px; border: 1px solid #dce5dd; border-radius: 10px; color: #194b38; background: #f3f7f3; font-size: 18px; font-weight: 750; }
+    .payment-breakdown { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 8px; font-size: 14px; font-weight: 500; }
+    .date-section { margin-top: 24px; }
+    .date-section h2 { margin: 0 0 10px; font-size: 18px; }
+    .date-total { margin-bottom: 12px; padding: 12px 14px; border: 1px solid #e8e8ed; border-radius: 8px; background: #fafaf8; }
     .table-wrap { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; }
     th, td { padding: 10px; border-bottom: 1px solid #e8e8ed; text-align: left; vertical-align: top; }
@@ -8289,14 +8388,12 @@
 <body>
   <main>
     <h1>旅遊費用明細報表</h1>
-    <p class="subtitle">${escapeHtml(currency.label)}（${escapeHtml(currency.code)}）・${entries.length} 筆費用</p>
-    <div class="total">總計：${escapeHtml(currency.label)}${amountFormatter.format(total)}元</div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>日期</th><th>費用大類</th><th>費用名稱</th><th>付款人</th><th>金額</th><th>支付方式</th><th>備註</th></tr></thead>
-        <tbody>${rows || `<tr><td colspan="7">尚無費用明細。</td></tr>`}</tbody>
-      </table>
+    <p class="subtitle">${isAllCurrencies ? "所有幣別（折合新台幣）" : `${escapeHtml(currency.label)}（${escapeHtml(currency.code)}）`}・${entries.length} 筆費用</p>
+    <div class="total">
+      <div>總計：${escapeHtml(reportCurrencyLabel)}${amountFormatter.format(total)}元</div>
+      <div class="payment-breakdown" aria-label="總計支付方式統計（${escapeHtml(reportCurrencyLabel)}）">${renderPaymentTotals(paymentMethodTotals)}</div>
     </div>
+    ${dateSections || `<p>尚無費用明細。</p>`}
   </main>
 </body>
 </html>`;
