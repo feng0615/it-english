@@ -1,0 +1,23 @@
+{
+  "format": "traveling-plan",
+  "version": 1,
+  "exportedAt": "2026-11-24T07:10:03.481Z",
+  "items": [
+    {
+      "id": "1795504169757-efxrud",
+      "date": "2027-01-01",
+      "time": "",
+      "title": "台南",
+      "location": "台南",
+      "notes": "",
+      "order": 0
+    }
+  ],
+  "checklists": {},
+  "preTripChecklist": [],
+  "expenses": {},
+  "checkinRecords": [],
+  "pageTitle": "2027跨年家族旅遊",
+  "rainyDays": [],
+  "foodExperiences": []
+}
