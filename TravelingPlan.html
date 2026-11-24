@@ -723,6 +723,64 @@
       color: #a3aca6;
     }
 
+    .field-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 7px;
+    }
+
+    .field-label-row label {
+      margin-bottom: 0;
+    }
+
+    .location-locate-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 28px;
+      padding: 0 10px;
+      border: 1px solid #7da591;
+      border-radius: 8px;
+      background: #f4f8f5;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .15s ease;
+      touch-action: manipulation;
+    }
+
+    .location-locate-button:hover:not(:disabled) {
+      background: var(--green);
+      color: #ffffff;
+      border-color: var(--green);
+    }
+
+    .location-locate-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .location-locate-status {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #52635a;
+      line-height: 1.4;
+      background: #f7faf8;
+      border: 1px solid #d5dfd8;
+      border-radius: 8px;
+      padding: 6px 10px;
+    }
+
+    .location-locate-status a {
+      color: var(--green);
+      text-decoration: underline;
+      font-weight: 700;
+      margin-left: 6px;
+    }
+
     .field-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -2695,12 +2753,19 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.4.004</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.4.005</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.4.005</strong>
+                  <time class="version-changelog-date" datetime="2026-11-24">2026-11-24</time>
+                </div>
+                <p>新增行程地點自動定位功能：在新增與編輯行程的地點欄位旁新增「自動定位」按鈕，支援裝置 GPS 坐標獲取與雙重逆地理編碼，自動填入當前所在行政區或地名並支援地圖核對。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.4.004</strong>
@@ -3620,8 +3685,18 @@
               </div>
 
               <div class="field">
-                <label for="item-location">地點</label>
+                <div class="field-label-row">
+                  <label for="item-location">地點</label>
+                  <button class="location-locate-button" id="item-location-locate-btn" type="button" title="取得當前 GPS 定位並填入地點名稱">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="3"></circle>
+                      <path d="M12 2v3m0 14v3M2 12h3m14 0h3"></path>
+                    </svg>
+                    <span>自動定位</span>
+                  </button>
+                </div>
                 <input id="item-location" name="location" type="text" maxlength="120" placeholder="例如：九份老街">
+                <div class="location-locate-status" id="item-location-locate-status" hidden></div>
               </div>
 
               <div class="field">
@@ -4548,6 +4623,8 @@
     const formDescription = document.querySelector("#form-description");
     const formToggleButton = document.querySelector("#form-toggle");
     const formContent = document.querySelector("#form-content");
+    const itemLocationLocateButton = document.querySelector("#item-location-locate-btn");
+    const itemLocationLocateStatus = document.querySelector("#item-location-locate-status");
     const preTripToggleButton = document.querySelector("#pre-trip-toggle");
     const preTripContent = document.querySelector("#pre-trip-content");
     const rainyDayToggleButton = document.querySelector("#rainy-day-toggle");
@@ -9490,6 +9567,204 @@
       formDescription.textContent = "把想去的地方，慢慢排進行程。";
       submitButton.textContent = "加入行程";
       cancelButton.hidden = true;
+      if (itemLocationLocateStatus) {
+        itemLocationLocateStatus.hidden = true;
+        itemLocationLocateStatus.replaceChildren();
+      }
+    }
+
+    /**
+     * 嘗試將 GPS 坐標逆解析為地名。
+     * 支援 BigDataCloud (免金鑰) 與 Nominatim (OpenStreetMap) 雙重備援，若皆失敗則回傳格式化坐標。
+     *
+     * @param {number} latitude 緯度
+     * @param {number} longitude 經度
+     * @returns {Promise<{placeName: string, detail?: string}>} 解析出的地名或坐標
+     */
+    async function reverseGeocodeLocation(latitude, longitude) {
+      const latFixed = Number(latitude.toFixed(6));
+      const lonFixed = Number(longitude.toFixed(6));
+
+      // 1. 嘗試 BigDataCloud Client Reverse Geocode API（針對客戶端免費、免 Key、支援多語系）
+      try {
+        const controller = new AbortController();
+        const timeoutId = window.setTimeout(() => controller.abort(), 6000);
+        const url = new URL("https://api.bigdatacloud.net/data/reverse-geocode-client");
+        url.searchParams.set("latitude", String(latFixed));
+        url.searchParams.set("longitude", String(lonFixed));
+        url.searchParams.set("localityLanguage", "zh");
+
+        const response = await fetch(url.toString(), {
+          cache: "no-store",
+          signal: controller.signal
+        });
+        window.clearTimeout(timeoutId);
+
+        if (response.ok) {
+          const data = await response.json();
+          const city = (data.city || data.locality || "").trim();
+          const admin = (data.principalSubdivision || "").trim();
+          const country = (data.countryName || "").trim();
+
+          const localityDetails = Array.isArray(data.localityInfo?.administrative)
+            ? data.localityInfo.administrative
+                .filter((item) => item.name && !/^(台灣|日本|China|Taiwan|Japan)$/i.test(item.name))
+                .map((item) => item.name.trim())
+            : [];
+
+          let resolved = "";
+          if (localityDetails.length > 0) {
+            const uniqueParts = [...new Set(localityDetails)];
+            resolved = uniqueParts.slice(-2).join("");
+          } else if (city) {
+            resolved = admin && admin !== city ? `${admin}${city}` : city;
+          } else if (admin) {
+            resolved = admin;
+          }
+
+          if (resolved) {
+            return {
+              placeName: resolved.slice(0, 80),
+              detail: country ? `${country} ${admin}` : admin
+            };
+          }
+        }
+      } catch {
+        // BigDataCloud 逾時或失敗，繼續嘗試備援 API
+      }
+
+      // 2. 備援嘗試 OpenStreetMap Nominatim
+      try {
+        const controller = new AbortController();
+        const timeoutId = window.setTimeout(() => controller.abort(), 6000);
+        const url = new URL("https://nominatim.openstreetmap.org/reverse");
+        url.searchParams.set("format", "json");
+        url.searchParams.set("lat", String(latFixed));
+        url.searchParams.set("lon", String(lonFixed));
+        url.searchParams.set("zoom", "18");
+        url.searchParams.set("addressdetails", "1");
+        url.searchParams.set("accept-language", "zh-TW,zh,ja,en");
+
+        const response = await fetch(url.toString(), {
+          cache: "no-store",
+          signal: controller.signal
+        });
+        window.clearTimeout(timeoutId);
+
+        if (response.ok) {
+          const data = await response.json();
+          const addr = data.address || {};
+          const poiName = data.name || addr.tourism || addr.amenity || addr.historic || addr.shop || "";
+          const road = addr.road || addr.pedestrian || "";
+          const suburb = addr.suburb || addr.district || addr.quarter || "";
+          const city = addr.city || addr.town || addr.village || addr.county || "";
+
+          let resolved = "";
+          if (poiName) {
+            resolved = suburb ? `${suburb} ${poiName}` : poiName;
+          } else if (road && suburb) {
+            resolved = `${suburb} ${road}`;
+          } else if (road) {
+            resolved = city ? `${city} ${road}` : road;
+          } else if (suburb) {
+            resolved = city ? `${city} ${suburb}` : suburb;
+          } else if (city) {
+            resolved = city;
+          } else if (data.display_name) {
+            resolved = data.display_name.split(",").slice(0, 2).join(" ").trim();
+          }
+
+          if (resolved) {
+            return {
+              placeName: resolved.slice(0, 80),
+              detail: data.display_name
+            };
+          }
+        }
+      } catch {
+        // Nominatim 逾時或失敗
+      }
+
+      // 3. 若無網路或逆地理編碼皆失敗，以清晰的坐標名稱表示
+      return {
+        placeName: `位置 (${latFixed}, ${lonFixed})`,
+        detail: "無法連線地名查詢服務，已直接填入 GPS 經緯度"
+      };
+    }
+
+    /**
+     * 自動取得 GPS 定位並填入地點輸入欄位。
+     */
+    async function autoLocateItemLocation() {
+      if (!itemLocationLocateButton || !itemLocationLocateStatus) {
+        return;
+      }
+
+      if (!navigator.geolocation) {
+        itemLocationLocateStatus.hidden = false;
+        itemLocationLocateStatus.textContent = "您的瀏覽器不支援地理定位功能。";
+        return;
+      }
+
+      const buttonText = itemLocationLocateButton.querySelector("span");
+      const originalText = buttonText ? buttonText.textContent : "自動定位";
+
+      itemLocationLocateButton.disabled = true;
+      if (buttonText) {
+        buttonText.textContent = "定位中...";
+      }
+      itemLocationLocateStatus.hidden = false;
+      itemLocationLocateStatus.replaceChildren();
+      itemLocationLocateStatus.textContent = "正在獲取 GPS 衛星或網路定位坐標...";
+
+      try {
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 30000
+          });
+        });
+
+        const { latitude, longitude, accuracy } = position.coords;
+        const accuracyText = Number.isFinite(accuracy) ? `±${Math.round(accuracy)}m` : "";
+
+        itemLocationLocateStatus.textContent = `已取得 GPS 坐標（${latitude.toFixed(5)}, ${longitude.toFixed(5)} ${accuracyText}），正在解析地名...`;
+
+        const geoResult = await reverseGeocodeLocation(latitude, longitude);
+        const placeName = geoResult.placeName.trim();
+
+        const locationInput = form.elements.location;
+        locationInput.value = placeName;
+        locationInput.dispatchEvent(new Event("input", { bubbles: true }));
+
+        itemLocationLocateStatus.replaceChildren();
+        const successSpan = makeElement("span", "", `📍 定位成功：已填入「${placeName}」${accuracyText ? `（精度 ${accuracyText}）` : ""}`);
+        const mapLink = makeElement("a", "", "在地圖確認");
+        mapLink.href = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+        mapLink.target = "_blank";
+        mapLink.rel = "noopener noreferrer";
+
+        itemLocationLocateStatus.append(successSpan, mapLink);
+        locationInput.focus();
+      } catch (error) {
+        let errorMsg = "定位失敗";
+        if (error?.code === 1) {
+          errorMsg = "定位失敗：瀏覽器已拒絕位置存取權限。請在網址列或瀏覽器設定中允許「位置存取」後重試。";
+        } else if (error?.code === 2) {
+          errorMsg = "定位失敗：無法取得目前位置（可能無 GPS 訊號或室內收訊不良）。";
+        } else if (error?.code === 3) {
+          errorMsg = "定位逾時（超過 15 秒）：請移至開闊處或檢查網路連線後重試。";
+        } else if (error?.message) {
+          errorMsg = `定位失敗：${error.message}`;
+        }
+        itemLocationLocateStatus.textContent = errorMsg;
+      } finally {
+        itemLocationLocateButton.disabled = false;
+        if (buttonText) {
+          buttonText.textContent = originalText;
+        }
+      }
     }
 
     function setFormExpanded(expanded) {
@@ -10324,6 +10599,10 @@
       form.elements.title.value = item.title;
       form.elements.location.value = item.location;
       form.elements.notes.value = item.notes;
+      if (itemLocationLocateStatus) {
+        itemLocationLocateStatus.hidden = true;
+        itemLocationLocateStatus.replaceChildren();
+      }
       formTitle.textContent = "編輯這一站";
       formDescription.textContent = "修改完成後，儲存變更即可更新行程。";
       submitButton.textContent = "儲存變更";
@@ -10336,6 +10615,12 @@
     formToggleButton.addEventListener("click", () => {
       setFormExpanded(formContent.hidden);
     });
+
+    if (itemLocationLocateButton) {
+      itemLocationLocateButton.addEventListener("click", () => {
+        void autoLocateItemLocation();
+      });
+    }
 
     preTripToggleButton.addEventListener("click", () => {
       setPreTripExpanded(preTripContent.hidden);
