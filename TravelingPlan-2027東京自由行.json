@@ -1,0 +1,23 @@
+{
+  "format": "traveling-plan",
+  "version": 1,
+  "exportedAt": "2026-11-24T03:11:58.588Z",
+  "items": [
+    {
+      "id": "1795489846414-irv806",
+      "date": "2027-05-08",
+      "time": "",
+      "title": "出發",
+      "location": "桃園國際機場",
+      "notes": "",
+      "order": 0
+    }
+  ],
+  "checklists": {},
+  "preTripChecklist": [],
+  "expenses": {},
+  "checkinRecords": [],
+  "pageTitle": "2027東京自由行",
+  "rainyDays": [],
+  "foodExperiences": []
+}
