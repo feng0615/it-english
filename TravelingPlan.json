@@ -1,7 +1,7 @@
 {
   "format": "traveling-plan",
   "version": 1,
-  "exportedAt": "2026-11-22T10:16:58.976Z",
+  "exportedAt": "2026-11-24T03:09:28.189Z",
   "items": [
     {
       "id": "klook-north-kyoto-2026-11-15-taxi",
@@ -1353,29 +1353,29 @@
       {
         "id": "expense-1795341182265-4350hktq",
         "name": "7-11 coffee",
-        "category": "食",
-        "payer": "Ealing",
         "currency": "JPY",
         "amount": 220,
-        "paymentMethod": "現金"
+        "paymentMethod": "現金",
+        "category": "食",
+        "payer": "Ealing"
       },
       {
         "id": "expense-1795341244804-0cai82or",
         "name": "7-11麭包",
-        "category": "食",
-        "payer": "Ealing",
         "currency": "JPY",
         "amount": 308,
-        "paymentMethod": "現金"
+        "paymentMethod": "現金",
+        "category": "食",
+        "payer": "Ealing"
       },
       {
         "id": "expense-1795341307068-tmliacfm",
         "name": "伴手禮",
-        "category": "食",
-        "payer": "Michael",
         "currency": "JPY",
         "amount": 13644,
         "paymentMethod": "刷卡",
+        "category": "食",
+        "payer": "Michael",
         "note": "J C B"
       }
     ]
