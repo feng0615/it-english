@@ -93,6 +93,70 @@
       font-size: 13px;
     }
 
+    .trip-manager-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 6px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--paper);
+    }
+
+    .trip-select {
+      height: 30px;
+      max-width: 220px;
+      padding: 0 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      outline: none;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .trip-select:focus-visible {
+      border-color: var(--green);
+      outline: 2px solid var(--green);
+    }
+
+    .trip-action-btn {
+      height: 30px;
+      padding: 0 9px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color .15s, border-color .15s, color .15s;
+    }
+
+    .trip-action-btn:hover:not(:disabled) {
+      background: var(--mint);
+      border-color: var(--green);
+      color: var(--green-dark);
+    }
+
+    .trip-action-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .trip-action-btn-danger:hover:not(:disabled) {
+      background: #fdf2f2;
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
     .hero {
       gap: 32px;
       margin: 54px 0 30px;
@@ -1884,6 +1948,38 @@
       margin: 0;
     }
 
+    .weather-quick-tags {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .weather-quick-label {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .weather-tag-btn {
+      background: #f1ede4;
+      color: #27322e;
+      border: 1px solid #ded7cb;
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      line-height: 1.4;
+    }
+
+    .weather-tag-btn:hover {
+      background: #1e4b3c;
+      color: #ffffff;
+      border-color: #1e4b3c;
+    }
+
     .weather-search-results,
     .weather-location-list {
       gap: 16px;
@@ -2352,6 +2448,22 @@
     }
 
     @media (max-width: 760px) {
+      .topbar {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .trip-manager-bar {
+        order: 3;
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .trip-select {
+        flex: 1;
+        min-width: 120px;
+      }
+
       .page {
         width: min(100% - 24px, 560px);
         padding: 20px 0 calc(32px + env(safe-area-inset-bottom));
@@ -2572,17 +2684,58 @@
         <span class="brand-mark" aria-hidden="true">↗</span>
         <span>旅途清單</span>
       </div>
+      <div class="trip-manager-bar" role="region" aria-label="行程專案管理">
+        <select id="trip-select" class="trip-select" aria-label="切換行程專案"></select>
+        <button id="trip-add-btn" class="trip-action-btn" type="button" title="建立新行程" aria-label="建立新行程">＋新增</button>
+        <button id="trip-rename-btn" class="trip-action-btn" type="button" title="重新命名目前行程" aria-label="重新命名目前行程">重新命名</button>
+        <button id="trip-delete-btn" class="trip-action-btn trip-action-btn-danger" type="button" title="刪除目前行程" aria-label="刪除目前行程">刪除</button>
+      </div>
       <span class="local-label">簡單規劃，安心出發</span>
     </header>
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.3.114</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.4.004</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.4.004</strong>
+                  <time class="version-changelog-date" datetime="2026-11-24">2026-11-24</time>
+                </div>
+                <p>修復國外（如日本京都）天氣預報更新與地點搜尋問題：增強 Geocoding 關鍵字智慧提取（容錯「京都、日本」等輸入）、放寬 Open-Meteo 跨時區預報長度相容、修復更新狀態卡滯提示並提供常用城市快速選取按鈕。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.4.003</strong>
+                  <time class="version-changelog-date" datetime="2026-11-24">2026-11-24</time>
+                </div>
+                <p>行程選單排序優化：最新建立的行程專案自動排列在下拉選單最上方。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.4.002</strong>
+                  <time class="version-changelog-date" datetime="2026-11-23">2026-11-23</time>
+                </div>
+                <p>支援多行程雲端分檔儲存與同步：預設行程維持 TravelingPlan.json，其餘行程依行程名稱獨立儲存與備份，互不覆蓋。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.4.001</strong>
+                  <time class="version-changelog-date" datetime="2026-11-23">2026-11-23</time>
+                </div>
+                <p>新增多行程管理功能，可在頁首切換、新增、重新命名與刪除獨立的行程專案。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.3.115</strong>
+                  <time class="version-changelog-date" datetime="2026-11-23">2026-11-23</time>
+                </div>
+                <p>載入行程時，若當天日期大於 Day1 則自動切換至當天；若超過最後一天則停留在最後一天。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.3.114</strong>
@@ -3713,10 +3866,19 @@
           <form class="weather-search-form" id="weather-search-form">
             <div class="field">
               <label for="weather-location-query">城市或地點</label>
-              <input class="expense-input" id="weather-location-query" name="location" type="text" maxlength="100" minlength="2" placeholder="例如：京都、日本" required>
+              <input class="expense-input" id="weather-location-query" name="location" type="text" maxlength="100" minlength="1" placeholder="例如：京都、大阪、東京（請輸入城市名）" required>
             </div>
             <button class="primary-button" id="weather-search-button" type="submit">搜尋地點</button>
           </form>
+          <div class="weather-quick-tags" id="weather-quick-tags" aria-label="熱門旅遊城市快速選">
+            <span class="weather-quick-label">熱門地點快速選：</span>
+            <button class="weather-tag-btn" type="button" data-city="京都">京都</button>
+            <button class="weather-tag-btn" type="button" data-city="大阪">大阪</button>
+            <button class="weather-tag-btn" type="button" data-city="東京">東京</button>
+            <button class="weather-tag-btn" type="button" data-city="札幌">札幌</button>
+            <button class="weather-tag-btn" type="button" data-city="福岡">福岡</button>
+            <button class="weather-tag-btn" type="button" data-city="那霸">那霸</button>
+          </div>
           <p class="weather-search-status" id="weather-search-status" role="status" aria-live="polite"></p>
           <div class="weather-search-results" id="weather-search-results"></div>
           <div class="weather-location-list-heading">
@@ -3758,6 +3920,380 @@
 
   <script>
     "use strict";
+
+    const DEFAULT_TRIP_ID = "trip-default";
+    const TRIPS_INDEX_STORAGE_KEY = "traveling-plan.trips.v1";
+    const ACTIVE_TRIP_STORAGE_KEY = "traveling-plan.active-trip-id.v1";
+
+    let activeTripId = DEFAULT_TRIP_ID;
+    let trips = [];
+
+    /**
+     * 取得特定行程專案的 Storage Key。
+     * 若為預設行程，維持原既有 Key 以確保相容既有資料；其餘行程附加專屬 ID。
+     *
+     * @param {string} baseKey 基礎 Key
+     * @param {string} [tripId=activeTripId] 行程 ID
+     * @returns {string} 完整的 Storage Key
+     */
+    function getTripStorageKey(baseKey, tripId = activeTripId) {
+      if (!tripId || tripId === DEFAULT_TRIP_ID) {
+        return baseKey;
+      }
+      return `${baseKey}:${tripId}`;
+    }
+
+    /**
+     * 取得行程的建立時間戳記。
+     * 若未顯式記錄 createdAt，嘗試從 ID（trip-{timestamp}）解析；預設行程為 0（最舊）。
+     *
+     * @param {{ id: string, createdAt?: number }} trip 行程資料
+     * @returns {number} 建立時間戳記
+     */
+    function getTripCreatedAt(trip) {
+      if (!trip) {
+        return 0;
+      }
+      if (typeof trip.createdAt === "number" && !Number.isNaN(trip.createdAt)) {
+        return trip.createdAt;
+      }
+      if (typeof trip.id === "string") {
+        const match = trip.id.match(/^trip-(\d+)$/);
+        if (match) {
+          return Number(match[1]);
+        }
+      }
+      return 0;
+    }
+
+    /**
+     * 將行程清單依建立時間由新到舊（最新排在最上面）排序。
+     *
+     * @param {Array<{ id: string, name: string, createdAt?: number }>} list 行程清單
+     * @returns {Array<{ id: string, name: string, createdAt?: number }>} 排序後清單
+     */
+    function sortTripsNewestFirst(list) {
+      if (!Array.isArray(list)) {
+        return [];
+      }
+      return [...list].sort((a, b) => getTripCreatedAt(b) - getTripCreatedAt(a));
+    }
+
+    /**
+     * 載入所有行程清單索引，並確保最新的行程排在最前面。
+     */
+    function loadTripsIndex() {
+      try {
+        const raw = window.localStorage.getItem(TRIPS_INDEX_STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0 && parsed.every((t) => t && typeof t.id === "string" && typeof t.name === "string")) {
+            return sortTripsNewestFirst(parsed);
+          }
+        }
+      } catch (err) {
+        console.error("無法讀取行程清單:", err);
+      }
+
+      let defaultName = "預設行程";
+      try {
+        const legacyTitle = window.localStorage.getItem("traveling-plan.page-title.v1");
+        if (legacyTitle && typeof legacyTitle === "string" && legacyTitle.trim()) {
+          defaultName = legacyTitle.trim();
+        }
+      } catch {}
+      return [{ id: DEFAULT_TRIP_ID, name: defaultName, createdAt: 0 }];
+    }
+
+    /**
+     * 儲存所有行程清單索引。
+     */
+    function saveTripsIndex(tripsToSave) {
+      try {
+        window.localStorage.setItem(TRIPS_INDEX_STORAGE_KEY, JSON.stringify(tripsToSave));
+        return true;
+      } catch {
+        showNotice("無法儲存行程清單，請確認瀏覽器儲存空間。", true);
+        return false;
+      }
+    }
+
+    /**
+     * 載入當前使用中的行程 ID。
+     */
+    function loadActiveTripId() {
+      try {
+        const stored = window.localStorage.getItem(ACTIVE_TRIP_STORAGE_KEY);
+        if (stored && trips.some((t) => t.id === stored)) {
+          return stored;
+        }
+      } catch {}
+      return trips.length > 0 ? trips[0].id : DEFAULT_TRIP_ID;
+    }
+
+    /**
+     * 儲存當前使用中的行程 ID。
+     */
+    function saveActiveTripId(tripId) {
+      try {
+        window.localStorage.setItem(ACTIVE_TRIP_STORAGE_KEY, tripId);
+      } catch {}
+    }
+
+    /**
+     * 渲染頂部行程切換下拉選單及按鈕狀態。
+     */
+    function renderTripSelector() {
+      if (!tripSelect) {
+        return;
+      }
+      tripSelect.innerHTML = "";
+      trips.forEach((trip) => {
+        const option = document.createElement("option");
+        option.value = trip.id;
+        option.textContent = trip.name;
+        if (trip.id === activeTripId) {
+          option.selected = true;
+        }
+        tripSelect.appendChild(option);
+      });
+      tripSelect.value = activeTripId;
+      if (tripDeleteBtn) {
+        tripDeleteBtn.disabled = trips.length <= 1;
+      }
+    }
+
+    /**
+     * 重新載入當前行程的所有本機資料並刷新所有視圖。
+     */
+    function reloadActiveTripData() {
+      currentDay = null;
+      items = loadItems();
+      checklists = loadChecklists();
+      preTripChecklist = loadPreTripChecklist();
+      rainyDays = loadRainyDays();
+      foodExperiences = loadFoodExperiences();
+      weatherLocations = loadWeatherLocations();
+      checkinRecords = loadCheckinRecords();
+      expenses = loadExpenses();
+      expenseExchangeRates = loadExpenseExchangeRates();
+
+      // 載入當前行程標題
+      let savedTitle = DEFAULT_PAGE_TITLE;
+      try {
+        const storedTitle = window.localStorage.getItem(getTripStorageKey(PAGE_TITLE_STORAGE_KEY));
+        if (storedTitle !== null) {
+          savedTitle = normalizePageTitle(storedTitle) || DEFAULT_PAGE_TITLE;
+        }
+      } catch {}
+      applyPageTitle(savedTitle);
+
+      // 載入當前行程底色
+      let savedColor = DEFAULT_ITINERARY_BACKGROUND_COLOR;
+      try {
+        const storedColor = window.localStorage.getItem(getTripStorageKey(ITINERARY_BACKGROUND_COLOR_STORAGE_KEY));
+        if (storedColor !== null && isValidHexColor(storedColor)) {
+          savedColor = storedColor.toLowerCase();
+        }
+      } catch {}
+      applyItineraryBackgroundColor(savedColor);
+
+      // 重設表單與編輯狀態
+      editingId = null;
+      editingChecklistId = null;
+      editingExpenseId = null;
+      editingExpenseDate = null;
+      editingRainyDayId = null;
+      editingFoodExperienceId = null;
+      if (typeof resetForm === "function") {
+        resetForm();
+      }
+
+      // 若為預設行程，確認種子資料
+      if (activeTripId === DEFAULT_TRIP_ID) {
+        ensureDefaultItems();
+        ensureV72Items();
+      }
+
+      // 重新渲染畫面
+      render();
+      renderPreTripChecklist();
+      renderRainyDays();
+      renderFoodExperiences();
+      renderWeatherLocations();
+      renderExpenses();
+    }
+
+    /**
+     * 切換至指定行程。
+     */
+    function switchActiveTrip(newTripId) {
+      if (newTripId === activeTripId) {
+        return;
+      }
+      const targetTrip = trips.find((t) => t.id === newTripId);
+      if (!targetTrip) {
+        return;
+      }
+      activeTripId = newTripId;
+      saveActiveTripId(activeTripId);
+      renderTripSelector();
+      reloadActiveTripData();
+      showNotice(`已切換至行程「${targetTrip.name}」`);
+    }
+
+    /**
+     * 彈窗提示新增行程。
+     */
+    function createNewTripPrompt() {
+      const name = window.prompt("請輸入新行程名稱（例如：2027 東京賞櫻）：");
+      if (name === null) {
+        return;
+      }
+      const trimmedName = name.trim();
+      if (!trimmedName) {
+        showNotice("行程名稱不可為空白。", true);
+        return;
+      }
+      if (trimmedName.length > 50) {
+        showNotice("行程名稱長度不可超過 50 個字。", true);
+        return;
+      }
+
+      const now = Date.now();
+      const newId = `trip-${now}`;
+      const newTrip = { id: newId, name: trimmedName, createdAt: now };
+      trips.unshift(newTrip);
+      if (!saveTripsIndex(trips)) {
+        trips.shift();
+        return;
+      }
+
+      // 新行程預設標題
+      try {
+        window.localStorage.setItem(getTripStorageKey(PAGE_TITLE_STORAGE_KEY, newId), trimmedName);
+      } catch {}
+
+      activeTripId = newId;
+      saveActiveTripId(activeTripId);
+      renderTripSelector();
+      reloadActiveTripData();
+      showNotice(`已建立並切換至新行程「${trimmedName}」`);
+    }
+
+    /**
+     * 重新命名當前行程。
+     */
+    function renameCurrentTripPrompt() {
+      const currentTrip = trips.find((t) => t.id === activeTripId);
+      if (!currentTrip) {
+        return;
+      }
+      const newName = window.prompt("請輸入新的行程名稱：", currentTrip.name);
+      if (newName === null) {
+        return;
+      }
+      const trimmedName = newName.trim();
+      if (!trimmedName) {
+        showNotice("行程名稱不可為空白。", true);
+        return;
+      }
+      if (trimmedName.length > 50) {
+        showNotice("行程名稱長度不可超過 50 個字。", true);
+        return;
+      }
+
+      currentTrip.name = trimmedName;
+      saveTripsIndex(trips);
+      renderTripSelector();
+
+      // 同步更新當前主標題
+      try {
+        window.localStorage.setItem(getTripStorageKey(PAGE_TITLE_STORAGE_KEY), trimmedName);
+        applyPageTitle(trimmedName);
+      } catch {}
+      showNotice(`已將行程名稱變更為「${trimmedName}」`);
+    }
+
+    /**
+     * 刪除當前行程。
+     */
+    function deleteCurrentTripPrompt() {
+      if (trips.length <= 1) {
+        showNotice("至少需保留一個行程，無法刪除。", true);
+        return;
+      }
+      const currentTrip = trips.find((t) => t.id === activeTripId);
+      if (!currentTrip) {
+        return;
+      }
+
+      const confirmed = window.confirm(`確定要刪除行程「${currentTrip.name}」嗎？\n此操作將清除該行程所有景點、清單與花費紀錄，且無法復原！`);
+      if (!confirmed) {
+        return;
+      }
+
+      // 清除該行程在 localStorage 內的專屬 key
+      const keysToRemove = [
+        STORAGE_KEY,
+        CHECKLIST_STORAGE_KEY,
+        PRE_TRIP_CHECKLIST_STORAGE_KEY,
+        RAINY_DAY_STORAGE_KEY,
+        FOOD_EXPERIENCE_STORAGE_KEY,
+        WEATHER_STORAGE_KEY,
+        CHECKIN_STORAGE_KEY,
+        EXPENSE_STORAGE_KEY,
+        EXPENSE_EXCHANGE_RATES_STORAGE_KEY,
+        LOCAL_VERSION_UPDATED_AT_STORAGE_KEY,
+        PAGE_TITLE_STORAGE_KEY,
+        ITINERARY_BACKGROUND_COLOR_STORAGE_KEY
+      ].map((k) => getTripStorageKey(k, activeTripId));
+
+      keysToRemove.forEach((k) => {
+        try {
+          window.localStorage.removeItem(k);
+        } catch {}
+      });
+
+      const deletedName = currentTrip.name;
+      trips = trips.filter((t) => t.id !== activeTripId);
+      activeTripId = trips[0].id;
+      saveTripsIndex(trips);
+      saveActiveTripId(activeTripId);
+      renderTripSelector();
+      reloadActiveTripData();
+      showNotice(`已刪除行程「${deletedName}」，已自動切換至「${trips[0].name}」`);
+    }
+
+    /**
+     * 初始化多行程選單與事件監聽器。
+     */
+    function initializeTrips() {
+      trips = loadTripsIndex();
+      activeTripId = loadActiveTripId();
+      renderTripSelector();
+
+      if (tripSelect) {
+        tripSelect.addEventListener("change", (e) => {
+          switchActiveTrip(e.target.value);
+        });
+      }
+      if (tripAddBtn) {
+        tripAddBtn.addEventListener("click", () => {
+          createNewTripPrompt();
+        });
+      }
+      if (tripRenameBtn) {
+        tripRenameBtn.addEventListener("click", () => {
+          renameCurrentTripPrompt();
+        });
+      }
+      if (tripDeleteBtn) {
+        tripDeleteBtn.addEventListener("click", () => {
+          deleteCurrentTripPrompt();
+        });
+      }
+    }
 
     const DEFAULT_PAGE_TITLE = "把期待，排進旅程裡。";
     const STORAGE_KEY = "traveling-plan.itinerary.v1";
@@ -4089,6 +4625,10 @@
     const daySwapSecondDateSelect = document.querySelector("#day-swap-second-date");
     const daySwapButton = document.querySelector("#day-swap-button");
     const preTripChecklistContent = document.querySelector("#pre-trip-checklist-content");
+    const tripSelect = document.querySelector("#trip-select");
+    const tripAddBtn = document.querySelector("#trip-add-btn");
+    const tripRenameBtn = document.querySelector("#trip-rename-btn");
+    const tripDeleteBtn = document.querySelector("#trip-delete-btn");
     let items = [];
     let checklists = {};
     let preTripChecklist = [];
@@ -4403,7 +4943,7 @@
 
     function loadItems() {
       try {
-        const savedItems = window.localStorage.getItem(STORAGE_KEY);
+        const savedItems = window.localStorage.getItem(getTripStorageKey(STORAGE_KEY));
         if (savedItems === null) {
           return [];
         }
@@ -4427,7 +4967,7 @@
 
     function loadChecklists() {
       try {
-        const savedChecklists = window.localStorage.getItem(CHECKLIST_STORAGE_KEY);
+        const savedChecklists = window.localStorage.getItem(getTripStorageKey(CHECKLIST_STORAGE_KEY));
         if (savedChecklists === null) {
           return {};
         }
@@ -4446,7 +4986,7 @@
 
     function loadPreTripChecklist() {
       try {
-        const savedChecklist = window.localStorage.getItem(PRE_TRIP_CHECKLIST_STORAGE_KEY);
+        const savedChecklist = window.localStorage.getItem(getTripStorageKey(PRE_TRIP_CHECKLIST_STORAGE_KEY));
         if (savedChecklist === null) {
           return [];
         }
@@ -4465,7 +5005,7 @@
 
     function loadRainyDays() {
       try {
-        const savedRainyDays = window.localStorage.getItem(RAINY_DAY_STORAGE_KEY);
+        const savedRainyDays = window.localStorage.getItem(getTripStorageKey(RAINY_DAY_STORAGE_KEY));
         if (savedRainyDays === null) {
           return [];
         }
@@ -4484,7 +5024,7 @@
 
     function loadFoodExperiences() {
       try {
-        const savedFoodExperiences = window.localStorage.getItem(FOOD_EXPERIENCE_STORAGE_KEY);
+        const savedFoodExperiences = window.localStorage.getItem(getTripStorageKey(FOOD_EXPERIENCE_STORAGE_KEY));
         if (savedFoodExperiences === null) {
           return [];
         }
@@ -4503,7 +5043,7 @@
 
     function loadWeatherLocations() {
       try {
-        const savedLocations = window.localStorage.getItem(WEATHER_STORAGE_KEY);
+        const savedLocations = window.localStorage.getItem(getTripStorageKey(WEATHER_STORAGE_KEY));
         if (savedLocations === null) {
           return [];
         }
@@ -4523,7 +5063,7 @@
 
     function loadCheckinRecords() {
       try {
-        const savedRecords = window.localStorage.getItem(CHECKIN_STORAGE_KEY);
+        const savedRecords = window.localStorage.getItem(getTripStorageKey(CHECKIN_STORAGE_KEY));
         if (savedRecords === null) {
           return [];
         }
@@ -4542,7 +5082,7 @@
 
     function loadExpenses() {
       try {
-        const savedExpenses = window.localStorage.getItem(EXPENSE_STORAGE_KEY);
+        const savedExpenses = window.localStorage.getItem(getTripStorageKey(EXPENSE_STORAGE_KEY));
         if (savedExpenses === null) {
           return {};
         }
@@ -4561,7 +5101,7 @@
 
     function loadExpenseExchangeRates() {
       try {
-        const savedRates = window.localStorage.getItem(EXPENSE_EXCHANGE_RATES_STORAGE_KEY);
+        const savedRates = window.localStorage.getItem(getTripStorageKey(EXPENSE_EXCHANGE_RATES_STORAGE_KEY));
         if (savedRates === null) {
           return {};
         }
@@ -4579,7 +5119,7 @@
 
     function persistExpenseExchangeRates(rates) {
       try {
-        window.localStorage.setItem(EXPENSE_EXCHANGE_RATES_STORAGE_KEY, JSON.stringify(rates));
+        window.localStorage.setItem(getTripStorageKey(EXPENSE_EXCHANGE_RATES_STORAGE_KEY), JSON.stringify(rates));
         return true;
       } catch {
         showNotice("匯率設定無法儲存到瀏覽器；請檢查瀏覽器儲存空間。", true);
@@ -4726,7 +5266,7 @@
 
     function saveItems() {
       try {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+        window.localStorage.setItem(getTripStorageKey(STORAGE_KEY), JSON.stringify(items));
         queueDirectorySave();
         return true;
       } catch {
@@ -4741,7 +5281,7 @@
       }
 
       try {
-        window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(checklists));
+        window.localStorage.setItem(getTripStorageKey(CHECKLIST_STORAGE_KEY), JSON.stringify(checklists));
         queueDirectorySave();
         return true;
       } catch {
@@ -4756,7 +5296,7 @@
       }
 
       try {
-        window.localStorage.setItem(PRE_TRIP_CHECKLIST_STORAGE_KEY, JSON.stringify(preTripChecklist));
+        window.localStorage.setItem(getTripStorageKey(PRE_TRIP_CHECKLIST_STORAGE_KEY), JSON.stringify(preTripChecklist));
         queueDirectorySave();
         return true;
       } catch {
@@ -4771,7 +5311,7 @@
       }
 
       try {
-        window.localStorage.setItem(RAINY_DAY_STORAGE_KEY, JSON.stringify(rainyDays));
+        window.localStorage.setItem(getTripStorageKey(RAINY_DAY_STORAGE_KEY), JSON.stringify(rainyDays));
         queueDirectorySave();
         return true;
       } catch {
@@ -4786,7 +5326,7 @@
       }
 
       try {
-        window.localStorage.setItem(FOOD_EXPERIENCE_STORAGE_KEY, JSON.stringify(foodExperiences));
+        window.localStorage.setItem(getTripStorageKey(FOOD_EXPERIENCE_STORAGE_KEY), JSON.stringify(foodExperiences));
         queueDirectorySave();
         return true;
       } catch {
@@ -4801,7 +5341,7 @@
       }
 
       try {
-        window.localStorage.setItem(WEATHER_STORAGE_KEY, JSON.stringify(weatherLocations));
+        window.localStorage.setItem(getTripStorageKey(WEATHER_STORAGE_KEY), JSON.stringify(weatherLocations));
         return true;
       } catch {
         showNotice("天氣地點無法儲存到瀏覽器；重新整理後可能會遺失。請檢查瀏覽器儲存空間。", true);
@@ -4815,7 +5355,7 @@
       }
 
       try {
-        window.localStorage.setItem(CHECKIN_STORAGE_KEY, JSON.stringify(checkinRecords));
+        window.localStorage.setItem(getTripStorageKey(CHECKIN_STORAGE_KEY), JSON.stringify(checkinRecords));
         queueDirectorySave();
         return true;
       } catch {
@@ -4830,7 +5370,7 @@
       }
 
       try {
-        window.localStorage.setItem(EXPENSE_STORAGE_KEY, JSON.stringify(expenses));
+        window.localStorage.setItem(getTripStorageKey(EXPENSE_STORAGE_KEY), JSON.stringify(expenses));
         queueDirectorySave();
         return true;
       } catch {
@@ -4938,7 +5478,7 @@
 
     function recordLocalVersionUpdatedAt(updatedAt = new Date().toISOString()) {
       try {
-        window.localStorage.setItem(LOCAL_VERSION_UPDATED_AT_STORAGE_KEY, updatedAt);
+        window.localStorage.setItem(getTripStorageKey(LOCAL_VERSION_UPDATED_AT_STORAGE_KEY), updatedAt);
       } catch {
         showNotice("本機資料已儲存，但無法記錄版本日期；下次雲端比對時會顯示未記錄。", true);
       }
@@ -5044,7 +5584,7 @@
     }
 
     function ensureDefaultItems() {
-      if (!storageReady) {
+      if (!storageReady || activeTripId !== DEFAULT_TRIP_ID) {
         return;
       }
 
@@ -5077,7 +5617,7 @@
     }
 
     function ensureV72Items() {
-      if (!storageReady) {
+      if (!storageReady || activeTripId !== DEFAULT_TRIP_ID) {
         return;
       }
 
@@ -5513,7 +6053,7 @@
         ...Object.keys(checklists),
         ...Object.keys(expenses)
       ])].sort();
-      currentDay = dates.includes(currentDay) ? currentDay : dates[0] || null;
+      currentDay = dates.includes(currentDay) ? currentDay : getDefaultItineraryDate(dates);
       queueDirectorySave({ updatedAt: versionUpdatedAt || new Date().toISOString() });
       render();
       const checklistCount = Object.values(checklists).reduce((count, dayItems) => count + dayItems.length, 0);
@@ -5542,26 +6082,33 @@
 
     function saveImportedState(importedData, previousItems, previousChecklists, previousPreTripChecklist, previousExpenses, previousRainyDays, previousFoodExperiences, previousCheckinRecords, nextCheckinRecords, previousPageTitle, nextPageTitle) {
       try {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(importedData.items));
-        window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(importedData.checklists));
-        window.localStorage.setItem(PRE_TRIP_CHECKLIST_STORAGE_KEY, JSON.stringify(importedData.preTripChecklist));
-        window.localStorage.setItem(EXPENSE_STORAGE_KEY, JSON.stringify(importedData.expenses));
-        window.localStorage.setItem(CHECKIN_STORAGE_KEY, JSON.stringify(nextCheckinRecords));
-        window.localStorage.setItem(RAINY_DAY_STORAGE_KEY, JSON.stringify(importedData.rainyDays || []));
-        window.localStorage.setItem(FOOD_EXPERIENCE_STORAGE_KEY, JSON.stringify(importedData.foodExperiences || []));
-        window.localStorage.setItem(PAGE_TITLE_STORAGE_KEY, nextPageTitle);
+        window.localStorage.setItem(getTripStorageKey(STORAGE_KEY), JSON.stringify(importedData.items));
+        window.localStorage.setItem(getTripStorageKey(CHECKLIST_STORAGE_KEY), JSON.stringify(importedData.checklists));
+        window.localStorage.setItem(getTripStorageKey(PRE_TRIP_CHECKLIST_STORAGE_KEY), JSON.stringify(importedData.preTripChecklist));
+        window.localStorage.setItem(getTripStorageKey(EXPENSE_STORAGE_KEY), JSON.stringify(importedData.expenses));
+        window.localStorage.setItem(getTripStorageKey(CHECKIN_STORAGE_KEY), JSON.stringify(nextCheckinRecords));
+        window.localStorage.setItem(getTripStorageKey(RAINY_DAY_STORAGE_KEY), JSON.stringify(importedData.rainyDays || []));
+        window.localStorage.setItem(getTripStorageKey(FOOD_EXPERIENCE_STORAGE_KEY), JSON.stringify(importedData.foodExperiences || []));
+        window.localStorage.setItem(getTripStorageKey(PAGE_TITLE_STORAGE_KEY), nextPageTitle);
+        const currentTrip = trips.find((t) => t.id === activeTripId);
+        if (currentTrip && importedData.pageTitle) {
+          currentTrip.name = importedData.pageTitle;
+          currentTrip.updatedAt = new Date().toISOString();
+          saveTrips(trips);
+          renderTripSelector();
+        }
         return true;
       } catch {
         let rollbackFailed = false;
         try {
-          window.localStorage.setItem(STORAGE_KEY, JSON.stringify(previousItems));
-          window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(previousChecklists));
-          window.localStorage.setItem(PRE_TRIP_CHECKLIST_STORAGE_KEY, JSON.stringify(previousPreTripChecklist));
-          window.localStorage.setItem(EXPENSE_STORAGE_KEY, JSON.stringify(previousExpenses));
-          window.localStorage.setItem(CHECKIN_STORAGE_KEY, JSON.stringify(previousCheckinRecords));
-          window.localStorage.setItem(RAINY_DAY_STORAGE_KEY, JSON.stringify(previousRainyDays || []));
-          window.localStorage.setItem(FOOD_EXPERIENCE_STORAGE_KEY, JSON.stringify(previousFoodExperiences || []));
-          window.localStorage.setItem(PAGE_TITLE_STORAGE_KEY, previousPageTitle);
+          window.localStorage.setItem(getTripStorageKey(STORAGE_KEY), JSON.stringify(previousItems));
+          window.localStorage.setItem(getTripStorageKey(CHECKLIST_STORAGE_KEY), JSON.stringify(previousChecklists));
+          window.localStorage.setItem(getTripStorageKey(PRE_TRIP_CHECKLIST_STORAGE_KEY), JSON.stringify(previousPreTripChecklist));
+          window.localStorage.setItem(getTripStorageKey(EXPENSE_STORAGE_KEY), JSON.stringify(previousExpenses));
+          window.localStorage.setItem(getTripStorageKey(CHECKIN_STORAGE_KEY), JSON.stringify(previousCheckinRecords));
+          window.localStorage.setItem(getTripStorageKey(RAINY_DAY_STORAGE_KEY), JSON.stringify(previousRainyDays || []));
+          window.localStorage.setItem(getTripStorageKey(FOOD_EXPERIENCE_STORAGE_KEY), JSON.stringify(previousFoodExperiences || []));
+          window.localStorage.setItem(getTripStorageKey(PAGE_TITLE_STORAGE_KEY), previousPageTitle);
         } catch {
           rollbackFailed = true;
         }
@@ -5966,7 +6513,11 @@
         ].join("-");
         const link = document.createElement("a");
         link.href = downloadUrl;
-        link.download = `TravelingPlan-${dateStamp}.html`;
+        const currentTrip = Array.isArray(trips) ? trips.find((t) => t.id === activeTripId) : null;
+        const tripSlug = activeTripId !== DEFAULT_TRIP_ID && currentTrip?.name
+          ? `-${currentTrip.name.trim().replace(/[\\/:*?"<>|\x00-\x1f\s]+/g, "_")}`
+          : "";
+        link.download = `TravelingPlan${tripSlug}-${dateStamp}.html`;
         document.body.append(link);
         link.click();
         link.remove();
@@ -5997,7 +6548,11 @@
         ].join("-");
         const link = document.createElement("a");
         link.href = downloadUrl;
-        link.download = `TravelingPlan-${dateStamp}.json`;
+        const currentTrip = Array.isArray(trips) ? trips.find((t) => t.id === activeTripId) : null;
+        const tripSlug = activeTripId !== DEFAULT_TRIP_ID && currentTrip?.name
+          ? `-${currentTrip.name.trim().replace(/[\\/:*?"<>|\x00-\x1f\s]+/g, "_")}`
+          : "";
+        link.download = `TravelingPlan${tripSlug}-${dateStamp}.json`;
         document.body.append(link);
         link.click();
         link.remove();
@@ -6101,18 +6656,22 @@
       let localUpdatedAt = null;
       try {
         localUpdatedAt = parseVersionTimestamp(
-          window.localStorage.getItem(LOCAL_VERSION_UPDATED_AT_STORAGE_KEY)
+          window.localStorage.getItem(getTripStorageKey(LOCAL_VERSION_UPDATED_AT_STORAGE_KEY))
         );
       } catch {
         localUpdatedAt = null;
       }
+
+      const cloudFileName = getTripCloudFileName();
+      const currentTrip = Array.isArray(trips) ? trips.find((t) => t.id === activeTripId) : null;
+      const tripDisplayName = currentTrip?.name || "目前行程";
 
       const cloudUpdatedAt = parseVersionTimestamp(cloudPayload?.exportedAt);
       const localDates = getPayloadTripDates(createExportPayload());
       const cloudDates = getPayloadTripDates(cloudPayload);
       const localOnlyDates = localDates.filter((date) => !cloudDates.includes(date));
       const cloudOnlyDates = cloudDates.filter((date) => !localDates.includes(date));
-      let versionAge = "雲端尚無版本，確認後將建立新檔。";
+      let versionAge = `雲端檔案（${cloudFileName}）尚無版本，確認後將建立新檔。`;
       if (cloudPayload && !localUpdatedAt) {
         versionAge = "無法比較：本機版本日期尚未記錄。";
       } else if (cloudPayload && !cloudUpdatedAt) {
@@ -6129,6 +6688,8 @@
       }
 
       return [
+        `行程專案：【${tripDisplayName}】`,
+        `雲端檔案：${cloudFileName}`,
         `本機版本修改時間：${formatVersionTimestamp(localUpdatedAt)}${localUpdatedAt ? "" : "（舊資料沒有版本日期紀錄）"}`,
         `雲端版本匯出時間：${cloudPayload ? formatVersionTimestamp(cloudUpdatedAt) : "尚無雲端檔案"}`,
         versionAge,
@@ -6146,16 +6707,34 @@
       return new TextDecoder().decode(bytes);
     }
 
-    function getGitHubFileApiUrl() {
-      return `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/${GITHUB_FILE_PATH}`;
+    /**
+     * 取得特定行程專案對應的雲端 JSON 檔案名稱。
+     * 預設行程維持 TravelingPlan.json；其餘行程依行程名稱分檔。
+     *
+     * @param {string} [tripId=activeTripId] 行程 ID
+     * @returns {string} 雲端檔案名稱
+     */
+    function getTripCloudFileName(tripId = activeTripId) {
+      if (!tripId || tripId === DEFAULT_TRIP_ID) {
+        return GITHUB_FILE_PATH;
+      }
+      const currentTrip = Array.isArray(trips) ? trips.find((t) => t.id === tripId) : null;
+      const tripName = currentTrip?.name ? currentTrip.name.trim() : tripId;
+      const safeName = tripName.replace(/[\\/:*?"<>|\x00-\x1f\s]+/g, "_");
+      return safeName ? `TravelingPlan-${safeName}.json` : `TravelingPlan-${tripId}.json`;
     }
 
-    async function fetchCloudVersion(token = "") {
+    function getGitHubFileApiUrl(tripId = activeTripId) {
+      const fileName = getTripCloudFileName(tripId);
+      return `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/${encodeURIComponent(fileName)}`;
+    }
+
+    async function fetchCloudVersion(token = "", tripId = activeTripId) {
       const headers = { "Accept": "application/vnd.github+json" };
       if (token) {
         headers.Authorization = `Bearer ${token}`;
       }
-      const response = await fetch(getGitHubFileApiUrl(), {
+      const response = await fetch(getGitHubFileApiUrl(tripId), {
         headers,
         cache: "no-cache"
       });
@@ -6186,14 +6765,18 @@
         return;
       }
 
+      const cloudFileName = getTripCloudFileName();
+      const currentTrip = Array.isArray(trips) ? trips.find((t) => t.id === activeTripId) : null;
+      const tripDisplayName = currentTrip?.name || "目前行程";
+
       cloudSyncButton.disabled = true;
       cloudSyncButton.textContent = "比對中...";
-      showNotice("正在讀取 GitHub 雲端版本，以比對資料日期...");
+      showNotice(`正在讀取 GitHub 雲端版本（${cloudFileName}），以比對資料日期...`);
 
       try {
         const cloudVersion = await fetchCloudVersion();
         if (!cloudVersion) {
-          showNotice("GitHub 雲端尚無 TravelingPlan.json，未執行同步。", true);
+          showNotice(`GitHub 雲端尚無 ${cloudFileName}，未執行同步。`, true);
           return;
         }
 
@@ -6204,7 +6787,7 @@
 
         const confirmed = window.confirm(buildCloudVersionComparison(
           cloudVersion.payload,
-          "同步會以雲端資料取代本機行程、Checklist、費用、雨天備案/必訪景點、美食饗宴及打卡紀錄；雲端沒有的舊版打卡欄位會保留本機資料。是否繼續？"
+          `同步會以雲端 ${cloudFileName} 的資料取代目前行程「${tripDisplayName}」的景點、Checklist、費用、雨天備案/必訪景點、美食饗宴及打卡紀錄（不影響其他行程）。是否繼續？`
         ));
         if (!confirmed) {
           showNotice("已取消同步；本機資料未變更。");
@@ -6227,9 +6810,13 @@
         return;
       }
 
+      const cloudFileName = getTripCloudFileName();
+      const currentTrip = Array.isArray(trips) ? trips.find((t) => t.id === activeTripId) : null;
+      const tripDisplayName = currentTrip?.name || "目前行程";
+
       cloudUploadButton.disabled = true;
       cloudUploadButton.textContent = "比對中...";
-      showNotice("正在讀取 GitHub 雲端版本，以比對資料日期...");
+      showNotice(`正在讀取 GitHub 雲端版本（${cloudFileName}），以比對資料日期...`);
 
       try {
         const comparedCloudVersion = await fetchCloudVersion();
@@ -6239,7 +6826,7 @@
 
         const confirmed = window.confirm(buildCloudVersionComparison(
           comparedCloudVersion?.payload || null,
-          "上傳會以本機資料取代雲端 TravelingPlan.json，並先將雲端舊檔備份至 TravelPlanBackup。注意：打卡紀錄包含景點名稱與時間，GitHub Pages 上的檔案可透過網址讀取，請勿存入敏感資訊。是否繼續？"
+          `上傳會以目前行程「${tripDisplayName}」的本機資料儲存至雲端 ${cloudFileName}，並先將雲端舊檔備份至 TravelPlanBackup（獨立分檔，不會覆蓋其他行程）。注意：打卡紀錄包含景點名稱與時間，GitHub Pages 上的檔案可透過網址讀取，請勿存入敏感資訊。是否繼續？`
         ));
         if (!confirmed) {
           showNotice("已取消上傳；雲端資料未變更。");
@@ -6307,10 +6894,12 @@
             pad(now.getMinutes()),
             pad(now.getSeconds())
           ].join("");
-          backupFileName = `${GITHUB_BACKUP_DIRECTORY}/TravelingPlan_${timestamp}.json`;
+          const baseName = cloudFileName.replace(/\.json$/i, "");
+          const backupFileNameOnly = `${baseName}_${timestamp}.json`;
+          backupFileName = `${GITHUB_BACKUP_DIRECTORY}/${backupFileNameOnly}`;
           showNotice(`正在備份雲端現有檔案為 ${backupFileName}...`);
 
-          const backupApiUrl = `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/${GITHUB_BACKUP_DIRECTORY}/TravelingPlan_${timestamp}.json`;
+          const backupApiUrl = `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/${GITHUB_BACKUP_DIRECTORY}/${encodeURIComponent(backupFileNameOnly)}`;
           const backupRes = await fetch(backupApiUrl, {
             method: "PUT",
             headers: {
@@ -6348,7 +6937,7 @@
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            message: `更新行程資料 (TravelingPlan.json) [Web] - ${new Date().toLocaleString("zh-TW")}`,
+            message: `更新行程資料 (${cloudFileName}) [Web] - ${new Date().toLocaleString("zh-TW")}`,
             content: base64Content,
             ...(sha ? { sha } : {})
           })
@@ -6367,7 +6956,7 @@
         const expenseCount = Object.values(expenses).reduce((count, dayExpenses) => count + dayExpenses.length, 0);
         const backupNote = backupFileName ? `（已自動備份舊檔為 ${backupFileName}）` : "";
         recordLocalVersionUpdatedAt(payload.exportedAt);
-        showNotice(`已成功儲存至 GitHub 雲端！${backupNote} 共 ${items.length} 筆行程、${checklistCount} 個 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用與 ${checkinRecords.length} 筆打卡紀錄。`);
+        showNotice(`已成功儲存至 GitHub 雲端（${cloudFileName}）！${backupNote} 共 ${items.length} 筆行程、${checklistCount} 個 Checklist、${preTripChecklist.length} 個行前檢查項目、${expenseCount} 筆費用與 ${checkinRecords.length} 筆打卡紀錄。`);
       } catch (error) {
         showNotice(`雲端上傳失敗：${error.message}`, true);
       } finally {
@@ -6593,6 +7182,37 @@
       ])].sort();
     }
 
+    /**
+     * 取得預設顯示的行程日期。
+     * 若當天日期大於 Day1，則自動移動至該日期；若超過最後一天則停留在最後一天；若小於等於 Day1 則顯示 Day1。
+     *
+     * @param {string[]} dates 已排序的有效行程日期陣列（YYYY-MM-DD）
+     * @param {Date} [currentDate=new Date()] 目前日期基準，預設為當前系統日期
+     * @returns {string|null} 預設日期字串，若無日期則回傳 null
+     */
+    function getDefaultItineraryDate(dates, currentDate = new Date()) {
+      if (!Array.isArray(dates) || dates.length === 0) {
+        return null;
+      }
+
+      const today = getLocalDateString(currentDate);
+      const firstDate = dates[0];
+      const lastDate = dates[dates.length - 1];
+
+      if (today <= firstDate) {
+        return firstDate;
+      }
+      if (today >= lastDate) {
+        return lastDate;
+      }
+      if (dates.includes(today)) {
+        return today;
+      }
+
+      const pastDates = dates.filter((date) => date <= today);
+      return pastDates.length > 0 ? pastDates[pastDates.length - 1] : firstDate;
+    }
+
     function updateDaySwapButtonState() {
       const canSwap = storageReady
         && checklistStorageReady
@@ -6677,15 +7297,15 @@
       const nextChecklists = swapDateBuckets(checklists, firstDate, secondDate);
       const nextExpenses = swapDateBuckets(expenses, firstDate, secondDate);
       const previousData = [
-        [STORAGE_KEY, JSON.stringify(items)],
-        [CHECKLIST_STORAGE_KEY, JSON.stringify(checklists)],
-        [EXPENSE_STORAGE_KEY, JSON.stringify(expenses)]
+        [getTripStorageKey(STORAGE_KEY), JSON.stringify(items)],
+        [getTripStorageKey(CHECKLIST_STORAGE_KEY), JSON.stringify(checklists)],
+        [getTripStorageKey(EXPENSE_STORAGE_KEY), JSON.stringify(expenses)]
       ];
 
       try {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextItems));
-        window.localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(nextChecklists));
-        window.localStorage.setItem(EXPENSE_STORAGE_KEY, JSON.stringify(nextExpenses));
+        window.localStorage.setItem(getTripStorageKey(STORAGE_KEY), JSON.stringify(nextItems));
+        window.localStorage.setItem(getTripStorageKey(CHECKLIST_STORAGE_KEY), JSON.stringify(nextChecklists));
+        window.localStorage.setItem(getTripStorageKey(EXPENSE_STORAGE_KEY), JSON.stringify(nextExpenses));
       } catch {
         let rollbackFailed = false;
         previousData.forEach(([key, value]) => {
@@ -6992,7 +7612,7 @@
       });
 
       try {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextItems));
+        window.localStorage.setItem(getTripStorageKey(STORAGE_KEY), JSON.stringify(nextItems));
       } catch {
         showNotice("搬移資料無法儲存到瀏覽器，原有資料未變更。", true);
         return;
@@ -7052,13 +7672,13 @@
       const nextItems = items.filter((entry) => entry.id !== itemId);
       const nextRainyDays = [...rainyDays, rainyDayItem];
       try {
-        window.localStorage.setItem(RAINY_DAY_STORAGE_KEY, JSON.stringify(nextRainyDays));
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextItems));
+        window.localStorage.setItem(getTripStorageKey(RAINY_DAY_STORAGE_KEY), JSON.stringify(nextRainyDays));
+        window.localStorage.setItem(getTripStorageKey(STORAGE_KEY), JSON.stringify(nextItems));
       } catch {
         let rollbackFailed = false;
         [
-          [RAINY_DAY_STORAGE_KEY, previousRainyDays],
-          [STORAGE_KEY, previousItems]
+          [getTripStorageKey(RAINY_DAY_STORAGE_KEY), previousRainyDays],
+          [getTripStorageKey(STORAGE_KEY), previousItems]
         ].forEach(([key, value]) => {
           try {
             window.localStorage.setItem(key, JSON.stringify(value));
@@ -7138,13 +7758,13 @@
       const nextRainyDays = rainyDays.filter((entry) => entry.id !== itemId);
 
       try {
-        window.localStorage.setItem(RAINY_DAY_STORAGE_KEY, JSON.stringify(nextRainyDays));
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextItems));
+        window.localStorage.setItem(getTripStorageKey(RAINY_DAY_STORAGE_KEY), JSON.stringify(nextRainyDays));
+        window.localStorage.setItem(getTripStorageKey(STORAGE_KEY), JSON.stringify(nextItems));
       } catch {
         let rollbackFailed = false;
         [
-          [RAINY_DAY_STORAGE_KEY, rainyDays],
-          [STORAGE_KEY, items]
+          [getTripStorageKey(RAINY_DAY_STORAGE_KEY), rainyDays],
+          [getTripStorageKey(STORAGE_KEY), items]
         ].forEach(([key, value]) => {
           try {
             window.localStorage.setItem(key, JSON.stringify(value));
@@ -8791,7 +9411,7 @@
       const dayCount = dates.length;
       summary.textContent = `${dayCount} 天・${items.length} 個時段`;
       if (!dates.includes(currentDay)) {
-        currentDay = dates[0];
+        currentDay = getDefaultItineraryDate(dates);
       }
       const selectedDateIndex = dates.indexOf(currentDay);
       dayTimelineSlider.max = String(dates.length - 1);
@@ -8970,51 +9590,130 @@
       });
     }
 
-    async function searchWeatherLocations() {
+    /**
+     * 智慧提取天氣地點搜尋關鍵字，支援去除國家名稱、頓號、逗號等常見誤輸入。
+     *
+     * @param {string} rawQuery 原始輸入字串
+     * @returns {string[]} 候選關鍵字清單（依優先順序）
+     */
+    function extractWeatherSearchKeywords(rawQuery) {
+      const trimmed = rawQuery.trim();
+      const candidates = [];
+      if (trimmed) {
+        candidates.push(trimmed);
+      }
+
+      // 將頓號、逗號、斜線替換為空格
+      const cleaned = trimmed
+        .replace(/[、,，/／\\#]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      const parts = cleaned.split(" ").filter((p) => p.length > 0);
+      if (parts.length > 1) {
+        // 去除常見國家名，取純地名
+        const nonCountry = parts.filter((p) => !/^(日本|Japan|JP|台灣|Taiwan|TW|韓國|Korea)$/i.test(p));
+        if (nonCountry.length > 0) {
+          candidates.push(nonCountry.join(" "));
+          candidates.push(nonCountry[0]);
+        }
+      }
+
+      // 去除「日本京都」開頭的「日本」或結尾的「日本」
+      const strippedCountry = cleaned
+        .replace(/^(日本|Japan|台灣|Taiwan|韓國|Korea)/i, "")
+        .replace(/(日本|Japan|台灣|Taiwan|韓國|Korea)$/i, "")
+        .trim();
+      if (strippedCountry && strippedCountry.length >= 1) {
+        candidates.push(strippedCountry);
+      }
+
+      // 去除「市」、「府」、「縣」
+      if (trimmed.endsWith("市") || trimmed.endsWith("府") || trimmed.endsWith("縣")) {
+        candidates.push(trimmed.slice(0, -1));
+      } else if (/^[\u4e00-\u9fa5]{2}$/.test(trimmed)) {
+        candidates.push(trimmed + "市");
+      }
+
+      return [...new Set(candidates.filter((c) => c && c.length >= 1))];
+    }
+
+    async function searchWeatherLocations(forcedQuery) {
       if (!weatherStorageReady || weatherSearchButton.disabled) {
         return;
       }
 
-      const query = weatherLocationQueryInput.value.trim().slice(0, 100);
-      if (query.length < 2) {
-        weatherSearchStatus.textContent = "請輸入至少 2 個字元的地點名稱。";
+      const inputVal = typeof forcedQuery === "string" ? forcedQuery : weatherLocationQueryInput.value;
+      const rawQuery = inputVal.trim().slice(0, 100);
+      if (rawQuery.length < 1) {
+        weatherSearchStatus.textContent = "請輸入地點或城市名稱（例如：京都、大阪）。";
         weatherLocationQueryInput.focus();
         return;
       }
 
       weatherSearchButton.disabled = true;
       weatherSearchButton.textContent = "搜尋中...";
-      weatherSearchStatus.textContent = "正在搜尋地點...";
+      weatherSearchStatus.textContent = `正在搜尋「${rawQuery}」...`;
       weatherSearchResults.replaceChildren();
+
+      const candidates = extractWeatherSearchKeywords(rawQuery);
       const controller = new AbortController();
-      const timeoutId = window.setTimeout(() => controller.abort(), 15000);
+      const timeoutId = window.setTimeout(() => controller.abort(), 20000);
+
       try {
-        const url = new URL(WEATHER_GEOCODING_API_URL);
-        url.searchParams.set("name", query);
-        url.searchParams.set("count", "5");
-        url.searchParams.set("language", "zh");
-        url.searchParams.set("format", "json");
-        const response = await fetch(url.toString(), {
-          cache: "no-store",
-          signal: controller.signal
-        });
-        if (!response.ok) {
-          throw new Error("地點搜尋服務回應失敗。");
+        let results = [];
+        let matchedKeyword = rawQuery;
+
+        for (const candidate of candidates) {
+          try {
+            const url = new URL(WEATHER_GEOCODING_API_URL);
+            url.searchParams.set("name", candidate);
+            url.searchParams.set("count", "5");
+            url.searchParams.set("language", "zh");
+            url.searchParams.set("format", "json");
+
+            const response = await fetch(url.toString(), {
+              cache: "no-store",
+              signal: controller.signal
+            });
+
+            if (response.status === 429) {
+              throw new Error("天氣服務請求過於頻繁（HTTP 429），請稍候 1 分鐘後重試。");
+            }
+            if (!response.ok) {
+              continue;
+            }
+
+            const parsed = parseWeatherSearchResults(await response.json());
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              results = parsed;
+              matchedKeyword = candidate;
+              break;
+            }
+          } catch (itemErr) {
+            if (itemErr?.message?.includes("429")) {
+              throw itemErr;
+            }
+          }
         }
 
-        const results = parseWeatherSearchResults(await response.json());
-        if (!results) {
-          throw new Error("地點搜尋資料格式無效。");
-        }
         if (results.length === 0) {
-          weatherSearchStatus.textContent = "找不到符合的地點，請調整名稱或加上國家名稱。";
+          weatherSearchStatus.textContent = `找不到與「${rawQuery}」相符的地點。建議直接輸入城市名稱（例如：京都、大阪、東京），避免輸入景點或標點符號。`;
           return;
         }
 
+        // 若搜尋詞包含「日本」，將日本相關結果優先排序
+        if (/日本|japan/i.test(rawQuery)) {
+          results.sort((a, b) => (/日本|japan/i.test(b.country) ? 1 : 0) - (/日本|japan/i.test(a.country) ? 1 : 0));
+        }
+
         renderWeatherSearchResults(results);
-        weatherSearchStatus.textContent = "請選擇正確的城市或地區以加入天氣清單。";
-      } catch {
-        weatherSearchStatus.textContent = "地點搜尋失敗，請確認網路連線後重試。";
+        weatherSearchStatus.textContent = matchedKeyword !== rawQuery
+          ? `已依關鍵字「${matchedKeyword}」找到 ${results.length} 個地點，請點擊下方按鈕加入：`
+          : "請點擊下方按鈕以加入天氣清單：";
+      } catch (error) {
+        const reason = error?.name === "AbortError" ? "連線逾時（超過 20 秒）" : (error?.message || "網路連線異常");
+        weatherSearchStatus.textContent = `地點搜尋失敗（${reason}），請確認網路後重試。`;
       } finally {
         window.clearTimeout(timeoutId);
         weatherSearchButton.disabled = !weatherStorageReady;
@@ -9065,23 +9764,21 @@
 
       const { time, weather_code, temperature_2m_max, temperature_2m_min, precipitation_probability_max } = data.daily;
       const dailyArrays = [time, weather_code, temperature_2m_max, temperature_2m_min, precipitation_probability_max];
-      if (!dailyArrays.every((values) => Array.isArray(values) && values.length === 7)) {
+      if (!dailyArrays.every((values) => Array.isArray(values) && values.length >= 7)) {
         return null;
       }
 
       const forecast = [];
       for (let index = 0; index < 7; index += 1) {
         const date = time[index];
-        const weatherCode = weather_code[index];
+        const rawCode = weather_code[index];
+        const weatherCode = Number.isInteger(rawCode) ? rawCode : 0;
         const maximumTemperature = temperature_2m_max[index];
         const minimumTemperature = temperature_2m_min[index];
         const precipitationProbability = precipitation_probability_max[index];
         const isOptionalNumber = (value) => value === null
           || (typeof value === "number" && Number.isFinite(value));
         if (!isValidDateString(date)
-          || !Number.isInteger(weatherCode)
-          || weatherCode < 0
-          || weatherCode > 99
           || !isOptionalNumber(maximumTemperature)
           || !isOptionalNumber(minimumTemperature)
           || !(precipitationProbability === null
@@ -9093,7 +9790,7 @@
         }
         forecast.push({
           date,
-          weatherCode,
+          weatherCode: Math.min(Math.max(weatherCode, 0), 99),
           maximumTemperature,
           minimumTemperature,
           precipitationProbability
@@ -9237,7 +9934,7 @@
       weatherRefreshStatus.textContent = `正在更新「${location.name}」的七日預報...`;
       renderWeatherLocations();
       const controller = new AbortController();
-      const timeoutId = window.setTimeout(() => controller.abort(), 15000);
+      const timeoutId = window.setTimeout(() => controller.abort(), 20000);
       try {
         const url = new URL(WEATHER_FORECAST_API_URL);
         url.searchParams.set("latitude", String(location.latitude));
@@ -9252,8 +9949,11 @@
           cache: "no-store",
           signal: controller.signal
         });
+        if (response.status === 429) {
+          throw new Error("天氣服務請求過於頻繁（HTTP 429），請稍候 1 分鐘後重試。");
+        }
         if (!response.ok) {
-          throw new Error("天氣服務回應失敗。");
+          throw new Error(`天氣服務回應失敗（HTTP ${response.status}）。`);
         }
 
         const forecast = parseWeatherForecast(await response.json());
@@ -9271,14 +9971,18 @@
         if (!saveWeatherLocations()) {
           weatherLocations = previousLocations;
           weatherLocationErrors.set(locationId, "預報已取得，但無法儲存；已保留先前資料。");
+          weatherRefreshStatus.textContent = `「${location.name}」預報已取得但本機儲存失敗。`;
           return false;
         }
 
         weatherLocationErrors.delete(locationId);
+        weatherRefreshStatus.textContent = `已成功更新「${location.name}」的天氣預報（${new Date().toLocaleTimeString("zh-TW")}）。`;
         return true;
-      } catch {
+      } catch (err) {
         if (weatherLocations.some((entry) => entry.id === locationId)) {
-          weatherLocationErrors.set(locationId, "預報更新失敗，已保留先前資料；請確認網路後重試。");
+          const reason = err?.name === "AbortError" ? "連線逾時（超過 20 秒）" : (err?.message || "網路連線異常");
+          weatherLocationErrors.set(locationId, `預報更新失敗（${reason}）；已保留先前資料。`);
+          weatherRefreshStatus.textContent = `「${location.name}」天氣預報更新失敗（${reason}）。`;
         }
         return false;
       } finally {
@@ -9445,7 +10149,7 @@
     function initializePageTitleControl() {
       let savedTitle = DEFAULT_PAGE_TITLE;
       try {
-        const storedTitle = window.localStorage.getItem(PAGE_TITLE_STORAGE_KEY);
+        const storedTitle = window.localStorage.getItem(getTripStorageKey(PAGE_TITLE_STORAGE_KEY));
         if (storedTitle !== null) {
           savedTitle = normalizePageTitle(storedTitle);
           if (!savedTitle) {
@@ -9467,9 +10171,20 @@
         }
 
         try {
-          window.localStorage.setItem(PAGE_TITLE_STORAGE_KEY, nextTitle);
+          window.localStorage.setItem(getTripStorageKey(PAGE_TITLE_STORAGE_KEY), nextTitle);
           savedTitle = nextTitle;
           applyPageTitle(nextTitle);
+
+          // 同步更新當前行程在清單中的名稱
+          if (Array.isArray(trips)) {
+            const currentTrip = trips.find((t) => t.id === activeTripId);
+            if (currentTrip && currentTrip.name !== nextTitle) {
+              currentTrip.name = nextTitle;
+              saveTripsIndex(trips);
+              renderTripSelector();
+            }
+          }
+
           queueDirectorySave();
           clearNotice();
         } catch {
@@ -9496,10 +10211,19 @@
       return typeof value === "string" && /^#[0-9a-f]{6}$/i.test(value);
     }
 
+    function applyItineraryBackgroundColor(color) {
+      if (!itineraryPanel || !itineraryBackgroundColorInput || !itineraryBackgroundColorValue) {
+        return;
+      }
+      itineraryPanel.style.backgroundColor = color;
+      itineraryBackgroundColorInput.value = color;
+      itineraryBackgroundColorValue.textContent = color.toUpperCase();
+    }
+
     function initializeItineraryBackgroundColorControl() {
       let savedColor = DEFAULT_ITINERARY_BACKGROUND_COLOR;
       try {
-        const storedColor = window.localStorage.getItem(ITINERARY_BACKGROUND_COLOR_STORAGE_KEY);
+        const storedColor = window.localStorage.getItem(getTripStorageKey(ITINERARY_BACKGROUND_COLOR_STORAGE_KEY));
         if (storedColor !== null) {
           if (!isValidHexColor(storedColor)) {
             throw new TypeError("我的行程底色設定格式無效");
@@ -9510,34 +10234,29 @@
         showNotice("無法讀取我的行程底色設定，已使用預設底色。", true);
       }
 
-      const applyColor = (color) => {
-        itineraryPanel.style.backgroundColor = color;
-        itineraryBackgroundColorInput.value = color;
-        itineraryBackgroundColorValue.textContent = color.toUpperCase();
-      };
       const saveColor = (color) => {
         if (!isValidHexColor(color)) {
-          applyColor(savedColor);
+          applyItineraryBackgroundColor(savedColor);
           showNotice("我的行程底色設定無效，已還原為上次設定。", true);
           return;
         }
 
         const normalizedColor = color.toLowerCase();
         try {
-          window.localStorage.setItem(ITINERARY_BACKGROUND_COLOR_STORAGE_KEY, normalizedColor);
+          window.localStorage.setItem(getTripStorageKey(ITINERARY_BACKGROUND_COLOR_STORAGE_KEY), normalizedColor);
           savedColor = normalizedColor;
-          applyColor(savedColor);
+          applyItineraryBackgroundColor(savedColor);
           clearNotice();
         } catch {
-          applyColor(savedColor);
+          applyItineraryBackgroundColor(savedColor);
           showNotice("無法儲存我的行程底色設定，已還原為上次設定。請檢查瀏覽器儲存空間。", true);
         }
       };
 
-      applyColor(savedColor);
+      applyItineraryBackgroundColor(savedColor);
       itineraryBackgroundColorInput.addEventListener("input", () => {
         if (isValidHexColor(itineraryBackgroundColorInput.value)) {
-          applyColor(itineraryBackgroundColorInput.value.toLowerCase());
+          applyItineraryBackgroundColor(itineraryBackgroundColorInput.value.toLowerCase());
         }
       });
       itineraryBackgroundColorInput.addEventListener("change", () => {
@@ -9638,6 +10357,13 @@
     });
     weatherRefreshAllButton.addEventListener("click", () => {
       void refreshAllWeatherLocations(true);
+    });
+    document.querySelectorAll(".weather-tag-btn").forEach((tagBtn) => {
+      tagBtn.addEventListener("click", () => {
+        const query = tagBtn.dataset.query || tagBtn.textContent.trim();
+        weatherLocationQueryInput.value = query;
+        void searchWeatherLocations(query);
+      });
     });
 
     expenseExchangeRateUpdateButton.addEventListener("click", updateExpenseExchangeRates);
@@ -9842,6 +10568,7 @@
       directoryButton.addEventListener("click", configureDirectoryAutoSave);
     }
     importFile.addEventListener("change", importSelectedFile);
+    initializeTrips();
     items = loadItems();
     checklists = loadChecklists();
     preTripChecklist = loadPreTripChecklist();
