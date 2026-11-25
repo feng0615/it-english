@@ -497,12 +497,19 @@
       <div>
         <div class="title-line">
           <h1 id="page-title">常用連結，一頁收好。</h1>
-          <span class="version-badge">版本v1.3.3</span>
+          <span class="version-badge">版本v1.3.4</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.4</strong>
+                    <time class="version-changelog-date" datetime="2026-11-25">2026-11-25</time>
+                  </div>
+                  <p>支援新增本機端網址（file:/// 或本機磁碟路徑），並在線上瀏覽器中提供複製輔助提示。</p>
+                </li>
                 <li>
                   <div class="version-changelog-entry-header">
                     <strong class="version-changelog-version">v1.3.3</strong>
@@ -581,7 +588,7 @@
               </div>
               <div>
                 <label for="link-url">網址</label>
-                <input id="link-url" name="url" type="text" inputmode="url" autocomplete="url" placeholder="https://example.com" required="">
+                <input id="link-url" name="url" type="text" inputmode="url" autocomplete="url" placeholder="https://example.com 或 file:///..." required="">
               </div>
             </div>
             <div class="form-actions">
@@ -589,7 +596,7 @@
               <button class="button" id="cancel-button" type="button" hidden="">取消編輯</button>
             </div>
           </fieldset>
-          <p class="form-note">網址僅接受 HTTP／HTTPS，或同資料夾內的相對連結。連結設定儲存在目前瀏覽器設定檔，不會同步到其他瀏覽器或裝置。</p>
+          <p class="form-note">支援 HTTP／HTTPS、本機網址（如 file:///... 或 C:\...），或同資料夾內的相對連結。連結設定儲存在目前瀏覽器設定檔，不會同步到其他瀏覽器或裝置。</p>
           <p class="status" id="form-status" role="status" aria-live="polite"></p>
         </form>
       </details>
@@ -630,12 +637,21 @@
       let isReady = false;
 
       function getSafeUrl(value) {
-        const candidate = value.trim();
-        if (!candidate || /[\u0000-\u001f\u007f]/.test(candidate)
-          || candidate.includes("\\") || candidate.startsWith("/")) {
+        if (typeof value !== "string") {
           return null;
         }
 
+        let candidate = value.trim();
+        if (!candidate || /[\u0000-\u001f\u007f]/.test(candidate)) {
+          return null;
+        }
+
+        // 支援 Windows 本機路徑（例如 C:\... 或 C:/...），自動轉換為標準 file:/// 格式
+        if (/^[a-zA-Z]:[\\/]/.test(candidate)) {
+          candidate = "file:///" + candidate.replace(/\\/g, "/");
+        }
+
+        // 支援 HTTP / HTTPS 網址
         if (/^https?:\/\//i.test(candidate)) {
           try {
             const parsed = new URL(candidate);
@@ -647,10 +663,23 @@
           }
         }
 
-        if (/^[a-z][a-z\d+.-]*:/i.test(candidate) || candidate.startsWith("//")) {
+        // 支援本機 file:/// 協定網址
+        if (/^file:\/\//i.test(candidate)) {
+          try {
+            const parsed = new URL(candidate);
+            return parsed.protocol === "file:" ? candidate : null;
+          } catch {
+            return candidate;
+          }
+        }
+
+        // 禁止其他危險協定（如 javascript:、data:、vbscript:）或協定相對網址（//）
+        if (/^[a-z][a-z\d+.-]*:/i.test(candidate) || candidate.startsWith("//")
+          || candidate.includes("\\") || candidate.startsWith("/")) {
           return null;
         }
 
+        // 相對路徑檢查
         const path = candidate.split(/[?#]/, 1)[0];
         if (path.split("/").includes("..")) {
           return null;
@@ -731,11 +760,23 @@
           const deleteButton = createElement("button", "button button-danger", "刪除");
 
           item.draggable = true;
-          anchor.href = getSafeUrl(link.url);
+          const safeUrl = getSafeUrl(link.url);
+          anchor.href = safeUrl || "#";
           anchor.draggable = false;
           anchor.target = "_blank";
           anchor.rel = "noopener noreferrer";
           anchor.setAttribute("aria-label", `在新分頁開啟：${link.title}`);
+
+          if (safeUrl && /^file:\/\//i.test(safeUrl)) {
+            anchor.addEventListener("click", () => {
+              if (window.location.protocol === "http:" || window.location.protocol === "https:") {
+                if (navigator.clipboard?.writeText) {
+                  navigator.clipboard.writeText(safeUrl).catch(() => {});
+                }
+                setStatus(listStatus, "已複製本機路徑至剪貼簿。因瀏覽器安全限制，線上網頁無法直接點開本機檔案，請在新分頁網址列貼上並前往。");
+              }
+            });
+          }
           icon.setAttribute("aria-hidden", "true");
           editButton.type = "button";
           deleteButton.type = "button";
@@ -874,7 +915,7 @@
           return;
         }
         if (!url) {
-          setStatus(formStatus, "請輸入有效的 HTTP／HTTPS 網址或同資料夾相對連結。", true);
+          setStatus(formStatus, "請輸入有效的 HTTP／HTTPS 網址、本機端網址（file:///... 或 C:\\...）或同資料夾相對連結。", true);
           urlInput.focus();
           return;
         }
