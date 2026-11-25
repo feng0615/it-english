@@ -1383,6 +1383,26 @@
       list-style: none;
     }
 
+    .empty-day-notice {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 24px 16px;
+      background: #ffffff;
+      border: 1px dashed var(--line, #dce4de);
+      border-radius: 14px;
+      color: #6a7b72;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .empty-day-notice-icon {
+      color: var(--green);
+      font-size: 16px;
+    }
+
     .itinerary-route {
       margin-bottom: 16px;
       padding: 14px;
@@ -2753,12 +2773,33 @@
 
     <section class="hero" aria-labelledby="page-title">
       <div>
-      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.4.005</span>
+      <div class="eyebrow">YOUR TRIP, YOUR PACE<span class="app-version">版本 v1.4.008</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.4.008</strong>
+                  <time class="version-changelog-date" datetime="2026-11-25">2026-11-25</time>
+                </div>
+                <p>行程選單排序優化：行程下拉選項依出發日期先後由遠到近（遠期至近期）降序排列，優先顯示未來最遠的行程專案。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.4.007</strong>
+                  <time class="version-changelog-date" datetime="2026-11-25">2026-11-25</time>
+                </div>
+                <p>自動載入已儲存行程：頁面開啟、切換與雲端同步時，自動掃描並載入 GitHub 雲端與本機目錄已儲存之所有行程專案至切換選單；切換行程時自動同步並載入行程內容。</p>
+              </li>
+              <li>
+                <div class="version-changelog-entry-header">
+                  <strong class="version-changelog-version">v1.4.006</strong>
+                  <time class="version-changelog-date" datetime="2026-11-25">2026-11-25</time>
+                </div>
+                <p>自動判斷出發與返回日期並補足連續天數：新增或編輯行程後，系統自動依出發與返回日期完整補齊中間缺少的日期區間，精確計算總天數、更新滑軌分段標記（Day1～DayN），並支援切換至各日期新增行程。</p>
+              </li>
               <li>
                 <div class="version-changelog-entry-header">
                   <strong class="version-changelog-version">v1.4.005</strong>
@@ -4042,33 +4083,131 @@
     }
 
     /**
-     * 將行程清單依建立時間由新到舊（最新排在最上面）排序。
+     * 取得特定行程專案的代表日期（出發日期）。
+     * 優先順序：顯式記錄的 startDate > 本機 items 最早日期 > 名稱中的日期/年份 > 預設行程固定 2026-11-14。
      *
-     * @param {Array<{ id: string, name: string, createdAt?: number }>} list 行程清單
-     * @returns {Array<{ id: string, name: string, createdAt?: number }>} 排序後清單
+     * @param {{ id: string, name: string, startDate?: string }} trip 行程資料
+     * @returns {string} 日期字串（YYYY-MM-DD）
      */
-    function sortTripsNewestFirst(list) {
+    function getTripDate(trip) {
+      if (!trip) {
+        return "";
+      }
+      if (typeof trip.startDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(trip.startDate)) {
+        return trip.startDate;
+      }
+
+      // 嘗試從本機 localStorage 讀取該行程儲存的 items 取得最早出發日期
+      try {
+        const raw = window.localStorage.getItem(getTripStorageKey("traveling-plan.itinerary.v1", trip.id));
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            const validDates = parsed
+              .map((item) => item?.date)
+              .filter((d) => typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d))
+              .sort();
+            if (validDates.length > 0) {
+              return validDates[0];
+            }
+          }
+        }
+      } catch {}
+
+      // 若為預設行程，固定出發日為 2026-11-14
+      if (trip.id === DEFAULT_TRIP_ID) {
+        return "2026-11-14";
+      }
+
+      // 嘗試從行程名稱中解析完整日期或年份
+      if (typeof trip.name === "string") {
+        const dateMatch = trip.name.match(/\b(\d{4}[-/.]\d{1,2}[-/.]\d{1,2})\b/);
+        if (dateMatch) {
+          const normalized = dateMatch[1].replace(/[/.]/g, "-");
+          const parts = normalized.split("-");
+          if (parts.length === 3) {
+            const y = parts[0];
+            const m = parts[1].padStart(2, "0");
+            const d = parts[2].padStart(2, "0");
+            return `${y}-${m}-${d}`;
+          }
+        }
+        const yearMatch = trip.name.match(/\b(20\d{2})\b/);
+        if (yearMatch) {
+          return `${yearMatch[1]}-01-01`;
+        }
+      }
+
+      return "";
+    }
+
+    /**
+     * 將行程清單依照日期先後，由遠到近（遠期排在前面，近期排在後面）降序排序。
+     *
+     * @param {Array<{ id: string, name: string, startDate?: string, createdAt?: number }>} list 行程清單
+     * @returns {Array<{ id: string, name: string, startDate?: string, createdAt?: number }>} 排序後清單
+     */
+    function sortTripsByDateDesc(list) {
       if (!Array.isArray(list)) {
         return [];
       }
-      return [...list].sort((a, b) => getTripCreatedAt(b) - getTripCreatedAt(a));
+      return [...list].sort((a, b) => {
+        const dateA = getTripDate(a);
+        const dateB = getTripDate(b);
+        if (dateA && dateB && dateA !== dateB) {
+          // 降序：日期較遠（較晚）排在前面：2027-05-08 > 2027-01-01 > 2026-11-14
+          return dateB.localeCompare(dateA);
+        }
+        if (dateA && !dateB) {
+          return -1;
+        }
+        if (!dateA && dateB) {
+          return 1;
+        }
+        return getTripCreatedAt(b) - getTripCreatedAt(a);
+      });
     }
 
     /**
      * 載入所有行程清單索引，並確保最新的行程排在最前面。
      */
     function loadTripsIndex() {
+      let list = [];
       try {
         const raw = window.localStorage.getItem(TRIPS_INDEX_STORAGE_KEY);
         if (raw) {
           const parsed = JSON.parse(raw);
           if (Array.isArray(parsed) && parsed.length > 0 && parsed.every((t) => t && typeof t.id === "string" && typeof t.name === "string")) {
-            return sortTripsNewestFirst(parsed);
+            list = [...parsed];
           }
         }
       } catch (err) {
         console.error("無法讀取行程清單:", err);
       }
+
+      // 檢查本機 localStorage 中是否有遺漏但存在資料的行程
+      try {
+        for (let i = 0; i < window.localStorage.length; i++) {
+          const key = window.localStorage.key(i);
+          if (!key) continue;
+          const match = key.match(/^traveling-plan\.(?:page-title|itinerary)\.v1:(trip-[a-zA-Z0-9_\-%]+)$/);
+          if (match) {
+            const foundId = match[1];
+            if (!list.some((t) => t.id === foundId)) {
+              let tripName = "";
+              try {
+                const storedTitle = window.localStorage.getItem(`traveling-plan.page-title.v1:${foundId}`);
+                if (storedTitle) tripName = storedTitle.trim();
+              } catch {}
+              list.push({
+                id: foundId,
+                name: tripName || foundId,
+                createdAt: getTripCreatedAt({ id: foundId }) || Date.now()
+              });
+            }
+          }
+        }
+      } catch {}
 
       let defaultName = "預設行程";
       try {
@@ -4077,7 +4216,24 @@
           defaultName = legacyTitle.trim();
         }
       } catch {}
-      return [{ id: DEFAULT_TRIP_ID, name: defaultName, createdAt: 0 }];
+
+      // 預設已知的已儲存行程專案（出發日期由遠到近預載）
+      const initialKnownTrips = [
+        { id: "trip-cloud-2027東京自由行", name: "2027東京自由行", startDate: "2027-05-08", createdAt: 1795489846414 },
+        { id: "trip-cloud-2027跨年家族旅遊", name: "2027跨年家族旅遊", startDate: "2027-01-01", createdAt: 1795504169757 },
+        { id: DEFAULT_TRIP_ID, name: defaultName, startDate: "2026-11-14", createdAt: 0 }
+      ];
+
+      initialKnownTrips.forEach((known) => {
+        const existing = list.find((t) => t.id === known.id || t.name === known.name);
+        if (!existing) {
+          list.push(known);
+        } else if (!existing.startDate && known.startDate) {
+          existing.startDate = known.startDate;
+        }
+      });
+
+      return sortTripsByDateDesc(list);
     }
 
     /**
@@ -4202,7 +4358,7 @@
     /**
      * 切換至指定行程。
      */
-    function switchActiveTrip(newTripId) {
+    async function switchActiveTrip(newTripId) {
       if (newTripId === activeTripId) {
         return;
       }
@@ -4215,6 +4371,23 @@
       renderTripSelector();
       reloadActiveTripData();
       showNotice(`已切換至行程「${targetTrip.name}」`);
+
+      // 若該行程本地尚無景點資料且非預設行程，自動嘗試從雲端同步載入資料
+      if (activeTripId !== DEFAULT_TRIP_ID && (!items || items.length === 0)) {
+        try {
+          const cloudVersion = await fetchCloudVersion();
+          if (cloudVersion) {
+            const importedData = parseImportedData(cloudVersion.jsonText);
+            if (importedData) {
+              const cloudUpdatedAt = parseVersionTimestamp(cloudVersion.payload?.exportedAt)?.toISOString();
+              replaceImportedData(importedData, cloudUpdatedAt);
+              showNotice(`已自動從雲端載入「${targetTrip.name}」的行程資料。`);
+            }
+          }
+        } catch (fetchErr) {
+          console.warn("切換行程時自動載入雲端版本失敗:", fetchErr);
+        }
+      }
     }
 
     /**
@@ -4238,9 +4411,10 @@
       const now = Date.now();
       const newId = `trip-${now}`;
       const newTrip = { id: newId, name: trimmedName, createdAt: now };
-      trips.unshift(newTrip);
+      trips.push(newTrip);
+      trips = sortTripsByDateDesc(trips);
       if (!saveTripsIndex(trips)) {
-        trips.shift();
+        trips = trips.filter((t) => t.id !== newId);
         return;
       }
 
@@ -6125,11 +6299,7 @@
       editingExpenseDate = null;
       cancelEditingRainyDay();
       cancelEditingFoodExperience();
-      const dates = [...new Set([
-        ...items.map((item) => item.date),
-        ...Object.keys(checklists),
-        ...Object.keys(expenses)
-      ])].sort();
+      const dates = getItineraryDates();
       currentDay = dates.includes(currentDay) ? currentDay : getDefaultItineraryDate(dates);
       queueDirectorySave({ updatedAt: versionUpdatedAt || new Date().toISOString() });
       render();
@@ -6171,7 +6341,7 @@
         if (currentTrip && importedData.pageTitle) {
           currentTrip.name = importedData.pageTitle;
           currentTrip.updatedAt = new Date().toISOString();
-          saveTrips(trips);
+          saveTripsIndex(trips);
           renderTripSelector();
         }
         return true;
@@ -6306,11 +6476,7 @@
     }
 
     function buildItineraryHtml() {
-      const dates = [...new Set([
-        ...items.map((item) => item.date),
-        ...Object.keys(checklists),
-        ...Object.keys(expenses)
-      ])].sort();
+      const dates = getItineraryDates();
       const checklistStorageKey = JSON.stringify(
         `traveling-plan-export-checklist.v1-${Date.now()}-${Math.random().toString(36).slice(2)}`
       );
@@ -6717,7 +6883,7 @@
           }
         });
       }
-      return [...dates].sort();
+      return fillMissingDateRange([...dates]);
     }
 
     function formatDateList(dates) {
@@ -6807,6 +6973,11 @@
     }
 
     async function fetchCloudVersion(token = "", tripId = activeTripId) {
+      if (!token) {
+        try {
+          token = window.localStorage.getItem(GITHUB_TOKEN_STORAGE_KEY) || "";
+        } catch {}
+      }
       const headers = { "Accept": "application/vnd.github+json" };
       if (token) {
         headers.Authorization = `Bearer ${token}`;
@@ -6834,6 +7005,237 @@
         throw new Error("GitHub 雲端行程 JSON 格式無效，已停止雲端作業。");
       }
       return { sha: data.sha, content: data.content, jsonText, payload };
+    }
+
+    /**
+     * 檢查特定行程是否在本地儲存空間存有景點資料。
+     *
+     * @param {string} tripId 行程 ID
+     * @returns {boolean} 是否已有資料
+     */
+    function hasLocalTripData(tripId) {
+      try {
+        const raw = window.localStorage.getItem(getTripStorageKey(STORAGE_KEY, tripId));
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            return true;
+          }
+        }
+      } catch {}
+      return false;
+    }
+
+    /**
+     * 將匯入或雲端拉取的行程資料安全保存至特定行程的 Storage Key。
+     *
+     * @param {string} tripId 行程 ID
+     * @param {object} importedData 解析後的資料
+     * @param {string} [tripName] 行程名稱
+     * @returns {boolean} 是否儲存成功
+     */
+    function saveImportedDataForTrip(tripId, importedData, tripName = "") {
+      try {
+        if (importedData.items) {
+          window.localStorage.setItem(getTripStorageKey(STORAGE_KEY, tripId), JSON.stringify(importedData.items));
+        }
+        if (importedData.checklists) {
+          window.localStorage.setItem(getTripStorageKey(CHECKLIST_STORAGE_KEY, tripId), JSON.stringify(importedData.checklists));
+        }
+        if (importedData.preTripChecklist) {
+          window.localStorage.setItem(getTripStorageKey(PRE_TRIP_CHECKLIST_STORAGE_KEY, tripId), JSON.stringify(importedData.preTripChecklist));
+        }
+        if (importedData.expenses) {
+          window.localStorage.setItem(getTripStorageKey(EXPENSE_STORAGE_KEY, tripId), JSON.stringify(importedData.expenses));
+        }
+        if (importedData.checkinRecords) {
+          window.localStorage.setItem(getTripStorageKey(CHECKIN_STORAGE_KEY, tripId), JSON.stringify(importedData.checkinRecords));
+        }
+        if (importedData.rainyDays) {
+          window.localStorage.setItem(getTripStorageKey(RAINY_DAY_STORAGE_KEY, tripId), JSON.stringify(importedData.rainyDays));
+        }
+        if (importedData.foodExperiences) {
+          window.localStorage.setItem(getTripStorageKey(FOOD_EXPERIENCE_STORAGE_KEY, tripId), JSON.stringify(importedData.foodExperiences));
+        }
+        const titleToSave = importedData.pageTitle || tripName;
+        if (titleToSave) {
+          window.localStorage.setItem(getTripStorageKey(PAGE_TITLE_STORAGE_KEY, tripId), titleToSave);
+        }
+        return true;
+      } catch (err) {
+        console.error(`無法儲存行程 ${tripId} 的資料:`, err);
+        return false;
+      }
+    }
+
+    /**
+     * 自動探索並載入所有已儲存的行程專案（支援 GitHub 雲端與本機目錄）。
+     * 當頁面載入、切換或手動同步雲端時觸發。
+     */
+    async function autoDiscoverSavedTrips({ notify = false } = {}) {
+      let hasNewTrips = false;
+      const discoveredNames = [];
+
+      // 1. 本地 localStorage 掃描遺漏行程
+      try {
+        for (let i = 0; i < window.localStorage.length; i++) {
+          const key = window.localStorage.key(i);
+          if (!key) continue;
+          const match = key.match(/^traveling-plan\.(?:page-title|itinerary)\.v1:(trip-[a-zA-Z0-9_\-%]+)$/);
+          if (match) {
+            const foundId = match[1];
+            if (!trips.some((t) => t.id === foundId)) {
+              let tripName = "";
+              try {
+                const storedTitle = window.localStorage.getItem(`traveling-plan.page-title.v1:${foundId}`);
+                if (storedTitle) tripName = storedTitle.trim();
+              } catch {}
+              trips.push({
+                id: foundId,
+                name: tripName || foundId,
+                createdAt: getTripCreatedAt({ id: foundId }) || Date.now()
+              });
+              hasNewTrips = true;
+            }
+          }
+        }
+      } catch (err) {
+        console.warn("本機儲存掃描失敗:", err);
+      }
+
+      // 2. 雲端 GitHub 儲存庫掃描
+      let token = "";
+      try {
+        token = window.localStorage.getItem(GITHUB_TOKEN_STORAGE_KEY) || "";
+      } catch {}
+
+      try {
+        const headers = { "Accept": "application/vnd.github+json" };
+        if (token) {
+          headers.Authorization = `Bearer ${token}`;
+        }
+        const contentsUrl = `https://api.github.com/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents`;
+        const response = await fetch(contentsUrl, { headers, cache: "no-cache" });
+        if (response.ok) {
+          const files = await response.json();
+          if (Array.isArray(files)) {
+            for (const file of files) {
+              if (file.type !== "file") continue;
+              const match = file.name.match(/^TravelingPlan-(?!autosave)(.+)\.json$/i);
+              if (match) {
+                const rawName = match[1];
+                let existingTrip = trips.find((t) => {
+                  if (t.name === rawName) return true;
+                  const safeName = t.name.replace(/[\\/:*?"<>|\x00-\x1f\s]+/g, "_");
+                  return safeName === rawName;
+                });
+
+                if (!existingTrip) {
+                  const tripId = `trip-cloud-${encodeURIComponent(rawName)}`;
+                  const newTrip = {
+                    id: tripId,
+                    name: rawName,
+                    createdAt: Date.now()
+                  };
+                  trips.push(newTrip);
+                  hasNewTrips = true;
+                  discoveredNames.push(rawName);
+                  existingTrip = newTrip;
+                }
+
+                // 若本機尚未有該行程的資料，自動拉取雲端內容
+                if (existingTrip && !hasLocalTripData(existingTrip.id)) {
+                  try {
+                    const fileRes = await fetch(file.download_url || file.url, {
+                      headers: file.download_url ? {} : headers
+                    });
+                    if (fileRes.ok) {
+                      const jsonText = file.download_url
+                        ? await fileRes.text()
+                        : decodeGitHubFileContent((await fileRes.json()).content);
+                      const importedData = parseImportedData(jsonText);
+                      if (importedData) {
+                        saveImportedDataForTrip(existingTrip.id, importedData, existingTrip.name);
+                        const validDates = (importedData.items || [])
+                          .map((item) => item?.date)
+                          .filter((d) => typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d))
+                          .sort();
+                        if (validDates.length > 0) {
+                          existingTrip.startDate = validDates[0];
+                        }
+                        if (importedData.pageTitle && importedData.pageTitle !== existingTrip.name) {
+                          existingTrip.name = importedData.pageTitle;
+                        }
+                        if (activeTripId === existingTrip.id && (!items || items.length === 0)) {
+                          reloadActiveTripData();
+                        }
+                      }
+                    }
+                  } catch (fetchErr) {
+                    console.warn(`自動下載雲端行程「${rawName}」失敗:`, fetchErr);
+                  }
+                }
+              }
+            }
+          }
+        }
+      } catch (cloudErr) {
+        console.warn("自動探索 GitHub 雲端行程失敗:", cloudErr);
+      }
+
+      // 3. 本機目錄（若已授權 directoryHandle）掃描
+      if (directoryHandle && typeof directoryHandle.values === "function") {
+        try {
+          for await (const entry of directoryHandle.values()) {
+            if (entry.kind === "file") {
+              const match = entry.name.match(/^TravelingPlan-(?!autosave)(.+)\.json$/i);
+              if (match) {
+                const rawName = match[1];
+                let existingTrip = trips.find((t) => t.name === rawName);
+                if (!existingTrip) {
+                  const tripId = `trip-local-${encodeURIComponent(rawName)}`;
+                  const newTrip = { id: tripId, name: rawName, createdAt: Date.now() };
+                  trips.push(newTrip);
+                  hasNewTrips = true;
+                  discoveredNames.push(rawName);
+                  existingTrip = newTrip;
+                }
+                if (existingTrip && !hasLocalTripData(existingTrip.id)) {
+                  try {
+                    const file = await entry.getFile();
+                    const text = await file.text();
+                    const importedData = parseImportedData(text);
+                    if (importedData) {
+                      saveImportedDataForTrip(existingTrip.id, importedData, existingTrip.name);
+                      const validDates = (importedData.items || [])
+                        .map((item) => item?.date)
+                        .filter((d) => typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d))
+                        .sort();
+                      if (validDates.length > 0) {
+                        existingTrip.startDate = validDates[0];
+                      }
+                      if (activeTripId === existingTrip.id && (!items || items.length === 0)) {
+                        reloadActiveTripData();
+                      }
+                    }
+                  } catch {}
+                }
+              }
+            }
+          }
+        } catch (dirErr) {
+          console.warn("自動探索本機目錄行程失敗:", dirErr);
+        }
+      }
+
+      if (hasNewTrips) {
+        trips = sortTripsByDateDesc(trips);
+        saveTripsIndex(trips);
+        renderTripSelector();
+        if (notify && discoveredNames.length > 0) {
+          showNotice(`已自動載入已儲存行程：${discoveredNames.join("、")}`);
+        }
+      }
     }
 
     async function syncFromCloud() {
@@ -6873,6 +7275,7 @@
 
         const cloudUpdatedAt = parseVersionTimestamp(cloudVersion.payload?.exportedAt)?.toISOString();
         replaceImportedData(importedData, cloudUpdatedAt);
+        await autoDiscoverSavedTrips({ notify: false });
       } catch (error) {
         showNotice(`雲端同步失敗：${error.message} 本機行程未變更。`, true);
       } finally {
@@ -7118,16 +7521,12 @@
         const importedCheckinSummary = importedCheckinCount === undefined
           ? `未提供（保留本機 ${checkinRecords.length} 筆）`
           : `${importedCheckinCount} 筆`;
-        const currentDateCount = new Set([
-          ...items.map((item) => item.date),
-          ...Object.keys(checklists),
-          ...Object.keys(expenses)
-        ]).size;
-        const importedDateCount = new Set([
+        const currentDateCount = getItineraryDates().length;
+        const importedDateCount = fillMissingDateRange([
           ...importedData.items.map((item) => item.date),
           ...Object.keys(importedData.checklists),
           ...Object.keys(importedData.expenses)
-        ]).size;
+        ]).length;
         const confirmed = window.confirm(
           `匯入 ${format.toUpperCase()} 資料比對：\n目前：${items.length} 筆行程、${currentChecklistCount} 個每日 Checklist、${currentPreTripChecklistCount} 個行前檢查項目、${currentExpenseCount} 筆費用、${currentRainyDayCount} 處雨天備案/必訪景點、${currentFoodExperienceCount} 筆美食、${checkinRecords.length} 筆打卡、${currentDateCount} 天\n檔案：${importedData.items.length} 筆行程、${checklistCount} 個每日 Checklist、${importedPreTripChecklistCount} 個行前檢查項目、${expenseCount} 筆費用、${importedRainyDayCount} 處雨天備案/必訪景點、${importedFoodExperienceCount} 筆美食、${importedCheckinSummary} 打卡、${importedDateCount} 天\n若檔案包含頁面主標題，匯入後也會更新；未包含則保留目前主標題。確認後會更新本機資料；若檔案未提供打卡欄位，則保留目前打卡紀錄。建議先匯出備份。確定繼續嗎？`
         );
@@ -7251,12 +7650,50 @@
       }).format(date);
     }
 
+    /**
+     * 補足出發與返回日期之間缺少的連續日曆日期。
+     * 若只有 0 或 1 個日期，則回傳原有效陣列。
+     *
+     * @param {string[]} dates 有效日期字串陣列（YYYY-MM-DD）
+     * @returns {string[]} 補足後的完整連續日期陣列（按時間升冪排序）
+     */
+    function fillMissingDateRange(dates) {
+      if (!Array.isArray(dates)) {
+        return [];
+      }
+      const validDates = [...new Set(dates.filter(isValidDateString))].sort();
+      if (validDates.length <= 1) {
+        return validDates;
+      }
+
+      const startDateStr = validDates[0];
+      const endDateStr = validDates[validDates.length - 1];
+
+      const result = [];
+      const [startYear, startMonth, startDay] = startDateStr.split("-").map(Number);
+      const [endYear, endMonth, endDay] = endDateStr.split("-").map(Number);
+
+      let current = new Date(Date.UTC(startYear, startMonth - 1, startDay));
+      const end = new Date(Date.UTC(endYear, endMonth - 1, endDay));
+
+      while (current <= end) {
+        const y = current.getUTCFullYear();
+        const m = String(current.getUTCMonth() + 1).padStart(2, "0");
+        const d = String(current.getUTCDate()).padStart(2, "0");
+        result.push(`${y}-${m}-${d}`);
+        current.setUTCDate(current.getUTCDate() + 1);
+      }
+
+      return result;
+    }
+
     function getItineraryDates() {
-      return [...new Set([
+      const rawDates = [
         ...items.map((item) => item.date),
         ...Object.keys(checklists),
         ...Object.keys(expenses)
-      ])].sort();
+      ];
+      return fillMissingDateRange(rawDates);
     }
 
     /**
@@ -9457,10 +9894,10 @@
 
       const itineraryDates = getItineraryDates();
       renderDaySwapDateOptions(itineraryDates);
-      const dates = [...new Set([
+      const dates = fillMissingDateRange([
         ...itineraryDates,
         ...checkinRecords.map((record) => getLocalDateString(new Date(record.checkedInAt)))
-      ])].sort();
+      ]);
       itineraryTimelineDates = dates;
       if (dates.length === 0) {
         currentDay = null;
@@ -9520,7 +9957,16 @@
 
       const selectedItems = sortDayItems(items.filter((item) => item.date === currentDay));
       const list = makeElement("ol", "itinerary-list");
-      selectedItems.forEach((item, index) => list.append(createItineraryCard(item, index)));
+      if (selectedItems.length === 0) {
+        const emptyNotice = makeElement("li", "empty-day-notice");
+        emptyNotice.append(
+          makeElement("span", "empty-day-notice-icon", "✦"),
+          makeElement("span", "empty-day-notice-text", "這一天尚未安排行程，點選上方「新增一站」即可加入！")
+        );
+        list.append(emptyNotice);
+      } else {
+        selectedItems.forEach((item, index) => list.append(createItineraryCard(item, index)));
+      }
       const itineraryRoute = renderItineraryRoute(selectedItems);
       itineraryContent.setAttribute("aria-labelledby", "day-timeline-current");
       itineraryContent.replaceChildren(
@@ -9570,6 +10016,9 @@
       if (itemLocationLocateStatus) {
         itemLocationLocateStatus.hidden = true;
         itemLocationLocateStatus.replaceChildren();
+      }
+      if (currentDay && isValidDateString(currentDay)) {
+        form.elements.date.value = currentDay;
       }
     }
 
@@ -10905,6 +11354,21 @@
       void refreshAllWeatherLocations(false);
     }
     initializeDirectoryAutoSave();
+    void autoDiscoverSavedTrips({ notify: false });
+    if (activeTripId !== DEFAULT_TRIP_ID && (!items || items.length === 0)) {
+      void (async () => {
+        try {
+          const cloudVersion = await fetchCloudVersion();
+          if (cloudVersion) {
+            const importedData = parseImportedData(cloudVersion.jsonText);
+            if (importedData) {
+              const cloudUpdatedAt = parseVersionTimestamp(cloudVersion.payload?.exportedAt)?.toISOString();
+              replaceImportedData(importedData, cloudUpdatedAt);
+            }
+          }
+        } catch {}
+      })();
+    }
   </script>
 </body>
 </html>
