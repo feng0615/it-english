@@ -279,6 +279,18 @@
       box-shadow: 0 3px 12px rgba(48, 62, 51, .12);
     }
 
+    .link-card--local {
+      border-left: 4px solid #2563eb;
+      background: #fbfdff;
+    }
+
+    .link-card--local:hover,
+    .link-card--local:focus-within {
+      border-color: #93c5fd;
+      border-left-color: #1d4ed8;
+      background: #f0f7ff;
+    }
+
     .link-main {
       position: absolute;
       z-index: 0;
@@ -311,6 +323,12 @@
       font-size: 16px;
     }
 
+    .link-icon--local {
+      background: #e8f1fd;
+      color: #1d4ed8;
+      font-size: 14px;
+    }
+
     .link-copy {
       min-width: 0;
     }
@@ -325,6 +343,30 @@
 
     .link-title {
       font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .link-title-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .link-tag-local {
+      display: inline-flex;
+      align-items: center;
+      flex: 0 0 auto;
+      padding: 1px 7px;
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.4;
     }
 
     .link-url {
@@ -497,12 +539,19 @@
       <div>
         <div class="title-line">
           <h1 id="page-title">常用連結，一頁收好。</h1>
-          <span class="version-badge">版本v1.3.4</span>
+          <span class="version-badge">版本v1.3.5</span>
           <details class="version-changelog">
             <summary>更新日誌</summary>
             <div class="version-changelog-panel">
               <p class="version-changelog-title">版本異動紀錄</p>
               <ol class="version-changelog-list">
+                <li>
+                  <div class="version-changelog-entry-header">
+                    <strong class="version-changelog-version">v1.3.5</strong>
+                    <time class="version-changelog-date" datetime="2026-11-25">2026-11-25</time>
+                  </div>
+                  <p>本機連結增加專屬視覺識別（本機徽章、電腦圖示與側邊藍色標示），便於區隔雲端與本機資源。</p>
+                </li>
                 <li>
                   <div class="version-changelog-entry-header">
                     <strong class="version-changelog-version">v1.3.4</strong>
@@ -751,16 +800,29 @@
           const item = document.createElement("li");
           const card = createElement("div", "link-card");
           const anchor = createElement("a", "link-main");
-          const icon = createElement("span", "link-icon", "↗");
+          const safeUrl = getSafeUrl(link.url);
+          const isLocal = Boolean(safeUrl && /^file:\/\//i.test(safeUrl));
+
+          const icon = createElement("span", `link-icon${isLocal ? " link-icon--local" : ""}`, isLocal ? "💻" : "↗");
           const copy = createElement("span", "link-copy");
-          const title = createElement("span", "link-title", link.title);
+          const title = createElement("span", "link-title");
+          const titleText = createElement("span", "link-title-text", link.title);
+          title.appendChild(titleText);
+
+          if (isLocal) {
+            card.classList.add("link-card--local");
+            const badge = createElement("span", "link-tag-local", "本機");
+            title.appendChild(badge);
+          }
+
           const url = createElement("span", "link-url", link.url);
+          copy.appendChild(title);
+          copy.appendChild(url);
           const actions = createElement("div", "link-actions");
           const editButton = createElement("button", "button", "編輯");
           const deleteButton = createElement("button", "button button-danger", "刪除");
 
           item.draggable = true;
-          const safeUrl = getSafeUrl(link.url);
           anchor.href = safeUrl || "#";
           anchor.draggable = false;
           anchor.target = "_blank";
